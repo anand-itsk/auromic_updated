@@ -160,7 +160,7 @@
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown ">
                             <a class="dropdown-item" href="#"><i
                                     class="mdi mdi-account-circle m-r-5 text-muted"></i> Profile</a>
-                            <a class="dropdown-item" href="#"><i
+                            <a class="dropdown-item" href="{{route('master.settings')}}"><i
                                     class="mdi mdi-settings m-r-5 text-muted"></i> Settings</a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
