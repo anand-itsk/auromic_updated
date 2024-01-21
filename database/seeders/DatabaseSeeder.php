@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\BankDetails;
+use App\Models\CompanyBankDetails;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,7 +22,13 @@ class DatabaseSeeder extends Seeder
             PermissionGroupTableSeeder::class,
             PermissionTableSeeder::class,
             RoleTableSeeder::class,
-            UserTableSeeder::class
+            UserTableSeeder::class,
+            CompanyTypeTableSeeder::class,
+            CompanyTableSeeder::class,
+            CompanyHierarchieTableSeeder::class,
+            CompanyRegistrationDetailTableSeeder::class,
+            BankDetailTableSeeder::class,
+            CompanyBankDetailTableSeeder::class
         ]);
     }
 }
