@@ -41,7 +41,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user-edit/{id}', [UserController::class, 'edit'])->name('user.edit');
     Route::post('/user-update/{id}', [UserController::class, 'update'])->name('user.update');
     Route::delete('/user-delete/{id}',  [UserController::class, 'delete'])->name('user.delete');
-
+    Route::post('/select-user-delete', [UserController::class, 'deleteSelected']);
+    Route::post('/import-users', [UserController::class, 'importUsers'])->name('import.users');
     // Roles
     // permission
     Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions');
