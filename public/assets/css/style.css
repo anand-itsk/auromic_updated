@@ -3220,3 +3220,7 @@ File: Responsive
   }
 }
 /*# sourceMappingURL=style.css.map */
+
+.justify-content-evenly{
+  justify-content: space-evenly;
+}

@@ -11,18 +11,26 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class UserDataImport implements ToCollection, WithHeadingRow
 {
     /**
-    * @param Collection $collection
-    */
+     * @param Collection $collection
+     */
     public function collection(Collection $collection)
     {
-        foreach ($collection as $row) 
-        {
+
+        foreach ($collection as $row) {
+
+            // Check if user with the same email already exists
+            $existingUser = User::where('email', $row['email'])->first();
+
+            if ($existingUser) {
+                // Skip this user or handle as needed
+                return null;
+            }
             User::create([
-                'name' => $row['Name'],
-                'name' => $row['Email'],
+                'name' => $row['name'],
+                'email' => $row['email'],
                 'password' => Hash::make('password'),
-                'created_by' => 1,
-                'updated_by' => 1
+                'created_by' => auth()->id() ?? 1,
+                'updated_by' => auth()->id() ?? 1
             ]);
         }
     }

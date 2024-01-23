@@ -1,9 +1,19 @@
 @extends('layouts.app')
 <!-- DataTables CSS -->
 @include('links.css.datatable.datatable-css')
+@include('links.css.table.custom-css')
+
 @section('content')
     <div class="wrapper">
         <div class="container-fluid">
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ session('success') }}
+                </div>
+            @endif
             <div class="row">
                 <div class="col-sm-12">
                     <div class="page-title-box">
@@ -18,14 +28,23 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card m-b-30">
-                                <div class="d-flex p-2 bd-highlight">
-                                    <div>Create</div>
-                                    <div>Create</div>
+                                <div class="d-flex justify-content-between p-2 bd-highlight">
+                                    <div>
+                                        <button id="deleteButton" class="icon-button delete-color"
+                                            title="Delete Selected Record"><i class="fa fa-user-times"></i></button>
+                                    </div>
+                                    <div>
+                                        <a href="{{ route('import.users.page') }}" class="icon-link common-color"
+                                            title="Import Users">
+                                            <i class="fa fa-upload"></i>
+                                        </a>
+                                        <a href="{{ route('user.create') }}" class="icon-link common-color"
+                                            title="Create New User">
+                                            <i class="fa fa-user-plus"></i>
+                                        </a>
+                                    </div>
                                 </div>
                                 <div class="card-body">
-                                    <!-- Delete Button -->
-                                    <button id="deleteButton" style="margin-bottom: 10px;">Delete Selected</button>
-                                    {{-- <h4 class="mt-0 header-title">Buttons example</h4> --}}
                                     <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap"
                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
@@ -71,6 +90,7 @@
                     },
                     // Add other fields as needed
                 ],
+                order: [[0, 'desc']],
                 select: true,
                 dom: 'lBfrtip',
                 buttons: [

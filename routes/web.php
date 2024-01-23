@@ -42,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user-update/{id}', [UserController::class, 'update'])->name('user.update');
     Route::delete('/user-delete/{id}',  [UserController::class, 'delete'])->name('user.delete');
     Route::post('/select-user-delete', [UserController::class, 'deleteSelected']);
+    Route::get('/import-users-page', [UserController::class, 'importUserPage'])->name('import.users.page');
     Route::post('/import-users', [UserController::class, 'importUsers'])->name('import.users');
     // Roles
     // permission
