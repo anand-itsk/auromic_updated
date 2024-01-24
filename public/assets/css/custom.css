@@ -1,0 +1,31 @@
+button.icon-button {
+    background: none;
+    border: none;
+    font-size: 18px;
+}
+
+.delete-color{
+    color:rgb(252, 31, 31)
+}
+
+.primary-color{
+    color: #508aeb;
+}
+
+.common-color{
+    color:#707070;
+}
+
+.icon-link {
+    text-decoration: none;
+    font-size: 18px;
+    padding: 5px;
+}
+
+.icon-link:hover{
+    color: #508aeb;
+}
+
+div.dt-buttons{
+    padding-left: 15px;
+}

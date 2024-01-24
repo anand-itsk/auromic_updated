@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\BankDetails;
+use App\Models\CompanyBankDetails;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +15,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call([
+            CountryTableSeeder::class,
+            StateTableSeeder::class,
+            DistrictTableSeeder::class,
+            PermissionGroupTableSeeder::class,
+            PermissionTableSeeder::class,
+            RoleTableSeeder::class,
+            UserTableSeeder::class,
+            CompanyTypeTableSeeder::class,
+            CompanyTableSeeder::class,
+            CompanyHierarchieTableSeeder::class,
+            CompanyRegistrationDetailTableSeeder::class,
+            BankDetailTableSeeder::class,
+            CompanyBankDetailTableSeeder::class
+        ]);
     }
 }
