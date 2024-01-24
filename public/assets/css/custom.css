@@ -26,3 +26,6 @@ button.icon-button {
     color: #508aeb;
 }
 
+div.dt-buttons{
+    padding-left: 15px;
+}
