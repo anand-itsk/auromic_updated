@@ -1,9 +1,10 @@
 @extends('layouts.app')
 <!-- DataTables CSS -->
-@include('links.css.datatable.datatable-css')
-@include('links.css.table.custom-css')
+
 
 @section('content')
+    @include('links.css.datatable.datatable-css')
+    @include('links.css.table.custom-css')
     <div class="wrapper">
         <div class="container-fluid">
             @if (session('success'))
@@ -52,6 +53,8 @@
                                                 <th>ID</th>
                                                 <th>Name</th>
                                                 <th>Email</th>
+                                                <th>Role</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -71,8 +74,9 @@
 
 
     <script>
+        var table;
         $(document).ready(function() {
-            var table = $('#users-table').DataTable({
+            table = $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: '{{ route('users.data') }}',
@@ -88,15 +92,34 @@
                         data: 'email',
                         name: 'email'
                     },
-                    // Add other fields as needed
+                    {
+                        data: 'role',
+                        name: 'role'
+                    },
+                    {
+                        data: null,
+                        orderable: false,
+                        searchable: false,
+                        render: function(data, type, row) {
+                            return `
+                        <button onclick="editUser(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
+                        <button onclick="deleteUser(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
+                        <button onclick="blockUser(${row.id})" class="icon-button common-color"><i class="fa fa-user-times"></i></button>
+                    `;
+                        }
+
+                    },
                 ],
-                order: [[0, 'desc']],
+                order: [
+                    [0, 'desc']
+                ],
                 select: true,
                 dom: 'lBfrtip',
                 buttons: [
                     'copy', 'csv', 'excel', 'pdf', 'print'
                 ]
             });
+
 
 
             $('#deleteButton').click(function() {
@@ -126,5 +149,44 @@
                 }
             });
         });
+
+        function editUser(id) {
+            console.log("inside");
+            // Redirect to the user edit page or open a modal for editing
+            window.location.href = '/user/edit/' + id;
+        }
+
+
+
+        function deleteUser(id) {
+            // Send an AJAX request to delete the user
+            if (confirm('Are you sure you want to delete this user?')) {
+                $.ajax({
+                    url: '/user/delete/' + id,
+                    type: 'DELETE',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                    },
+                    success: function(result) {
+                        table.ajax.reload(); // Reload the DataTable
+                    }
+                });
+            }
+        }
+
+        function blockUser(id) {
+            // Send an AJAX request to block the user
+            $.ajax({
+                url: '/user/block/' + id,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    is_blocked: true, // Assuming you have an 'is_blocked' attribute
+                },
+                success: function(result) {
+                    table.ajax.reload(); // Reload the DataTable
+                }
+            });
+        }
     </script>
 @endsection

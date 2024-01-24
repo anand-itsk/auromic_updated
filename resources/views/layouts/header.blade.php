@@ -6,8 +6,8 @@
             <div class="logo">
                 <!-- Image Logo -->
                 <a href="index.html" class="logo">
-                    <img src="assets/images/logo-sm.png" alt="" height="32" class="logo-small">
-                    <img src="assets/images/logo.png" alt="" height="20" class="logo-large">
+                    <img src="{{ asset('assets/images/logo-sm.png') }}" alt="" height="32" class="logo-small">
+                    <img src="{{ asset('assets/images/logo.png') }}" alt="" height="20" class="logo-large">
                 </a>
 
             </div>
@@ -155,7 +155,7 @@
                     <li class="list-inline-item dropdown notification-list">
                         <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown"
                             href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                            <img src="assets/images/users/user-1.jpg" alt="user" class="rounded-circle">
+                            <img src="{{ asset('assets/images/users/user-1.jpg')  }}" alt="user" class="rounded-circle">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown ">
                             <a class="dropdown-item" href="#"><i

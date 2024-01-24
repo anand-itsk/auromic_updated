@@ -38,9 +38,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/user-create', [UserController::class, 'create'])->name('user.create');
     Route::post('/user-store', [UserController::class, 'store'])->name('user.store');
-    Route::get('/user-edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+    Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
     Route::post('/user-update/{id}', [UserController::class, 'update'])->name('user.update');
-    Route::delete('/user-delete/{id}',  [UserController::class, 'delete'])->name('user.delete');
+    Route::delete('/user/delete/{id}',  [UserController::class, 'destroy'])->name('user.delete');
     Route::post('/select-user-delete', [UserController::class, 'deleteSelected']);
     Route::get('/import-users-page', [UserController::class, 'importUserPage'])->name('import.users.page');
     Route::post('/import-users', [UserController::class, 'importUsers'])->name('import.users');
