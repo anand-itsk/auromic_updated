@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('lic_infos', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('employee_id');
+            $table->string('policy_no')->nullable();
+            $table->string('policy_term')->nullable();
+            $table->string('lic_id')->nullable();
+            $table->date('annual_renewable_date')->nullable();
             $table->timestamps();
+            $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
+
         });
     }
 

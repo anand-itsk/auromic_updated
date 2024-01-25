@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('pf_infos', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('company_id');
+            $table->boolean('pf_applicable')->default(0);
+            $table->date('pf_joining_date');
+            $table->string('pf_no');
+            $table->date('pf_last_date');
+            $table->date('pension_joining_date');
+            $table->boolean('pension_applicable')->default(0);
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->timestamps();
         });
     }
