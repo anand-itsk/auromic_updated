@@ -15,6 +15,11 @@ class UserTableSeeder extends Seeder
     {
         User::factory()->count(10000)->create();
 
+        User::factory()->create([
+            'name' => 'developer',
+            'email' => 'developer@syscorp.in',
+        ]);
+
         //     DB::table('users')->delete();
         //     echo '---------------------------------------' . "\n";
         //     echo '--------User Seeding-------' . "\n";
