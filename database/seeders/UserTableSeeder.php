@@ -14,11 +14,9 @@ class UserTableSeeder extends Seeder
     public function run(): void
     {
         User::factory()->count(10000)->create();
-
         //     DB::table('users')->delete();
         //     echo '---------------------------------------' . "\n";
         //     echo '--------User Seeding-------' . "\n";
-
         //     $datas = [
         //         [
         //             'name' => 'Developer',
