@@ -19,11 +19,9 @@ class UserTableSeeder extends Seeder
             'name' => 'developer',
             'email' => 'developer@syscorp.in',
         ]);
-
         //     DB::table('users')->delete();
         //     echo '---------------------------------------' . "\n";
         //     echo '--------User Seeding-------' . "\n";
-
         //     $datas = [
         //         [
         //             'name' => 'Developer',
