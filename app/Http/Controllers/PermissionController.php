@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PermissionGroup;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -12,7 +14,7 @@ class PermissionController extends Controller
     {
         // $permission = Permission::get();
         $all_roles = Role::orderBy('id', 'DESC')->get();
-        dd($all_roles);
+        // dd($all_roles);
         return view('settings.masters.permission.index', compact('all_roles'));
     }
 
@@ -44,33 +46,36 @@ class PermissionController extends Controller
         return back()->with('failure', 'Please try again');
     }
 
-    public function edit(string $id)
+    public function edit($id)
     {
-        $permission = Permission::find($id);
-
-        return view('Master.usermanagement.permission.edit', compact('permission'));
+        $role = Role::find($id);
+        $permissionGroups = PermissionGroup::with('permissions')->get();
+        $permission = Permission::get();
+        $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id", $id)
+            ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
+            ->all();
+        // dd($rolePermissions);
+        return view('settings.masters.permission.edit', compact('role', 'permission', 'rolePermissions', 'permissionGroups'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|regex:/^[A-Za-z ]+$/',
-
+        // dd($request);
+        $this->validate($request, [
+            'name' => 'required',
+            'permission' => 'required',
         ]);
 
-        $input = [
-            'name' => $request['name'],
-        ];
+        $role = Role::find($id);
+        $role->name = $request->input('name');
+        $role->save();
 
-        $permission = Permission::find($id);
-        $permission->update($input);
+        $permissionIds = $request->input('permission'); // assuming this is an array of IDs
+        $permissions = Permission::whereIn('id', $permissionIds)->pluck('name');
+        $role->syncPermissions($permissions);
 
-        if ($permission) {
-            return redirect()->route('permission.index')
-                ->with('success', 'Permission updated successfully');
-        }
-
-        return back()->with('failure', 'Please try again');
+        return redirect()->route('permissions')
+            ->with('success', 'Role & Permission updated successfully');
     }
 
     public function delete(string $id)
