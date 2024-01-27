@@ -1,170 +1,129 @@
-<!doctype html>
-<html lang="en">
+@extends('layouts.app')
+<!-- DataTables CSS -->
+{{-- @include('links.css.datatable.datatable-css') --}}
+@section('content')
+    <link href="assets/plugins/dropzone/dist/dropzone.css" rel="stylesheet" type="text/css">
 
-<head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!--favicon-->
-	<link rel="icon" href="{{asset('assets/images/favicon-32x32.png')}}" type="image/png" />
-
-	@include('layouts.user_link')
-	<title>SikanderPlayX - Portal</title>
-</head>
-
-<body class="bg-theme bg-theme2">
-	<!--wrapper-->
-	<div class="wrapper">
-		@include('layouts.sidebar')
-	  <!--start header -->
-      @include('layouts.header')
-      <!--end header -->
-		<!--start page wrapper -->
-
-        <!--start page wrapper -->
-        <div class="page-wrapper">
-          <div class="page-content">
-
-
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content bg-white">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5 text-black" id="exampleModalLabel">Profile Details</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body bg-black">
-              <ul class="list-group list-group-flush">
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                      <h6 class="mb-0">User Name</h6>
-                      <span class="text-white">Kamal Durai</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                      <h6 class="mb-0">Mobile No</h6>
-                      <span class="text-white">1234567890</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                      <h6 class="mb-0">Platform Paying</h6>
-                      <span class="text-white">@Sikander</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                      <h6 class="mb-0">Account Id</h6>
-                      <span class="text-white">#23333334</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                      <h6 class="mb-0">User Id</h6>
-                      <span class="text-white">1234</span>
-                  </li>
-              </ul>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Deposite</button>
-            <button type="button" class="btn btn-primary">Withdraw</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- end -->
-          <div class="row justify-content-between align-items-center">
-              <div class="col-md-4">
-              <h6 class="mb-0 text-uppercase">Edit Permission</h6>
-              </div>
-
-
-          </div>
-
-            <hr />
-            <div class="card">
-              <div class="card-body">
-                <form  class="row g-3" method="POST" action="{{route('permission.update',$permission->id)}}">
-                    @csrf
-                    <div class="col-md-12">
-                        <label for="inputFirstName" class="form-label">Permission Name</label>
-                        <input type="text" name="name" class="form-control"  value="{{$permission->name}}">
-                      </div>
-
-                      <div class="col-12">
-                        <button type="submit" class="btn btn-light px-5">
-                          Update
-                        </button>
-                        <button type="reset" class="btn btn-light px-5">
-                          Cancel
-                      </button>
+    <div class="wrapper">
+        <div class="container-fluid">
+            <!-- Page-Title -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="btn-group float-right">
+                            <ol class="breadcrumb hide-phone p-0 m-0">
+                                <li class="breadcrumb-item"><a href="#">Aurmics</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('users') }}">Users</a></li>
+                                <li class="breadcrumb-item"><a href="#">Import</a></li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">Create User</h4>
                     </div>
-                    </form>
-              </div>
+                </div>
             </div>
-          </div>
+            <!-- end page title end breadcrumb -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card m-b-30">
+                        <div class="card-body">
+                            <div class="m-b-30">
+                                <form class="row g-3" method="POST" action="{{ route('permission.update', $role->id) }}">
+                                    @csrf
+                                    <div class="col-md-12">
+                                        <label for="inputFirstName" class="form-label">Role Name</label>
+                                        <input type="text" name="name" class="form-control"
+                                            value="{{ $role->name }}">
+                                    </div>
+                                    <div class="col-md-12">
+                                        {{-- <hr /> --}}
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <table class="table table-bordered mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Module</th>
+                                                            <th scope="col">Permission</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($permissionGroups as $permissionGroup)
+                                                            <tr>
+                                                                <td>{{ $permissionGroup->name }}</td>
+                                                                <td>
+                                                                    @if ($permissionGroup->permissions->count())
+                                                                        @php
+                                                                            $permission = Spatie\Permission\Models\Permission::where('permission_group_id', $permissionGroup->id)->get();
+                                                                        @endphp
+                                                                        @foreach ($permission as $key => $value)
+                                                                            <div class="ml-3 d-flex flex-wrap">
+                                                                                <label>
+                                                                                    <input class="form-check-input"
+                                                                                        name="permission[]" type="checkbox"
+                                                                                        value="{{ $value->id }}"
+                                                                                        {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}
+                                                                                        id="invalidCheck">
+                                                                                    {{ $value->name }}</label>
+                                                                            </div>
+                                                                        @endforeach
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                    {{-- <tbody>
+                                                        @if ($permissionGroups->count())
+                                                            @foreach ($permissionGroups as $permissionGroup)
+                                                                <tr>
+                                                                    <td width="20%">{{ $permissionGroup->name }}</td>
+                                                                    <td>
+                                                                        <div class="row">
+                                                                            @if ($permissionGroup->permissions->count())
+                                                                                @php
+                                                                                    $permission = Spatie\Permission\Models\Permission::where('permission_group_id', $permissionGroup->id)->get();
+                                                                                @endphp
+                                                                                @foreach ($permission as $key => $value)
+                                                                                    <div class="d-flex flex-wrap">
+                                                                                        <label>
+                                                                                            <input class="form-check-input"
+                                                                                                name="permission[]"
+                                                                                                type="checkbox"
+                                                                                                value="{{ $value->id }}"
+                                                                                                {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}
+                                                                                                id="invalidCheck">
+                                                                                            {{ $value->name }}</label>
+                                                                                    </div>
+                                                                                @endforeach
+                                                                            @endif
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                    </tbody> --}}
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-light px-5">
+                                            Update
+                                        </button>
+                                        <button type="reset" class="btn btn-light px-5">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!--end page wrapper -->
-
-
-
-
-		<!--end page wrapper -->
-		<!--start overlay-->
-		<div class="overlay toggle-icon"></div>
-		<!--end overlay-->
-		<!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
-		<!--End Back To Top Button-->
-		{{--  @include('layouts.footer')  --}}
-	</div>
-	<!--end wrapper-->
-	<!--start switcher-->
-	<div class="switcher-wrapper">
-		<div class="switcher-btn"> <i class='bx bx-cog bx-spin'></i>
-		</div>
-		<div class="switcher-body">
-			<div class="d-flex align-items-center">
-				<h5 class="mb-0 text-uppercase">Theme Customizer</h5>
-				<button type="button" class="btn-close ms-auto close-switcher" aria-label="Close"></button>
-			</div>
-			<hr/>
-			<p class="mb-0">Gaussian Texture</p>
-			<hr>
-			<ul class="switcher">
-				<li id="theme1"></li>
-				<li id="theme2"></li>
-				<li id="theme3"></li>
-				<li id="theme4"></li>
-				<li id="theme5"></li>
-				<li id="theme6"></li>
-			</ul>
-			<hr>
-			<p class="mb-0">Gradient Background</p>
-			<hr>
-			<ul class="switcher">
-				<li id="theme7"></li>
-				<li id="theme8"></li>
-				<li id="theme9"></li>
-				<li id="theme10"></li>
-				<li id="theme11"></li>
-				<li id="theme12"></li>
-				<li id="theme13"></li>
-				<li id="theme14"></li>
-				<li id="theme15"></li>
-			  </ul>
-		</div>
-	</div>
-	<!--end switcher-->
-
-    @include('layouts.user_script')
-
-	<script>
-		$(document).ready(function() {
-			$('#Transaction-History').DataTable({
-				lengthMenu: [[6, 10, 20, -1], [6, 10, 20, 'Todos']]
-			});
-		  } );
-	</script>
-	<script src="assets/js/index.js"></script>
-	<script>
-		new PerfectScrollbar('.product-list');
-		new PerfectScrollbar('.customers-list');
-	</script>
-</body>
-
-</html>
+    </div>
+    <!-- DataTables JS -->
+    @include('links.js.datatable.datatable-js')
+    <script src="assets/plugins/dropzone/dist/dropzone.js"></script>
+@endsection

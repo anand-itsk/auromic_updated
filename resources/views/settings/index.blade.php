@@ -23,8 +23,8 @@
                                 <div class="card-body">
                                     <h4 class="mt-0 header-title"> User Management</h4>
                                     <a class="text-muted m-b-0 font-14" href="{{ route('users') }}">Users</a>
-                                    <br>
-                                    <a class="text-muted m-b-0 font-14" href="{{ route('roles') }}">Roles</a>
+                                    {{-- <br>
+                                    <a class="text-muted m-b-0 font-14" href="{{ route('roles') }}">Roles</a> --}}
                                     <br>
                                     <a class="text-muted m-b-0 font-14" href="{{ route('permissions') }}">Permissions</a>
                                 </div>

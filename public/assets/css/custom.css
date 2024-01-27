@@ -3,6 +3,15 @@ button.icon-button {
     border: none;
     font-size: 18px;
 }
+a.icon-link {
+    background: none;
+    border: none;
+    font-size: 18px;
+}
+
+a.icon-link:hover {
+    color:#508aeb;
+}
 
 .delete-color{
     color:rgb(252, 31, 31)
@@ -26,3 +35,6 @@ button.icon-button {
     color: #508aeb;
 }
 
+div.dt-buttons{
+    padding-left: 15px;
+}

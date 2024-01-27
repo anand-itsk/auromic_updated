@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('office_address')->nullable();
             $table->unsignedBigInteger('state_id');
             $table->integer('pincode')->nullable();
-            $table->string('area_code')->nullable();
+            $table->string('std_code')->nullable();
             $table->string('phone_number')->nullable();
             $table->date('starting_date')->nullable();
             $table->string('business_nature')->nullable();
