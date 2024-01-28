@@ -1,1 +1,1 @@
-<link href="assets/css/custom.css" rel="stylesheet" type="text/css">
+<link href="{{ asset('assets/css/custom.css')}}" rel="stylesheet" type="text/css">

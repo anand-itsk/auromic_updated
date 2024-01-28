@@ -18,4 +18,9 @@ class Address extends Model
         'village_area',
         'address_type_id',
     ];
+
+    public function addressable()
+    {
+        return $this->morphTo();
+    }
 }

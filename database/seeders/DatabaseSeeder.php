@@ -22,13 +22,17 @@ class DatabaseSeeder extends Seeder
             PermissionGroupTableSeeder::class,
             PermissionTableSeeder::class,
             RoleTableSeeder::class,
+            ResigningReasonTableSeeder::class,
+            AddressTypeTableSeeder::class,
             UserTableSeeder::class,
             CompanyTypeTableSeeder::class,
             CompanyTableSeeder::class,
             CompanyHierarchieTableSeeder::class,
             CompanyRegistrationDetailTableSeeder::class,
             BankDetailTableSeeder::class,
-            CompanyBankDetailTableSeeder::class
+            CompanyBankDetailTableSeeder::class,
+            CustomerTableSeeder::class,
+            EmployeeTableSeeder::class
         ]);
     }
 }
