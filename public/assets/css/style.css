@@ -3224,3 +3224,8 @@ File: Responsive
 .justify-content-evenly{
   justify-content: space-evenly;
 }
+
+.mandatory::after {
+  content: " *"; /* Space before asterisk for separation */
+  color: red;
+}

@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\MasterSetting;
 use App\Http\Controllers\PageControllers\MasterCompanyController;
+use App\Http\Controllers\PageControllers\MasterControllers\CustomerController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -56,6 +58,29 @@ Route::middleware(['auth'])->group(function () {
 
     //Pages
     Route::get('/master-companies', [MasterCompanyController::class, 'index'])->name('master-companies');
+
+
+
+
+
+    // Master > Customer
+    Route::prefix('master/customers')->name('master.customers.')->group(function () {
+        Route::get('/', [CustomerController::class, 'index'])->name('index');
+        Route::get('/data', [CustomerController::class, 'customersData'])->name('data');
+
+        Route::get('/create', [CustomerController::class, 'create'])->name('create');
+        Route::post('/store', [CustomerController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [CustomerController::class, 'edit'])->name('edit');
+        Route::post('/update/{id}', [CustomerController::class, 'update'])->name('update');
+        Route::delete('/user/delete/{id}',  [UserController::class, 'destroy'])->name('user.delete');
+        Route::post('/select-user-delete', [UserController::class, 'deleteSelected']);
+        Route::get('/import-users-page', [UserController::class, 'importUserPage'])->name('import.users.page');
+        Route::post('/import-users', [UserController::class, 'importUsers'])->name('import.users');
+    });
+
+    //Data Fetch
+    Route::get('/get-states/{countryId}', [AddressController::class, 'getStates'])->name('get-states');
+    Route::get('/get-districts/{stateId}', [AddressController::class, 'getDistricts'])->name('get-districts');
 });
 
 //Reoptimized class loader:

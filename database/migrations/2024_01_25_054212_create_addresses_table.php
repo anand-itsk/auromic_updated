@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->text('address')->nullable();
-            $table->unsignedBigInteger('state_id');
-            $table->unsignedBigInteger('country_id');
-            $table->unsignedBigInteger('district_id');
+            $table->unsignedBigInteger('state_id')->default(1);
+            $table->unsignedBigInteger('country_id')->default(1);
+            $table->unsignedBigInteger('district_id')->default(1);
             $table->string('pincode')->nullable();
             $table->string('village_area')->nullable();
-            $table->unsignedBigInteger('address_type_id');
+            $table->unsignedBigInteger('address_type_id')->default(1);
             $table->morphs('addressable');
             $table->timestamps();
 

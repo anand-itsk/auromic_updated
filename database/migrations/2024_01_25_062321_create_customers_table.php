@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('std_code')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
-            $table->string('mobile')->nullabel();
+            $table->string('mobile')->nullable();
             $table->string('tin_no')->nullable();
             $table->string('tin_date')->nullable();
             $table->string('cst_no')->nullable();
