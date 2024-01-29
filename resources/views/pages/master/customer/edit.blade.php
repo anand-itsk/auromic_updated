@@ -27,7 +27,7 @@
                     <div class="card m-b-30">
                         <div class="card-body">
                             <div class="m-b-30">
-                                <form action="{{ route('master.customers.store') }}" method="POST"
+                                <form action="{{ route('master.customers.update', $customer->id) }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group row">
@@ -59,8 +59,7 @@
                                         @endphp
                                         <label for="office_address" class="col-sm-2 col-form-label">Office Address</label>
                                         <div class="col-sm-10 mb-4">
-                                            <textarea class="form-control" name="office_address" id="office_address" cols="10" rows="3">{{ $officeAddress->address ?? '' }}
-                                            </textarea>
+                                            <textarea class="form-control" name="office_address" id="office_address" cols="10" rows="3">{{ $officeAddress->address ?? '' }}</textarea>
                                             @error('office_address')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -72,7 +71,7 @@
                                                 id="office_country_id">
                                                 @foreach ($countries as $item)
                                                     <option value="{{ $item->id }}"
-                                                        {{ $officeAddress->country_id == $item->id ? 'selected' : '' }}>
+                                                        {{ $officeAddress && $officeAddress->country_id == $item->id ? 'selected' : '' }}>
                                                         {{ $item->name }}</option>
                                                 @endforeach
                                             </select>
@@ -211,6 +210,17 @@
                                             @error('cst_date')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="d-flex justify-content-evenly">
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                                Submit
+                                            </button>
+                                            <button type="cancel" class="btn btn-secondary waves-effect m-l-5">
+                                                Cancel
+                                            </button>
                                         </div>
                                     </div>
                                 </form>
