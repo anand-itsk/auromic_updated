@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\PageControllers\MasterControllers;
 
+use App\Exports\CustomersExport;
 use App\Http\Controllers\Controller;
+use App\Imports\CustomerDataImport;
 use App\Models\Address;
 use App\Models\AddressType;
 use App\Models\Country;
@@ -10,6 +12,7 @@ use App\Models\Customer;
 use App\Models\State;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 
 class CustomerController extends Controller
@@ -151,12 +154,20 @@ class CustomerController extends Controller
         return redirect()->route('master.customers.index')
             ->with('success', 'Customer updated successfully');
     }
+    // Show
+    public function showDetails($id)
+    {
+        $customer = Customer::with('addresses')->findOrFail($id);
+        // Return a view or data with user details
+        return response()->json($customer);
+    }
+    // Delete
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
+        $user = Customer::findOrFail($id);
         $user->delete();
 
-        return response()->json(['success' => 'User deleted successfully']);
+        return response()->json(['success' => 'Customer deleted successfully']);
     }
 
     public function block($id)
@@ -177,23 +188,25 @@ class CustomerController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Invalid input'], 400);
         }
 
-        User::destroy($ids);
+        Customer::destroy($ids);
         return response()->json(['status' => 'success']);
     }
-    // Import User page
-    public function importUserPage()
-    {
-        return view('settings.masters.users.import');
-    }
+
     // Import Users
-    public function importUsers(Request $request)
+    public function import(Request $request)
     {
         $request->validate([
             'file' => 'required|file|mimes:xlsx,csv'
         ]);
 
-        Excel::import(new UserDataImport, request()->file('file'));
+        Excel::import(new CustomerDataImport, request()->file('file'));
 
-        return redirect()->route('users')->with('success', 'Data imported successfully');
+        return redirect()->route('master.customers.index')->with('success', 'Data imported successfully');
+    }
+
+    // Import Users
+    public function export(Request $request)
+    {
+        return Excel::download(new CustomersExport($request->all()), 'CustomerDatas_' . date('d-m-Y') . '.xlsx');
     }
 }

@@ -241,7 +241,7 @@
                         <ul class="submenu megamenu">
                             <li>
                                 <ul>
-                                    <li><a href="{{route('master.customers.index')}}">Customer</a></li>
+                                    <li><a href="{{route('master.customers.index')}}">Customers</a></li>
                                     {{-- <li><a href="ui-badge.html">Raw Material</a></li>
                                     <li><a href="ui-dropdowns.html">Size</a></li>
                                     <li><a href="ui-tabs-accordions.html">Colour</a></li>
@@ -250,7 +250,7 @@
                             </li>
                             <li>
                                 <ul>
-                                    <li><a href="ui-buttons.html">Employee</a></li>
+                                    <li><a href="ui-buttons.html">Employees</a></li>
                                     {{-- <li><a href="ui-cards.html">Product Model</a></li>
                                     <li><a href="ui-modals.html">Product</a></li>
                                     <li><a href="ui-progressbars.html">Finishing Product</a></li>
