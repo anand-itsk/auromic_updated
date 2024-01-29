@@ -155,12 +155,13 @@
                     <li class="list-inline-item dropdown notification-list">
                         <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown"
                             href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                            <img src="{{ asset('assets/images/users/user-1.jpg')  }}" alt="user" class="rounded-circle">
+                            <img src="{{ asset('assets/images/users/user-1.jpg') }}" alt="user"
+                                class="rounded-circle">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown ">
                             <a class="dropdown-item" href="#"><i
                                     class="mdi mdi-account-circle m-r-5 text-muted"></i> Profile</a>
-                            <a class="dropdown-item" href="{{route('master.settings')}}"><i
+                            <a class="dropdown-item" href="{{ route('master.settings') }}"><i
                                     class="mdi mdi-settings m-r-5 text-muted"></i> Settings</a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
@@ -229,9 +230,35 @@
                                 </ul>
                             </li>
 
+
+
                         </ul>
                     </li>
 
+                    {{-- Master --}}
+                    <li class="has-submenu">
+                        <a href="#"><i class="dripicons-briefcase"></i>Master</a>
+                        <ul class="submenu megamenu">
+                            <li>
+                                <ul>
+                                    <li><a href="{{route('master.customers.index')}}">Customer</a></li>
+                                    {{-- <li><a href="ui-badge.html">Raw Material</a></li>
+                                    <li><a href="ui-dropdowns.html">Size</a></li>
+                                    <li><a href="ui-tabs-accordions.html">Colour</a></li>
+                                    <li><a href="ui-progressbars.html">Finishing Product</a></li> --}}
+                                </ul>
+                            </li>
+                            <li>
+                                <ul>
+                                    <li><a href="ui-buttons.html">Employee</a></li>
+                                    {{-- <li><a href="ui-cards.html">Product Model</a></li>
+                                    <li><a href="ui-modals.html">Product</a></li>
+                                    <li><a href="ui-progressbars.html">Finishing Product</a></li>
+                                    <li><a href="ui-navs.html">Incentive </a></li> --}}
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
                 <!-- End navigation menu -->
             </div> <!-- end #navigation -->
