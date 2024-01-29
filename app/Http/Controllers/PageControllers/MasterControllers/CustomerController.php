@@ -89,7 +89,7 @@ class CustomerController extends Controller
         }
 
         return redirect()->route('master.customers.index')
-            ->with('success', 'User created successfully');
+            ->with('success', 'Customer created successfully');
     }
     // Edit
     public function edit(Address $address, $id)
@@ -101,32 +101,55 @@ class CustomerController extends Controller
         // dd($customer);
         return view('pages.master.customer.edit', compact('customer', 'user', 'countries', 'address'));
     }
-    // Updata
+    // Update
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $id,
-            'password' => 'confirmed',
-            'role' => 'required',
-
+        $validatedData = $request->validate([
+            'customer_code' => 'required|max:255',
+            'customer_name' => 'required|max:255',
+            'std_code' => 'required_with:phone'
         ]);
 
         $input = $request->all();
-        if (!empty($input['password'])) {
-            $input['password'] = Hash::make($input['password']);
-        } else {
-            $input = Arr::except($input, array('password'));
-        }
-        $user = User::with('roles')->find($id);
-        $user->update($input);
-        $user->syncRoles($input['role']);
-        if ($user) {
-            return redirect()->route('users')
-                ->with('success', 'User updated successfully');
+        $customer = Customer::findOrFail($id);
+
+        $customer->customer_code = $input['customer_code'];
+        $customer->customer_name = $input['customer_name'];
+        $customer->std_code = $input['std_code'];
+        $customer->phone = $input['phone'];
+        $customer->email = $input['email'];
+        $customer->mobile = $input['mobile'];
+        $customer->tin_no = $input['tin_no'];
+        $customer->tin_date = $input['tin_date'];
+        $customer->cst_no = $input['cst_no'];
+        $customer->cst_date = $input['cst_date'];
+
+        $customer->save();
+
+        // Handle office address update
+        if ($input['office_address'] || $input['office_country_id'] != "1" || $input['office_pincode']) {
+            $officeAddress = $customer->addresses()->where('address_type_id', 2)->first() ?: new Address();
+            $officeAddress->address_type_id = 2;
+            $officeAddress->address = $input['office_address'];
+            $officeAddress->country_id = $input['office_country_id'];
+            $officeAddress->state_id = $input['office_state_id'] ?? 1;
+            $officeAddress->pincode = $input['office_pincode'];
+            $customer->addresses()->save($officeAddress);
         }
 
-        return back()->with('failure', 'Please try again');
+        // Handle home address update
+        if ($input['address'] || $input['country_id'] != "1" || $input['pincode']) {
+            $homeAddress = $customer->addresses()->where('address_type_id', 3)->first() ?: new Address();
+            $homeAddress->address_type_id = 3;
+            $homeAddress->address = $input['address'];
+            $homeAddress->country_id = $input['country_id'];
+            $homeAddress->state_id = $input['state_id'] ?? 1;
+            $homeAddress->pincode = $input['pincode'];
+            $customer->addresses()->save($homeAddress);
+        }
+
+        return redirect()->route('master.customers.index')
+            ->with('success', 'Customer updated successfully');
     }
     public function destroy($id)
     {
