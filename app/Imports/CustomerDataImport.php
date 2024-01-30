@@ -15,6 +15,7 @@ class CustomerDataImport implements ToCollection, WithHeadingRow
      */
     public function collection(Collection $collection)
     {
+        
 
         foreach ($collection as $row) {
             // Check if user with the same email already exists
@@ -27,8 +28,8 @@ class CustomerDataImport implements ToCollection, WithHeadingRow
             Customer::create([
                 'customer_code' => $row['customer_code'],
                 'customer_name' => $row['customer_name'],
-                // 'created_by' => auth()->id() ?? 1,
-                // 'updated_by' => auth()->id() ?? 1
+                'created_by' => auth()->id() ?? 1,
+                'updated_by' => auth()->id() ?? 1
             ]);
         }
     }

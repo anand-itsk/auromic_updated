@@ -19,6 +19,8 @@ class CustomerTableSeeder extends Seeder
         Customer::factory()->create([
             'customer_code' => 'C001',
             'customer_name' => 'Varun',
+            'created_by' => 1,
+            'updated_by' => 1
         ]);
         // DB::table('customers')->delete();
 

@@ -159,7 +159,8 @@ class CustomerController extends Controller
     {
         $customer = Customer::with('addresses')->findOrFail($id);
         // Return a view or data with user details
-        return response()->json($customer);
+        // return response()->json($customer);
+        return view('pages.master.customer.show', compact('customer'));
     }
     // Delete
     public function destroy($id)
