@@ -25,6 +25,10 @@ return new class extends Migration
             $table->string('cst_date')->nullable();
             $table->string('license_no')->nullable();
             $table->string('website')->nullable();
+            $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('updated_by');
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

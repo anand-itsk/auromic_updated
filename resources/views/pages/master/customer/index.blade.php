@@ -116,22 +116,51 @@
             <!-- Modal -->
             <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel"
                 aria-hidden="true">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="detailsModalLabel">User Details</h5>
+                            <h5 class="modal-title" id="detailsModalLabel">Customer Details</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <!-- User details will go here -->
-                            <div id="userDetailsContent">
-                                <!-- Content will be loaded dynamically -->
+                            <div id="customerDetailsContent">
+                                <!-- Content loaded via AJAX -->
                             </div>
                         </div>
+
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                            <div class="row w-100">
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <span class="font-weight-bold mr-2">Created By</span>
+                                            <span>Varun</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="font-weight-bold mr-2">Created On</span>
+                                            <span>11/12/2024 11:30 PM</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 ">
+                                            <span class="font-weight-bold mr-2">Updated By</span>
+                                            <span>Sharan</span>
+                                        </div>
+                                        <div class="col-md-6 ">
+                                            <span class="font-weight-bold mr-2">Updated On</span>
+                                            <span>15/12/2024 10:30 AM</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -255,9 +284,7 @@
                 type: 'GET',
                 success: function(response) {
                     console.log(response);
-                    // Populate the modal with user details
-                    $('#userDetailsContent').html(response);
-                    // Show the modal
+                    $('#customerDetailsContent').html(response);
                     $('#detailsModal').modal('show');
                 }
             });

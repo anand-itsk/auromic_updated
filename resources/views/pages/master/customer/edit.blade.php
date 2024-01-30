@@ -122,7 +122,7 @@
                                         @endphp
                                         <label for="address" class="col-sm-2 col-form-label">Address</label>
                                         <div class="col-sm-10 mb-4">
-                                            <textarea class="form-control" name="address" id="address" cols="10" rows="3">{{ $address->address }}</textarea>
+                                            <textarea class="form-control" name="address" id="address" cols="10" rows="3">{{ $address->address ?? '' }}</textarea>
                                             @error('address')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -154,7 +154,7 @@
                                         <label for="pincode" class="col-sm-2 col-form-label">Pincode</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="pincode" id="pincode"
-                                                value="{{ $address->pincode }}">
+                                                value="{{ $address->pincode ?? '' }}">
                                             @error('pincode')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -163,7 +163,7 @@
                                         <label for="phone_no" class="col-sm-2 col-form-label">Mobile</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="mobile" id="mobile"
-                                                value="{{ $customer->mobile }}">
+                                                value="{{ $customer->mobile ?? '' }}">
                                             @error('mobile')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -176,7 +176,7 @@
                                         <label for="email" class="col-sm-2 col-form-label">Email Id</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="email" name="email" id="email"
-                                                value="{{ $customer->email }}">
+                                                value="{{ $customer->email ?? '' }}">
                                             @error('email')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -184,7 +184,7 @@
                                         <label for="website" class="col-sm-2 col-form-label">Website</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="website" id="website"
-                                                value="{{ $customer->website }}">
+                                                value="{{ $customer->website ?? '' }}">
                                             @error('website')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -193,7 +193,7 @@
                                         <label for="tin_no" class="col-sm-2 col-form-label">TIN No</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="tin_no" id="tin_no"
-                                                value="{{ $customer->tin_no }}">
+                                                value="{{ $customer->tin_no ?? '' }}">
                                             @error('tin_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror

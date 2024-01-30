@@ -21,6 +21,8 @@ class CustomerFactory extends Factory
         return [
             'customer_code' => fake()->name(),
             'customer_name' => Str::random(10),
+            'created_by' => mt_rand(1, 10),
+            'updated_by' => mt_rand(1, 10)
         ];
     }
 }
