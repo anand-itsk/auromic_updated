@@ -34,9 +34,6 @@
                 </div>
             </div>
             <!-- end page title end breadcrumb -->
-
-
-            <!-- end row -->
         </div> <!-- end container -->
     </div>
 @endsection
