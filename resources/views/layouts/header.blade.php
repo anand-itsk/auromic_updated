@@ -213,13 +213,13 @@
                         <a href="#"><i class="dripicons-view-thumb"></i>Profile</a>
                         <ul class="submenu">
                             <li>
-                                <a href="calendar.html">Master Company</a>
+                                <a href="{{ route('profile.masters.index')}}">Master Company</a>
                             </li>
                             <li>
-                                <a href="calendar.html">Client Company</a>
+                                <a href="{{ route('profile.clients.index')}}">Client Company</a>
                             </li>
                             <li>
-                                <a href="calendar.html">Sub-client Company</a>
+                                <a href="{{ route('profile.sub_clients.index')}}">Sub-client Company</a>
                             </li>
                             <li class="has-submenu">
                                 <a href="#">Bank Details</a>
@@ -241,7 +241,7 @@
                         <ul class="submenu megamenu">
                             <li>
                                 <ul>
-                                    <li><a href="{{route('master.customers.index')}}">Customer</a></li>
+                                    <li><a href="{{route('master.customers.index')}}">Customers</a></li>
                                     {{-- <li><a href="ui-badge.html">Raw Material</a></li>
                                     <li><a href="ui-dropdowns.html">Size</a></li>
                                     <li><a href="ui-tabs-accordions.html">Colour</a></li>
@@ -250,7 +250,7 @@
                             </li>
                             <li>
                                 <ul>
-                                    <li><a href="ui-buttons.html">Employee</a></li>
+                                    <li><a href="ui-buttons.html">Employees</a></li>
                                     {{-- <li><a href="ui-cards.html">Product Model</a></li>
                                     <li><a href="ui-modals.html">Product</a></li>
                                     <li><a href="ui-progressbars.html">Finishing Product</a></li>

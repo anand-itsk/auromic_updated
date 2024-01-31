@@ -12,12 +12,12 @@
                     <div class="page-title-box">
                         <div class="btn-group float-right">
                             <ol class="breadcrumb hide-phone p-0 m-0">
-                                <li class="breadcrumb-item"><a href="#">Aurmics</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('users') }}">Users</a></li>
-                                <li class="breadcrumb-item"><a href="#">Import</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Auromics</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('master.customers.index') }}">Customer</a></li>
+                                <li class="breadcrumb-item">Create</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Create Customer</h4>
+                        <h4 class="page-title">Create Master Company</h4>
                     </div>
                 </div>
             </div>
@@ -159,7 +159,6 @@
                                         </div>
                                     </div>
                                     {{-- Other Details --}}
-
                                     <div class="form-group row">
 
                                         <label for="email" class="col-sm-2 col-form-label">Email Id</label>
@@ -209,26 +208,29 @@
                                             @enderror
                                         </div>
                                     </div>
+
+
+
+                                    <div class="form-group">
+                                        <div class="d-flex justify-content-evenly">
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                                Submit
+                                            </button>
+                                            <a href="{{ route('master.customers.create') }}"
+                                                class="btn btn-warning waves-effect waves-light">
+                                                Reset
+                                            </a>
+                                            <a href="{{ route('master.customers.index') }}"
+                                                class="btn btn-secondary waves-effect m-l-5">
+                                                Cancel
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </form>
+
                             </div>
-
                         </div>
-
-
-                        <div class="form-group">
-                            <div class="d-flex justify-content-evenly">
-                                <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                    Submit
-                                </button>
-                                <button type="reset" class="btn btn-warning waves-effect waves-light">
-                                    Reset
-                                </button>
-                                <button type="cancel" class="btn btn-secondary waves-effect m-l-5">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-
-                        </form>
                     </div>
                 </div>
             </div>

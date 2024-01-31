@@ -11,9 +11,9 @@
                     <div class="page-title-box">
                         <div class="btn-group float-right">
                             <ol class="breadcrumb hide-phone p-0 m-0">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Aurmics</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('users') }}">Users</a></li>
-                                <li class="breadcrumb-item"><a href="#">Import</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Auromics</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('master.customers.index') }}">Customer</a></li>
+                                <li class="breadcrumb-item">Edit</li>
                             </ol>
                         </div>
                         <h4 class="page-title">Edit User</h4>
@@ -93,7 +93,7 @@
                                         <label for="office_pincode" class="col-sm-2 col-form-label">Pincode</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="office_pincode"
-                                                id="office_pincode">
+                                                id="office_pincode" value="{{ $officeAddress->pincode ?? '' }}">
                                             @error('office_pincode')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -101,13 +101,15 @@
 
                                         <label for="phone_no" class="col-sm-2 col-form-label">Phone No</label>
                                         <div class="col-sm-1 mb-4">
-                                            <input class="form-control" type="std_code" name="std_code" id="std_code">
+                                            <input class="form-control" type="std_code" name="std_code" id="std_code"
+                                                value="{{ $customer->std_code }}">
                                             @error('std_code')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <div class="col-sm-3 mb-4">
-                                            <input class="form-control" type="text" name="phone" id="phone">
+                                            <input class="form-control" type="text" name="phone" id="phone"
+                                                value="{{ $customer->phone }}">
                                             @error('phone')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -115,10 +117,12 @@
                                     </div>
                                     {{--  Addresses --}}
                                     <div class="form-group row">
-
+                                        @php
+                                            $address = $customer->addresses->where('address_type_id', 3)->first();
+                                        @endphp
                                         <label for="address" class="col-sm-2 col-form-label">Address</label>
                                         <div class="col-sm-10 mb-4">
-                                            <textarea class="form-control" name="address" id="address" cols="10" rows="3"></textarea>
+                                            <textarea class="form-control" name="address" id="address" cols="10" rows="3">{{ $address->address ?? '' }}</textarea>
                                             @error('address')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -128,7 +132,9 @@
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="country_id" id="country_id">
                                                 @foreach ($countries as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                    <option value="{{ $item->id }}"
+                                                        {{ $address && $address->country_id == $item->id ? 'selected' : '' }}>
+                                                        {{ $item->name }}</option>
                                                 @endforeach
                                             </select>
                                             @error('country_id')
@@ -147,7 +153,8 @@
 
                                         <label for="pincode" class="col-sm-2 col-form-label">Pincode</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="pincode" id="pincode">
+                                            <input class="form-control" type="text" name="pincode" id="pincode"
+                                                value="{{ $address->pincode ?? '' }}">
                                             @error('pincode')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -155,7 +162,8 @@
 
                                         <label for="phone_no" class="col-sm-2 col-form-label">Mobile</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="mobile" id="mobile">
+                                            <input class="form-control" type="text" name="mobile" id="mobile"
+                                                value="{{ $customer->mobile ?? '' }}">
                                             @error('mobile')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -167,14 +175,16 @@
 
                                         <label for="email" class="col-sm-2 col-form-label">Email Id</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="email" name="email" id="email">
+                                            <input class="form-control" type="email" name="email" id="email"
+                                                value="{{ $customer->email ?? '' }}">
                                             @error('email')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <label for="website" class="col-sm-2 col-form-label">Website</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="website" id="website">
+                                            <input class="form-control" type="text" name="website" id="website"
+                                                value="{{ $customer->website ?? '' }}">
                                             @error('website')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -182,7 +192,8 @@
 
                                         <label for="tin_no" class="col-sm-2 col-form-label">TIN No</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="tin_no" id="tin_no">
+                                            <input class="form-control" type="text" name="tin_no" id="tin_no"
+                                                value="{{ $customer->tin_no ?? '' }}">
                                             @error('tin_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -190,7 +201,8 @@
 
                                         <label for="tin_date" class="col-sm-2 col-form-label">Date</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="date" name="tin_date" id="tin_date">
+                                            <input class="form-control" type="date" name="tin_date" id="tin_date"
+                                                value="{{ $customer->tin_date }}">
                                             @error('tin_date')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -198,7 +210,8 @@
 
                                         <label for="cst_no" class="col-sm-2 col-form-label">CST No</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="cst_no" id="cst_no">
+                                            <input class="form-control" type="text" name="cst_no" id="cst_no"
+                                                value="{{ $customer->cst_no }}">
                                             @error('cst_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -206,7 +219,8 @@
 
                                         <label for="cst_date" class="col-sm-2 col-form-label">Date</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="date" name="cst_date" id="cst_date">
+                                            <input class="form-control" type="date" name="cst_date" id="cst_date"
+                                                value="{{ $customer->cst_date }}">
                                             @error('cst_date')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -218,9 +232,10 @@
                                             <button type="submit" class="btn btn-primary waves-effect waves-light">
                                                 Submit
                                             </button>
-                                            <button type="cancel" class="btn btn-secondary waves-effect m-l-5">
+                                            <a href="{{ route('master.customers.index') }}"
+                                                class="btn btn-secondary waves-effect m-l-5">
                                                 Cancel
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </form>
@@ -234,6 +249,7 @@
     <!-- DataTables JS -->
     @include('links.js.select2.select2')
     <script>
-        var selectedStateId = "{{ $officeAddress->state_id ?? '' }}";
+        var selectedOfficeStateId = "{{ $officeAddress->state_id ?? '' }}";
+        var selectedStateId = "{{ $address->state_id ?? '' }}";
     </script>
 @endsection
