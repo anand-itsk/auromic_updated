@@ -21,11 +21,11 @@
                         <div class="btn-group float-right">
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="#">Auromics</a></li>
-                                <li class="breadcrumb-item"><a href="#">Master</a></li>
-                                <li class="breadcrumb-item active">Customers</li>
+                                <li class="breadcrumb-item"><a href="#">Profile</a></li>
+                                <li class="breadcrumb-item active">Master Company</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Customers</h4>
+                        <h4 class="page-title">Master Company</h4>
                     </div>
                     <div class="row">
                         <div class="col-12">
@@ -40,7 +40,7 @@
                                             data-target=".bs-example-modal-center" title="Create Customer"><i
                                                 class="fa fa-upload"></i></button>
 
-                                        <a href="{{ route('master.customers.create') }}" class="icon-link common-color"
+                                        <a href="{{ route('profile.masters.create') }}" class="icon-link common-color"
                                             title="Create New User">
                                             <i class="fa fa-user-plus"></i>
                                         </a>
@@ -63,7 +63,7 @@
                                                     <div class="col-12">
                                                         <div class="card m-b-30">
                                                             <div class="card-body">
-                                                                <form action="{{ route('master.customers.import') }}"
+                                                                <form action="{{ route('profile.masters.import') }}"
                                                                     method="POST" enctype="multipart/form-data">
                                                                     @csrf
                                                                     <input type="file" name="file" required>
@@ -83,7 +83,7 @@
                                                     .xlsx or .csv)</p>
                                                 <p class="text-muted font-14">To upload sample document, it
                                                     must have concern fields.
-                                                    <a href="{{ asset('assets/sample_excels/customer_import.xlsx') }}"
+                                                    <a href="{{ asset('assets/sample_excels/company_import.xlsx') }}"
                                                         download>Click
                                                         to download sample document</a>
                                                 </p>
@@ -93,13 +93,13 @@
                                     </div><!-- /.modal-dialog -->
                                 </div>
                                 <div class="card-body">
-                                    <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap"
+                                    <table id="data-table" class="table table-striped table-bordered dt-responsive nowrap"
                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Customer Code</th>
-                                                <th>Customer Name</th>
+                                                <th>Company Code</th>
+                                                <th>Company Name</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -119,7 +119,7 @@
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="detailsModalLabel">Customer Details</h5>
+                            <h5 class="modal-title" id="detailsModalLabel">Master Company Details</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -174,21 +174,21 @@
     <script>
         var table;
         $(document).ready(function() {
-            table = $('#users-table').DataTable({
+            table = $('#data-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('master.customers.data') }}',
+                ajax: '{{ route('profile.masters.data') }}',
                 columns: [{
                         data: 'id',
                         name: 'id'
                     },
                     {
-                        data: 'customer_code',
-                        name: 'customer_code'
+                        data: 'company_code',
+                        name: 'company_code'
                     },
                     {
-                        data: 'customer_name',
-                        name: 'customer_name'
+                        data: 'company_name',
+                        name: 'company_name'
                     },
                     {
                         data: null,
@@ -214,7 +214,7 @@
                     {
                         text: 'Export All',
                         action: function(e, dt, node, config) {
-                            window.location.href = '/master/customers/export?' + $.param(dt.ajax
+                            window.location.href = '/profile/masters/export?' + $.param(dt.ajax
                                 .params());
                         }
                     }
@@ -237,7 +237,7 @@
                 if (confirm("Are you sure you want to delete these rows?")) {
                     // Send AJAX request to delete the selected rows
                     $.ajax({
-                        url: '/master/customers/delete/selected',
+                        url: '/profile/masters/delete/selected',
                         type: 'POST',
                         data: {
                             ids: ids,
@@ -255,15 +255,17 @@
         function edit(id) {
             console.log("inside");
             // Redirect to the user edit page or open a modal for editing
-            window.location.href = '/master/customers/edit/' + id;
+            window.location.href = '/profile/masters/edit/' + id;
         }
+
+
 
         function deleteCustomer(id) {
             console.log("inside")
             // Send an AJAX request to delete the user
             if (confirm('Are you sure you want to delete this user?')) {
                 $.ajax({
-                    url: '/master/customers/delete/' + id,
+                    url: '/profile/masters/delete/' + id,
                     type: 'DELETE',
                     data: {
                         _token: '{{ csrf_token() }}',
@@ -278,10 +280,10 @@
         function showDetails(userId) {
             // Fetch user details using AJAX
             $.ajax({
-                url: '/master/customers/show/' + userId,
+                url: '/profile/masters/show/' + userId,
                 type: 'GET',
                 success: function(response) {
-
+                    console.log(response);
                     const createdAt = response.data.created_at;
                     const formattedCreatedAt = formatTimestamp(createdAt);
                     const updatedAt = response.data.updated_at;
