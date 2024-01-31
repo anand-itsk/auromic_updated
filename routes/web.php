@@ -3,6 +3,7 @@
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\MasterSetting;
 use App\Http\Controllers\PageControllers\ClientCompanyController;
+use App\Http\Controllers\PageControllers\CompanyBankDetailController;
 use App\Http\Controllers\PageControllers\MasterCompanyController;
 use App\Http\Controllers\PageControllers\MasterControllers\CustomerController;
 use App\Http\Controllers\PageControllers\SubClientCompanyController;
@@ -106,6 +107,22 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete/selected', [SubClientCompanyController::class, 'deleteSelected']);
             Route::post('/import', [SubClientCompanyController::class, 'import'])->name('import');
             Route::get('/export', [SubClientCompanyController::class, 'export']);
+        });
+
+        // Company Bank Details
+        Route::prefix('/bank_details')->name('bank_details.')->group(function () {
+            Route::get('/', [CompanyBankDetailController::class, 'index'])->name('index');
+            Route::get('/data', [CompanyBankDetailController::class, 'indexData'])->name('data');
+
+            Route::get('/create', [CompanyBankDetailController::class, 'create'])->name('create');
+            Route::post('/store', [CompanyBankDetailController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [CompanyBankDetailController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [CompanyBankDetailController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}',  [CompanyBankDetailController::class, 'destroy'])->name('delete');
+            Route::get('/show/{id}', [CompanyBankDetailController::class, 'showDetails']);
+            Route::post('/delete/selected', [CompanyBankDetailController::class, 'deleteSelected']);
+            Route::post('/import', [CompanyBankDetailController::class, 'import'])->name('import');
+            Route::get('/export', [CompanyBankDetailController::class, 'export']);
         });
     });
 
