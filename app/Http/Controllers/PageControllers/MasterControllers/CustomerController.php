@@ -23,12 +23,11 @@ class CustomerController extends Controller
         return view('pages.master.customer.index');
     }
     // Index DataTable
-    public function customersData()
+    public function indexData()
     {
         // Eager load the roles relationship
-        $customers = Customer::query();
-        // dd($customers);
-        return DataTables::of($customers)->make(true);
+        $company = Customer::query();
+        return DataTables::of($company)->make(true);
     }
     // Create Page
     public function create()
@@ -60,7 +59,8 @@ class CustomerController extends Controller
         $customer->tin_date = $input['tin_date'];
         $customer->cst_no = $input['cst_no'];
         $customer->cst_date = $input['cst_date'];
-
+        $input['created_by'] = $auth_id;
+        $input['updated_by'] = $auth_id;
         $customer = $customer->create($input);
 
         if (
@@ -158,9 +158,16 @@ class CustomerController extends Controller
     public function showDetails($id)
     {
         $customer = Customer::with('addresses')->findOrFail($id);
-        // Return a view or data with user details
-        // return response()->json($customer);
-        return view('pages.master.customer.show', compact('customer'));
+        $html = view('pages.master.customer.show', compact('customer'))->render();
+        return response()->json([
+            'html' => $html,
+            'data' => [
+                'created_by' => $customer->createdBy->name,
+                'created_at' => $customer->created_at,
+                'updated_at' => $customer->updated_at,
+                'updated_by' => $customer->updatedBy->name,
+            ]
+        ]);
     }
     // Delete
     public function destroy($id)
@@ -169,15 +176,6 @@ class CustomerController extends Controller
         $user->delete();
 
         return response()->json(['success' => 'Customer deleted successfully']);
-    }
-
-    public function block($id)
-    {
-        $user = User::findOrFail($id);
-        $user->is_blocked = true; // Assuming you have an 'is_blocked' attribute
-        $user->save();
-
-        return response()->json(['success' => 'User blocked successfully']);
     }
     // Multi Delete
     public function deleteSelected(Request $request)
@@ -192,7 +190,6 @@ class CustomerController extends Controller
         Customer::destroy($ids);
         return response()->json(['status' => 'success']);
     }
-
     // Import Users
     public function import(Request $request)
     {
@@ -204,7 +201,6 @@ class CustomerController extends Controller
 
         return redirect()->route('master.customers.index')->with('success', 'Data imported successfully');
     }
-
     // Import Users
     public function export(Request $request)
     {

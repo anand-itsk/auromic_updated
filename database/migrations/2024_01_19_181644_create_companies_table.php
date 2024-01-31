@@ -16,11 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('company_type_id');
             $table->string('company_code');
             $table->string('company_name');
-            $table->text('office_address')->nullable();
-            $table->unsignedBigInteger('state_id');
-            $table->integer('pincode')->nullable();
             $table->string('std_code')->nullable();
-            $table->string('phone_number')->nullable();
+            $table->string('phone')->nullable();
             $table->date('starting_date')->nullable();
             $table->string('business_nature')->nullable();
             $table->string('email')->nullable();
@@ -31,7 +28,6 @@ return new class extends Migration
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('company_type_id')->references('id')->on('company_types')->onDelete('cascade');
-            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
 

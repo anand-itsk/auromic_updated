@@ -112,14 +112,14 @@
                                                         </span>
                                                     @enderror
                                                 </div>
-
                                             </div>
 
                                             <div class="form-group row">
                                                 <div class="col-12">
                                                     <input id="password" type="password"
                                                         class="form-control @error('password') is-invalid @enderror"
-                                                        name="password" required autocomplete="current-password">
+                                                        name="password" placeholder="Password" required
+                                                        autocomplete="current-password">
 
                                                     @error('password')
                                                         <span class="invalid-feedback" role="alert">

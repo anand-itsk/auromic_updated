@@ -17,7 +17,7 @@
                                 <li class="breadcrumb-item">Create</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Create Customer</h4>
+                        <h4 class="page-title">Create Master Company</h4>
                     </div>
                 </div>
             </div>
@@ -159,7 +159,6 @@
                                         </div>
                                     </div>
                                     {{-- Other Details --}}
-
                                     <div class="form-group row">
 
                                         <label for="email" class="col-sm-2 col-form-label">Email Id</label>

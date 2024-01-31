@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\MasterSetting;
+use App\Http\Controllers\PageControllers\ClientCompanyController;
 use App\Http\Controllers\PageControllers\MasterCompanyController;
 use App\Http\Controllers\PageControllers\MasterControllers\CustomerController;
+use App\Http\Controllers\PageControllers\SubClientCompanyController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -59,10 +61,58 @@ Route::middleware(['auth'])->group(function () {
     //Pages
     Route::get('/master-companies', [MasterCompanyController::class, 'index'])->name('master-companies');
 
+    // Profile
+    Route::prefix('profile')->name('profile.')->group(function () {
+        Route::prefix('/masters')->name('masters.')->group(function () {
+            Route::get('/', [MasterCompanyController::class, 'index'])->name('index');
+            Route::get('/data', [MasterCompanyController::class, 'indexData'])->name('data');
+
+            Route::get('/create', [MasterCompanyController::class, 'create'])->name('create');
+            Route::post('/store', [MasterCompanyController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [MasterCompanyController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [MasterCompanyController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}',  [MasterCompanyController::class, 'destroy'])->name('delete');
+            Route::get('/show/{id}', [MasterCompanyController::class, 'showDetails']);
+            Route::post('/delete/selected', [MasterCompanyController::class, 'deleteSelected']);
+            Route::post('/import', [MasterCompanyController::class, 'import'])->name('import');
+            Route::get('/export', [MasterCompanyController::class, 'export']);
+        });
+        // Client Company
+        Route::prefix('/clients')->name('clients.')->group(function () {
+            Route::get('/', [ClientCompanyController::class, 'index'])->name('index');
+            Route::get('/data', [ClientCompanyController::class, 'indexData'])->name('data');
+
+            Route::get('/create', [ClientCompanyController::class, 'create'])->name('create');
+            Route::post('/store', [ClientCompanyController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [ClientCompanyController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [ClientCompanyController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}',  [ClientCompanyController::class, 'destroy'])->name('delete');
+            Route::get('/show/{id}', [ClientCompanyController::class, 'showDetails']);
+            Route::post('/delete/selected', [ClientCompanyController::class, 'deleteSelected']);
+            Route::post('/import', [ClientCompanyController::class, 'import'])->name('import');
+            Route::get('/export', [ClientCompanyController::class, 'export']);
+        });
+        // Sub-Client Company
+        Route::prefix('/sub_clients')->name('sub_clients.')->group(function () {
+            Route::get('/', [SubClientCompanyController::class, 'index'])->name('index');
+            Route::get('/data', [SubClientCompanyController::class, 'indexData'])->name('data');
+
+            Route::get('/create', [SubClientCompanyController::class, 'create'])->name('create');
+            Route::post('/store', [SubClientCompanyController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [SubClientCompanyController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [SubClientCompanyController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}',  [SubClientCompanyController::class, 'destroy'])->name('delete');
+            Route::get('/show/{id}', [SubClientCompanyController::class, 'showDetails']);
+            Route::post('/delete/selected', [SubClientCompanyController::class, 'deleteSelected']);
+            Route::post('/import', [SubClientCompanyController::class, 'import'])->name('import');
+            Route::get('/export', [SubClientCompanyController::class, 'export']);
+        });
+    });
+
     // Master > Customer
     Route::prefix('master/customers')->name('master.customers.')->group(function () {
         Route::get('/', [CustomerController::class, 'index'])->name('index');
-        Route::get('/data', [CustomerController::class, 'customersData'])->name('data');
+        Route::get('/data', [CustomerController::class, 'indexData'])->name('data');
 
         Route::get('/create', [CustomerController::class, 'create'])->name('create');
         Route::post('/store', [CustomerController::class, 'store'])->name('store');

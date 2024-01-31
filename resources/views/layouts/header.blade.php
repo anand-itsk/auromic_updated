@@ -213,13 +213,13 @@
                         <a href="#"><i class="dripicons-view-thumb"></i>Profile</a>
                         <ul class="submenu">
                             <li>
-                                <a href="calendar.html">Master Company</a>
+                                <a href="{{ route('profile.masters.index')}}">Master Company</a>
                             </li>
                             <li>
-                                <a href="calendar.html">Client Company</a>
+                                <a href="{{ route('profile.clients.index')}}">Client Company</a>
                             </li>
                             <li>
-                                <a href="calendar.html">Sub-client Company</a>
+                                <a href="{{ route('profile.sub_clients.index')}}">Sub-client Company</a>
                             </li>
                             <li class="has-submenu">
                                 <a href="#">Bank Details</a>
