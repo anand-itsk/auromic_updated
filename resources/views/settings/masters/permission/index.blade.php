@@ -34,7 +34,7 @@
 
                                     </div>
                                     <div>
-                                        <a href="{{ route('user.create') }}" class="icon-link common-color"
+                                        <a href="{{ route('permission.create') }}" class="icon-link common-color"
                                             title="Create New User">
                                             <i class="fa fa-user-plus"></i>
                                         </a>

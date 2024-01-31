@@ -60,7 +60,7 @@ class CustomerController extends Controller
         $customer->tin_date = $input['tin_date'];
         $customer->cst_no = $input['cst_no'];
         $customer->cst_date = $input['cst_date'];
-
+       
         $customer = $customer->create($input);
 
         if (

@@ -108,10 +108,10 @@
                                     </div>
 
                                     <div class="col-12">
-                                        <button type="submit" class="btn btn-light px-5">
+                                        <button type="submit" class="btn btn-primary waves-effect waves-light">
                                             Update
                                         </button>
-                                        <button type="reset" class="btn btn-light px-5">
+                                        <button type="reset" class="btn btn-secondary waves-effect m-l-5">
                                             Cancel
                                         </button>
                                     </div>
