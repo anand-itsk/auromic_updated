@@ -122,6 +122,9 @@
                         <div class="modal-body">
                             <div id="detailsContent">
                                 <!-- Content loaded via AJAX -->
+                                 <table id="dataTable">
+        <!-- Table header and body content -->
+    </table>
                             </div>
                         </div>
 
@@ -277,7 +280,10 @@
                     $('#updated_by').html(response.data.updated_by);
                     $('#created_at').html(formattedCreatedAt);
                     $('#updated_at').html(formattedUpdatedAt);
-
+ // Initialize DataTable
+            $('#dataTable').DataTable({
+                // Add your DataTable options here
+            });
                     console.log(formattedCreatedAt);
                     $('#detailsModal').modal('show');
                 }

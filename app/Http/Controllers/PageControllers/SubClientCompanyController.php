@@ -37,7 +37,10 @@ class SubClientCompanyController extends Controller
         $countries = Country::all();
         $states = State::all();
         $addressTypes = AddressType::all();
-        return view('pages.profile.sub_client_company.create', ['countries' => $countries, 'states' => $states, 'addressTypes' => $addressTypes]);
+         $master_companies = Company::with('authorisedPerson')
+            ->where('company_type_id', 2)
+            ->get();
+        return view('pages.profile.sub_client_company.create', ['countries' => $countries, 'states' => $states, 'addressTypes' => $addressTypes,'master_companies' =>  $master_companies]);
     }
     // Store Date
     public function store(Request $request)

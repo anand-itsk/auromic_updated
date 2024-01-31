@@ -76,7 +76,7 @@
                                         </div>
 
                                     
-                                        <label for="branch_code" class="col-sm-2 col-form-label mandatory">Branch
+                                        <label for="branch_code" class="col-sm-2 col-form-label">Branch
                                             Code</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="branch_code" id="branch_code">
@@ -85,7 +85,7 @@
                                             @enderror
                                         </div>
 
-                                        <label for="branch_name" class="col-sm-2 col-form-label mandatory">Branch
+                                        <label for="branch_name" class="col-sm-2 col-form-label">Branch
                                             Name</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="branch_name" id="branch_name">
@@ -94,7 +94,7 @@
                                             @enderror
                                         </div>
 
-                                        <label for="ifsc_code" class="col-sm-2 col-form-label mandatory">IFSC
+                                        <label for="ifsc_code" class="col-sm-2 col-form-label">IFSC
                                             Code</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="ifsc_code" id="branch_code">
