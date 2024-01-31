@@ -34,16 +34,19 @@
                                     @csrf
                                     <h5 class="text-primary">Company Info</h5>
                                     <div class="form-group row">
-                                        {{-- <label class="col-sm-2 col-form-label">Master Companies</label>
+                                        <label class="col-sm-2 col-form-label">Master Companies</label>
                                         <div class="col-sm-10 mb-4">
                                             <select class="form-control select2" name="master_company" id="master_company">
-                                                @foreach ($master_companies as $item)
-                                                    <option value="{{ $item->company_name }}">{{ $item->company_name }}</option>
+                                                @foreach ($master_companies as $company)
+                                                    <option value="{{ $company->company_name }}">
+                                                        {{ $company->company_name }} -
+                                                        {{ optional($company->authorisedPerson)->name ?? 'No Authorised Person' }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                             @error('master_company')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror --}}
+                                            @enderror
                                         </div>
                                         <label for="company_code" class="col-sm-2 col-form-label mandatory">Company
                                             Code</label>
