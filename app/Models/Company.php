@@ -47,4 +47,9 @@ class Company extends Model
     {
         return $this->belongsTo(User::class, 'updated_by');
     }
+
+    public function bankDetail()
+    {
+        return $this->belongsToMany(BankDetail::class, 'company_bank_details');
+    }
 }

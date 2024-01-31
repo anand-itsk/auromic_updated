@@ -221,13 +221,8 @@
                             <li>
                                 <a href="{{ route('profile.sub_clients.index')}}">Sub-client Company</a>
                             </li>
-                            <li class="has-submenu">
-                                <a href="#">Bank Details</a>
-                                <ul class="submenu">
-                                    <li><a href="form-elements.html">Master Company</a></li>
-                                    <li><a href="form-validation.html">Client Company</a></li>
-                                    <li><a href="form-advanced.html">Sub-client Company</a></li>
-                                </ul>
+                            <li>
+                                <a href="{{ route('profile.bank_details.index')}}">Bank Details</a>
                             </li>
 
 
