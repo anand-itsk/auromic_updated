@@ -40,6 +40,7 @@ class CompanyBankDetailController extends Controller
         $validatedData = $request->validate([
             'company_id' => 'required|string|max:255',
             'bank_name' => 'required|string|max:255',
+            'account_number' => 'required|string|max:255',
         ]);
         $input = $request->all();
         $bank_detail = new BankDetail();
@@ -151,6 +152,7 @@ class CompanyBankDetailController extends Controller
     {
         $company = Company::with('addresses', 'companyRegistrationDetail', 'authorisedPerson')->findOrFail($id);
         $html = view('pages.profile.client_company.show', compact('company'))->render();
+        
         return response()->json([
             'html' => $html,
             'data' => [
@@ -161,6 +163,8 @@ class CompanyBankDetailController extends Controller
             ]
         ]);
     }
+
+  
     // Delete
     public function destroy($id)
     {
