@@ -13,11 +13,11 @@
                         <div class="btn-group float-right">
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="#">Aurmics</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('users') }}">Users</a></li>
-                                <li class="breadcrumb-item"><a href="#">Import</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('permissions') }}"></a>Roles & Permission</li>
+                                <li class="breadcrumb-item">Edit</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Create User</h4>
+                        <h4 class="page-title">Edit Roles & Permission</h4>
                     </div>
                 </div>
             </div>

@@ -13,12 +13,12 @@
                         <div class="btn-group float-right">
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Auromics</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('profile.masters.index') }}">Master Company</a>
+                                <li class="breadcrumb-item"><a href="{{ route('profile.sub_clients.index') }}">Sub-Client Company</a>
                                 </li>
                                 <li class="breadcrumb-item">Create</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Create Master Company</h4>
+                        <h4 class="page-title">Create Sub-Client Company</h4>
                     </div>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                     <div class="card m-b-30">
                         <div class="card-body">
                             <div class="m-b-30">
-                                <form action="{{ route('profile.masters.store') }}" method="POST"
+                                <form action="{{ route('profile.sub_clients.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <h5 class="text-primary">Company Info</h5>

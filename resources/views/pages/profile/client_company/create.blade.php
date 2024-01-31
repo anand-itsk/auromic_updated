@@ -13,12 +13,12 @@
                         <div class="btn-group float-right">
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Auromics</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('profile.masters.index') }}">Master Company</a>
+                                <li class="breadcrumb-item"><a href="{{ route('profile.clients.index') }}">Client Company</a>
                                 </li>
                                 <li class="breadcrumb-item">Create</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Create Master Company</h4>
+                        <h4 class="page-title">Create Client Company</h4>
                     </div>
                 </div>
             </div>

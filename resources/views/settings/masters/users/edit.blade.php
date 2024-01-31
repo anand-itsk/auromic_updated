@@ -12,7 +12,7 @@
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="{{route('home')}}">Aurmics</a></li>
                                 <li class="breadcrumb-item"><a href="{{ route('users') }}">Users</a></li>
-                                <li class="breadcrumb-item"><a href="#">Import</a></li>
+                                <li class="breadcrumb-item">Edit</li>
                             </ol>
                         </div>
                         <h4 class="page-title">Edit User</h4>
