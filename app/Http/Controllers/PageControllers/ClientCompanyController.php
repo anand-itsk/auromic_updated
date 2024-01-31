@@ -37,20 +37,10 @@ class ClientCompanyController extends Controller
         $countries = Country::all();
         $states = State::all();
         $addressTypes = AddressType::all();
-        $master_companies = Company::with(['authorisedPerson' => function ($query) {
-            $query->select('id', 'name', 'company_id'); // Select fields from the related model
-        }])
+        $master_companies = Company::with('authorisedPerson')
             ->where('company_type_id', 1)
-            ->get(['id', 'company_name']); // Select fields from the Company model
-
-        $filter_master_companies = $master_companies->map(function ($company) {
-            return [
-                'company_name' => $company->company_name,
-                'authorised_person_name' => $company->authorisedPersion ? $company->authorisedPersion->name : null
-            ];
-        });
-        // dd($filter_master_companies[0]);
-        return view('pages.profile.client_company.create', ['master_companies' => $filter_master_companies, 'countries' => $countries, 'states' => $states, 'addressTypes' => $addressTypes]);
+            ->get();
+        return view('pages.profile.client_company.create', ['master_companies' => $master_companies, 'countries' => $countries, 'states' => $states, 'addressTypes' => $addressTypes]);
     }
     // Store Date
     public function store(Request $request)
