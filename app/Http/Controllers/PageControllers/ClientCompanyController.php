@@ -186,7 +186,7 @@ class ClientCompanyController extends Controller
             $company->addresses()->save($homeAddress);
         }
         return redirect()->route('profile.clients.index')
-            ->with('success', 'Customer created successfully');
+            ->with('success', 'Customer Updated successfully');
     }
     // Show
     public function showDetails($id)
