@@ -6,6 +6,7 @@ use App\Http\Controllers\PageControllers\ClientCompanyController;
 use App\Http\Controllers\PageControllers\CompanyBankDetailController;
 use App\Http\Controllers\PageControllers\MasterCompanyController;
 use App\Http\Controllers\PageControllers\MasterControllers\CustomerController;
+use App\Http\Controllers\PageControllers\MasterControllers\EmployeeController;
 use App\Http\Controllers\PageControllers\SubClientCompanyController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -127,19 +128,38 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Master > Customer
-    Route::prefix('master/customers')->name('master.customers.')->group(function () {
-        Route::get('/', [CustomerController::class, 'index'])->name('index');
-        Route::get('/data', [CustomerController::class, 'indexData'])->name('data');
+    Route::prefix('master')->name('master.')->group(function () {
+        Route::prefix('/customers')->name('customers.')->group(function () {
 
-        Route::get('/create', [CustomerController::class, 'create'])->name('create');
-        Route::post('/store', [CustomerController::class, 'store'])->name('store');
-        Route::get('/edit/{id}', [CustomerController::class, 'edit'])->name('edit');
-        Route::post('/update/{id}', [CustomerController::class, 'update'])->name('update');
-        Route::delete('/delete/{id}',  [CustomerController::class, 'destroy'])->name('delete');
-        Route::get('/show/{id}', [CustomerController::class, 'showDetails']);
-        Route::post('/delete/selected', [CustomerController::class, 'deleteSelected']);
-        Route::post('/import', [CustomerController::class, 'import'])->name('import');
-        Route::get('/export', [CustomerController::class, 'export']);
+            Route::get('/', [CustomerController::class, 'index'])->name('index');
+            Route::get('/data', [CustomerController::class, 'indexData'])->name('data');
+
+            Route::get('/create', [CustomerController::class, 'create'])->name('create');
+            Route::post('/store', [CustomerController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [CustomerController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [CustomerController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}',  [CustomerController::class, 'destroy'])->name('delete');
+            Route::get('/show/{id}', [CustomerController::class, 'showDetails']);
+            Route::post('/delete/selected', [CustomerController::class, 'deleteSelected']);
+            Route::post('/import', [CustomerController::class, 'import'])->name('import');
+            Route::get('/export', [CustomerController::class, 'export']);
+        });
+
+        Route::prefix('/employees')->name('employees.')->group(function () {
+
+            Route::get('/', [EmployeeController::class, 'index'])->name('index');
+            Route::get('/data', [EmployeeController::class, 'indexData'])->name('data');
+
+            Route::get('/create', [EmployeeController::class, 'create'])->name('create');
+            Route::post('/store', [EmployeeController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [EmployeeController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [EmployeeController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}',  [EmployeeController::class, 'destroy'])->name('delete');
+            Route::get('/show/{id}', [EmployeeController::class, 'showDetails']);
+            Route::post('/delete/selected', [EmployeeController::class, 'deleteSelected']);
+            Route::post('/import', [EmployeeController::class, 'import'])->name('import');
+            Route::get('/export', [EmployeeController::class, 'export']);
+        });
     });
 
     //Data Fetch
