@@ -13,12 +13,12 @@
                         <div class="btn-group float-right">
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Auromics</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('profile.masters.index') }}">Master Company</a>
+                                <li class="breadcrumb-item"><a href="{{ route('profile.sub_clients.index') }}">Sub-Client Company</a>
                                 </li>
                                 <li class="breadcrumb-item">Create</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Create Master Company</h4>
+                        <h4 class="page-title">Create Sub-Client Company</h4>
                     </div>
                 </div>
             </div>
@@ -29,11 +29,26 @@
                     <div class="card m-b-30">
                         <div class="card-body">
                             <div class="m-b-30">
-                                <form action="{{ route('profile.masters.store') }}" method="POST"
+                                <form action="{{ route('profile.sub_clients.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <h5 class="text-primary">Company Info</h5>
                                     <div class="form-group row">
+                                          
+                                        <label class="col-sm-2 col-form-label">Client Companies</label>
+                                        <div class="col-sm-10 mb-4">
+                                            <select class="form-control select2" name="client_company" id="client_company">
+                                                @foreach ($master_companies as $company)
+                                                    <option value="{{ $company->company_name }}">
+                                                        {{ $company->company_name }} -
+                                                        {{ optional($company->authorisedPerson)->name ?? 'No Authorised Person' }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('master_company')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                         <label for="company_code" class="col-sm-2 col-form-label mandatory">Company
                                             Code</label>
                                         <div class="col-sm-4 mb-4">

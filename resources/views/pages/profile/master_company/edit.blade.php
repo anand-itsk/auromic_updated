@@ -170,7 +170,7 @@
                                         <label for="pf_code" class="col-sm-2 col-form-label">PF Code</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="pf_code" id="pf_code"
-                                                value="{{ $company->companyRegistrationDetail->pf_code }}">
+                                                value="{{ $company->companyRegistrationDetail->pf_code ?? ''}}">
                                             @error('pf_code')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -179,7 +179,7 @@
                                         <label for="pf_date" class="col-sm-2 col-form-label">Date</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="date" name="pf_date" id="pf_date"
-                                                value="{{ $company->companyRegistrationDetail->pf_date }}">
+                                                value="{{ $company->companyRegistrationDetail->pf_date ?? '' }}">
                                             @error('pf_date')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -188,7 +188,7 @@
                                         <label for="esi_code" class="col-sm-2 col-form-label">ESI Code</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="esi_code" id="esi_code"
-                                                value="{{ $company->companyRegistrationDetail->esi_code }}">
+                                                value="{{ $company->companyRegistrationDetail->esi_code ?? ''}}">
                                             @error('esi_code')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -197,7 +197,7 @@
                                         <label for="esi_date" class="col-sm-2 col-form-label">Date</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="date" name="esi_date" id="esi_date"
-                                                value="{{ $company->companyRegistrationDetail->esi_date }}">
+                                                value="{{ $company->companyRegistrationDetail->esi_date ?? '' }}">
                                             @error('esi_date')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -206,7 +206,7 @@
                                         <label for="factory_act_no" class="col-sm-2 col-form-label">Factory Act No</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="factory_act_no"
-                                                value="{{ $company->companyRegistrationDetail->factory_act_no }}"
+                                                value="{{ $company->companyRegistrationDetail->factory_act_no ?? '' }}"
                                                 id="factory_act_no">
                                             @error('factory_act_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
@@ -216,7 +216,7 @@
                                         <label for="tin_no" class="col-sm-2 col-form-label">TIN No</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="tin_no" id="tin_no"
-                                                value="{{ $company->companyRegistrationDetail->tin_no }}">
+                                                value="{{ $company->companyRegistrationDetail->tin_no ?? '' }}">
                                             @error('tin_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -225,7 +225,7 @@
                                         <label for="cst_no" class="col-sm-2 col-form-label">CST No</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="cst_no" id="cst_no"
-                                                value="{{ $company->companyRegistrationDetail->cst_no }}">
+                                                value="{{ $company->companyRegistrationDetail->cst_no ?? '' }}">
                                             @error('cst_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -234,7 +234,7 @@
                                         <label for="ssi_no" class="col-sm-2 col-form-label">SSI No</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="ssi_no" id="ssi_no"
-                                                value="{{ $company->companyRegistrationDetail->ssi_no }}">
+                                                value="{{ $company->companyRegistrationDetail->ssi_no ?? '' }}">
                                             @error('ssi_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -243,7 +243,7 @@
                                         <label for="pan_no" class="col-sm-2 col-form-label">PAN No</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="pan_no" id="pan_no"
-                                                value="{{ $company->companyRegistrationDetail->pan_no }}">
+                                                value="{{ $company->companyRegistrationDetail->pan_no ?? '' }}">
                                             @error('pan_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -252,7 +252,7 @@
                                         <label for="tan_no" class="col-sm-2 col-form-label">TAN No</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="tan_no" id="tan_no"
-                                                value="{{ $company->companyRegistrationDetail->tan_no }}">
+                                                value="{{ $company->companyRegistrationDetail->tan_no ?? ''}}">
                                             @error('tan_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -261,7 +261,7 @@
                                         <label for="license_no" class="col-sm-2 col-form-label">License No</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="license_no"
-                                                value="{{ $company->companyRegistrationDetail->license_no }}"
+                                                value="{{ $company->companyRegistrationDetail->license_no ?? '' }}"
                                                 id="license_no">
                                             @error('license_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
@@ -274,7 +274,7 @@
                                         <label for="name" class="col-sm-2 col-form-label mandatory">Name</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="name" id="name"
-                                                value="{{ $company->authorisedPerson->name }}">
+                                                value="{{ $company->authorisedPerson->name ?? '' }}">
                                             @error('name')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -285,7 +285,7 @@
                                             Name</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="faorhus_name"
-                                                value="{{ $company->authorisedPerson->faorhus_name }}" id="faorhus_name">
+                                                value="{{ $company->authorisedPerson->faorhus_name ?? ''}}" id="faorhus_name">
                                             @error('faorhus_name')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -295,8 +295,8 @@
                                             Nature</label>
                                         <div class="col-sm-2 mb-4">
                                             <select class="form-control" name="gender" id="gender">
-                                                <option value="{{ $company->authorisedPerson->gender }}">
-                                                    {{ $company->authorisedPerson->gender }}</option>
+                                                <option value="{{ $company->authorisedPerson->gender ?? '' }}">
+                                                    {{ $company->authorisedPerson->gender ?? ''}}</option>
                                                 <option value="male">Male</option>
                                                 <option value="female">Female</option>
                                                 <option value="others">Others</option>
@@ -355,14 +355,14 @@
                                         <label for="phone_no" class="col-sm-2 col-form-label">Phone No</label>
                                         <div class="col-sm-1 mb-4">
                                             <input class="form-control" type="std_code" name="std_code" id="std_code"
-                                                value="{{ $company->authorisedPerson->std_code }}">
+                                                value="{{ $company->authorisedPerson->std_code ?? ''}}">
                                             @error('std_code')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <div class="col-sm-3 mb-4">
                                             <input class="form-control" type="text" name="phone" id="phone"
-                                                value="{{ $company->authorisedPerson->phone }}">
+                                                value="{{ $company->authorisedPerson->phone ?? ''}}">
                                             @error('phone')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -374,8 +374,8 @@
                                         <label for="blood_group" class="col-sm-2 col-form-label">Blood Group</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control" name="blood_group" id="blood_group">
-                                                <option value="{{ $company->authorisedPerson->blood_group }}">
-                                                    {{ $company->authorisedPerson->blood_group }}</option>
+                                                <option value="{{ $company->authorisedPerson->blood_group ?? ''}}">
+                                                    {{ $company->authorisedPerson->blood_group ?? '' }}</option>
                                                 <option value="A+">A+</option>
                                                 <option value="A-">A-</option>
                                                 <option value="B+">B+</option>
@@ -393,7 +393,7 @@
                                         <label for="dob" class="col-sm-2 col-form-label">Date of Birth</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="date" name="dob" id="dob"
-                                                value="{{ $company->authorisedPerson->dob }}">
+                                                value="{{ $company->authorisedPerson->dob ?? ''}}">
                                             @error('dob')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -401,7 +401,7 @@
                                         <label for="email" class="col-sm-2 col-form-label">Email Id</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="email" name="email" id="email"
-                                                value="{{ $company->authorisedPerson->email }}">
+                                                value="{{ $company->authorisedPerson->email ?? ''}}">
                                             @error('email')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -409,7 +409,7 @@
                                         <label for="mobile" class="col-sm-2 col-form-label">Mobile</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="mobile" id="mobile"
-                                                value="{{ $company->authorisedPerson->mobile }}">
+                                                value="{{ $company->authorisedPerson->mobile ?? ''}}">
                                             @error('mobile')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -417,7 +417,7 @@
                                         <label for="pan_no" class="col-sm-2 col-form-label">PAN No</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="pan_no" id="pan_no"
-                                                value="{{ $company->authorisedPerson->pan_no }}">
+                                                value="{{ $company->authorisedPerson->pan_no ?? ''}}">
                                             @error('pan_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror

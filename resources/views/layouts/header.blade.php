@@ -206,28 +206,23 @@
                 <ul class="navigation-menu">
 
                     <li class="has-submenu">
-                        <a href="index.html"><i class="dripicons-meter"></i>Dashboard</a>
+                        <a href="{{ route('home') }}"><i class="dripicons-meter"></i>Dashboard</a>
                     </li>
 
                     <li class="has-submenu">
                         <a href="#"><i class="dripicons-view-thumb"></i>Profile</a>
                         <ul class="submenu">
                             <li>
-                                <a href="{{ route('profile.masters.index')}}">Master Company</a>
+                                <a href="{{ route('profile.masters.index') }}">Master Company</a>
                             </li>
                             <li>
-                                <a href="{{ route('profile.clients.index')}}">Client Company</a>
+                                <a href="{{ route('profile.clients.index') }}">Client Company</a>
                             </li>
                             <li>
-                                <a href="{{ route('profile.sub_clients.index')}}">Sub-client Company</a>
+                                <a href="{{ route('profile.sub_clients.index') }}">Sub-client Company</a>
                             </li>
-                            <li class="has-submenu">
-                                <a href="#">Bank Details</a>
-                                <ul class="submenu">
-                                    <li><a href="form-elements.html">Master Company</a></li>
-                                    <li><a href="form-validation.html">Client Company</a></li>
-                                    <li><a href="form-advanced.html">Sub-client Company</a></li>
-                                </ul>
+                            <li>
+                                <a href="{{ route('profile.bank_details.index') }}">Bank Details</a>
                             </li>
 
 
@@ -241,7 +236,7 @@
                         <ul class="submenu megamenu">
                             <li>
                                 <ul>
-                                    <li><a href="{{route('master.customers.index')}}">Customers</a></li>
+                                    <li><a href="{{ route('master.customers.index') }}">Customers</a></li>
                                     {{-- <li><a href="ui-badge.html">Raw Material</a></li>
                                     <li><a href="ui-dropdowns.html">Size</a></li>
                                     <li><a href="ui-tabs-accordions.html">Colour</a></li>
@@ -250,7 +245,7 @@
                             </li>
                             <li>
                                 <ul>
-                                    <li><a href="ui-buttons.html">Employees</a></li>
+                                    <li><a href="{{ route('master.employees.index') }}">Employees</a></li>
                                     {{-- <li><a href="ui-cards.html">Product Model</a></li>
                                     <li><a href="ui-modals.html">Product</a></li>
                                     <li><a href="ui-progressbars.html">Finishing Product</a></li>

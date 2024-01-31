@@ -2,98 +2,57 @@
 
 namespace App\Http\Controllers\PageControllers;
 
-use App\Exports\CompanyExport;
 use App\Http\Controllers\Controller;
-use App\Imports\CompanyDataImport;
-use App\Models\Address;
-use App\Models\AddressType;
-use App\Models\AuthorisedPerson;
+use App\Models\BankDetail;
 use App\Models\Company;
-use App\Models\CompanyRegistrationDetails;
-use App\Models\Country;
-use App\Models\State;
-use App\Models\User;
+use App\Models\CompanyBankDetail;
+use App\Models\CompanyBankDetails;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 
-class SubClientCompanyController extends Controller
+class CompanyBankDetailController extends Controller
 {
     // Index Page
     public function index()
     {
-        return view('pages.profile.sub_client_company.index');
+        return view('pages.profile.company_bank.index');
     }
     // Index DataTable
     public function indexData()
     {
         // Eager load the roles relationship
-        $company = Company::query()->where('company_type_id', 3);
+        $company = Company::query();
         return DataTables::of($company)->make(true);
     }
     // Create Page
     public function create()
     {
-        $countries = Country::all();
-        $states = State::all();
-        $addressTypes = AddressType::all();
-         $master_companies = Company::with('authorisedPerson')
-            ->where('company_type_id', 2)
+
+        $companies = Company::with('authorisedPerson', 'bankDetail')
             ->get();
-        return view('pages.profile.sub_client_company.create', ['countries' => $countries, 'states' => $states, 'addressTypes' => $addressTypes,'master_companies' =>  $master_companies]);
+        // dd($companies);
+        return view('pages.profile.company_bank.create', ['companies' => $companies]);
     }
     // Store Date
     public function store(Request $request)
     {
         $auth_id = auth()->id();
         $validatedData = $request->validate([
-            'company_code' => 'required|max:255',
-            'company_name' => 'required|max:255',
-            'name' => 'required'
+            'company_id' => 'required|string|max:255',
+            'bank_name' => 'required|string|max:255',
+            'account_number' => 'required|string|max:255',
         ]);
         $input = $request->all();
-        $company = new Company();
+        $bank_detail = new BankDetail();
 
-        $input['company_type_id'] = 3;
-        $input['created_by'] = $auth_id;
-        $input['updated_by'] = $auth_id;
+        $bank_detail = $bank_detail->create($input);
 
-        $company = $company->create($input);
+        $company = Company::find($input['company_id']);
+        $company->bankDetail()->attach($bank_detail->id);
 
-        $input['company_id'] = $company->id;
-        $company_registration_details = CompanyRegistrationDetails::create($input);
-        $authorised_person = AuthorisedPerson::create($input);
 
-        if (
-            $input['office_address'] !== null ||
-            $input['office_country_id'] !== "1" ||
-            $input['office_pincode'] !== null
-        ) {
-            $address = new Address();
-            $address->address_type_id = 2;
-            $address->address = $input['office_address'];
-            $address->country_id = $input['office_country_id'];
-            $address->state_id = $input['office_state_id'] ?? 1;
-            $address->pincode = $input['office_pincode'];
-            $company->addresses()->save($address);
-        }
-
-        if (
-            $input['address'] !== null ||
-            $input['country_id'] !== "1" ||
-            $input['pincode'] !== null
-        ) {
-            $address = new Address();
-            $address->address_type_id = 3;
-            $address->address = $input['address'];
-            $address->country_id = $input['country_id'];
-            $address->state_id = $input['state_id'] ?? 1;
-            $address->pincode = $input['pincode'];
-            $company->addresses()->save($address);
-        }
-
-        return redirect()->route('profile.sub_clients.index')
-            ->with('success', 'Customer created successfully');
+        return redirect()->route('profile.bank_details.index')
+            ->with('success', 'Bank Details created successfully');
     }
     // Edit
     public function edit(Address $address, $id)
@@ -102,8 +61,7 @@ class SubClientCompanyController extends Controller
         $user = User::with('roles')->find($id);
         $company = Company::with('addresses')->find($id);
         $countries = Country::all();
-        // dd($customer);
-        return view('pages.profile.sub_client_company.edit', compact('company', 'user', 'countries', 'address'));
+        return view('pages.profile.client_company.edit', compact('company', 'user', 'countries', 'address'));
     }
     // Update
     public function update(Request $request, $id)
@@ -119,7 +77,7 @@ class SubClientCompanyController extends Controller
         $input = $request->all();
         $company = Company::findOrFail($id);
 
-        $company->company_type_id = 3;
+        $company->company_type_id = 2;
         $company->company_code = $input['company_code'];
         $company->company_name = $input['company_name'];
         $company->std_code = $input['std_code'];
@@ -186,14 +144,15 @@ class SubClientCompanyController extends Controller
             $homeAddress->pincode = $input['pincode'];
             $company->addresses()->save($homeAddress);
         }
-        return redirect()->route('profile.sub_clients.index')
-            ->with('success', 'Customer Updated successfully');
+        return redirect()->route('profile.clients.index')
+            ->with('success', 'Customer created successfully');
     }
     // Show
     public function showDetails($id)
     {
         $company = Company::with('addresses', 'companyRegistrationDetail', 'authorisedPerson')->findOrFail($id);
-        $html = view('pages.profile.sub_client_company.show', compact('company'))->render();
+        $html = view('pages.profile.client_company.show', compact('company'))->render();
+        
         return response()->json([
             'html' => $html,
             'data' => [
@@ -204,6 +163,8 @@ class SubClientCompanyController extends Controller
             ]
         ]);
     }
+
+  
     // Delete
     public function destroy($id)
     {
@@ -231,10 +192,10 @@ class SubClientCompanyController extends Controller
         $request->validate([
             'file' => 'required|file|mimes:xlsx,csv'
         ]);
-        $company_type_id = 3;
+        $company_type_id = 2;
         Excel::import(new CompanyDataImport($company_type_id), request()->file('file'));
 
-        return redirect()->route('profile.sub_clients.index')->with('success', 'Data imported successfully');
+        return redirect()->route('profile.clients.index')->with('success', 'Data imported successfully');
     }
     // Import Users
     public function export(Request $request)
