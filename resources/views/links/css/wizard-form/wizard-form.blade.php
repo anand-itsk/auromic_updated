@@ -169,7 +169,7 @@
 
     .wizard .tab-pane {
         position: relative;
-        padding-top: 20px;
+        padding-top: 10px;
     }
 
 

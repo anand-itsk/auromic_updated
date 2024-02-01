@@ -4,6 +4,8 @@ namespace App\Http\Controllers\PageControllers\MasterControllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\AddressType;
+use App\Models\Company;
+use App\Models\CompanyType;
 use App\Models\Country;
 use App\Models\Employee;
 use App\Models\State;
@@ -30,7 +32,11 @@ class EmployeeController extends Controller
         $countries = Country::all();
         $states = State::all();
         $addressTypes = AddressType::all();
-        return view('pages.master.employee.create', ['countries' => $countries, 'states' => $states, 'addressTypes' => $addressTypes]);
+        $company_types = CompanyType::all();
+        // $companies = Company::with('authorisedPerson')
+        //     ->where('company_type_id', 1)
+        //     ->get();
+        return view('pages.master.employee.create', ['company_types' => $company_types, 'countries' => $countries, 'states' => $states, 'addressTypes' => $addressTypes]);
     }
     // Store Date
     public function store(Request $request)
@@ -200,5 +206,11 @@ class EmployeeController extends Controller
     public function export(Request $request)
     {
         return Excel::download(new CustomersExport($request->all()), 'CustomerDatas_' . date('d-m-Y') . '.xlsx');
+    }
+
+    public function getCompanies($companytypeid)
+    {
+        $companies = Company::where('company_type_id', $companytypeid)->with('authorisedPerson')->get();
+        return response()->json($companies);
     }
 }
