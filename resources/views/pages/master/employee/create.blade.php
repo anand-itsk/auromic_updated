@@ -60,13 +60,15 @@
                                                             <h4 class="text-center pb-4">Personal</h4>
                                                             {{-- Company Info --}}
                                                             <div class="row m-2">
-                                                                <h5 class="text-primary">Company Info</h5>
-                                                                <div class="form-group row">
+                                                                <h5 class="text-primary w-100">Company Info</h5>
+
+                                                                <div class="form-group row w-100">
+
                                                                     <label for="company_type_id"
                                                                         class="col-sm-2 col-form-label">Company Type</label>
                                                                     <div class="col-sm-4 mb-4">
 
-                                                                        <select class="form-control select2"
+                                                                        <select class="form-control select2 w-100"
                                                                             name="company_type_id" id="company_type_id">
                                                                             <option value="">Select</option>
                                                                             @foreach ($company_types as $item)
@@ -128,9 +130,9 @@
 
                                                             {{-- Permanent Address --}}
                                                             <div class="row m-2">
-                                                                <h5 class="text-primary">Permanent Address</h5>
+                                                                <h5 class="text-primary w-100">Permanent Address</h5>
 
-                                                                <div class="form-group row">
+                                                                <div class="form-group row w-100">
                                                                     <label for="office_address"
                                                                         class="col-sm-2 col-form-label">Office
                                                                         Address</label>
@@ -211,16 +213,21 @@
 
                                                             {{-- Correspondence Address --}}
                                                             <div class="row m-2">
-                                                                <h5 class="text-primary">Correspondence Address</h5>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox"
-                                                                        id="sameAsPermanentAddress">
-                                                                    <label class="form-check-label"
-                                                                        for="sameAsPermanentAddress">
-                                                                        Same as Permanent Address
-                                                                    </label>
+                                                                <div class="d-flex" style="flex-wrap: inherit">
+                                                                    <h5 class="text-primary w-100">Correspondence Address
+                                                                    </h5>
+
+                                                                    <div class="">
+                                                                        <input class="" type="checkbox"
+                                                                            id="sameAsPermanentAddress">
+                                                                        <label class=""
+                                                                            for="sameAsPermanentAddress">
+                                                                            Same as Permanent Address
+                                                                        </label>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="form-group row">
+
+                                                                <div class="form-group row w-100">
                                                                     <label for="address"
                                                                         class="col-sm-2 col-form-label">Address</label>
                                                                     <div class="col-sm-10 mb-4">
@@ -295,7 +302,312 @@
                                                                 </div>
                                                             </div>
 
+                                                            {{-- Identity  Proof --}}
+                                                            <div class="row m-2">
+                                                                <h5 class="text-primary w-100">Identity Proof
+                                                                </h5>
+                                                                <div class="form-group row">
 
+                                                                    <label for="voter_id_number"
+                                                                        class="col-sm-2 col-form-label">Voter ID
+                                                                        Number</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="text"
+                                                                            name="voter_id_number" id="voter_id_number">
+                                                                        @error('voter_id_number')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="driving_license_number"
+                                                                        class="col-sm-2 col-form-label">Driving License
+                                                                        Number</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="text"
+                                                                            name="driving_license_number"
+                                                                            id="driving_license_number">
+                                                                        @error('driving_license_number')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+                                                                    <label for="pan_number"
+                                                                        class="col-sm-2 col-form-label">Pan Number</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="text"
+                                                                            name="pan_number" id="pan_number">
+                                                                        @error('pan_number')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+                                                                    <label for="passport_number"
+                                                                        class="col-sm-2 col-form-label">Passport
+                                                                        Number</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="text"
+                                                                            name="passport_number" id="passport_number">
+                                                                        @error('passport_number')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+                                                                    <label for="identity_mark"
+                                                                        class="col-sm-2 col-form-label">Identity
+                                                                        Mark</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="text"
+                                                                            name="identity_mark" id="identity_mark">
+                                                                        @error('identity_mark')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            {{-- Other  Details --}}
+                                                            <div class="row m-2">
+                                                                <h5 class="text-primary w-100">Other Details
+                                                                </h5>
+                                                                <div class="form-group row">
+                                                                    <label for="dob"
+                                                                        class="col-sm-2 col-form-label mandatory">Date of
+                                                                        Birth</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="date"
+                                                                            name="dob" id="dob">
+                                                                        @error('dob')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="gender"
+                                                                        class="col-sm-2 col-form-label">Gender</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <select class="form-control" name="gender"
+                                                                            id="gender">
+                                                                            <option value="">Select</option>
+                                                                            <option value="male">Male</option>
+                                                                            <option value="female">Female</option>
+                                                                            <option value="others">Others</option>
+                                                                        </select>
+
+                                                                        @error('gender')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="blood_group"
+                                                                        class="col-sm-2 col-form-label">Blood Group</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <select class="form-control" name="blood_group"
+                                                                            id="blood_group">
+                                                                            <option value="">Select</option>
+                                                                            <option value="A+">A+</option>
+                                                                            <option value="A-">A-</option>
+                                                                            <option value="B+">B+</option>
+                                                                            <option value="B-">B-</option>
+                                                                            <option value="AB+">AB+</option>
+                                                                            <option value="AB-">AB-</option>
+                                                                            <option value="O+">O+</option>
+                                                                            <option value="O-">O-</option>
+                                                                        </select>
+
+                                                                        @error('blood_group')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="email"
+                                                                        class="col-sm-2 col-form-label">Email Id</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="email"
+                                                                            name="email" id="email">
+                                                                        @error('email')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="mobile"
+                                                                        class="col-sm-2 col-form-label">Mobile</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="text"
+                                                                            name="mobile" id="mobile">
+                                                                        @error('mobile')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="faorhus_name"
+                                                                        class="col-sm-2 col-form-label">Father's/Husband
+                                                                        Name</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="text"
+                                                                            name="faorhus_name" id="faorhus_name">
+                                                                        @error('faorhus_name')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="maritalStatus"
+                                                                        class="col-sm-2 col-form-label">Marital Status</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <select name="maritalStatus" id="maritalStatus"
+                                                                            class="form-control">
+                                                                            <option value="">Select</option>
+                                                                            <option value="single">Single</option>
+                                                                            <option value="married">Married</option>
+                                                                            <option value="divorced">Divorced</option>
+                                                                            <option value="widowed">Widowed</option>
+                                                                            <option value="separated">Separated</option>
+                                                                            <option value="other">Other</option>
+                                                                        </select>
+                                                                        @error('maritalStatus')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="phone_no"
+                                                                        class="col-sm-2 col-form-label">Phone No</label>
+                                                                    <div class="col-sm-1 mb-4">
+                                                                        <input class="form-control" type="std_code"
+                                                                            name="std_code" id="std_code">
+                                                                        @error('std_code')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+                                                                    <div class="col-sm-3 mb-4">
+                                                                        <input class="form-control" type="text"
+                                                                            name="phone" id="phone">
+                                                                        @error('phone')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label class="col-sm-2 col-form-label">Religion</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <select class="form-control select2"
+                                                                            name="religion_id" id="religion_id">
+                                                                            @foreach ($religions as $item)
+                                                                                <option value="{{ $item->id }}">
+                                                                                    {{ $item->name }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                        @error('religion_id')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label class="col-sm-2 col-form-label">Caste</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <select class="form-control select2"
+                                                                            name="caste_id" id="caste_id">
+                                                                            @foreach ($castes as $item)
+                                                                                <option value="{{ $item->id }}">
+                                                                                    {{ $item->name }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                        @error('caste_id')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label
+                                                                        class="col-sm-2 col-form-label">Nationality</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <select class="form-control select2"
+                                                                            name="nationality_id" id="nationality_id">
+                                                                            @foreach ($nationality as $item)
+                                                                                <option value="{{ $item->id }}">
+                                                                                    {{ $item->name }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                        @error('nationality_id')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="joining_date"
+                                                                        class="col-sm-2 col-form-label">Joining
+                                                                        Date</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="date"
+                                                                            name="joining_date" id="joining_date">
+                                                                        @error('joining_date')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="prob_period"
+                                                                        class="col-sm-2 col-form-label">Prob Period in
+                                                                        Month</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="text"
+                                                                            name="prob_period" id="prob_period">
+                                                                        @error('prob_period')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="confirm_date"
+                                                                        class="col-sm-2 col-form-label">Confirm
+                                                                        Date</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="date"
+                                                                            name="confirm_date" id="confirm_date">
+                                                                        @error('confirm_date')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="resigning_date"
+                                                                        class="col-sm-2 col-form-label">Resigning Date
+                                                                        Date</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="date"
+                                                                            name="resigning_date" id="resigning_date">
+                                                                        @error('resigning_date')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label class="col-sm-2 col-form-label">Select with
+                                                                        reason</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <select class="form-control select2"
+                                                                            name="resigning_reason_id"
+                                                                            id="resigning_reason_id">
+                                                                            @foreach ($nationality as $item)
+                                                                                <option value="{{ $item->id }}">
+                                                                                    {{ $item->name }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                        @error('resigning_reason_id')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
 
                                                             <ul class="list-inline pull-right">
                                                                 <li><button type="button"
@@ -304,373 +616,9 @@
                                                                         step</button></li>
                                                             </ul>
                                                         </div>
-                                                        <div class="tab-pane" role="tabpanel" id="step2">
-                                                            <h4 class="text-center">Step 2</h4>
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>Address 1 *</label>
-                                                                        <input class="form-control" type="text"
-                                                                            name="name" placeholder="">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>City / Town *</label>
-                                                                        <input class="form-control" type="text"
-                                                                            name="name" placeholder="">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>Country *</label>
-                                                                        <select name="country" class="form-control"
-                                                                            id="country">
-                                                                            <option value="NG" selected="selected">
-                                                                                Nigeria</option>
-                                                                            <option value="NU">Niue
-                                                                            </option>
-                                                                            <option value="NF">Norfolk
-                                                                                Island
-                                                                            </option>
-                                                                            <option value="KP">North
-                                                                                Korea</option>
-                                                                            <option value="MP">Northern
-                                                                                Mariana
-                                                                                Islands</option>
-                                                                            <option value="NO">Norway
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-
-
-
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>Registration No.</label>
-                                                                        <input class="form-control" type="text"
-                                                                            name="name" placeholder="">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-
-                                                            <ul class="list-inline pull-right">
-                                                                <li><button type="button"
-                                                                        class="default-btn prev-step">Back</button>
-                                                                </li>
-                                                                <li><button type="button"
-                                                                        class="default-btn next-step skip-btn">Skip</button>
-                                                                </li>
-                                                                <li><button type="button"
-                                                                        class="default-btn next-step">Continue</button>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="tab-pane" role="tabpanel" id="step3">
-                                                            <h4 class="text-center">Step 3</h4>
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>Account Name *</label>
-                                                                        <input class="form-control" type="text"
-                                                                            name="name" placeholder="">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>Demo</label>
-                                                                        <input class="form-control" type="text"
-                                                                            name="name" placeholder="">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>Inout</label>
-                                                                        <input class="form-control" type="text"
-                                                                            name="name" placeholder="">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>Information</label>
-                                                                        <div class="custom-file">
-                                                                            <input type="file"
-                                                                                class="custom-file-input" id="customFile">
-                                                                            <label class="custom-file-label"
-                                                                                for="customFile">Select
-                                                                                file</label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>Number *</label>
-                                                                        <input class="form-control" type="text"
-                                                                            name="name" placeholder="">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>Input Number</label>
-                                                                        <input class="form-control" type="text"
-                                                                            name="name" placeholder="">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <ul class="list-inline pull-right">
-                                                                <li><button type="button"
-                                                                        class="default-btn prev-step">Back</button>
-                                                                </li>
-                                                                <li><button type="button"
-                                                                        class="default-btn next-step skip-btn">Skip</button>
-                                                                </li>
-                                                                <li><button type="button"
-                                                                        class="default-btn next-step">Continue</button>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="tab-pane" role="tabpanel" id="step4">
-                                                            <h4 class="text-center">Step 4</h4>
-                                                            <div class="all-info-container">
-                                                                <div class="list-content">
-                                                                    <a href="#listone" data-toggle="collapse"
-                                                                        aria-expanded="false"
-                                                                        aria-controls="listone">Collapse 1
-                                                                        <i class="fa fa-chevron-down"></i></a>
-                                                                    <div class="collapse" id="listone">
-                                                                        <div class="list-box">
-                                                                            <div class="row">
-
-                                                                                <div class="col-md-6">
-                                                                                    <div class="form-group">
-                                                                                        <label>First and
-                                                                                            Last Name
-                                                                                            *</label>
-                                                                                        <input class="form-control"
-                                                                                            type="text" name="name"
-                                                                                            placeholder=""
-                                                                                            disabled="disabled">
-                                                                                    </div>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <div class="form-group">
-                                                                                        <label>Phone Number
-                                                                                            *</label>
-                                                                                        <input class="form-control"
-                                                                                            type="text" name="name"
-                                                                                            placeholder=""
-                                                                                            disabled="disabled">
-                                                                                    </div>
-                                                                                </div>
-
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="list-content">
-                                                                    <a href="#listtwo" data-toggle="collapse"
-                                                                        aria-expanded="false"
-                                                                        aria-controls="listtwo">Collapse 2
-                                                                        <i class="fa fa-chevron-down"></i></a>
-                                                                    <div class="collapse" id="listtwo">
-                                                                        <div class="list-box">
-                                                                            <div class="row">
-
-                                                                                <div class="col-md-6">
-                                                                                    <div class="form-group">
-                                                                                        <label>Address 1
-                                                                                            *</label>
-                                                                                        <input class="form-control"
-                                                                                            type="text" name="name"
-                                                                                            placeholder=""
-                                                                                            disabled="disabled">
-                                                                                    </div>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <div class="form-group">
-                                                                                        <label>City / Town
-                                                                                            *</label>
-                                                                                        <input class="form-control"
-                                                                                            type="text" name="name"
-                                                                                            placeholder=""
-                                                                                            disabled="disabled">
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-6">
-                                                                                    <div class="form-group">
-                                                                                        <label>Country
-                                                                                            *</label>
-                                                                                        <select name="country2"
-                                                                                            class="form-control"
-                                                                                            id="country2"
-                                                                                            disabled="disabled">
-                                                                                            <option value="NG"
-                                                                                                selected="selected">
-                                                                                                Nigeria
-                                                                                            </option>
-                                                                                            <option value="NU">
-                                                                                                Niue
-                                                                                            </option>
-                                                                                            <option value="NF">
-                                                                                                Norfolk
-                                                                                                Island
-                                                                                            </option>
-                                                                                            <option value="KP">
-                                                                                                North Korea
-                                                                                            </option>
-                                                                                            <option value="MP">
-                                                                                                Northern
-                                                                                                Mariana
-                                                                                                Islands
-                                                                                            </option>
-                                                                                            <option value="NO">
-                                                                                                Norway
-                                                                                            </option>
-                                                                                        </select>
-                                                                                    </div>
-                                                                                </div>
-
-
-
-                                                                                <div class="col-md-6">
-                                                                                    <div class="form-group">
-                                                                                        <label>Legal
-                                                                                            Form</label>
-                                                                                        <select name="legalform2"
-                                                                                            class="form-control"
-                                                                                            id="legalform2"
-                                                                                            disabled="disabled">
-                                                                                            <option value=""
-                                                                                                selected="selected">
-                                                                                                -Select an
-                                                                                                Answer-
-                                                                                            </option>
-                                                                                            <option value="AG">
-                                                                                                Limited
-                                                                                                liability
-                                                                                                company
-                                                                                            </option>
-                                                                                            <option value="GmbH">
-                                                                                                Public
-                                                                                                Company
-                                                                                            </option>
-                                                                                            <option value="GbR">
-                                                                                                No
-                                                                                                minimum
-                                                                                                capital,
-                                                                                                unlimited
-                                                                                                liability of
-                                                                                                partners,
-                                                                                                non-busines
-                                                                                            </option>
-                                                                                        </select>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-6">
-                                                                                    <div class="form-group">
-                                                                                        <label>Business
-                                                                                            Registration
-                                                                                            No.</label>
-                                                                                        <input class="form-control"
-                                                                                            type="text" name="name"
-                                                                                            placeholder=""
-                                                                                            disabled="disabled">
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-6">
-                                                                                    <div class="form-group">
-                                                                                        <label>Registered</label>
-                                                                                        <select name="vat2"
-                                                                                            class="form-control"
-                                                                                            id="vat2"
-                                                                                            disabled="disabled">
-                                                                                            <option value=""
-                                                                                                selected="selected">
-                                                                                                -Select an
-                                                                                                Answer-
-                                                                                            </option>
-                                                                                            <option value="yes">
-                                                                                                Yes
-                                                                                            </option>
-                                                                                            <option value="no">
-                                                                                                No
-                                                                                            </option>
-                                                                                        </select>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-6">
-                                                                                    <div class="form-group">
-                                                                                        <label>Seller</label>
-                                                                                        <input class="form-control"
-                                                                                            type="text" name="name"
-                                                                                            placeholder=""
-                                                                                            disabled="disabled">
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-12">
-                                                                                    <div class="form-group">
-                                                                                        <label>Company Name
-                                                                                            *</label>
-                                                                                        <input class="form-control"
-                                                                                            type="password" name="name"
-                                                                                            placeholder=""
-                                                                                            disabled="disabled">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="list-content">
-                                                                    <a href="#listthree" data-toggle="collapse"
-                                                                        aria-expanded="false"
-                                                                        aria-controls="listthree">Collapse
-                                                                        3 <i class="fa fa-chevron-down"></i></a>
-                                                                    <div class="collapse" id="listthree">
-                                                                        <div class="list-box">
-                                                                            <div class="row">
-
-                                                                                <div class="col-md-6">
-                                                                                    <div class="form-group">
-                                                                                        <label>Name
-                                                                                            *</label>
-                                                                                        <input class="form-control"
-                                                                                            type="text" name="name"
-                                                                                            placeholder="">
-                                                                                    </div>
-                                                                                </div>
-
-
-                                                                                <div class="col-md-6">
-                                                                                    <div class="form-group">
-                                                                                        <label>Number
-                                                                                            *</label>
-                                                                                        <input class="form-control"
-                                                                                            type="text" name="name"
-                                                                                            placeholder="">
-                                                                                    </div>
-                                                                                </div>
-
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <ul class="list-inline pull-right">
-                                                                <li><button type="button"
-                                                                        class="default-btn prev-step">Back</button>
-                                                                </li>
-                                                                <li><button type="button"
-                                                                        class="default-btn next-step">Finish</button>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
+                                                        @include('pages.master.employee.create_finance')
+                                                        @include('pages.master.employee.create_family')
+                                                        @include('pages.master.employee.create_nominee')
                                                         <div class="clearfix"></div>
                                                     </div>
 

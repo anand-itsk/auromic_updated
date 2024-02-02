@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('employee_nominees', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('family_memeber_id');
+            $table->string('gratuity_sharing')->nullable();
+            $table->string('marital_status')->nullable();
+            $table->unsignedBigInteger('religion_id')->nullable();
+            $table->string('faorhus_name')->nullable();
+            $table->string('guardian_name')->nullable();
+            $table->string('guardian_address')->nullable();
+            $table->string('guardian_relation_with_emp')->nullable();
+            $table->foreign('religion_id')->references('id')->on('religions')->onDelete('cascade');
             $table->timestamps();
         });
     }
