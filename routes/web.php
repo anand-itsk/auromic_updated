@@ -151,6 +151,12 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/data', [EmployeeController::class, 'indexData'])->name('data');
 
             Route::get('/create', [EmployeeController::class, 'create'])->name('create');
+            Route::post('/store_personal', [EmployeeController::class, 'storePersonal'])->name('store.personal');
+            Route::post('/store_finance', [EmployeeController::class, 'storefinance'])->name('store.finance');
+            // Route::post('/step2', 'WizardController@storeStep2')->name('wizard.storeStep2');
+
+
+
             Route::post('/store', [EmployeeController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [EmployeeController::class, 'edit'])->name('edit');
             Route::post('/update/{id}', [EmployeeController::class, 'update'])->name('update');

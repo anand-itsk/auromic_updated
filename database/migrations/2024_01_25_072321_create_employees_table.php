@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('company_id');
+            $table->unsignedBigInteger('company_id')->default(1);
             $table->string('employee_code');
             $table->string('employee_name');
             $table->date('dob')->nullable();
@@ -33,7 +33,7 @@ return new class extends Migration
             $table->string('prob_period')->nullable();
             $table->date('confirm_date')->nullable();
             $table->date('resigning_date')->nullable();
-            $table->unsignedBigInteger('resigning_reason_id');
+            $table->unsignedBigInteger('resigning_reason_id')->default(1);
             $table->timestamps();
 
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
