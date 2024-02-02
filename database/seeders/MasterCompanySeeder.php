@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Company;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
+
 
 class MasterCompanySeeder extends Seeder
 {
@@ -12,10 +14,10 @@ class MasterCompanySeeder extends Seeder
      */
     public function run(): void
     {
-    
+
         Company::factory(\Database\Factories\MasterCompanyFactory::class)->count(10)->create();
 
-        
+
         Company::create([
             'company_code' => 'C001',
             'company_name' => 'Syscorp',

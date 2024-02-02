@@ -28,7 +28,7 @@ class SubClientCompanyController extends Controller
     public function indexData()
     {
         // Eager load the roles relationship
-        $company = Company::query()->where('company_type_id', 3);
+        $company = Company::query()->where('company_type_id', 4);
         return DataTables::of($company)->make(true);
     }
     // Create Page
@@ -37,10 +37,10 @@ class SubClientCompanyController extends Controller
         $countries = Country::all();
         $states = State::all();
         $addressTypes = AddressType::all();
-         $master_companies = Company::with('authorisedPerson')
-            ->where('company_type_id', 2)
+        $master_companies = Company::with('authorisedPerson')
+            ->where('company_type_id', 3)
             ->get();
-        return view('pages.profile.sub_client_company.create', ['countries' => $countries, 'states' => $states, 'addressTypes' => $addressTypes,'master_companies' =>  $master_companies]);
+        return view('pages.profile.sub_client_company.create', ['countries' => $countries, 'states' => $states, 'addressTypes' => $addressTypes, 'master_companies' =>  $master_companies]);
     }
     // Store Date
     public function store(Request $request)
@@ -55,7 +55,7 @@ class SubClientCompanyController extends Controller
         $input = $request->all();
         $company = new Company();
 
-        $input['company_type_id'] = 3;
+        $input['company_type_id'] = 4;
         $input['created_by'] = $auth_id;
         $input['updated_by'] = $auth_id;
 
@@ -120,7 +120,7 @@ class SubClientCompanyController extends Controller
         $input = $request->all();
         $company = Company::findOrFail($id);
 
-        $company->company_type_id = 3;
+        $company->company_type_id = 4;
         $company->company_code = $input['company_code'];
         $company->company_name = $input['company_name'];
         $company->std_code = $input['std_code'];
@@ -232,7 +232,7 @@ class SubClientCompanyController extends Controller
         $request->validate([
             'file' => 'required|file|mimes:xlsx,csv'
         ]);
-        $company_type_id = 3;
+        $company_type_id = 4;
         Excel::import(new CompanyDataImport($company_type_id), request()->file('file'));
 
         return redirect()->route('profile.sub_clients.index')->with('success', 'Data imported successfully');

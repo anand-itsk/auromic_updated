@@ -58,7 +58,8 @@
                                                 <div class="tab-content" id="main_form">
                                                     <div class="tab-pane active" role="tabpanel" id="step1">
                                                         <h4 class="text-center pb-4">Personal</h4>
-                                                        <form role="form" action="{{ route('master.employees.store.personal') }}"
+                                                        <form role="form"
+                                                            action="{{ route('master.employees.store.personal') }}"
                                                             method="post" class="login-box">
                                                             <input type="hidden" name="_token"
                                                                 value="{{ csrf_token() }}">
@@ -100,7 +101,6 @@
                                                                         @enderror
                                                                     </div>
 
-
                                                                     <label for="employee_code"
                                                                         class="col-sm-2 col-form-label mandatory">Employee
                                                                         Code</label>
@@ -108,17 +108,14 @@
 
                                                                         <input class="form-control" type="text"
                                                                             name="employee_code" id="employee_code">
-                                                                        @error('employee_code')
-                                                                            <span class="error"
-                                                                                style="color: red;">{{ $message }}</span>
-                                                                        @enderror
+                                                                        <span class="error-message text-danger"></span>
                                                                     </div>
 
 
 
                                                                     <label for="employee_name"
                                                                         class="col-sm-2 col-form-label mandatory">Employee
-                                                                        Code</label>
+                                                                        Name</label>
                                                                     <div class="col-sm-4 mb-4">
 
                                                                         <input class="form-control" type="text"
@@ -138,8 +135,7 @@
 
                                                                 <div class="form-group row w-100">
                                                                     <label for="office_address"
-                                                                        class="col-sm-2 col-form-label">Office
-                                                                        Address</label>
+                                                                        class="col-sm-2 col-form-label">Address</label>
                                                                     <div class="col-sm-10 mb-4">
                                                                         <textarea class="form-control" name="office_address" id="office_address" cols="10" rows="3"></textarea>
 
@@ -232,24 +228,24 @@
                                                                 </div>
 
                                                                 <div class="form-group row w-100">
-                                                                    <label for="address"
+                                                                    <label for="corrs_address"
                                                                         class="col-sm-2 col-form-label">Address</label>
                                                                     <div class="col-sm-10 mb-4">
-                                                                        <textarea class="form-control" name="address" id="address" cols="10" rows="3"></textarea>
+                                                                        <textarea class="form-control" name="corrs_address" id="corrs_address" cols="10" rows="3"></textarea>
 
-                                                                        @error('address')
+                                                                        @error('corrs_address')
                                                                             <span class="error"
                                                                                 style="color: red;">{{ $message }}</span>
                                                                         @enderror
                                                                     </div>
 
-                                                                    <label for="area"
+                                                                    <label for="corrs_area"
                                                                         class="col-sm-2 col-form-label">Village/Area</label>
                                                                     <div class="col-sm-4 mb-4">
                                                                         <input class="form-control" type="text"
-                                                                            name="area" id="area">
+                                                                            name="corrs_area" id="corrs_area">
 
-                                                                        @error('area')
+                                                                        @error('corrs_area')
                                                                             <span class="error"
                                                                                 style="color: red;">{{ $message }}</span>
                                                                         @enderror
@@ -258,14 +254,14 @@
                                                                     <label class="col-sm-2 col-form-label">Country</label>
                                                                     <div class="col-sm-4 mb-4">
                                                                         <select class="form-control select2"
-                                                                            name="country_id" id="country_id">
+                                                                            name="corrs_country_id" id="corrs_country_id">
                                                                             @foreach ($countries as $item)
                                                                                 <option value="{{ $item->id }}">
                                                                                     {{ $item->name }}
                                                                                 </option>
                                                                             @endforeach
                                                                         </select>
-                                                                        @error('country_id')
+                                                                        @error('corrs_country_id')
                                                                             <span class="error"
                                                                                 style="color: red;">{{ $message }}</span>
                                                                         @enderror
@@ -274,9 +270,10 @@
                                                                     <label class="col-sm-2 col-form-label">State</label>
                                                                     <div class="col-sm-4 mb-4">
                                                                         <select class="form-control select2 w-100"
-                                                                            name="state_id" id="state_id" disabled>
+                                                                            name="corrs_state_id" id="corrs_state_id"
+                                                                            disabled>
                                                                         </select>
-                                                                        @error('state_id')
+                                                                        @error('corrs_state_id')
                                                                             <span class="error"
                                                                                 style="color: red;">{{ $message }}</span>
                                                                         @enderror
@@ -285,20 +282,21 @@
                                                                     <label class="col-sm-2 col-form-label">District</label>
                                                                     <div class="col-sm-4 mb-4">
                                                                         <select class="form-control select2 w-100"
-                                                                            name="district_id" id="district_id" disabled>
+                                                                            name="corrs_district_id"
+                                                                            id="corrs_district_id" disabled>
                                                                         </select>
-                                                                        @error('district_id')
+                                                                        @error('corrs_district_id')
                                                                             <span class="error"
                                                                                 style="color: red;">{{ $message }}</span>
                                                                         @enderror
                                                                     </div>
 
-                                                                    <label for="pincode"
+                                                                    <label for="corrs_pincode"
                                                                         class="col-sm-2 col-form-label">Pincode</label>
                                                                     <div class="col-sm-4 mb-4">
                                                                         <input class="form-control" type="text"
-                                                                            name="pincode" id="pincode">
-                                                                        @error('pincode')
+                                                                            name="corrs_pincode" id="corrs_pincode">
+                                                                        @error('corrs_pincode')
                                                                             <span class="error"
                                                                                 style="color: red;">{{ $message }}</span>
                                                                         @enderror
@@ -729,7 +727,8 @@
                 // Copy values from Permanent Address fields to Correspondence Address fields
                 document.getElementById('address').value = document.getElementById('office_address').value;
                 document.getElementById('area').value = document.getElementById('office_area').value;
-                document.getElementById('country_id').value = document.getElementById('office_country_id').value;
+                document.getElementById('corrs_country_id').value = document.getElementById('office_country_id')
+                    .value;
                 document.getElementById('state_id').value = document.getElementById('office_state_id').value;
                 document.getElementById('district_id').value = document.getElementById('office_district_id').value;
                 document.getElementById('pincode').value = document.getElementById('office_pincode').value;
@@ -737,7 +736,7 @@
                 // Clear the Correspondence Address fields
                 document.getElementById('address').value = '';
                 document.getElementById('area').value = '';
-                document.getElementById('country_id').value = '';
+                document.getElementById('corrs_country_id').value = '';
                 document.getElementById('state_id').value = '';
                 document.getElementById('district_id').value = '';
                 document.getElementById('pincode').value = '';
@@ -746,7 +745,7 @@
 
         $(".next-step").click(function(e) {
             e.preventDefault();
-            
+
             var activeTab = $('.wizard .nav-tabs li.active');
             var form = $(this).closest('form');
             var formData = new FormData(form[0]);
@@ -765,8 +764,34 @@
                     nextTab(activeTab);
                 },
                 error: function(response) {
-                    // Handle errors, display validation messages if necessary
-                    console.log(response.responseJSON.errors);
+                    if (response.status === 422) { // Unprocessable Entity (Validation Error)
+                        let errors = response.responseJSON.errors;
+                        let firstInvalidInput = null;
+
+                        for (let key in errors) {
+                            if (errors.hasOwnProperty(key)) {
+                                let inputField = form.find('[name="' + key + '"]');
+                                let errorMessage = errors[key][0]; // First error message for this field
+
+                                // Append error message and add invalid input styling
+                                inputField.addClass('is-invalid').after(
+                                    '<span class="error-message text-danger">' + errorMessage +
+                                    '</span>');
+
+                                // Focus the first invalid input
+                                if (!firstInvalidInput) {
+                                    firstInvalidInput = inputField;
+                                }
+                            }
+                        }
+
+                        if (firstInvalidInput) {
+                            firstInvalidInput.focus();
+                        }
+                    } else {
+                        // Handle other types of errors
+                        console.log('An error occurred:', response.statusText);
+                    }
                 }
             });
         });

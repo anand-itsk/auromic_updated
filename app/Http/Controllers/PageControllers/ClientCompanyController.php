@@ -28,7 +28,7 @@ class ClientCompanyController extends Controller
     public function indexData()
     {
         // Eager load the roles relationship
-        $company = Company::query()->where('company_type_id', 2);
+        $company = Company::query()->where('company_type_id', 3);
         return DataTables::of($company)->make(true);
     }
     // Create Page
@@ -38,7 +38,7 @@ class ClientCompanyController extends Controller
         $states = State::all();
         $addressTypes = AddressType::all();
         $master_companies = Company::with('authorisedPerson')
-            ->where('company_type_id', 1)
+            ->where('company_type_id', 2)
             ->get();
         return view('pages.profile.client_company.create', ['master_companies' => $master_companies, 'countries' => $countries, 'states' => $states, 'addressTypes' => $addressTypes]);
     }
@@ -55,7 +55,7 @@ class ClientCompanyController extends Controller
         $input = $request->all();
         $company = new Company();
 
-        $input['company_type_id'] = 2;
+        $input['company_type_id'] = 3;
         $input['created_by'] = $auth_id;
         $input['updated_by'] = $auth_id;
 
@@ -119,7 +119,7 @@ class ClientCompanyController extends Controller
         $input = $request->all();
         $company = Company::findOrFail($id);
 
-        $company->company_type_id = 2;
+        $company->company_type_id = 3;
         $company->company_code = $input['company_code'];
         $company->company_name = $input['company_name'];
         $company->std_code = $input['std_code'];
@@ -231,7 +231,7 @@ class ClientCompanyController extends Controller
         $request->validate([
             'file' => 'required|file|mimes:xlsx,csv'
         ]);
-        $company_type_id = 2;
+        $company_type_id = 3;
         Excel::import(new CompanyDataImport($company_type_id), request()->file('file'));
 
         return redirect()->route('profile.clients.index')->with('success', 'Data imported successfully');
