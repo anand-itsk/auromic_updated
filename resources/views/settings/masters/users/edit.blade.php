@@ -68,9 +68,9 @@
                                         <label class="col-sm-2 col-form-label">Select</label>
                                         <div class="col-sm-10">
                                             <select class="form-control" name="role">
-                                                <option value="{{$userRole->name ?? ''}}">{{ $userRole->name ?? 'Select' }}</option>
+                                                <!-- <option value="{{$userRole->name ?? ''}}">{{ $userRole->name ?? 'Select' }}</option> -->
                                                 @foreach ($roles as $item)
-                                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                                   <option value="{{ $item->name }}" @if ($userRole && $userRole->name === $item->name) selected @endif>{{ $item->name }}</option>
                                                 @endforeach
                                             </select>
                                             @error('role')
@@ -84,12 +84,13 @@
                                             <button type="submit" class="btn btn-primary waves-effect waves-light">
                                                 Submit
                                             </button>
-                                            <button type="reset" class="btn btn-warning waves-effect waves-light">
+                                            <!-- <button type="reset" class="btn btn-warning waves-effect waves-light">
                                                 Reset
-                                            </button>
-                                            <button type="cancel" class="btn btn-secondary waves-effect m-l-5">
+                                            </button> -->
+                                            <a href="{{ route('users') }}"
+                                                class="btn btn-secondary waves-effect m-l-5">
                                                 Cancel
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
 

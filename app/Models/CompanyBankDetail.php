@@ -13,4 +13,8 @@ class CompanyBankDetail extends Model
         'company_id',
         'bank_detail_id'
     ];
+     public function bankDetail()
+    {
+        return $this->belongsTo(BankDetail::class, 'bank_detail_id', 'id');
+    }
 }
