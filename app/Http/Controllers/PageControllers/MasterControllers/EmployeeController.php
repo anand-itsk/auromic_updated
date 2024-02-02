@@ -17,6 +17,7 @@ use App\Models\PaymentMode;
 use App\Models\Religion;
 use App\Models\State;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
 class EmployeeController extends Controller
@@ -61,6 +62,34 @@ class EmployeeController extends Controller
             'esi_despensaries' => $esi_despensaries,
             'family_members' => $family_members
         ]);
+    }
+
+    // Store Personal Data
+    public function storePersonal(Request $request)
+    {
+        $rules = [
+            'employee_code' => 'required',
+            'employee_name' => 'required',
+            'dob'   => 'required'
+        ];
+
+        // Validate request
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            // Return error messages if validation fails
+            return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
+        }
+
+        // Store data
+        $employee = new Employee();
+        $employee->employee_code = $request->employee_code;
+        $employee->employee_name = $request->employee_name;
+        $employee->dob = $request->dob;
+        $employee->save();
+
+        // Return success response
+        return response()->json(['success' => true, 'message' => 'Step 1 completed successfully.']);
     }
     // Store Date
     public function store(Request $request)

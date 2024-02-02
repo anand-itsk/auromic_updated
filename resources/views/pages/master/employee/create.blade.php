@@ -54,10 +54,14 @@
                                     <div class="card m-b-30">
                                         <div class="card-body">
                                             <div class="m-b-30">
-                                                <form role="form" action="index.html" class="login-box">
-                                                    <div class="tab-content" id="main_form">
-                                                        <div class="tab-pane active" role="tabpanel" id="step1">
-                                                            <h4 class="text-center pb-4">Personal</h4>
+                                                {{-- <form role="form" action="index.html" class="login-box"> --}}
+                                                <div class="tab-content" id="main_form">
+                                                    <div class="tab-pane active" role="tabpanel" id="step1">
+                                                        <h4 class="text-center pb-4">Personal</h4>
+                                                        <form role="form" action="{{ route('master.employees.store.personal') }}"
+                                                            method="post" class="login-box">
+                                                            <input type="hidden" name="_token"
+                                                                value="{{ csrf_token() }}">
                                                             {{-- Company Info --}}
                                                             <div class="row m-2">
                                                                 <h5 class="text-primary w-100">Company Info</h5>
@@ -458,7 +462,8 @@
                                                                     </div>
 
                                                                     <label for="maritalStatus"
-                                                                        class="col-sm-2 col-form-label">Marital Status</label>
+                                                                        class="col-sm-2 col-form-label">Marital
+                                                                        Status</label>
                                                                     <div class="col-sm-4 mb-4">
                                                                         <select name="maritalStatus" id="maritalStatus"
                                                                             class="form-control">
@@ -610,19 +615,19 @@
                                                             </div>
 
                                                             <ul class="list-inline pull-right">
-                                                                <li><button type="button"
-                                                                        class="default-btn next-step">Continue
-                                                                        to next
-                                                                        step</button></li>
+                                                                <li><button type="button" class="default-btn next-step"
+                                                                        data-url="{{ route('master.employees.store.personal') }}">Continue
+                                                                        to next step</button></li>
                                                             </ul>
-                                                        </div>
-                                                        @include('pages.master.employee.create_finance')
-                                                        @include('pages.master.employee.create_family')
-                                                        @include('pages.master.employee.create_nominee')
-                                                        <div class="clearfix"></div>
+                                                        </form>
                                                     </div>
+                                                    @include('pages.master.employee.create_finance')
+                                                    @include('pages.master.employee.create_family')
+                                                    @include('pages.master.employee.create_nominee')
+                                                    <div class="clearfix"></div>
+                                                </div>
 
-                                                </form>
+                                                {{-- </form> --}}
 
                                             </div>
                                         </div>
@@ -656,13 +661,13 @@
                 }
             });
 
-            $(".next-step").click(function(e) {
+            // $(".next-step").click(function(e) {
 
-                var active = $('.wizard .nav-tabs li.active');
-                active.next().removeClass('disabled');
-                nextTab(active);
+            //     var active = $('.wizard .nav-tabs li.active');
+            //     active.next().removeClass('disabled');
+            //     nextTab(active);
 
-            });
+            // });
             $(".prev-step").click(function(e) {
 
                 var active = $('.wizard .nav-tabs li.active');
@@ -737,6 +742,33 @@
                 document.getElementById('district_id').value = '';
                 document.getElementById('pincode').value = '';
             }
+        });
+
+        $(".next-step").click(function(e) {
+            e.preventDefault();
+            
+            var activeTab = $('.wizard .nav-tabs li.active');
+            var form = $(this).closest('form');
+            var formData = new FormData(form[0]);
+            var url = form.attr('action'); // Set form action attribute to the appropriate Laravel route.
+            console.log(url);
+            // AJAX submission to Laravel
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    // If save is successful, move to the next tab
+                    activeTab.next().removeClass('disabled');
+                    nextTab(activeTab);
+                },
+                error: function(response) {
+                    // Handle errors, display validation messages if necessary
+                    console.log(response.responseJSON.errors);
+                }
+            });
         });
     </script>
 @endsection
