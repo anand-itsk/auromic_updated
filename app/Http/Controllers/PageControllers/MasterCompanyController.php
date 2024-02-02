@@ -47,7 +47,8 @@ class MasterCompanyController extends Controller
         $validatedData = $request->validate([
             'company_code' => 'required|max:255',
             'company_name' => 'required|max:255',
-            'name' => 'required'
+            'name' => 'required',
+            'email' => 'email|unique:authorised_people,email',
         ]);
         $input = $request->all();
         // dd($input);
