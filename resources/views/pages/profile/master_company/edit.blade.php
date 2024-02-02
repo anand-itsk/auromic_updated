@@ -12,11 +12,12 @@
                     <div class="btn-group float-right">
                         <ol class="breadcrumb hide-phone p-0 m-0">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}">Auromics</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('profile.masters.index') }}">Company</a></li>
-                            <li class="breadcrumb-item">Edit</li>
+                            <li class="breadcrumb-item"><a href="{{ route('profile.masters.index') }}">Mastter
+                                    Company</a></li>
+                            <li class="breadcrumb-item">Edit </li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Edit User</h4>
+                    <h4 class="page-title">Edit Master Company</h4>
                 </div>
             </div>
         </div>

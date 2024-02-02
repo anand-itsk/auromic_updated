@@ -32,7 +32,9 @@ class DatabaseSeeder extends Seeder
             BankDetailTableSeeder::class,
             CompanyBankDetailTableSeeder::class,
             CustomerTableSeeder::class,
-            EmployeeTableSeeder::class
+            EmployeeTableSeeder::class,
+            MasterCompanySeeder::class,
+            AuthorisedPeopleTableSeeder::class
         ]);
     }
 }
