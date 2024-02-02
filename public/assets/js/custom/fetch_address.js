@@ -29,6 +29,21 @@ $(document).ready(function() {
         });
     });
 
+    $('#office_state_id').select2();
+
+    $('#office_state_id').on('change', function() {
+        var stateId = this.value;
+        $.get(`/get-districts/${stateId}`, function(districts) {
+            var districtSelect = $('#office_district_id');
+            districtSelect.empty();
+            districtSelect.append(new Option('Select State', ''));
+            $.each(districts, function(index, state) {
+                districtSelect.append(new Option(state.name, state.id));
+            });
+            districtSelect.prop('disabled', false).trigger('change');
+        });
+    });
+
     // Similar logic for updating districts when state changes
 
 

@@ -25,400 +25,617 @@
             </div>
             <!-- end page title end breadcrumb -->
             <section class="pt-5">
-                <div class="container">
-                    <div class="row d-flex justify-content-center">
-                        <div class="col-md-8">
-                            <div class="wizard">
-                                <div class="wizard-inner">
-                                    <div class="connecting-line"></div>
-                                    <ul class="nav nav-tabs" role="tablist">
-                                        <li role="presentation" class="active">
-                                            <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab"
-                                                aria-expanded="true"><span class="round-tab">1 </span> <i>Step 1</i></a>
-                                        </li>
-                                        <li role="presentation" class="disabled">
-                                            <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab"
-                                                aria-expanded="false"><span class="round-tab">2</span> <i>Step 2</i></a>
-                                        </li>
-                                        <li role="presentation" class="disabled">
-                                            <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab"><span
-                                                    class="round-tab">3</span> <i>Step
-                                                    3</i></a>
-                                        </li>
-                                        <li role="presentation" class="disabled">
-                                            <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab"><span
-                                                    class="round-tab">4</span> <i>Step
-                                                    4</i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <form role="form" action="index.html" class="login-box">
-                                    <div class="tab-content" id="main_form">
-                                        <div class="tab-pane active" role="tabpanel" id="step1">
-                                            <h4 class="text-center">Step 1</h4>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>First and Last Name *</label>
-                                                        <input class="form-control" type="text" name="name"
-                                                            placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Phone Number *</label>
-                                                        <input class="form-control" type="text" name="name"
-                                                            placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Email Address *</label>
-                                                        <input class="form-control" type="email" name="name"
-                                                            placeholder="">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Password *</label>
-                                                        <input class="form-control" type="password" name="name"
-                                                            placeholder="">
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-                                            <ul class="list-inline pull-right">
-                                                <li><button type="button" class="default-btn next-step">Continue to next
-                                                        step</button></li>
-                                            </ul>
-                                        </div>
-                                        <div class="tab-pane" role="tabpanel" id="step2">
-                                            <h4 class="text-center">Step 2</h4>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Address 1 *</label>
-                                                        <input class="form-control" type="text" name="name"
-                                                            placeholder="">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>City / Town *</label>
-                                                        <input class="form-control" type="text" name="name"
-                                                            placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Country *</label>
-                                                        <select name="country" class="form-control" id="country">
-                                                            <option value="NG" selected="selected">Nigeria</option>
-                                                            <option value="NU">Niue</option>
-                                                            <option value="NF">Norfolk Island
-                                                            </option>
-                                                            <option value="KP">North Korea</option>
-                                                            <option value="MP">Northern Mariana
-                                                                Islands</option>
-                                                            <option value="NO">Norway</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-
-
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Registration No.</label>
-                                                        <input class="form-control" type="text" name="name"
-                                                            placeholder="">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <ul class="list-inline pull-right">
-                                                <li><button type="button" class="default-btn prev-step">Back</button>
-                                                </li>
-                                                <li><button type="button"
-                                                        class="default-btn next-step skip-btn">Skip</button>
-                                                </li>
-                                                <li><button type="button" class="default-btn next-step">Continue</button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="tab-pane" role="tabpanel" id="step3">
-                                            <h4 class="text-center">Step 3</h4>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Account Name *</label>
-                                                        <input class="form-control" type="text" name="name"
-                                                            placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Demo</label>
-                                                        <input class="form-control" type="text" name="name"
-                                                            placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Inout</label>
-                                                        <input class="form-control" type="text" name="name"
-                                                            placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Information</label>
-                                                        <div class="custom-file">
-                                                            <input type="file" class="custom-file-input"
-                                                                id="customFile">
-                                                            <label class="custom-file-label" for="customFile">Select
-                                                                file</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Number *</label>
-                                                        <input class="form-control" type="text" name="name"
-                                                            placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Input Number</label>
-                                                        <input class="form-control" type="text" name="name"
-                                                            placeholder="">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <ul class="list-inline pull-right">
-                                                <li><button type="button" class="default-btn prev-step">Back</button>
-                                                </li>
-                                                <li><button type="button"
-                                                        class="default-btn next-step skip-btn">Skip</button>
-                                                </li>
-                                                <li><button type="button" class="default-btn next-step">Continue</button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="tab-pane" role="tabpanel" id="step4">
-                                            <h4 class="text-center">Step 4</h4>
-                                            <div class="all-info-container">
-                                                <div class="list-content">
-                                                    <a href="#listone" data-toggle="collapse" aria-expanded="false"
-                                                        aria-controls="listone">Collapse 1 <i
-                                                            class="fa fa-chevron-down"></i></a>
-                                                    <div class="collapse" id="listone">
-                                                        <div class="list-box">
-                                                            <div class="row">
-
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>First and Last Name
-                                                                            *</label>
-                                                                        <input class="form-control" type="text"
-                                                                            name="name" placeholder=""
-                                                                            disabled="disabled">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>Phone Number *</label>
-                                                                        <input class="form-control" type="text"
-                                                                            name="name" placeholder=""
-                                                                            disabled="disabled">
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="list-content">
-                                                    <a href="#listtwo" data-toggle="collapse" aria-expanded="false"
-                                                        aria-controls="listtwo">Collapse 2 <i
-                                                            class="fa fa-chevron-down"></i></a>
-                                                    <div class="collapse" id="listtwo">
-                                                        <div class="list-box">
-                                                            <div class="row">
-
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>Address 1 *</label>
-                                                                        <input class="form-control" type="text"
-                                                                            name="name" placeholder=""
-                                                                            disabled="disabled">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>City / Town *</label>
-                                                                        <input class="form-control" type="text"
-                                                                            name="name" placeholder=""
-                                                                            disabled="disabled">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>Country *</label>
-                                                                        <select name="country2" class="form-control"
-                                                                            id="country2" disabled="disabled">
-                                                                            <option value="NG" selected="selected">
-                                                                                Nigeria</option>
-                                                                            <option value="NU">Niue
-                                                                            </option>
-                                                                            <option value="NF">
-                                                                                Norfolk Island</option>
-                                                                            <option value="KP">
-                                                                                North Korea</option>
-                                                                            <option value="MP">
-                                                                                Northern Mariana Islands
-                                                                            </option>
-                                                                            <option value="NO">
-                                                                                Norway</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-
-
-
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>Legal Form</label>
-                                                                        <select name="legalform2" class="form-control"
-                                                                            id="legalform2" disabled="disabled">
-                                                                            <option value="" selected="selected">
-                                                                                -Select an Answer-
-                                                                            </option>
-                                                                            <option value="AG">
-                                                                                Limited liability
-                                                                                company</option>
-                                                                            <option value="GmbH">
-                                                                                Public Company</option>
-                                                                            <option value="GbR">No
-                                                                                minimum capital,
-                                                                                unlimited liability of
-                                                                                partners, non-busines
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>Business Registration
-                                                                            No.</label>
-                                                                        <input class="form-control" type="text"
-                                                                            name="name" placeholder=""
-                                                                            disabled="disabled">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>Registered</label>
-                                                                        <select name="vat2" class="form-control"
-                                                                            id="vat2" disabled="disabled">
-                                                                            <option value="" selected="selected">
-                                                                                -Select an Answer-
-                                                                            </option>
-                                                                            <option value="yes">Yes
-                                                                            </option>
-                                                                            <option value="no">No
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>Seller</label>
-                                                                        <input class="form-control" type="text"
-                                                                            name="name" placeholder=""
-                                                                            disabled="disabled">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <div class="form-group">
-                                                                        <label>Company Name *</label>
-                                                                        <input class="form-control" type="password"
-                                                                            name="name" placeholder=""
-                                                                            disabled="disabled">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="list-content">
-                                                    <a href="#listthree" data-toggle="collapse" aria-expanded="false"
-                                                        aria-controls="listthree">Collapse 3 <i
-                                                            class="fa fa-chevron-down"></i></a>
-                                                    <div class="collapse" id="listthree">
-                                                        <div class="list-box">
-                                                            <div class="row">
-
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>Name *</label>
-                                                                        <input class="form-control" type="text"
-                                                                            name="name" placeholder="">
-                                                                    </div>
-                                                                </div>
-
-
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>Number *</label>
-                                                                        <input class="form-control" type="text"
-                                                                            name="name" placeholder="">
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <ul class="list-inline pull-right">
-                                                <li><button type="button" class="default-btn prev-step">Back</button>
-                                                </li>
-                                                <li><button type="button" class="default-btn next-step">Finish</button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-
-                                </form>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-12">
+                        <div class="wizard">
+                            <div class="wizard-inner">
+                                <div class="connecting-line"></div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active">
+                                        <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab"
+                                            aria-expanded="true"><span class="round-tab">1 </span> <i>Personal</i></a>
+                                    </li>
+                                    <li role="presentation" class="disabled">
+                                        <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab"
+                                            aria-expanded="false"><span class="round-tab">2</span> <i>Finance</i></a>
+                                    </li>
+                                    <li role="presentation" class="disabled">
+                                        <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab"><span
+                                                class="round-tab">3</span> <i>Family</i></a>
+                                    </li>
+                                    <li role="presentation" class="disabled">
+                                        <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab"><span
+                                                class="round-tab">4</span> <i>Nominee</i></a>
+                                    </li>
+                                </ul>
                             </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card m-b-30">
+                                        <div class="card-body">
+                                            <div class="m-b-30">
+                                                <form role="form" action="index.html" class="login-box">
+                                                    <div class="tab-content" id="main_form">
+                                                        <div class="tab-pane active" role="tabpanel" id="step1">
+                                                            <h4 class="text-center pb-4">Personal</h4>
+                                                            {{-- Company Info --}}
+                                                            <div class="row m-2">
+                                                                <h5 class="text-primary w-100">Company Info</h5>
+
+                                                                <div class="form-group row w-100">
+
+                                                                    <label for="company_type_id"
+                                                                        class="col-sm-2 col-form-label">Company Type</label>
+                                                                    <div class="col-sm-4 mb-4">
+
+                                                                        <select class="form-control select2 w-100"
+                                                                            name="company_type_id" id="company_type_id">
+                                                                            <option value="">Select</option>
+                                                                            @foreach ($company_types as $item)
+                                                                                <option value="{{ $item->id }}">
+                                                                                    {{ $item->name }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                        @error('company_type_id')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+
+                                                                    <label for="company_type_id"
+                                                                        class="col-sm-2 col-form-label">Companies</label>
+                                                                    <div class="col-sm-4 mb-4">
+
+                                                                        <select class="form-control select2 w-100"
+                                                                            name="company_id" id="company_id" disabled>
+                                                                        </select>
+                                                                        @error('company_id')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+
+                                                                    <label for="employee_code"
+                                                                        class="col-sm-2 col-form-label mandatory">Employee
+                                                                        Code</label>
+                                                                    <div class="col-sm-4 mb-4">
+
+                                                                        <input class="form-control" type="text"
+                                                                            name="employee_code" id="employee_code">
+                                                                        @error('employee_code')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+
+
+                                                                    <label for="employee_name"
+                                                                        class="col-sm-2 col-form-label mandatory">Employee
+                                                                        Code</label>
+                                                                    <div class="col-sm-4 mb-4">
+
+                                                                        <input class="form-control" type="text"
+                                                                            name="employee_name" id="employee_name">
+                                                                        @error('employee_name')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                            {{-- Permanent Address --}}
+                                                            <div class="row m-2">
+                                                                <h5 class="text-primary w-100">Permanent Address</h5>
+
+                                                                <div class="form-group row w-100">
+                                                                    <label for="office_address"
+                                                                        class="col-sm-2 col-form-label">Office
+                                                                        Address</label>
+                                                                    <div class="col-sm-10 mb-4">
+                                                                        <textarea class="form-control" name="office_address" id="office_address" cols="10" rows="3"></textarea>
+
+                                                                        @error('office_address')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="office_area"
+                                                                        class="col-sm-2 col-form-label">Village/Area</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="text"
+                                                                            name="office_area" id="office_area">
+
+                                                                        @error('office_area')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label class="col-sm-2 col-form-label">Country</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <select class="form-control select2"
+                                                                            name="office_country_id"
+                                                                            id="office_country_id">
+                                                                            @foreach ($countries as $item)
+                                                                                <option value="{{ $item->id }}">
+                                                                                    {{ $item->name }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                        @error('office_country_id')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label class="col-sm-2 col-form-label">State</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <select class="form-control select2 w-100"
+                                                                            name="office_state_id" id="office_state_id"
+                                                                            disabled>
+                                                                        </select>
+                                                                        @error('office_state_id')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label class="col-sm-2 col-form-label">District</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <select class="form-control select2 w-100"
+                                                                            name="office_district_id"
+                                                                            id="office_district_id" disabled>
+                                                                        </select>
+                                                                        @error('office_district_id')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="office_pincode"
+                                                                        class="col-sm-2 col-form-label">Pincode</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="text"
+                                                                            name="office_pincode" id="office_pincode">
+                                                                        @error('office_pincode')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            {{-- Correspondence Address --}}
+                                                            <div class="row m-2">
+                                                                <div class="d-flex" style="flex-wrap: inherit">
+                                                                    <h5 class="text-primary w-100">Correspondence Address
+                                                                    </h5>
+
+                                                                    <div class="">
+                                                                        <input class="" type="checkbox"
+                                                                            id="sameAsPermanentAddress">
+                                                                        <label class=""
+                                                                            for="sameAsPermanentAddress">
+                                                                            Same as Permanent Address
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group row w-100">
+                                                                    <label for="address"
+                                                                        class="col-sm-2 col-form-label">Address</label>
+                                                                    <div class="col-sm-10 mb-4">
+                                                                        <textarea class="form-control" name="address" id="address" cols="10" rows="3"></textarea>
+
+                                                                        @error('address')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="area"
+                                                                        class="col-sm-2 col-form-label">Village/Area</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="text"
+                                                                            name="area" id="area">
+
+                                                                        @error('area')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label class="col-sm-2 col-form-label">Country</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <select class="form-control select2"
+                                                                            name="country_id" id="country_id">
+                                                                            @foreach ($countries as $item)
+                                                                                <option value="{{ $item->id }}">
+                                                                                    {{ $item->name }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                        @error('country_id')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label class="col-sm-2 col-form-label">State</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <select class="form-control select2 w-100"
+                                                                            name="state_id" id="state_id" disabled>
+                                                                        </select>
+                                                                        @error('state_id')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label class="col-sm-2 col-form-label">District</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <select class="form-control select2 w-100"
+                                                                            name="district_id" id="district_id" disabled>
+                                                                        </select>
+                                                                        @error('district_id')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="pincode"
+                                                                        class="col-sm-2 col-form-label">Pincode</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="text"
+                                                                            name="pincode" id="pincode">
+                                                                        @error('pincode')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            {{-- Identity  Proof --}}
+                                                            <div class="row m-2">
+                                                                <h5 class="text-primary w-100">Identity Proof
+                                                                </h5>
+                                                                <div class="form-group row">
+
+                                                                    <label for="voter_id_number"
+                                                                        class="col-sm-2 col-form-label">Voter ID
+                                                                        Number</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="text"
+                                                                            name="voter_id_number" id="voter_id_number">
+                                                                        @error('voter_id_number')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="driving_license_number"
+                                                                        class="col-sm-2 col-form-label">Driving License
+                                                                        Number</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="text"
+                                                                            name="driving_license_number"
+                                                                            id="driving_license_number">
+                                                                        @error('driving_license_number')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+                                                                    <label for="pan_number"
+                                                                        class="col-sm-2 col-form-label">Pan Number</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="text"
+                                                                            name="pan_number" id="pan_number">
+                                                                        @error('pan_number')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+                                                                    <label for="passport_number"
+                                                                        class="col-sm-2 col-form-label">Passport
+                                                                        Number</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="text"
+                                                                            name="passport_number" id="passport_number">
+                                                                        @error('passport_number')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+                                                                    <label for="identity_mark"
+                                                                        class="col-sm-2 col-form-label">Identity
+                                                                        Mark</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="text"
+                                                                            name="identity_mark" id="identity_mark">
+                                                                        @error('identity_mark')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            {{-- Other  Details --}}
+                                                            <div class="row m-2">
+                                                                <h5 class="text-primary w-100">Other Details
+                                                                </h5>
+                                                                <div class="form-group row">
+                                                                    <label for="dob"
+                                                                        class="col-sm-2 col-form-label mandatory">Date of
+                                                                        Birth</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="date"
+                                                                            name="dob" id="dob">
+                                                                        @error('dob')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="gender"
+                                                                        class="col-sm-2 col-form-label">Gender</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <select class="form-control" name="gender"
+                                                                            id="gender">
+                                                                            <option value="">Select</option>
+                                                                            <option value="male">Male</option>
+                                                                            <option value="female">Female</option>
+                                                                            <option value="others">Others</option>
+                                                                        </select>
+
+                                                                        @error('gender')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="blood_group"
+                                                                        class="col-sm-2 col-form-label">Blood Group</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <select class="form-control" name="blood_group"
+                                                                            id="blood_group">
+                                                                            <option value="">Select</option>
+                                                                            <option value="A+">A+</option>
+                                                                            <option value="A-">A-</option>
+                                                                            <option value="B+">B+</option>
+                                                                            <option value="B-">B-</option>
+                                                                            <option value="AB+">AB+</option>
+                                                                            <option value="AB-">AB-</option>
+                                                                            <option value="O+">O+</option>
+                                                                            <option value="O-">O-</option>
+                                                                        </select>
+
+                                                                        @error('blood_group')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="email"
+                                                                        class="col-sm-2 col-form-label">Email Id</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="email"
+                                                                            name="email" id="email">
+                                                                        @error('email')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="mobile"
+                                                                        class="col-sm-2 col-form-label">Mobile</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="text"
+                                                                            name="mobile" id="mobile">
+                                                                        @error('mobile')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="faorhus_name"
+                                                                        class="col-sm-2 col-form-label">Father's/Husband
+                                                                        Name</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="text"
+                                                                            name="faorhus_name" id="faorhus_name">
+                                                                        @error('faorhus_name')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="maritalStatus"
+                                                                        class="col-sm-2 col-form-label">Marital Status</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <select name="maritalStatus" id="maritalStatus"
+                                                                            class="form-control">
+                                                                            <option value="">Select</option>
+                                                                            <option value="single">Single</option>
+                                                                            <option value="married">Married</option>
+                                                                            <option value="divorced">Divorced</option>
+                                                                            <option value="widowed">Widowed</option>
+                                                                            <option value="separated">Separated</option>
+                                                                            <option value="other">Other</option>
+                                                                        </select>
+                                                                        @error('maritalStatus')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="phone_no"
+                                                                        class="col-sm-2 col-form-label">Phone No</label>
+                                                                    <div class="col-sm-1 mb-4">
+                                                                        <input class="form-control" type="std_code"
+                                                                            name="std_code" id="std_code">
+                                                                        @error('std_code')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+                                                                    <div class="col-sm-3 mb-4">
+                                                                        <input class="form-control" type="text"
+                                                                            name="phone" id="phone">
+                                                                        @error('phone')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label class="col-sm-2 col-form-label">Religion</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <select class="form-control select2"
+                                                                            name="religion_id" id="religion_id">
+                                                                            @foreach ($religions as $item)
+                                                                                <option value="{{ $item->id }}">
+                                                                                    {{ $item->name }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                        @error('religion_id')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label class="col-sm-2 col-form-label">Caste</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <select class="form-control select2"
+                                                                            name="caste_id" id="caste_id">
+                                                                            @foreach ($castes as $item)
+                                                                                <option value="{{ $item->id }}">
+                                                                                    {{ $item->name }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                        @error('caste_id')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label
+                                                                        class="col-sm-2 col-form-label">Nationality</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <select class="form-control select2"
+                                                                            name="nationality_id" id="nationality_id">
+                                                                            @foreach ($nationality as $item)
+                                                                                <option value="{{ $item->id }}">
+                                                                                    {{ $item->name }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                        @error('nationality_id')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="joining_date"
+                                                                        class="col-sm-2 col-form-label">Joining
+                                                                        Date</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="date"
+                                                                            name="joining_date" id="joining_date">
+                                                                        @error('joining_date')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="prob_period"
+                                                                        class="col-sm-2 col-form-label">Prob Period in
+                                                                        Month</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="text"
+                                                                            name="prob_period" id="prob_period">
+                                                                        @error('prob_period')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="confirm_date"
+                                                                        class="col-sm-2 col-form-label">Confirm
+                                                                        Date</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="date"
+                                                                            name="confirm_date" id="confirm_date">
+                                                                        @error('confirm_date')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label for="resigning_date"
+                                                                        class="col-sm-2 col-form-label">Resigning Date
+                                                                        Date</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <input class="form-control" type="date"
+                                                                            name="resigning_date" id="resigning_date">
+                                                                        @error('resigning_date')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <label class="col-sm-2 col-form-label">Select with
+                                                                        reason</label>
+                                                                    <div class="col-sm-4 mb-4">
+                                                                        <select class="form-control select2"
+                                                                            name="resigning_reason_id"
+                                                                            id="resigning_reason_id">
+                                                                            @foreach ($nationality as $item)
+                                                                                <option value="{{ $item->id }}">
+                                                                                    {{ $item->name }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                        @error('resigning_reason_id')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <ul class="list-inline pull-right">
+                                                                <li><button type="button"
+                                                                        class="default-btn next-step">Continue
+                                                                        to next
+                                                                        step</button></li>
+                                                            </ul>
+                                                        </div>
+                                                        @include('pages.master.employee.create_finance')
+                                                        @include('pages.master.employee.create_family')
+                                                        @include('pages.master.employee.create_nominee')
+                                                        <div class="clearfix"></div>
+                                                    </div>
+
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </section>
 
-            <div class="row">
-                <div class="col-12">
-                    <div class="card m-b-30">
-                        <div class="card-body">
-                            <div class="m-b-30">
 
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -466,6 +683,60 @@
         $('.nav-tabs').on('click', 'li', function() {
             $('.nav-tabs li.active').removeClass('active');
             $(this).addClass('active');
+        });
+
+
+        // Fetch Datas's 
+        var selectedCompanyId = "";
+        var selectedStateId = "{{ $address->state_id ?? '' }}";
+        let selectedCompanyTypeId = $('#company_type_id').val();
+        if (selectedCompanyTypeId != 1) {
+            $('#company_id').prop('disabled', false).trigger('change');
+            loadCompanies(selectedCompanyTypeId, 'company_id', selectedCompanyId);
+        }
+
+        $('#company_type_id').on('change', function() {
+            loadCompanies($(this).val(), 'company_id');
+        });
+
+        function loadCompanies(companyTypeId, companyId, selectedCompanyId = null) {
+            $.ajax({
+                url: '/get-companies/' + companyTypeId,
+                type: 'GET',
+                success: function(datas) {
+                    $('#' + companyId).empty().append('<option value="">Select Company</option>');
+                    datas.forEach(function(data) {
+
+                        let isSelected = selectedCompanyId == data.id ? 'selected' : '';
+                        let authorisedPersonName = data.authorised_person ? data.authorised_person
+                            .name :
+                            'N/A';
+                        $('#' + companyId).append('<option value="' + data.id + '" ' + isSelected +
+                            '>' + data.company_name + ' (' + authorisedPersonName + ')</option>');
+                    });
+                    $('#' + companyId).trigger('change');
+                }
+            });
+        }
+
+        document.getElementById('sameAsPermanentAddress').addEventListener('change', function() {
+            if (this.checked) {
+                // Copy values from Permanent Address fields to Correspondence Address fields
+                document.getElementById('address').value = document.getElementById('office_address').value;
+                document.getElementById('area').value = document.getElementById('office_area').value;
+                document.getElementById('country_id').value = document.getElementById('office_country_id').value;
+                document.getElementById('state_id').value = document.getElementById('office_state_id').value;
+                document.getElementById('district_id').value = document.getElementById('office_district_id').value;
+                document.getElementById('pincode').value = document.getElementById('office_pincode').value;
+            } else {
+                // Clear the Correspondence Address fields
+                document.getElementById('address').value = '';
+                document.getElementById('area').value = '';
+                document.getElementById('country_id').value = '';
+                document.getElementById('state_id').value = '';
+                document.getElementById('district_id').value = '';
+                document.getElementById('pincode').value = '';
+            }
         });
     </script>
 @endsection

@@ -4,8 +4,17 @@ namespace App\Http\Controllers\PageControllers\MasterControllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\AddressType;
+use App\Models\Caste;
+use App\Models\Company;
+use App\Models\CompanyType;
 use App\Models\Country;
 use App\Models\Employee;
+use App\Models\EmployeeFamilyMemberDetail;
+use App\Models\EsiDispensary;
+use App\Models\LocalOffice;
+use App\Models\Nationality;
+use App\Models\PaymentMode;
+use App\Models\Religion;
 use App\Models\State;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -30,7 +39,28 @@ class EmployeeController extends Controller
         $countries = Country::all();
         $states = State::all();
         $addressTypes = AddressType::all();
-        return view('pages.master.employee.create', ['countries' => $countries, 'states' => $states, 'addressTypes' => $addressTypes]);
+        $company_types = CompanyType::all();
+        $religions = Religion::all();
+        $castes = Caste::all();
+        $nationality = Nationality::all();
+        $payment_modes = PaymentMode::all();
+        $local_offices = LocalOffice::all();
+        $esi_despensaries = EsiDispensary::all();
+        $family_members = EmployeeFamilyMemberDetail::all();
+
+        return view('pages.master.employee.create', [
+            'company_types' => $company_types,
+            'countries' => $countries,
+            'states' => $states,
+            'addressTypes' => $addressTypes,
+            'religions' => $religions,
+            'castes' => $castes,
+            'nationality' => $nationality,
+            'payment_modes' => $payment_modes,
+            'local_offices' => $local_offices,
+            'esi_despensaries' => $esi_despensaries,
+            'family_members' => $family_members
+        ]);
     }
     // Store Date
     public function store(Request $request)
@@ -200,5 +230,11 @@ class EmployeeController extends Controller
     public function export(Request $request)
     {
         return Excel::download(new CustomersExport($request->all()), 'CustomerDatas_' . date('d-m-Y') . '.xlsx');
+    }
+
+    public function getCompanies($companytypeid)
+    {
+        $companies = Company::where('company_type_id', $companytypeid)->with('authorisedPerson')->get();
+        return response()->json($companies);
     }
 }

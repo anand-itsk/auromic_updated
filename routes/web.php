@@ -165,6 +165,7 @@ Route::middleware(['auth'])->group(function () {
     //Data Fetch
     Route::get('/get-states/{countryId}', [AddressController::class, 'getStates'])->name('get-states');
     Route::get('/get-districts/{stateId}', [AddressController::class, 'getDistricts'])->name('get-districts');
+    Route::get('/get-companies/{companyTypeId}', [EmployeeController::class, 'getCompanies'])->name('get-companies');
 });
 
 //Reoptimized class loader:
