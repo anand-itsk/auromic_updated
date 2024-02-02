@@ -29,7 +29,7 @@
                     <div class="card m-b-30">
                         <div class="card-body">
                             <div class="m-b-30">
-                                <form action="{{ route('profile.masters.store') }}" method="POST"
+                                <form action="{{ route('profile.clients.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <h5 class="text-primary">Company Info</h5>

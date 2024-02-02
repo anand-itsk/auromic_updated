@@ -22,4 +22,8 @@ class BankDetail extends Model
     {
         return $this->belongsToMany(Company::class, 'company_bank_details');
     }
+    public function companyBankDetails()
+    {
+        return $this->hasMany(CompanyBankDetail::class, 'bank_detail_id', 'id');
+    }
 }

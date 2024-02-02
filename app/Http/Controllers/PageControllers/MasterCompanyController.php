@@ -50,6 +50,7 @@ class MasterCompanyController extends Controller
             'name' => 'required'
         ]);
         $input = $request->all();
+        // dd($input);
         $company = new Company();
 
         $input['company_type_id'] = 1;
@@ -100,6 +101,7 @@ class MasterCompanyController extends Controller
         $user = User::with('roles')->find($id);
         $company = Company::with('addresses')->find($id);
         $countries = Country::all();
+        
         // dd($customer);
         return view('pages.profile.master_company.edit', compact('company', 'user', 'countries', 'address'));
     }
@@ -195,6 +197,7 @@ class MasterCompanyController extends Controller
         return response()->json([
             'html' => $html,
             'data' => [
+                
                 'created_by' => $company->createdBy->name,
                 'created_at' => $company->created_at,
                 'updated_at' => $company->updated_at,

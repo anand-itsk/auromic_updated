@@ -111,9 +111,10 @@
                                         <button type="submit" class="btn btn-primary waves-effect waves-light">
                                             Update
                                         </button>
-                                        <button type="reset" class="btn btn-secondary waves-effect m-l-5">
-                                            Cancel
-                                        </button>
+                                        <a href="{{ route('permissions') }}"
+                                                class="btn btn-secondary waves-effect m-l-5">
+                                                Cancel
+                                            </a>
                                     </div>
                                 </form>
                             </div>
