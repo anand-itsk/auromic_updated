@@ -17,6 +17,7 @@ class DistrictTableSeeder extends Seeder
     {
         DB::table('districts')->delete();
         $districts = array(
+            array('state_id' => 1, 'name' => "Not Specified",'code' => "NS"),
             array('state_id' => 28, 'name' => "Ariyalur",'code' => "AR"),
             array('state_id' => 28, 'name' => "Chengalpattu",'code' => "CP"),
             array('state_id' => 28, 'name' => "Chennai",'code' => "CH"),

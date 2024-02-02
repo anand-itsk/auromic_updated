@@ -16,6 +16,7 @@ class CompanyTypeTableSeeder extends Seeder
         DB::table('company_types')->delete();
 
         $company_types = array(
+            array('Name' => 'Not Specified', 'Code' => 'NS'),
             array('Name' => 'Master Company', 'Code' => 'MC'),
             array('Name' => 'Client Company', 'Code' => 'CC'),
             array('Name' => 'Sub-client Company', 'Code' => 'SC'),

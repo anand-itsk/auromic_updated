@@ -10,11 +10,10 @@ use Illuminate\Support\Str;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Company>
  */
-class MasterCompanyFactory extends Factory
+class ClientCompanyFactory extends Factory
 {
 
     protected $model = Company::class;
-
     /**
      * Define the model's default state.
      *
@@ -23,7 +22,7 @@ class MasterCompanyFactory extends Factory
     public function definition(): array
     {
         return [
-            'company_type_id' => 2,
+            'company_type_id' => 3,
             'company_code' => fake()->name(),
             'company_name' => Str::random(10),
             'created_by' => mt_rand(1, 10),

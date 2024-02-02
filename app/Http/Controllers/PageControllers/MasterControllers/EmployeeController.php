@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\PageControllers\MasterControllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Models\AddressType;
 use App\Models\Caste;
 use App\Models\Company;
@@ -73,6 +74,10 @@ class EmployeeController extends Controller
             'dob'   => 'required'
         ];
 
+
+        // dd($request);
+
+
         // Validate request
         $validator = Validator::make($request->all(), $rules);
 
@@ -82,11 +87,63 @@ class EmployeeController extends Controller
         }
 
         // Store data
-        $employee = new Employee();
-        $employee->employee_code = $request->employee_code;
-        $employee->employee_name = $request->employee_name;
-        $employee->dob = $request->dob;
-        $employee->save();
+        $employee = Employee::create([
+            'employee_code' => $request->employee_code,
+            'employee_name' => $request->employee_name,
+            'dob' => $request->dob,
+            'gender' => $request->gender,
+            'blood_group' => $request->blood_group,
+            'email' => $request->email,
+            'mobile' => $request->mobile,
+            'faorhus_name' => $request->faorhus_name,
+            'mother_name' => $request->mother_name,
+            'marital_status' => $request->marital_status,
+            'std_code' => $request->std_code,
+            'phone' => $request->phone,
+            'religion_id' => $request->religion_id,
+            'caste_id' => $request->caste_id,
+            'nationality_id' => $request->nationality_id,
+            'joining_date' => $request->joining_date,
+            'prob_period' => $request->prob_period,
+            'confirm_date' => $request->confirm_date,
+            'resigning_date' => $request->resigning_date,
+            'resigning_reason_id' => 1, // Assuming this is hardcoded or fetched from some other part of the request
+        ]);
+
+
+        if (
+            $request->office_address !== null ||
+            $request->office_country_id !== "1" ||
+            $request->office_area !== null ||
+            $request->office_pincode !== null
+        ) {
+            $address = new Address();
+            $address->address_type_id = 3;
+            $address->address = $request->office_address;
+            $address->country_id = $request->office_country_id;
+            $address->state_id = $request->office_state_id;
+            $address->district_id = $request->office_district_id;
+            $address->pincode = $request->office_pincode;
+            $employee->addresses()->save($address);
+        }
+
+        if (
+            $request->corrs_address !== null ||
+            $request->corrs_country_id !== "1" ||
+            $request->corrs_area !== null ||
+            $request->corrs_pincode !== null
+        ) {
+            $address = new Address();
+            $address->address_type_id = 2;
+            $address->address = $request->corrs_address;
+            $address->country_id = $request->corrs_country_id;
+            $address->state_id = $request->corrs_state_id;
+            $address->district_id = $request->corrs_district_id;
+            $address->pincode = $request->corrs_pincode;
+            $employee->addresses()->save($address);
+        }
+
+
 
         // Return success response
         return response()->json(['success' => true, 'message' => 'Step 1 completed successfully.']);

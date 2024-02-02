@@ -29,7 +29,7 @@ class MasterCompanyController extends Controller
     public function indexData()
     {
         // Eager load the roles relationship
-        $company = Company::query()->where('company_type_id', 1);
+        $company = Company::query()->where('company_type_id', 2);
         return DataTables::of($company)->make(true);
     }
     // Create Page
@@ -54,7 +54,7 @@ class MasterCompanyController extends Controller
         // dd($input);
         $company = new Company();
 
-        $input['company_type_id'] = 1;
+        $input['company_type_id'] = 2;
         $input['created_by'] = $auth_id;
         $input['updated_by'] = $auth_id;
 
@@ -120,7 +120,7 @@ class MasterCompanyController extends Controller
         $input = $request->all();
         $company = Company::findOrFail($id);
 
-        $company->company_type_id = 1;
+        $company->company_type_id = 2;
         $company->company_code = $input['company_code'];
         $company->company_name = $input['company_name'];
         $company->std_code = $input['std_code'];
@@ -233,7 +233,7 @@ class MasterCompanyController extends Controller
         $request->validate([
             'file' => 'required|file|mimes:xlsx,csv'
         ]);
-        $company_type_id = 1;
+        $company_type_id = 2;
         Excel::import(new CompanyDataImport($company_type_id), request()->file('file'));
 
         return redirect()->route('profile.masters.index')->with('success', 'Data imported successfully');

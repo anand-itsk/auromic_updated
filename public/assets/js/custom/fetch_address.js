@@ -14,21 +14,6 @@ $(document).ready(function() {
         });
     });
 
-    $('#country_id').select2();
-
-    $('#country_id').on('change', function() {
-        var countryId = this.value;
-        $.get(`/get-states/${countryId}`, function(states) {
-            var stateSelect = $('#state_id');
-            stateSelect.empty();
-            stateSelect.append(new Option('Select State', ''));
-            $.each(states, function(index, state) {
-                stateSelect.append(new Option(state.name, state.id));
-            });
-            stateSelect.prop('disabled', false).trigger('change');
-        });
-    });
-
     $('#office_state_id').select2();
 
     $('#office_state_id').on('change', function() {
@@ -43,6 +28,38 @@ $(document).ready(function() {
             districtSelect.prop('disabled', false).trigger('change');
         });
     });
+
+    $('#corrs_country_id').select2();
+
+    $('#corrs_country_id').on('change', function() {
+        var countryId = this.value;
+        $.get(`/get-states/${countryId}`, function(states) {
+            var stateSelect = $('#corrs_state_id');
+            stateSelect.empty();
+            stateSelect.append(new Option('Select State', ''));
+            $.each(states, function(index, state) {
+                stateSelect.append(new Option(state.name, state.id));
+            });
+            stateSelect.prop('disabled', false).trigger('change');
+        });
+    });
+
+    $('#corrs_state_id').select2();
+
+    $('#corrs_state_id').on('change', function() {
+        var stateId = this.value;
+        $.get(`/get-districts/${stateId}`, function(districts) {
+            var districtSelect = $('#corrs_district_id');
+            districtSelect.empty();
+            districtSelect.append(new Option('Select State', ''));
+            $.each(districts, function(index, state) {
+                districtSelect.append(new Option(state.name, state.id));
+            });
+            districtSelect.prop('disabled', false).trigger('change');
+        });
+    });
+
+    
 
     // Similar logic for updating districts when state changes
 
@@ -72,14 +89,14 @@ $(document).ready(function() {
         });
     }
 
-    let selectedCountryId = $('#country_id').val();
+    let selectedCountryId = $('#corrs_country_id').val();
     if(selectedCountryId != 1) {
-        $('#state_id').prop('disabled', false).trigger('change');
-        loadStates(selectedCountryId, 'state_id', selectedStateId);
+        $('#corrs_state_id').prop('disabled', false).trigger('change');
+        loadStates(selectedCountryId, 'corrs_state_id', selectedStateId);
     }
 
-    $('#country_id').on('change', function() {
-        loadStates($(this).val(), 'state_id');
+    $('#corrs_country_id').on('change', function() {
+        loadStates($(this).val(), 'corrs_state_id');
     });
 
     function loadStates(countryId, stateSelectId, selectedStateId = null) {
@@ -98,7 +115,5 @@ $(document).ready(function() {
         });
     }
 
-
-   
 
 });

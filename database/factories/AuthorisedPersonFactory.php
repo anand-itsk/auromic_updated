@@ -9,21 +9,20 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class AuthorisedPersonFactory extends Factory
 {
+
+    protected $model = AuthorisedPerson::class;
+    private static $companyId = 1;
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    
-     protected $model = AuthorisedPerson::class;
-
-
      
    public function definition()
     {
         return [
+            'company_id' => self::$companyId++,
              'name' => fake()->name(),
-           
         ];
     }
 }
