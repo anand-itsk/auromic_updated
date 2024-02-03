@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->date('starting_date')->nullable();
             $table->string('business_nature')->nullable();
-            $table->string('email')->nullable();
+            $table->string('company_email')->nullable();
             $table->string('website')->nullable();
             $table->boolean('status')->default(1);
             $table->unsignedBigInteger('created_by');

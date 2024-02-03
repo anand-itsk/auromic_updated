@@ -94,7 +94,7 @@
                 <span class="font-weight-bold">Email Id</span>
             </div>
             <div class="col-md-8 ">
-                <span>{{ $company->email ?? '-' }}</span>
+                <span>{{ $company->company_email ?? '-' }}</span>
             </div>
         </div>
     </div>
@@ -368,7 +368,7 @@
                 <span class="font-weight-bold">Email Id</span>
             </div>
             <div class="col-md-8 ">
-                <span>{{ $company->authorisedPerson->email ?? '-' }}</span>
+                <span>{{ $company->authorisedPerson->emaperson_emailil ?? '-' }}</span>
             </div>
         </div>
     </div>

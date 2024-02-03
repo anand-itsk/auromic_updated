@@ -156,8 +156,8 @@
                                     </div>
                                     <label for="email" class="col-sm-2 col-form-label">Email Id</label>
                                     <div class="col-sm-4 mb-4">
-                                        <input class="form-control" type="email" name="email" id="email">
-                                        @error('email')
+                                        <input class="form-control" type="email" name="company_email" id="email">
+                                        @error('company_email')
                                         <span class="error" style="color: red;">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -386,8 +386,8 @@
                                     </div>
                                     <label for="email" class="col-sm-2 col-form-label">Email Id</label>
                                     <div class="col-sm-4 mb-4">
-                                        <input class="form-control" type="email" name="email" id="email">
-                                        @error('email')
+                                        <input class="form-control" type="email" name="person_email" id="email">
+                                        @error('person_email')
                                         <span class="error" style="color: red;">{{ $message }}</span>
                                         @enderror
                                     </div>

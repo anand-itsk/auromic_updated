@@ -50,7 +50,8 @@ class SubClientCompanyController extends Controller
             'company_code' => 'required|max:255',
             'company_name' => 'required|max:255',
             'name' => 'required',
-            'email' => 'email|unique:authorised_people,email',
+            'company_email' => 'nullable|email|unique:companies,email',
+             'person_email' => 'nullable|email|unique:authorised_people,email',
         ]);
         $input = $request->all();
         $company = new Company();
@@ -125,7 +126,7 @@ class SubClientCompanyController extends Controller
         $company->company_name = $input['company_name'];
         $company->std_code = $input['std_code'];
         $company->phone = $input['phone'];
-        $company->email = $input['email'];
+       $company->company_email = $input['company_email'];
         $company->starting_date = $input['starting_date'];
         $company->business_nature = $input['business_nature'];
         $company->website = $input['website'];
@@ -157,7 +158,7 @@ class SubClientCompanyController extends Controller
         $authorised_person->gender = $input['gender'];
         $authorised_person->blood_group = $input['blood_group'];
         $authorised_person->dob = $input['dob'];
-        $authorised_person->email = $input['email'];
+         $authorised_person->person_email = $input['person_email'];
         $authorised_person->pan_no = $input['pan_no'];
         $authorised_person->std_code = $input['std_code'];
         $authorised_person->phone = $input['phone'];
