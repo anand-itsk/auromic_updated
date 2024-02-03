@@ -19,8 +19,8 @@ class CompanyTableSeeder extends Seeder
     {
 
         MasterCompanyFactory::new()->count(10)->create();
-        ClientCompanyFactory::new()->count(10)->create();
-        SubClientCompanyFactory::new()->count(10)->create();
+        ClientCompanyFactory::new()->count(5000)->create();
+        SubClientCompanyFactory::new()->count(10000)->create();
 
 
 

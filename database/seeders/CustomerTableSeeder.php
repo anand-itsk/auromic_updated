@@ -14,14 +14,14 @@ class CustomerTableSeeder extends Seeder
      */
     public function run(): void
     {
-        Customer::factory()->count(1000)->create();
+        Customer::factory()->count(10000)->create();
 
-        Customer::factory()->create([
-            'customer_code' => 'C001',
-            'customer_name' => 'Varun',
-            'created_by' => 1,
-            'updated_by' => 1
-        ]);
+        // Customer::factory()->create([
+        //     'customer_code' => 'C001',
+        //     'customer_name' => 'Varun',
+        //     'created_by' => 1,
+        //     'updated_by' => 1
+        // ]);
         // DB::table('customers')->delete();
 
         // $datas = array(

@@ -29,6 +29,21 @@ $(document).ready(function() {
         });
     });
 
+    $('#country_id').select2();
+
+    $('#country_id').on('change', function() {
+        var countryId = this.value;
+        $.get(`/get-states/${countryId}`, function(states) {
+            var stateSelect = $('#state_id');
+            stateSelect.empty();
+            stateSelect.append(new Option('Select State', ''));
+            $.each(states, function(index, state) {
+                stateSelect.append(new Option(state.name, state.id));
+            });
+            stateSelect.prop('disabled', false).trigger('change');
+        });
+    });
+
     $('#corrs_country_id').select2();
 
     $('#corrs_country_id').on('change', function() {
