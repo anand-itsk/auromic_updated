@@ -37,13 +37,16 @@
                                     </div>
                                     <div>
                                         <button type="button" class="icon-button common-color" data-toggle="modal"
-                                            data-target=".bs-example-modal-center" title="Create Employee"><i
+                                            data-target=".bs-example-modal-center" title="Import Employee"><i
                                                 class="fa fa-upload"></i></button>
+                                        <button type="button" class="icon-button common-color" data-toggle="modal"
+                                            data-target=".employe-create-modal-center" title="Create Employee"><i
+                                                class="fa fa-user-plus"></i></button>
 
-                                        <a href="{{ route('master.employees.create') }}" class="icon-link common-color"
+                                        {{-- <a href="{{ route('master.employees.create') }}" class="icon-link common-color"
                                             title="Create New User">
                                             <i class="fa fa-user-plus"></i>
-                                        </a>
+                                        </a> --}}
                                     </div>
                                 </div>
                                 {{-- Import Modal --}}
@@ -92,8 +95,87 @@
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
                                 </div>
+
+                                {{-- Create Modal --}}
+                                <div class="modal fade employe-create-modal-center" tabindex="-1" role="dialog"
+                                    aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title mt-0">Create Employee</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card m-b-30">
+                                                            <div class="card-body">
+                                                                <form action="{{ route('master.employees.store') }}"
+                                                                    method="POST" enctype="multipart/form-data">
+                                                                    @csrf
+                                                                    <div class="row">
+                                                                        <label for="employee_code"
+                                                                            class="col-sm-12 col-form-label mandatory">Employee
+                                                                            Code</label>
+                                                                        <div class="col-sm-12 mb-4">
+
+                                                                            <input class="form-control" type="text"
+                                                                                name="employee_code" id="employee_code"
+                                                                                required>
+                                                                            <span class="error-message text-danger"></span>
+                                                                        </div>
+
+
+
+                                                                        <label for="employee_name"
+                                                                            class="col-sm-12 col-form-label mandatory">Employee
+                                                                            Name</label>
+                                                                        <div class="col-sm-12 mb-4">
+
+                                                                            <input class="form-control" type="text"
+                                                                                name="employee_name" id="employee_name"
+                                                                                required>
+                                                                            @error('employee_name')
+                                                                                <span class="error"
+                                                                                    style="color: red;">{{ $message }}</span>
+                                                                            @enderror
+                                                                        </div>
+
+                                                                        <label for="dob"
+                                                                            class="col-sm-12 col-form-label mandatory">Date
+                                                                            of
+                                                                            Birth</label>
+                                                                        <div class="col-sm-12 mb-4">
+                                                                            <input class="form-control" type="date"
+                                                                                name="dob" id="dob" required>
+                                                                            @error('dob')
+                                                                                <span class="error"
+                                                                                    style="color: red;">{{ $message }}</span>
+                                                                            @enderror
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <button type="submit"
+                                                                        class="btn btn-primary">Create</button>
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">Close</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div>
                                 <div class="card-body">
-                                    <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap"
+                                    <table id="users-table"
+                                        class="table table-striped table-bordered dt-responsive nowrap"
                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
@@ -255,7 +337,7 @@
         function edit(id) {
             console.log("inside");
             // Redirect to the user edit page or open a modal for editing
-            window.location.href = '/master/Employees/edit/' + id;
+            window.location.href = '/master/employees/edit/' + id;
         }
 
         function deleteCustomer(id) {

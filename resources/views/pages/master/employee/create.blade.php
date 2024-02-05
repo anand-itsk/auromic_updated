@@ -647,6 +647,8 @@
     <script>
         // ------------step-wizard-------------
         $(document).ready(function() {
+            console.log('clicked');
+
             $('.nav-tabs > li a[title]').tooltip();
 
             //Wizard

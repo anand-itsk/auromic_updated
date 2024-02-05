@@ -14,7 +14,7 @@ class CustomerTableSeeder extends Seeder
      */
     public function run(): void
     {
-        Customer::factory()->count(10000)->create();
+        Customer::factory()->count(100)->create();
 
         // Customer::factory()->create([
         //     'customer_code' => 'C001',

@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('employee_nominees', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('family_memeber_id');
+            $table->unsignedBigInteger('family_member_id');
+            $table->unsignedBigInteger('employee_id');
             $table->string('gratuity_sharing')->nullable();
             $table->string('marital_status')->nullable();
             $table->unsignedBigInteger('religion_id')->nullable();
@@ -22,6 +23,8 @@ return new class extends Migration
             $table->string('guardian_address')->nullable();
             $table->string('guardian_relation_with_emp')->nullable();
             $table->foreign('religion_id')->references('id')->on('religions')->onDelete('cascade');
+            $table->foreign('family_member_id')->references('id')->on('employee_family_member_details')->onDelete('cascade');
+            $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
             $table->timestamps();
         });
     }

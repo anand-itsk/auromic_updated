@@ -151,14 +151,30 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/data', [EmployeeController::class, 'indexData'])->name('data');
 
             Route::get('/create', [EmployeeController::class, 'create'])->name('create');
-            Route::post('/store_personal', [EmployeeController::class, 'storePersonal'])->name('store.personal');
-            Route::post('/store_finance', [EmployeeController::class, 'storefinance'])->name('store.finance');
+            Route::post('/store', [EmployeeController::class, 'store'])->name('store');
             // Route::post('/step2', 'WizardController@storeStep2')->name('wizard.storeStep2');
 
 
 
             Route::post('/store', [EmployeeController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [EmployeeController::class, 'edit'])->name('edit');
+            Route::post('/store_personal/{id}', [EmployeeController::class, 'storePersonal'])->name('store.personal');
+            Route::post('/store_finance/{id}', [EmployeeController::class, 'storeFinance'])->name('store.finance');
+
+            //Family
+            Route::post('/store_family/{id}', [EmployeeController::class, 'storeFamily'])->name('store.family');
+            Route::get('/family-members', [EmployeeController::class, 'getFamilyMembers'])->name('family-members');
+            Route::get('/family-members/edit/{id}', [EmployeeController::class, 'editFamilyMember'])->name('family-members.edit');
+            Route::post('/family-members/update/{id}', [EmployeeController::class, 'updateFamilyMember'])->name('family-members.update');
+            Route::delete('/family-members/delete/{id}', [EmployeeController::class, 'deleteFamilyMember'])->name('family-members.delete');
+
+            // Nominee
+            Route::post('/store_nominee/{id}', [EmployeeController::class, 'storeNominee'])->name('store.nominee');
+            Route::get('/nominee', [EmployeeController::class, 'getNominee'])->name('nominee');
+            Route::get('/nominee/edit/{id}', [EmployeeController::class, 'editNominee'])->name('nominee.edit');
+            Route::post('/nominee/update/{id}', [EmployeeController::class, 'updateNominee'])->name('nominee.update');
+            Route::delete('/nominee/delete/{id}', [EmployeeController::class, 'deleteNominee'])->name('nominee.delete');
+
             Route::post('/update/{id}', [EmployeeController::class, 'update'])->name('update');
             Route::delete('/delete/{id}',  [EmployeeController::class, 'destroy'])->name('delete');
             Route::get('/show/{id}', [EmployeeController::class, 'showDetails']);
