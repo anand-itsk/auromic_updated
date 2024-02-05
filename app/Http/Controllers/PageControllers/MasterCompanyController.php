@@ -57,7 +57,7 @@ class MasterCompanyController extends Controller
         // dd($input);
 
      if ($request->hasFile('photo')) {
-        $filename = $request->file('photo')->store('profile_images', 'public');
+        $filename = $request->file('photo')->store('profile_images/Master Company', 'public');
         $input['photo'] = $filename;
     }
 
@@ -178,12 +178,10 @@ class MasterCompanyController extends Controller
         $authorised_person->mobile = $input['mobile'];
 
        if ($request->hasFile('photo')) {
-        $filename1 = $request->file('photo')->store('profile_images', 'public');
+        $filename1 = $request->file('photo')->store('profile_images/Master Company', 'public');
         $authorised_person->update(['photo' => $filename1]);
     }
-
-
-
+    
         $authorised_person->save();
 
 

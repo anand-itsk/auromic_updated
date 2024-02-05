@@ -293,21 +293,21 @@
                                         <span class="error" style="color: red;">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                      <label for="faorhus_name" class="col-sm-2 col-form-label">Profile Image</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input  type="file" name="photo"
-                                                id="imageUpload">
-                                            @error('photo')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                            <br>
-                                           @if (!empty($company->authorisedPerson->photo))
-                                         <img id="imagePreview" src="{{ asset('storage/' .$company->authorisedPerson->photo ) }}" alt="Image Preview"
-                                             style="display: none; width: 50px; height: 50px;">
-                                             @endif
-                                              <img id="imagePreview" src="#" alt="Image Preview"
-                                          style="display: none; width: 200px; height: 200px;">
-                                        </div>
+                                                                        <label for="faorhus_name" class="col-sm-2 col-form-label">Profile Image</label>
+<div class="col-sm-4 mb-4">
+    <input type="file" name="photo" id="imageInput">
+    @error('photo')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+    <br>
+    
+    <h6 style="font-weight: bold;">Current Image:</h6>
+    <img src="{{ asset('storage/' . $company->authorisedPerson->photo) }}" alt="Current Image"
+         style="max-width: 100px; max-height: 100px;">
+    
+    <h6 style="font-weight: bold;">Change Image:</h6>
+    <div id="imagePreviewContainer"></div>
+</div>
                                         
                                     <label for="gender" class="col-sm-2 col-form-label">Gender
                                     </label>
@@ -469,13 +469,28 @@ var selectedOfficeStateId = "{{ $officeAddress->state_id ?? '' }}";
 var selectedStateId = "{{ $address->state_id ?? '' }}";
 </script>
 <script>
-   document.getElementById("imageUpload").addEventListener("change", function() {
-       var reader = new FileReader();
-       reader.onload = function(e) {
-           document.getElementById("imagePreview").setAttribute("src", e.target.result);
-           document.getElementById("imagePreview").style.display = "block";
-       }
-       reader.readAsDataURL(this.files[0]);
-   });
-</script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const imageInput = document.getElementById("imageInput");
+            const imagePreviewContainer = document.getElementById("imagePreviewContainer");
+
+            imageInput.addEventListener("change", function(event) {
+                imagePreviewContainer.innerHTML = ""; // Clear previous previews
+
+                const files = event.target.files;
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        const imagePreview = document.createElement("img");
+                        imagePreview.src = e.target.result;
+                        imagePreview.style.maxWidth = "100px"; // Adjust the image size as needed
+                        imagePreviewContainer.appendChild(imagePreview);
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    </script>
 @endsection

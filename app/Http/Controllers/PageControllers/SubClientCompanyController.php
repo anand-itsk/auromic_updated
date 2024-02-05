@@ -52,8 +52,13 @@ class SubClientCompanyController extends Controller
             'name' => 'required',
             'company_email' => 'nullable|email|unique:companies,email',
              'person_email' => 'nullable|email|unique:authorised_people,email',
+              'photo' => 'nullable|image|max:200000',
         ]);
         $input = $request->all();
+        if ($request->hasFile('photo')) {
+        $filename = $request->file('photo')->store('profile_images/Sub_Client Company', 'public');
+        $input['photo'] = $filename;
+    }
         $company = new Company();
 
         $input['company_type_id'] = 4;
@@ -115,7 +120,8 @@ class SubClientCompanyController extends Controller
         $validatedData = $request->validate([
             'company_code' => 'required|max:255',
             'company_name' => 'required|max:255',
-            'name' => 'required'
+            'name' => 'required',
+             'photo' => 'nullable|image|max:200000',
         ]);
 
         $input = $request->all();
@@ -163,6 +169,11 @@ class SubClientCompanyController extends Controller
         $authorised_person->std_code = $input['std_code'];
         $authorised_person->phone = $input['phone'];
         $authorised_person->mobile = $input['mobile'];
+
+          if ($request->hasFile('photo')) {
+        $filename1 = $request->file('photo')->store('profile_images/Sub_Client Company', 'public');
+        $authorised_person->update(['photo' => $filename1]);
+    }
 
         $authorised_person->save();
 
