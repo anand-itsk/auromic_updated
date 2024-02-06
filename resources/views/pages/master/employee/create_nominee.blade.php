@@ -140,7 +140,7 @@
                                         </div>
 
                                         <ul class="list-inline pull-right">
-                                            <li><button type="button" class="default-btn next-step3"
+                                            <li><button type="button" class="default-btn next-step4"
                                                     data-url="{{ route('master.employees.store.nominee', $employee->id) }}">Continue</button>
                                             </li>
                                         </ul>
@@ -152,10 +152,15 @@
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div>
 
+    </div>
+    {{-- <ul class="list-inline pull-right">
+        <li><button type="button" class="default-btn next-step"
+                data-url="{{ route('master.employees.show', $employee->id) }}">Preview</button>
+        </li>
+    </ul> --}}
     <script>
-        $(".next-step3").click(function(e) {
+        $(".next-step4").click(function(e) {
             console.log("click")
             e.preventDefault();
 
@@ -173,7 +178,7 @@
                 processData: false,
                 success: function(response) {
                     $('.employee-nominee-add').modal('hide');
-                    familyMemberTable(response
+                    nomineeTable(response
                         .emp_id);
 
                 },
@@ -260,11 +265,11 @@
                     $('#name').val(data.name);
                     $('#relation_with_emp').val(data.relation_with_emp);
                     console.log();
-                    $('#family_address').html(data.addresses[0].address);
-                    $('#family_area').val(data.addresses[0].village_area);
-                    $('#family_country_id').val(data.addresses[0].country_id);
-                    $('#family_state_id').val(data.addresses[0].state_id);
-                    $('#family_pincode').val(data.addresses[0].pincode);
+                    // $('#family_address').html(data.addresses[0].address);
+                    // $('#family_area').val(data.addresses[0].village_area);
+                    // $('#family_country_id').val(data.addresses[0].country_id);
+                    // $('#family_state_id').val(data.addresses[0].state_id);
+                    // $('#family_pincode').val(data.addresses[0].pincode);
 
                     $('#dob').val(data.dob);
                     $('#is_residing').val(data.is_residing);

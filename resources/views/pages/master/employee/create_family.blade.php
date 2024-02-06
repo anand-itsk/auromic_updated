@@ -173,7 +173,7 @@
 
                                         <ul class="list-inline pull-right">
                                             <li><button type="button" class="default-btn next-step3"
-                                                    data-url="{{ route('master.employees.store.family', $employee->id) }}">Continue</button>
+                                                    id="next-step3">Continue</button>
                                             </li>
                                         </ul>
                                     </form>
@@ -187,15 +187,13 @@
     </div>
 
     <script>
-        $(".next-step3").click(function(e) {
-            console.log("click")
+        $("#next-step3").click(function(e) {
             e.preventDefault();
 
             var activeTab = $('.wizard .nav-tabs li.active');
             var form = $(this).closest('form');
             var formData = new FormData(form[0]);
             var url = form.attr('action'); // Set form action attribute to the appropriate Laravel route.
-            console.log(url);
             // AJAX submission to Laravel
             $.ajax({
                 type: 'POST',

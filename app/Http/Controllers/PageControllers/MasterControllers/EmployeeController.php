@@ -12,6 +12,7 @@ use App\Models\Country;
 use App\Models\Customer;
 use App\Models\Employee;
 use App\Models\EmployeeFamilyMemberDetail;
+use App\Models\EmployeeNominee;
 use App\Models\EsiDispensary;
 use App\Models\LocalOffice;
 use App\Models\Nationality;
@@ -474,12 +475,12 @@ class EmployeeController extends Controller
 
     public function editNominee(Request $request, $id)
     {
-        $familyMember = EmployeeFamilyMemberDetail::with('addresses')->find($id);
-        if (!$familyMember) {
+        $nominee = EmployeeNominee::find($id);
+        if (!$nominee) {
             return response()->json(['error' => 'Family member not found.'], 404);
         }
 
-        return response()->json($familyMember);
+        return response()->json($nominee);
     }
 
     public function updateNominee(Request $request, $id)
@@ -531,12 +532,12 @@ class EmployeeController extends Controller
 
     public function deleteNominee($id)
     {
-        $familyMember = EmployeeFamilyMemberDetail::find($id);
-        if (!$familyMember) {
+        $nominee = EmployeeNominee::find($id);
+        if (!$nominee) {
             return response()->json(['error' => 'Family member not found.'], 404);
         }
-        $emp_id = $familyMember->employee_id;
-        $familyMember->delete();
+        $emp_id = $nominee->employee_id;
+        $nominee->delete();
 
 
         return response()->json([
