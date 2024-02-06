@@ -34,19 +34,24 @@
                                         <div class="card-body">
                                             <div class="m-b-30">
                                                 <div class="row text-center">
-                                                    <div class="col-md-4 ">
+                                                    <div class="col-md-3">
                                                         <h6>Employee Code</h6>
                                                         <p>{{ $employee->employee_code }}</p>
                                                         <!-- More fields... -->
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-3">
                                                         <h6>Employee Name</h6>
                                                         <p>{{ $employee->employee_name }}</p>
                                                         <!-- More fields... -->
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-3">
                                                         <h6>Company Name</h6>
                                                         <p>{{ $employee->company->company_name }}</p>
+                                                        <!-- More fields... -->
+                                                    </div>
+                                                    <div class="col-md-3 d-flex justify-content-center align-items-center">
+                                                      <a href="{{route('master.employees.index')}}">Close</a> 
+                                                      
                                                         <!-- More fields... -->
                                                     </div>
                                                     <!-- Repeat for all fields as per the modal layout -->
@@ -620,7 +625,62 @@
                                                 </div>
 
                                                 {{-- Family Members --}}
-                                                <h5 class="font-weight-lighter mt-4 text-center">Family Member Details</h5>
+                                               <h5 class="font-weight-lighter mt-4 text-center">Family Member Details</h5>
+    <table class="table table-striped table-bordered dt-responsive nowrap"
+           style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Relation</th>
+                <th>Date of Birth</th>
+                <th>Residing</th>
+                <th>Remark</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($employee->familyMembers as $familyMember)
+                <tr>
+                    <td>{{ $familyMember->name }}</td>
+                    <td>{{ $familyMember->relation_with_emp }}</td>
+                    <td>{{ $familyMember->dob }}</td>
+                    <td>{{ $familyMember->is_residing ? 'Yes' : 'No' }}</td>
+                    <td>{{ $familyMember->remark }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+     {{-- Nominess Members --}}
+                                                <h5 class="font-weight-lighter mt-4 text-center">Nominee Details</h5>
+    <table class="table table-striped table-bordered dt-responsive nowrap"
+           style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead>
+            <tr>
+                <th>Family Member</th>
+                <th>Gratuity Sharing</th>
+                <th>Marital Status</th>
+                <th>Religion ID</th>
+                <th>Forhus Name</th>
+                <th>Guardian Name</th>
+                <th>Guardian Address</th>
+                <th>Guardian Relation with Emp</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($employee->nominee as $nominees)
+                <tr>
+                    <td>{{ $nominees->familyMember->name }}</td>
+                    <td>{{ $nominees->gratuity_sharing }}</td>
+                    <td>{{ $nominees->marital_status }}</td>
+                    <td>{{ $nominees->religion_id }}</td>
+                    <td>{{ $nominees->faorhus_name }}</td>
+                    <td>{{ $nominees->guardian_name }}</td>
+                    <td>{{ $nominees->guardian_address }}</td>
+                    <td>{{ $nominees->guardian_relation_with_emp }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
                                                 <div class="row">
                                                     {{-- Banking Info --}}
                                                     <div class="col-md-12">
