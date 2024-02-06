@@ -11,6 +11,7 @@ use App\Http\Controllers\PageControllers\SubClientCompanyController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CountryController;
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -59,6 +60,22 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/permission-edit/{id}', [PermissionController::class, 'edit'])->name('permission.edit');
     Route::post('/permission-update/{id}', [PermissionController::class, 'update'])->name('permission.update');
     Route::get('/permission-delete/{id}', [PermissionController::class, 'delete'])->name('permission.delete');
+
+// Country
+    Route::get('/country', [CountryController::class, 'index'])->name('countries');
+    Route::get('/country-create', [CountryController::class, 'create'])->name('countries.create');
+    Route::post('/country-store', [CountryController::class, 'store'])->name('countries.store');
+    Route::get('/country-edit/{id}', [CountryController::class, 'edit'])->name('countries.edit');
+    Route::post('/country-update/{id}', [CountryController::class, 'update'])->name('countries.update');
+    Route::get('/country-delete/{id}', [CountryController::class, 'delete'])->name('countries.delete');
+
+  // state
+    Route::get('/state', [StateController::class, 'index'])->name('states');
+    Route::get('/state-create', [StateController::class, 'create'])->name('states.create');
+    Route::post('/state-store', [StateController::class, 'store'])->name('states.store');
+    Route::get('/state-edit/{id}', [StateController::class, 'edit'])->name('states.edit');
+    Route::post('/state-update/{id}', [StateController::class, 'update'])->name('states.update');
+    Route::get('/state-delete/{id}', [StateController::class, 'delete'])->name('states.delete');
 
     //Pages
     Route::get('/master-companies', [MasterCompanyController::class, 'index'])->name('master-companies');
