@@ -173,7 +173,7 @@
 
                                         <ul class="list-inline pull-right">
                                             <li><button type="button" class="default-btn next-step3"
-                                                    id="next-step3">Continue</button>
+                                                    id="next-step3">Add</button>
                                             </li>
                                         </ul>
                                     </form>

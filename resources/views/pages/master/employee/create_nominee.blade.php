@@ -141,7 +141,7 @@
 
                                         <ul class="list-inline pull-right">
                                             <li><button type="button" class="default-btn next-step4"
-                                                    data-url="{{ route('master.employees.store.nominee', $employee->id) }}">Continue</button>
+                                                    data-url="{{ route('master.employees.store.nominee', $employee->id) }}">Add</button>
                                             </li>
                                         </ul>
                                     </form>
