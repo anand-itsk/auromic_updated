@@ -16,7 +16,7 @@ class AuthorisedPerson extends Model
         'gender',
         'blood_group',
         'dob',
-        'email',
+        'person_email',
         'pan_no',
         'std_code',
         'phone',

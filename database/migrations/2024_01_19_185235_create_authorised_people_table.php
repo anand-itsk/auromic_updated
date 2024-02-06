@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('gender', ['Male', 'Female', 'Other'])->nullable();
             $table->enum('blood_group', ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])->nullable();
             $table->date('dob')->nullable();
-            $table->string('email')->unique()->nullable();
+            $table->string('person_email')->unique()->nullable();
             $table->string('pan_no')->nullable();
             $table->string('std_code')->nullable();
             $table->string('phone')->nullable();

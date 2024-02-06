@@ -157,8 +157,8 @@
                                     </div>
                                     <label for="email" class="col-sm-2 col-form-label">Email Id</label>
                                     <div class="col-sm-4 mb-4">
-                                        <input class="form-control" type="email" name="email" id="email">
-                                        @error('email')
+                                        <input class="form-control" type="email" name="company_email" id="email">
+                                        @error('company_email')
                                         <span class="error" style="color: red;">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -286,6 +286,18 @@
                                         @enderror
                                     </div>
 
+                                     <label for="faorhus_name" class="col-sm-2 col-form-label">Profile Image</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input  type="file" name="photo"
+                                                id="imageUpload">
+                                            @error('photo')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                            <br>
+                                         <img id="imagePreview" src="#" alt="Image Preview"
+                                             style="display: none; width: 50px; height: 50px;">
+                                        </div>
+
                                     <label for="gender" class="col-sm-2 col-form-label">Gender</label>
                                     <div class="col-sm-2 mb-4">
                                         <select class="form-control" name="gender" id="gender">
@@ -387,8 +399,8 @@
                                     </div>
                                     <label for="email" class="col-sm-2 col-form-label">Email Id</label>
                                     <div class="col-sm-4 mb-4">
-                                        <input class="form-control" type="email" name="email" id="email">
-                                        @error('email')
+                                        <input class="form-control" type="email" name="person_email" id="email">
+                                        @error('person_email')
                                         <span class="error" style="color: red;">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -434,6 +446,16 @@
     </div>
 </div>
 <script></script>
+<script>
+   document.getElementById("imageUpload").addEventListener("change", function() {
+       var reader = new FileReader();
+       reader.onload = function(e) {
+           document.getElementById("imagePreview").setAttribute("src", e.target.result);
+           document.getElementById("imagePreview").style.display = "block";
+       }
+       reader.readAsDataURL(this.files[0]);
+   });
+</script>
 
 @include('links.js.select2.select2')
 @endsection

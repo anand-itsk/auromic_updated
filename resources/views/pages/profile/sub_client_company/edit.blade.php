@@ -152,9 +152,9 @@
                                     </div>
                                     <label for="email" class="col-sm-2 col-form-label">Email Id</label>
                                     <div class="col-sm-4 mb-4">
-                                        <input class="form-control" type="email" name="email" id="email"
-                                            value="{{ $company->email }}">
-                                        @error('email')
+                                        <input class="form-control" type="email" name="company_email" id="email"
+                                            value="{{ $company->company_email }}">
+                                        @error('company_email')
                                         <span class="error" style="color: red;">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -296,8 +296,23 @@
                                         @enderror
                                     </div>
 
-                                    <label for="gender" class="col-sm-2 col-form-label">Business
-                                        Nature</label>
+                                     <label for="faorhus_name" class="col-sm-2 col-form-label">Profile Image</label>
+<div class="col-sm-4 mb-4">
+    <input type="file" name="photo" id="imageInput">
+    @error('photo')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+    <br>
+    
+    <h6 style="font-weight: bold;">Current Image:</h6>
+    <img src="{{ asset('storage/' . $company->authorisedPerson->photo) }}" alt="Current Image"
+         style="max-width: 100px; max-height: 100px;">
+    
+    <h6 style="font-weight: bold;">Change Image:</h6>
+    <div id="imagePreviewContainer"></div>
+</div>
+
+                                    <label for="gender" class="col-sm-2 col-form-label">Gender</label>
                                     <div class="col-sm-2 mb-4">
                                         <select class="form-control" name="gender" id="gender">
                                             <option value="{{ $company->authorisedPerson->gender ?? '' }}">
@@ -406,9 +421,9 @@
                                     </div>
                                     <label for="email" class="col-sm-2 col-form-label">Email Id</label>
                                     <div class="col-sm-4 mb-4">
-                                        <input class="form-control" type="email" name="email" id="email"
-                                            value="{{ $company->authorisedPerson->email ?? '' }}">
-                                        @error('email')
+                                        <input class="form-control" type="email" name="person_email" id="email"
+                                            value="{{ $company->authorisedPerson->person_email ?? '' }}">
+                                        @error('person_email')
                                         <span class="error" style="color: red;">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -455,4 +470,29 @@
 var selectedOfficeStateId = "{{ $officeAddress->state_id ?? '' }}";
 var selectedStateId = "{{ $address->state_id ?? '' }}";
 </script>
+ <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const imageInput = document.getElementById("imageInput");
+            const imagePreviewContainer = document.getElementById("imagePreviewContainer");
+
+            imageInput.addEventListener("change", function(event) {
+                imagePreviewContainer.innerHTML = ""; // Clear previous previews
+
+                const files = event.target.files;
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        const imagePreview = document.createElement("img");
+                        imagePreview.src = e.target.result;
+                        imagePreview.style.maxWidth = "100px"; // Adjust the image size as needed
+                        imagePreviewContainer.appendChild(imagePreview);
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    </script>
 @endsection
