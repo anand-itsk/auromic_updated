@@ -14,7 +14,7 @@
                                 <li class="breadcrumb-item active">Settings</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Dashboard</h4>
+                        <h4 class="page-title">Masters</h4>
 
                     </div>
                     <div class="row">
@@ -31,7 +31,40 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="card m-b-30">
+
+                                <div class="card-body">
+                                    <h4 class="mt-0 header-title">Common</h4>
+                                    <a class="text-muted m-b-0 font-14" href="{{route('countries')}}">Country</a>
+                                    <br>
+                                    <a class="text-muted m-b-0 font-14" href="">State</a> 
+                                    <br>
+                                    <a class="text-muted m-b-0 font-14" href="">Districts</a>
+                                    <br>
+                                    <a class="text-muted m-b-0 font-14" href="">Religion</a>
+                                    <br>
+                                    <a class="text-muted m-b-0 font-14" href="">Caste</a>
+                                     <br>
+                                    <a class="text-muted m-b-0 font-14" href="">Nationality</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="card m-b-30">
+
+                                <div class="card-body">
+                                    <h4 class="mt-0 header-title">Common</h4>
+                                    <a class="text-muted m-b-0 font-14" href="">Country</a>
+                                    <br>
+                                    <a class="text-muted m-b-0 font-14" href="">State</a> 
+                                    <br>
+                                    <a class="text-muted m-b-0 font-14" href="">Districts</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    
                 </div>
             </div>
             <!-- end page title end breadcrumb -->

@@ -504,11 +504,11 @@
                                                                         @enderror
                                                                     </div>
 
-                                                                    <label for="maritalStatus"
+                                                                    <label for="marital_status"
                                                                         class="col-sm-2 col-form-label">Marital
                                                                         Status</label>
                                                                     <div class="col-sm-4 mb-4">
-                                                                        <select name="maritalStatus" id="maritalStatus"
+                                                                        <select name="marital_status" id="marital_status"
                                                                             class="form-control">
                                                                             <option value=""
                                                                                 {{ $employee->blood_group == null ? 'selected' : '' }}>
@@ -532,7 +532,7 @@
                                                                                 {{ $employee->blood_group == 'Other' ? 'selected' : '' }}>
                                                                                 Other</option>
                                                                         </select>
-                                                                        @error('maritalStatus')
+                                                                        @error('marital_status')
                                                                             <span class="error"
                                                                                 style="color: red;">{{ $message }}</span>
                                                                         @enderror
