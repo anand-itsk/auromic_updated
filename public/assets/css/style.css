@@ -3229,3 +3229,10 @@ File: Responsive
   content: " *"; /* Space before asterisk for separation */
   color: red;
 }
+
+button.default-btn {
+  font-size: 14px;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 2px;
+}

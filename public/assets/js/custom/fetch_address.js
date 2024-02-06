@@ -21,11 +21,26 @@ $(document).ready(function() {
         $.get(`/get-districts/${stateId}`, function(districts) {
             var districtSelect = $('#office_district_id');
             districtSelect.empty();
-            districtSelect.append(new Option('Select State', ''));
-            $.each(districts, function(index, state) {
-                districtSelect.append(new Option(state.name, state.id));
+            districtSelect.append(new Option('Select District', ''));
+            $.each(districts, function(index, district) {
+                districtSelect.append(new Option(district.name, district.id));
             });
             districtSelect.prop('disabled', false).trigger('change');
+        });
+    });
+
+    $('#country_id').select2();
+
+    $('#country_id').on('change', function() {
+        var countryId = this.value;
+        $.get(`/get-states/${countryId}`, function(states) {
+            var stateSelect = $('#state_id');
+            stateSelect.empty();
+            stateSelect.append(new Option('Select State', ''));
+            $.each(states, function(index, state) {
+                stateSelect.append(new Option(state.name, state.id));
+            });
+            stateSelect.prop('disabled', false).trigger('change');
         });
     });
 
@@ -51,7 +66,7 @@ $(document).ready(function() {
         $.get(`/get-districts/${stateId}`, function(districts) {
             var districtSelect = $('#corrs_district_id');
             districtSelect.empty();
-            districtSelect.append(new Option('Select State', ''));
+            districtSelect.append(new Option('Select District', ''));
             $.each(districts, function(index, state) {
                 districtSelect.append(new Option(state.name, state.id));
             });
@@ -63,7 +78,7 @@ $(document).ready(function() {
 
     // Similar logic for updating districts when state changes
 
-
+    // Edit Fetch State
     let selectedOfficeCountryId = $('#office_country_id').val();
     if(selectedOfficeCountryId != 1) {
         $('#office_state_id').prop('disabled', false).trigger('change');
@@ -79,6 +94,7 @@ $(document).ready(function() {
             url: '/get-states/' + countryId,
             type: 'GET',
             success: function (states) {
+
                 $('#' + stateSelectId).empty().append('<option value="">Select State</option>');
                 states.forEach(function (state) {
                     let isSelected = selectedOfficeStateId == state.id ? 'selected' : '';
@@ -88,6 +104,36 @@ $(document).ready(function() {
             }
         });
     }
+
+        // Edit Fetch District
+        let selectedOfficeStateIdNew = $('#office_state_id').val();
+        if(selectedOfficeStateIdNew != 1) {
+            $('#office_district_id').prop('disabled', false).trigger('change');
+            loadOfficeDistricts(selectedOfficeStateIdNew, 'office_district_id', selectedOfficeDistrictId);
+        }
+    
+        $('#office_state_id').on('change', function() {
+            loadOfficeDistricts($(this).val(), 'office_district_id');
+        });
+        
+        function loadOfficeDistricts(stateId, districtSelectId, selectedOfficeDistrictId1 = null) {
+            
+
+            $.ajax({
+                url: '/get-districts/' + stateId,
+                type: 'GET',
+                success: function (districts) {
+
+                    $('#' + districtSelectId).empty().append('<option value="">Select District</option>');
+
+                    districts.forEach(function (district) {
+                        let isSelectedDistrict = selectedOfficeDistrictId == district.id ? 'selected' : '';
+                        $('#' + districtSelectId).append('<option value="' + district.id + '" ' + isSelectedDistrict + '>' + district.name + '</option>');
+                    });
+                    $('#' + districtSelectId).trigger('change'); // Notify select2 to update options
+                }
+            });
+        }
 
     let selectedCountryId = $('#corrs_country_id').val();
     if(selectedCountryId != 1) {
