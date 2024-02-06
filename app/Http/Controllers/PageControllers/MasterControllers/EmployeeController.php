@@ -9,6 +9,7 @@ use App\Models\Caste;
 use App\Models\Company;
 use App\Models\CompanyType;
 use App\Models\Country;
+use App\Models\Customer;
 use App\Models\Employee;
 use App\Models\EmployeeFamilyMemberDetail;
 use App\Models\EsiDispensary;
@@ -183,6 +184,7 @@ class EmployeeController extends Controller
         $employee = Employee::findOrFail($id);
         // Store data
         $employee->update([
+            'company_id' => $request->company_id,
             'employee_code' => $request->employee_code,
             'employee_name' => $request->employee_name,
             'dob' => $request->dob,
@@ -650,21 +652,7 @@ class EmployeeController extends Controller
         return redirect()->route('master.customers.index')
             ->with('success', 'Customer updated successfully');
     }
-    // Show
-    public function showDetails($id)
-    {
-        $customer = Customer::with('addresses')->findOrFail($id);
-        $html = view('pages.master.customer.show', compact('customer'))->render();
-        return response()->json([
-            'html' => $html,
-            'data' => [
-                'created_by' => $customer->createdBy->name,
-                'created_at' => $customer->created_at,
-                'updated_at' => $customer->updated_at,
-                'updated_by' => $customer->updatedBy->name,
-            ]
-        ]);
-    }
+
     // Delete
     public function destroy($id)
     {
@@ -707,5 +695,12 @@ class EmployeeController extends Controller
     {
         $companies = Company::where('company_type_id', $companytypeid)->with('authorisedPerson')->get();
         return response()->json($companies);
+    }
+    // Show
+    public function showDetails($id)
+    {
+        // $employee = Employee::where('id', $id)->first();
+        $employee = Employee::where('id', $id)->first();
+        return view('pages.master.employee.show', ['employee' => $employee]);
     }
 }

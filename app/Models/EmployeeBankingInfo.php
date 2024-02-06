@@ -20,4 +20,8 @@ class EmployeeBankingInfo extends Model
         'range',
     ];
 
+    public function paymentMode(){
+        return $this->belongsTo(PaymentMode::class);
+    }
+
 }

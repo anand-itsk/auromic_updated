@@ -33,6 +33,11 @@ class Employee extends Model
         'resigning_reason_id',
     ];
 
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
     public function addresses()
     {
         return $this->morphMany(Address::class, 'addressable');

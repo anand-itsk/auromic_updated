@@ -10,7 +10,7 @@
                 <label for="bank_name" class="col-sm-2 col-form-label">Bank Name</label>
                 <div class="col-sm-4 mb-4">
                     <input class="form-control" type="text" name="bank_name" id="bank_name"
-                        value={{ $employee->financeDetail && $employee->financeDetail->bank_name ?? '' }}>
+                        value={{ $employee->financeDetail ? $employee->financeDetail->bank_name : '' }}>
                     @error('bank_name')
                         <span class="error" style="color: red;">{{ $message }}</span>
                     @enderror
@@ -19,7 +19,7 @@
                 <label for="account_number" class="col-sm-2 col-form-label">Salary A/C No</label>
                 <div class="col-sm-4 mb-4">
                     <input class="form-control" type="text" name="account_number" id="account_number"
-                        value={{ $employee->financeDetail && $employee->financeDetail->account_number ?? '' }}>
+                        value={{ $employee->financeDetail ? $employee->financeDetail->account_number : '' }}>
                     @error('account_number')
                         <span class="error" style="color: red;">{{ $message }}</span>
                     @enderror
@@ -27,7 +27,7 @@
 
                 <label for="address" class="col-sm-2 col-form-label">Address</label>
                 <div class="col-sm-10 mb-4">
-                    <textarea class="form-control" name="address" id="address" cols="10" rows="3"> {{ $employee->financeDetail && $employee->financeDetail->address ? 'selected' : '' }}</textarea>
+                    <textarea class="form-control" name="address" id="address" cols="10" rows="3"> {{ $employee->financeDetail ? $employee->financeDetail->address : '' }}</textarea>
 
                     @error('address')
                         <span class="error" style="color: red;">{{ $message }}</span>
@@ -38,7 +38,8 @@
                 <div class="col-sm-4 mb-4">
                     <select class="form-control select2" name="payment_mode_id" id="payment_mode_id">
                         @foreach ($payment_modes as $item)
-                            <option value="{{ $item->id }}">
+                            <option value="{{ $item->id }}"
+                                {{ $employee->financeDetail && $employee->financeDetail->payment_mode_id == $item->id ? 'selected' : '' }}>
                                 {{ $item->name }}
                             </option>
                         @endforeach
@@ -90,7 +91,7 @@
                 <label for="bank_ref_no" class="col-sm-2 col-form-label">Bank Ref.no</label>
                 <div class="col-sm-4 mb-4">
                     <input class="form-control" type="text" name="bank_ref_no" id="bank_ref_no"
-                        value={{ $employee->financeDetail && $employee->financeDetail->bank_ref_no ?? '' }}>
+                        value={{ $employee->financeDetail ? $employee->financeDetail->bank_ref_no : '' }}>
                     @error('bank_ref_no')
                         <span class="error" style="color: red;">{{ $message }}</span>
                     @enderror
@@ -99,7 +100,7 @@
                 <label for="range" class="col-sm-2 col-form-label">Ward/ Circle/ Range</label>
                 <div class="col-sm-4 mb-4">
                     <input class="form-control" type="text" name="range" id="range"
-                        value={{ $employee->financeDetail && $employee->financeDetail->range }}>
+                        value={{ $employee->financeDetail ? $employee->financeDetail->range : '' }}>
                     @error('range')
                         <span class="error" style="color: red;">{{ $message }}</span>
                     @enderror
@@ -116,7 +117,7 @@
                 <label for="policy_no" class="col-sm-2 col-form-label">Policy No</label>
                 <div class="col-sm-4 mb-4">
                     <input class="form-control" type="text" name="policy_no" id="policy_no"
-                        value= "{{ $employee->licInfo && $employee->licInfo->policy_no ? 'selected' : '' }}">
+                        value= "{{ $employee->licInfo ? $employee->licInfo->policy_no : '' }}">
                     @error('policy_no')
                         <span class="error" style="color: red;">{{ $message }}</span>
                     @enderror
@@ -125,7 +126,7 @@
                 <label for="policy_term" class="col-sm-2 col-form-label">Policy Term</label>
                 <div class="col-sm-4 mb-4">
                     <input class="form-control" type="text" name="policy_term" id="policy_term"
-                        value= "{{ $employee->licInfo && $employee->licInfo->policy_term ? 'selected' : '' }}">
+                        value= "{{ $employee->licInfo ? $employee->licInfo->policy_term : '' }}">
                     @error('policy_term')
                         <span class="error" style="color: red;">{{ $message }}</span>
                     @enderror
@@ -134,7 +135,7 @@
                 <label for="lic_id" class="col-sm-2 col-form-label">LIC ID</label>
                 <div class="col-sm-4 mb-4">
                     <input class="form-control" type="text" name="lic_id" id="lic_id"
-                        value= "{{ $employee->licInfo && $employee->licInfo->lic_id ? 'selected' : '' }}">
+                        value= "{{ $employee->licInfo ? $employee->licInfo->lic_id : '' }}">
                     @error('lic_id')
                         <span class="error" style="color: red;">{{ $message }}</span>
                     @enderror
@@ -143,7 +144,7 @@
                 <label for="annual_renewable_date" class="col-sm-2 col-form-label">Annual Renewable Date</label>
                 <div class="col-sm-4 mb-4">
                     <input class="form-control" type="date"
-                        value= "{{ $employee->licInfo && $employee->licInfo->annual_renewable_date ? 'selected' : '' }}"
+                        value= "{{ $employee->licInfo ? $employee->licInfo->annual_renewable_date : '' }}"
                         name="annual_renewable_date" id="annual_renewable_date">
                     @error('annual_renewable_date')
                         <span class="error" style="color: red;">{{ $message }}</span>
@@ -179,7 +180,7 @@
                 <label for="pf_no" class="col-sm-2 col-form-label">PF No</label>
                 <div class="col-sm-4 mb-4">
                     <input class="form-control" type="text"
-                        value="{{ $employee->pfInfo && $employee->pfInfo->pf_no ?: '' }}" name="pf_no"
+                        value="{{ $employee->pfInfo ? $employee->pfInfo->pf_no : '' }}" name="pf_no"
                         id="pf_no">
                     @error('pf_no')
                         <span class="error" style="color: red;">{{ $message }}</span>
@@ -262,7 +263,9 @@
 
                 <label for="pf_no" class="col-sm-2 col-form-label">ESI No</label>
                 <div class="col-sm-4 mb-4">
-                    <input class="form-control" type="text" name="esi_no" id="esi_no">
+                    <input class="form-control" type="text"
+                        value="{{ $employee->esiInfo ? $employee->esiInfo->esi_no : '' }}" name="esi_no"
+                        id="esi_no">
                     @error('esi_no')
                         <span class="error" style="color: red;">{{ $message }}</span>
                     @enderror
@@ -270,7 +273,9 @@
 
                 <label for="pf_joining_date" class="col-sm-2 col-form-label">ESI Joining Date</label>
                 <div class="col-sm-4 mb-4">
-                    <input class="form-control" type="date" name="esi_joining_date" id="esi_joining_date">
+                    <input class="form-control" type="date"
+                        value="{{ $employee->esiInfo ? $employee->esiInfo->esi_joining_date : '' }}"
+                        name="esi_joining_date" id="esi_joining_date">
                     @error('esi_joining_date')
                         <span class="error" style="color: red;">{{ $message }}</span>
                     @enderror
@@ -278,7 +283,9 @@
 
                 <label for="pf_last_date" class="col-sm-2 col-form-label">ESI Last Date</label>
                 <div class="col-sm-4 mb-4">
-                    <input class="form-control" type="date" name="esi_last_date" id="esi_last_date">
+                    <input class="form-control" type="date"
+                        value="{{ $employee->esiInfo ? $employee->esiInfo->esi_last_date : '' }}"
+                        name="esi_last_date" id="esi_last_date">
                     @error('esi_last_date')
                         <span class="error" style="color: red;">{{ $message }}</span>
                     @enderror
@@ -288,7 +295,8 @@
                 <div class="col-sm-4 mb-4">
                     <select class="form-control select2" name="local_office_id" id="local_office_id">
                         @foreach ($local_offices as $item)
-                            <option value="{{ $item->id }}">
+                            <option value="{{ $item->id }}"
+                                {{ $employee->esiInfo && $employee->esiInfo->local_office_id == $item->id ? 'selected' : '' }}>
                                 {{ $item->name }}
                             </option>
                         @endforeach
@@ -302,7 +310,8 @@
                 <div class="col-sm-4 mb-4">
                     <select class="form-control select2" name="esi_dispensary_id" id="esi_dispensary_id">
                         @foreach ($esi_despensaries as $item)
-                            <option value="{{ $item->id }}">
+                            <option value="{{ $item->id }}"
+                                {{ $employee->esiInfo && $employee->esiInfo->esi_dispensary_id == $item->id ? 'selected' : '' }}>
                                 {{ $item->name }}
                             </option>
                         @endforeach
