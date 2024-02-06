@@ -18,5 +18,14 @@ class EsiInfo extends Model
         'local_office_id',
         'esi_dispensary_id',
     ];
-    
+
+    public function localOffice()
+    {
+        return $this->belongsTo(LocalOffice::class);
+    }
+
+    public function esiDispensary()
+    {
+        return $this->belongsTo(EsiDispensary::class);
+    }
 }

@@ -77,7 +77,8 @@
                                                                             name="company_type_id" id="company_type_id">
                                                                             <option value="">Select</option>
                                                                             @foreach ($company_types as $item)
-                                                                                <option value="{{ $item->id }}">
+                                                                                <option value="{{ $item->id }}"
+                                                                                    {{ $employee->company && $employee->company->company_type_id == $item->id ? 'selected' : '' }}>
                                                                                     {{ $item->name }}</option>
                                                                             @endforeach
                                                                         </select>
@@ -740,7 +741,51 @@
                 prevTab(active);
 
             });
+
+
+            var selectedCompanyId = "{{ $employee->company_id ?? '' }}";
+
+            // Process initial state based on the current value of #company_type_id without waiting for a change event
+            let selectedCompanyTypeId = $('#company_type_id').val();
+            processCompanyTypeSelection(selectedCompanyTypeId, selectedCompanyId);
+
+            // Setup change event handler for subsequent changes
+            $('#company_type_id').on('change', function() {
+                let companyTypeId = $(this).val();
+                processCompanyTypeSelection(companyTypeId, selectedCompanyId);
+            });
         });
+
+        function processCompanyTypeSelection(companyTypeId, selectedCompanyId) {
+            let isDisabled = companyTypeId != 1; // Enable #company_id if company type is not 1
+            $('#company_id').prop('disabled', !isDisabled);
+
+            if (companyTypeId != 1) { // Load companies only if company type is not 1
+                loadCompanies(companyTypeId, 'company_id', selectedCompanyId);
+            }
+        }
+
+        function loadCompanies(companyTypeId, companyIdElementId, selectedCompanyId = null) {
+            $.ajax({
+                url: '/get-companies/' + companyTypeId,
+                type: 'GET',
+                success: function(companies) {
+                    let $companyIdElement = $('#' + companyIdElementId);
+                    $companyIdElement.empty().append('<option value="">Select Company</option>');
+
+                    companies.forEach(function(company) {
+                        let isSelected = selectedCompanyId == company.id ? 'selected' : '';
+                        let authorisedPersonName = company.authorised_person ? company.authorised_person
+                            .name : 'N/A';
+                        $companyIdElement.append(
+                            `<option value="${company.id}" ${isSelected}>${company.company_name} (${authorisedPersonName})</option>`
+                            );
+                    });
+
+                    $companyIdElement.trigger('change');
+                }
+            });
+        }
 
         function nextTab(elem) {
             $(elem).next().find('a[data-toggle="tab"]').click();
@@ -786,7 +831,8 @@
                             .name :
                             'N/A';
                         $('#' + companyId).append('<option value="' + data.id + '" ' + isSelected +
-                            '>' + data.company_name + ' (' + authorisedPersonName + ')</option>');
+                            '>' + data.company_name + ' (' + authorisedPersonName + ')</option>'
+                        );
                     });
                     $('#' + companyId).trigger('change');
                 }
@@ -801,7 +847,8 @@
                 document.getElementById('corrs_country_id').value = document.getElementById('office_country_id')
                     .value;
                 document.getElementById('state_id').value = document.getElementById('office_state_id').value;
-                document.getElementById('district_id').value = document.getElementById('office_district_id').value;
+                document.getElementById('district_id').value = document.getElementById('office_district_id')
+                    .value;
                 document.getElementById('pincode').value = document.getElementById('office_pincode').value;
             } else {
                 // Clear the Correspondence Address fields
@@ -842,7 +889,9 @@
                         for (let key in errors) {
                             if (errors.hasOwnProperty(key)) {
                                 let inputField = form.find('[name="' + key + '"]');
-                                let errorMessage = errors[key][0]; // First error message for this field
+                                let errorMessage = errors[key][
+                                    0
+                                ]; // First error message for this field
 
                                 // Append error message and add invalid input styling
                                 inputField.addClass('is-invalid').after(

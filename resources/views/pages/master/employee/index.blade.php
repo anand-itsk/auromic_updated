@@ -358,26 +358,28 @@
         }
 
         function showDetails(userId) {
+
+            window.location.href = '/master/employees/show/' + userId;
             // Fetch user details using AJAX
-            $.ajax({
-                url: '/master/Employees/show/' + userId,
-                type: 'GET',
-                success: function(response) {
+            // $.ajax({
+            //     url: '/master/employees/show/' + userId,
+            //     type: 'GET',
+            //     success: function(response) {
 
-                    const createdAt = response.data.created_at;
-                    const formattedCreatedAt = formatTimestamp(createdAt);
-                    const updatedAt = response.data.updated_at;
-                    const formattedUpdatedAt = formatTimestamp(updatedAt);
-                    $('#detailsContent').html(response.html);
-                    $('#created_by').html(response.data.created_by);
-                    $('#updated_by').html(response.data.updated_by);
-                    $('#created_at').html(formattedCreatedAt);
-                    $('#updated_at').html(formattedUpdatedAt);
+            //         const createdAt = response.data.created_at;
+            //         const formattedCreatedAt = formatTimestamp(createdAt);
+            //         const updatedAt = response.data.updated_at;
+            //         const formattedUpdatedAt = formatTimestamp(updatedAt);
+            //         $('#detailsContent').html(response.html);
+            //         $('#created_by').html(response.data.created_by);
+            //         $('#updated_by').html(response.data.updated_by);
+            //         $('#created_at').html(formattedCreatedAt);
+            //         $('#updated_at').html(formattedUpdatedAt);
 
-                    console.log(formattedCreatedAt);
-                    $('#detailsModal').modal('show');
-                }
-            });
+            //         console.log(formattedCreatedAt);
+            //         $('#detailsModal').modal('show');
+            //     }
+            // });
         }
 
         function formatTimestamp(timestamp) {

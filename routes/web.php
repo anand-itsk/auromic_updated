@@ -152,6 +152,8 @@ Route::middleware(['auth'])->group(function () {
 
             Route::get('/create', [EmployeeController::class, 'create'])->name('create');
             Route::post('/store', [EmployeeController::class, 'store'])->name('store');
+            Route::get('/show/{id}', [EmployeeController::class, 'showDetails'])->name('show');
+
             // Route::post('/step2', 'WizardController@storeStep2')->name('wizard.storeStep2');
 
 
@@ -181,6 +183,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete/selected', [EmployeeController::class, 'deleteSelected']);
             Route::post('/import', [EmployeeController::class, 'import'])->name('import');
             Route::get('/export', [EmployeeController::class, 'export']);
+
+            
         });
     });
 
