@@ -5,6 +5,7 @@ namespace App\Http\Controllers\PageControllers;
 use App\Exports\CompanyExport;
 use App\Http\Controllers\Controller;
 use App\Imports\CompanyDataImport;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Address;
 use App\Models\AddressType;
 use App\Models\AuthorisedPerson;
@@ -29,7 +30,7 @@ class MasterCompanyController extends Controller
     public function indexData()
     {
         // Eager load the roles relationship
-        $company = Company::query()->where('company_type_id', 1);
+        $company = Company::query()->where('company_type_id', 2);
         return DataTables::of($company)->make(true);
     }
     // Create Page
@@ -47,20 +48,31 @@ class MasterCompanyController extends Controller
         $validatedData = $request->validate([
             'company_code' => 'required|max:255',
             'company_name' => 'required|max:255',
-            'name' => 'required'
+            'name' => 'required',
+            'company_email' => 'nullable|email|unique:companies,email',
+             'person_email' => 'nullable|email|unique:authorised_people,email',
+             'photo' => 'nullable|image|max:200000',
         ]);
         $input = $request->all();
+        // dd($input);
+
+     if ($request->hasFile('photo')) {
+        $filename = $request->file('photo')->store('profile_images/Master Company', 'public');
+        $input['photo'] = $filename;
+    }
+
         $company = new Company();
 
-        $input['company_type_id'] = 1;
+        $input['company_type_id'] = 2;
         $input['created_by'] = $auth_id;
         $input['updated_by'] = $auth_id;
 
         $company = $company->create($input);
-
+// dd($company);
         $input['company_id'] = $company->id;
         $company_registration_details = CompanyRegistrationDetails::create($input);
         $authorised_person = AuthorisedPerson::create($input);
+        // dd($authorised_person);
 
         if (
             $input['office_address'] !== null ||
@@ -98,8 +110,10 @@ class MasterCompanyController extends Controller
     {
         // dd($address);
         $user = User::with('roles')->find($id);
-        $company = Company::with('addresses')->find($id);
+        $company = Company::with('addresses','authorisedPerson')->find($id);
         $countries = Country::all();
+      
+
         // dd($customer);
         return view('pages.profile.master_company.edit', compact('company', 'user', 'countries', 'address'));
     }
@@ -111,18 +125,21 @@ class MasterCompanyController extends Controller
         $validatedData = $request->validate([
             'company_code' => 'required|max:255',
             'company_name' => 'required|max:255',
-            'name' => 'required'
+            'name' => 'required',
+            'photo' => 'nullable|image|max:200000',
         ]);
 
         $input = $request->all();
+
+     
         $company = Company::findOrFail($id);
 
-        $company->company_type_id = 1;
+        $company->company_type_id = 2;
         $company->company_code = $input['company_code'];
         $company->company_name = $input['company_name'];
         $company->std_code = $input['std_code'];
         $company->phone = $input['phone'];
-        $company->email = $input['email'];
+        $company->company_email = $input['company_email'];
         $company->starting_date = $input['starting_date'];
         $company->business_nature = $input['business_nature'];
         $company->website = $input['website'];
@@ -154,12 +171,17 @@ class MasterCompanyController extends Controller
         $authorised_person->gender = $input['gender'];
         $authorised_person->blood_group = $input['blood_group'];
         $authorised_person->dob = $input['dob'];
-        $authorised_person->email = $input['email'];
+        $authorised_person->person_email = $input['person_email'];
         $authorised_person->pan_no = $input['pan_no'];
         $authorised_person->std_code = $input['std_code'];
         $authorised_person->phone = $input['phone'];
         $authorised_person->mobile = $input['mobile'];
 
+       if ($request->hasFile('photo')) {
+        $filename1 = $request->file('photo')->store('profile_images/Master Company', 'public');
+        $authorised_person->update(['photo' => $filename1]);
+    }
+    
         $authorised_person->save();
 
 
@@ -195,6 +217,7 @@ class MasterCompanyController extends Controller
         return response()->json([
             'html' => $html,
             'data' => [
+                
                 'created_by' => $company->createdBy->name,
                 'created_at' => $company->created_at,
                 'updated_at' => $company->updated_at,
@@ -229,7 +252,7 @@ class MasterCompanyController extends Controller
         $request->validate([
             'file' => 'required|file|mimes:xlsx,csv'
         ]);
-        $company_type_id = 1;
+        $company_type_id = 2;
         Excel::import(new CompanyDataImport($company_type_id), request()->file('file'));
 
         return redirect()->route('profile.masters.index')->with('success', 'Data imported successfully');

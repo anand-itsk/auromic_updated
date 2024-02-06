@@ -36,7 +36,7 @@
                                     </div>
                                     <div>
                                         <a href="{{ route('profile.bank_details.create') }}" class="icon-link common-color"
-                                            title="Create New User">
+                                            title="Create ">
                                             <i class="fa fa-user-plus"></i>
                                         </a>
                                     </div>
@@ -122,9 +122,7 @@
                         <div class="modal-body">
                             <div id="detailsContent">
                                 <!-- Content loaded via AJAX -->
-                                 <table id="dataTable">
-        <!-- Table header and body content -->
-    </table>
+
                             </div>
                         </div>
 
@@ -180,13 +178,14 @@
                         data: 'id',
                         name: 'id'
                     },
-                    {
-                        data: 'company_code',
-                        name: 'company_code'
-                    },
+
                     {
                         data: 'company_name',
                         name: 'company_name'
+                    },
+                    {
+                        data: 'company_code',
+                        name: 'company_code'
                     },
                     {
                         data: null,
@@ -205,7 +204,7 @@
                 ],
                 select: true,
                 dom: 'lBfrtip',
-                
+
 
             });
 
@@ -270,7 +269,9 @@
                 url: '/profile/bank_details/show/' + userId,
                 type: 'GET',
                 success: function(response) {
-                    console.log(response);
+
+                    console.log(userId);
+                    // console.log(response);
                     const createdAt = response.data.created_at;
                     const formattedCreatedAt = formatTimestamp(createdAt);
                     const updatedAt = response.data.updated_at;
@@ -280,10 +281,7 @@
                     $('#updated_by').html(response.data.updated_by);
                     $('#created_at').html(formattedCreatedAt);
                     $('#updated_at').html(formattedUpdatedAt);
- // Initialize DataTable
-            $('#dataTable').DataTable({
-                // Add your DataTable options here
-            });
+
                     console.log(formattedCreatedAt);
                     $('#detailsModal').modal('show');
                 }

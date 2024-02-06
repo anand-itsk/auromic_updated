@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('employee_family_member_details', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('employee_id');
+            $table->string('name');
+            $table->string('relation_with_emp')->nullable();
+            $table->date('dob')->nullable();
+            $table->boolean('is_residing')->default(0);
+            $table->text('remark')->nullable();
+            $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
             $table->timestamps();
         });
     }

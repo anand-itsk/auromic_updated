@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
             PermissionGroupTableSeeder::class,
             PermissionTableSeeder::class,
             RoleTableSeeder::class,
+            PaymentModeTableSeeder::class,
+            LocalOfficeTableSeeder::class,
+            EsiDispensaryTableSeeder::class,
             ResigningReasonTableSeeder::class,
             AddressTypeTableSeeder::class,
             UserTableSeeder::class,
@@ -32,7 +35,8 @@ class DatabaseSeeder extends Seeder
             BankDetailTableSeeder::class,
             CompanyBankDetailTableSeeder::class,
             CustomerTableSeeder::class,
-            EmployeeTableSeeder::class
+            EmployeeTableSeeder::class,
+            AuthorisedPeopleTableSeeder::class
         ]);
     }
 }

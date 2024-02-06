@@ -150,9 +150,20 @@ class CompanyBankDetailController extends Controller
     // Show
     public function showDetails($id)
     {
-        $company = Company::with('addresses', 'companyRegistrationDetail', 'authorisedPerson')->findOrFail($id);
-        $html = view('pages.profile.client_company.show', compact('company'))->render();
-        
+//        $company_bank_details = CompanyBankDetail::get();
+//        return $company_bank_details;
+
+//        if($company_bank_details->company_id === $id)
+
+// {
+    
+
+// }       
+$company = Company::with('addresses', 'companyRegistrationDetail', 'authorisedPerson')->findOrFail($id);
+         $bank_details = CompanyBankDetail::where('company_id', $id)->with('bankDetail')->get();
+        $html = view('pages.profile.company_bank.show', compact('company','bank_details'))->render();
+        // dd($html);
+        // return "sample";
         return response()->json([
             'html' => $html,
             'data' => [

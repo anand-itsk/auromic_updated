@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('account_number');
             $table->text('address')->nullable();
             $table->string('branch_code')->nullable();
-            $table->string('branch_name');
-            $table->string('ifsc_code');
+            $table->string('branch_name')->nullable();
+            $table->string('ifsc_code')->nullable();
             $table->timestamps();
         });
     }

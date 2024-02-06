@@ -17,7 +17,7 @@ class Company extends Model
         'phone',
         'starting_date',
         'business_nature',
-        'email',
+        'company_email',
         'website',
         'status',
         'created_by',
