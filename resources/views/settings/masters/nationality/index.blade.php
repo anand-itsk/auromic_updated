@@ -21,10 +21,10 @@
                         <div class="btn-group float-right">
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="#">Auromics</a></li>
-                                <li class="breadcrumb-item active">Country</li>
+                                <li class="breadcrumb-item active">Nationality</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Country</h4>
+                        <h4 class="page-title">Nationality</h4>
                     </div>
                     <div class="row">
                         <div class="col-12">
@@ -34,8 +34,8 @@
 
                                     </div>
                                     <div>
-                                        <a href="{{ route('countries.create') }}" class="icon-link common-color"
-                                            title="Create New Country">
+                                        <a href="{{ route('nationalities.create') }}" class="icon-link common-color"
+                                            title="Create New Nationalities">
                                             <i class="fa fa-user-plus"></i>
                                         </a>
                                     </div>
@@ -52,15 +52,15 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                               @if (!empty($countries))
-                                             @foreach ($countries as $item)
+                                               @if (!empty($nationality))
+                                             @foreach ($nationality as $item)
                                                     <tr>
                                                         <td>{{ $item->id }}</td>
                                                         <td>{{ $item->name }}</td>
                                                         <td>{{ $item->code}} </td>
                                                         <td>
                                                             
-                                                                <a href="{{ route('countries.edit', $item->id) }}" class="icon-link primary-color"><i
+                                                                <a href="{{ route('nationalities.edit', $item->id) }}" class="icon-link primary-color"><i
                                                                         class="fa fa-edit"></i></a>
                                                                 <button class="icon-button delete-color" onclick="confirmDelete({{ $item->id }})"><i class="fa fa-trash"></i></button>
 
@@ -71,11 +71,7 @@
                                             @endif
                                         </tbody>
                                     </table>
-                                                        
-    <div class="pagination">
-    {{ $countries->links('pagination::bootstrap-4')}}
-</div>
-
+                             {{ $nationality->links('pagination::bootstrap-4')}}
                                 </div>
                             </div>
                         </div>
@@ -88,8 +84,8 @@
     @include('links.js.datatable.datatable-js')
 <script>
     function confirmDelete(id) {
-        if (confirm("Are you sure you want to delete this country?")) {
-            window.location.href = "/country-delete/" + id;
+        if (confirm("Are you sure you want to delete this nationality?")) {
+            window.location.href = "/nationality-delete/" + id;
         }
     }
 </script>
