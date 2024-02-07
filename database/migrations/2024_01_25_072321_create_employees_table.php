@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('prob_period')->nullable();
             $table->date('confirm_date')->nullable();
             $table->date('resigning_date')->nullable();
+            $table->string('photo')->nullable();
             $table->unsignedBigInteger('resigning_reason_id')->default(1);
             $table->timestamps();
 

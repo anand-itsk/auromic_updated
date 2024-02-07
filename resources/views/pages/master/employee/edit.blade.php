@@ -60,75 +60,105 @@
                                                         <h4 class="text-center pb-4">Personal</h4>
                                                         <form role="form"
                                                             action="{{ route('master.employees.store.personal', $employee->id) }}"
-                                                            method="post" class="login-box">
+                                                            method="post" class="login-box" enctype="multipart/form-data">
                                                             <input type="hidden" name="_token"
                                                                 value="{{ csrf_token() }}">
                                                             {{-- Company Info --}}
                                                             <div class="row m-2">
                                                                 <h5 class="text-primary w-100">Company Info</h5>
+                                                                <div class="col-md-10">
+                                                                    <div class="form-group row w-100">
 
-                                                                <div class="form-group row w-100">
+                                                                        <label for="company_type_id"
+                                                                            class="col-sm-2 col-form-label">Company
+                                                                            Type</label>
+                                                                        <div class="col-sm-4 mb-4">
 
-                                                                    <label for="company_type_id"
-                                                                        class="col-sm-2 col-form-label">Company Type</label>
-                                                                    <div class="col-sm-4 mb-4">
+                                                                            <select class="form-control select2 w-100"
+                                                                                name="company_type_id" id="company_type_id">
+                                                                                <option value="">Select</option>
+                                                                                @foreach ($company_types as $item)
+                                                                                    <option value="{{ $item->id }}"
+                                                                                        {{ $employee->company && $employee->company->company_type_id == $item->id ? 'selected' : '' }}>
+                                                                                        {{ $item->name }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                            @error('company_type_id')
+                                                                                <span class="error"
+                                                                                    style="color: red;">{{ $message }}</span>
+                                                                            @enderror
+                                                                        </div>
 
-                                                                        <select class="form-control select2 w-100"
-                                                                            name="company_type_id" id="company_type_id">
-                                                                            <option value="">Select</option>
-                                                                            @foreach ($company_types as $item)
-                                                                                <option value="{{ $item->id }}"
-                                                                                    {{ $employee->company && $employee->company->company_type_id == $item->id ? 'selected' : '' }}>
-                                                                                    {{ $item->name }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                        @error('company_type_id')
+
+                                                                        <label for="company_type_id"
+                                                                            class="col-sm-2 col-form-label">Companies</label>
+                                                                        <div class="col-sm-4 mb-4">
+
+                                                                            <select class="form-control select2 w-100"
+                                                                                name="company_id" id="company_id" disabled>
+                                                                            </select>
+                                                                            @error('company_id')
+                                                                                <span class="error"
+                                                                                    style="color: red;">{{ $message }}</span>
+                                                                            @enderror
+                                                                        </div>
+
+                                                                        <label for="employee_code"
+                                                                            class="col-sm-2 col-form-label mandatory">Employee
+                                                                            Code</label>
+                                                                        <div class="col-sm-4 mb-4">
+
+                                                                            <input class="form-control" type="text"
+                                                                                value="{{ $employee->employee_code }}"
+                                                                                name="employee_code" id="employee_code">
+                                                                            <span class="error-message text-danger"></span>
+                                                                        </div>
+
+
+
+                                                                        <label for="employee_name"
+                                                                            class="col-sm-2 col-form-label mandatory">Employee
+                                                                            Name</label>
+                                                                        <div class="col-sm-4 mb-4">
+
+                                                                            <input class="form-control" type="text"
+                                                                                value="{{ $employee->employee_name }}"
+                                                                                name="employee_name" id="employee_name">
+                                                                            @error('employee_name')
+                                                                                <span class="error"
+                                                                                    style="color: red;">{{ $message }}</span>
+                                                                            @enderror
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <div class="container">
+                                                                        <div class="picture-container">
+                                                                            <div class="picture">
+                                                                                <img src="https://lh3.googleusercontent.com/LfmMVU71g-HKXTCP_QWlDOemmWg4Dn1rJjxeEsZKMNaQprgunDTtEuzmcwUBgupKQVTuP0vczT9bH32ywaF7h68mF-osUSBAeM6MxyhvJhG6HKZMTYjgEv3WkWCfLB7czfODidNQPdja99HMb4qhCY1uFS8X0OQOVGeuhdHy8ln7eyr-6MnkCcy64wl6S_S6ep9j7aJIIopZ9wxk7Iqm-gFjmBtg6KJVkBD0IA6BnS-XlIVpbqL5LYi62elCrbDgiaD6Oe8uluucbYeL1i9kgr4c1b_NBSNe6zFwj7vrju4Zdbax-GPHmiuirf2h86eKdRl7A5h8PXGrCDNIYMID-J7_KuHKqaM-I7W5yI00QDpG9x5q5xOQMgCy1bbu3St1paqt9KHrvNS_SCx-QJgBTOIWW6T0DHVlvV_9YF5UZpN7aV5a79xvN1Gdrc7spvSs82v6gta8AJHCgzNSWQw5QUR8EN_-cTPF6S-vifLa2KtRdRAV7q-CQvhMrbBCaEYY73bQcPZFd9XE7HIbHXwXYA=s200-no"
+                                                                                    class="picture-src"
+                                                                                    id="wizardPicturePreview"
+                                                                                    title="">
+                                                                                <input type="file" name="employee_profile" id="wizard-picture"
+                                                                                    class="">
+                                                                            </div>
+                                                                            <h6 class="">Choose Picture</h6>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    {{-- <label for="employee_profile"
+                                                                        class="col-sm-2 col-form-label mandatory text-nowrap">Profile</label>
+                                                                    <div class="col-sm-2 mb-4">
+
+                                                                        <input class="" type="file"
+                                                                            name="employee_profile" id="employee_profile">
+                                                                        @error('employee_profile')
                                                                             <span class="error"
                                                                                 style="color: red;">{{ $message }}</span>
                                                                         @enderror
-                                                                    </div>
-
-
-                                                                    <label for="company_type_id"
-                                                                        class="col-sm-2 col-form-label">Companies</label>
-                                                                    <div class="col-sm-4 mb-4">
-
-                                                                        <select class="form-control select2 w-100"
-                                                                            name="company_id" id="company_id" disabled>
-                                                                        </select>
-                                                                        @error('company_id')
-                                                                            <span class="error"
-                                                                                style="color: red;">{{ $message }}</span>
-                                                                        @enderror
-                                                                    </div>
-
-                                                                    <label for="employee_code"
-                                                                        class="col-sm-2 col-form-label mandatory">Employee
-                                                                        Code</label>
-                                                                    <div class="col-sm-4 mb-4">
-
-                                                                        <input class="form-control" type="text"
-                                                                            value="{{ $employee->employee_code }}"
-                                                                            name="employee_code" id="employee_code">
-                                                                        <span class="error-message text-danger"></span>
-                                                                    </div>
-
-
-
-                                                                    <label for="employee_name"
-                                                                        class="col-sm-2 col-form-label mandatory">Employee
-                                                                        Name</label>
-                                                                    <div class="col-sm-4 mb-4">
-
-                                                                        <input class="form-control" type="text"
-                                                                            value="{{ $employee->employee_name }}"
-                                                                            name="employee_name" id="employee_name">
-                                                                        @error('employee_name')
-                                                                            <span class="error"
-                                                                                style="color: red;">{{ $message }}</span>
-                                                                        @enderror
-                                                                    </div>
-
+                                                                    </div> --}}
                                                                 </div>
                                                             </div>
 
@@ -754,6 +784,10 @@
                 let companyTypeId = $(this).val();
                 processCompanyTypeSelection(companyTypeId, selectedCompanyId);
             });
+
+            $("#wizard-picture").change(function() {
+                readURL(this);
+            });
         });
 
         function processCompanyTypeSelection(companyTypeId, selectedCompanyId) {
@@ -779,7 +813,7 @@
                             .name : 'N/A';
                         $companyIdElement.append(
                             `<option value="${company.id}" ${isSelected}>${company.company_name} (${authorisedPersonName})</option>`
-                            );
+                        );
                     });
 
                     $companyIdElement.trigger('change');
@@ -915,5 +949,16 @@
                 }
             });
         });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#wizardPicturePreview').attr('src', e.target.result).fadeIn('slow');
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
     </script>
 @endsection
