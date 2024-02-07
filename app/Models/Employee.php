@@ -23,6 +23,7 @@ class Employee extends Model
         'marital_status',
         'std_code',
         'phone',
+        'photo',
         'religion_id',
         'caste_id',
         'nationality_id',

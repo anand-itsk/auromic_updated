@@ -183,6 +183,11 @@ class EmployeeController extends Controller
         }
 
         $employee = Employee::findOrFail($id);
+
+        if ($request->hasFile('employee_profile')) {
+            $filename = $request->file('employee_profile')->store('profile_images/Sub_Client Company', 'public');
+            $employee->photo = $filename;
+        }
         // Store data
         $employee->update([
             'company_id' => $request->company_id,
