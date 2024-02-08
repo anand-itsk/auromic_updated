@@ -490,16 +490,17 @@ class EmployeeController extends Controller
     public function getNominee(Request $request)
     {
         $employeeId = $request->employee_id; // Assuming you pass an employee ID
-        $employee = Employee::with('familyMember', 'nominee', 'nominee.familyMember')->find($employeeId);
+        // dd($employeeId);
+        $employee = Employee::with('familyMembers', 'nominee', 'nominee.familyMember')->find($employeeId);
 
         if (!$employee) {
-            return response()->json(['message' => 'Employee not found'], 404);
+            return response()->json(['message' => 'Nominees not found'], 404);
         }
 
-        return response()->json(
-            $employee->nominee,
-            $employee->familyMembers
-        );
+        return response()->json([
+            'nominee' => $employee->nominee,
+            'employee' => $employee->familyMembers
+        ]);
     }
 
     public function editNominee(Request $request, $id)
