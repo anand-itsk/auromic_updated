@@ -270,7 +270,7 @@ Route::middleware(['auth'])->group(function () {
 
             Route::post('/update/{id}', [EmployeeController::class, 'update'])->name('update');
             Route::delete('/delete/{id}',  [EmployeeController::class, 'destroy'])->name('delete');
-            Route::get('/show/{id}', [EmployeeController::class, 'showDetails']);
+            // Route::get('/show/{id}', [EmployeeController::class, 'showDetails']);
             Route::post('/delete/selected', [EmployeeController::class, 'deleteSelected']);
             Route::post('/import', [EmployeeController::class, 'import'])->name('import');
             Route::get('/export', [EmployeeController::class, 'export']);

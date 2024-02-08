@@ -627,6 +627,8 @@ class EmployeeController extends Controller
         $esi_despensaries = EsiDispensary::all();
         $family_members = EmployeeFamilyMemberDetail::where('employee_id', $id)->get();
         $resigning_reason = ResigningReason::all();
+        $photoPath = $employee->photo ?? null;
+
 
         return view('pages.master.employee.edit', [
             'employee' => $employee,
@@ -641,7 +643,8 @@ class EmployeeController extends Controller
             'local_offices' => $local_offices,
             'esi_despensaries' => $esi_despensaries,
             'family_members' => $family_members,
-            'resigning_reason' => $resigning_reason
+            'resigning_reason' => $resigning_reason,
+            'photoPath' => $photoPath
         ]);
     }
     // Update

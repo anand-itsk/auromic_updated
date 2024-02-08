@@ -53,9 +53,9 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="d-flex justify-content-end align-items-center">
-                                        {{-- <a class="mr-2" href="{{ route('master.employees.show' , $employee->id) }}"><button
+                                        <a class="mr-2" href="{{ route('master.employees.show' , $employee->id) }}"><button
                                                 class="btn btn-warning">
-                                                Preview</button></a> --}}
+                                                Preview</button></a> 
                                         <a class="mr-2" href="{{ route('master.employees.index') }}"><button
                                                 class="btn btn-danger">
                                                 Close</button></a>
@@ -147,14 +147,13 @@
                                                                     <div class="container">
                                                                         <div class="picture-container">
                                                                             <div class="picture">
-                                                                                <img src="https://lh3.googleusercontent.com/LfmMVU71g-HKXTCP_QWlDOemmWg4Dn1rJjxeEsZKMNaQprgunDTtEuzmcwUBgupKQVTuP0vczT9bH32ywaF7h68mF-osUSBAeM6MxyhvJhG6HKZMTYjgEv3WkWCfLB7czfODidNQPdja99HMb4qhCY1uFS8X0OQOVGeuhdHy8ln7eyr-6MnkCcy64wl6S_S6ep9j7aJIIopZ9wxk7Iqm-gFjmBtg6KJVkBD0IA6BnS-XlIVpbqL5LYi62elCrbDgiaD6Oe8uluucbYeL1i9kgr4c1b_NBSNe6zFwj7vrju4Zdbax-GPHmiuirf2h86eKdRl7A5h8PXGrCDNIYMID-J7_KuHKqaM-I7W5yI00QDpG9x5q5xOQMgCy1bbu3St1paqt9KHrvNS_SCx-QJgBTOIWW6T0DHVlvV_9YF5UZpN7aV5a79xvN1Gdrc7spvSs82v6gta8AJHCgzNSWQw5QUR8EN_-cTPF6S-vifLa2KtRdRAV7q-CQvhMrbBCaEYY73bQcPZFd9XE7HIbHXwXYA=s200-no"
-                                                                                    class="picture-src"
-                                                                                    id="wizardPicturePreview"
-                                                                                    title="">
-                                                                                <input type="file"
-                                                                                    name="employee_profile"
-                                                                                    id="wizard-picture" class="">
-                                                                            </div>
+                                                                               @if($photoPath)
+                    <img src="{{ asset('storage/' . $photoPath) }}" class="picture-src" id="wizardPicturePreview" title="">
+                @else
+                    <img src="" class="picture-src" id="wizardPicturePreview" title="" style="display: none;">
+                @endif
+                <input type="file" name="employee_profile" id="wizard-picture" class="">
+            </div>
                                                                             <h6 class="">Choose Picture</h6>
 
                                                                         </div>
@@ -972,7 +971,7 @@
         $('a[href="#step4"]').click(function(e) {
             e.preventDefault(); // Prevent the default anchor action
             console.log("fetch_famail");
-            if ($(this).parent().hasClass('disabled')) {
+            if ($(this).parent().hasClass('disabled')) {    
                 // The element is disabled, perform AJAX call
                 $.ajax({
                     url: `/master/employees/nominee/family/${employeeId}`,
