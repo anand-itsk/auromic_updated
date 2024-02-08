@@ -191,6 +191,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/store_nominee/{id}', [EmployeeController::class, 'storeNominee'])->name('store.nominee');
             Route::get('/nominee', [EmployeeController::class, 'getNominee'])->name('nominee');
             Route::get('/nominee/edit/{id}', [EmployeeController::class, 'editNominee'])->name('nominee.edit');
+            Route::get('/nominee/family/{id}', [EmployeeController::class, 'employeeFamily'])->name('nominee.family');
             Route::post('/nominee/update/{id}', [EmployeeController::class, 'updateNominee'])->name('nominee.update');
             Route::delete('/nominee/delete/{id}', [EmployeeController::class, 'deleteNominee'])->name('nominee.delete');
 

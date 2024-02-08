@@ -30,31 +30,57 @@
                         <div class="wizard">
                             <div class="row">
                                 <div class="col-12">
+                                    <div class="d-flex justify-content-end align-items-center">
+                                        <a class="mr-2"
+                                            href="{{ route('master.employees.edit', $employee->id) }}"><button
+                                                class="btn btn-primary">
+                                                Edit</button></a>
+                                        <a class="mr-2" href="{{ route('master.employees.index') }}"><button
+                                                class="btn btn-danger">
+                                                Close</button></a>
+
+                                    </div>
                                     <div class="card m-b-30">
+
                                         <div class="card-body">
                                             <div class="m-b-30">
                                                 <div class="row text-center">
-                                                    <div class="col-md-3">
-                                                        <h6>Employee Code</h6>
-                                                        <p>{{ $employee->employee_code }}</p>
-                                                        <!-- More fields... -->
+                                                    <div class="col-md-9">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <h6>Employee Code</h6>
+                                                                <p>{{ $employee->employee_code }}</p>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <h6>Employee Name</h6>
+                                                                <p>{{ $employee->employee_name }}</p>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <h6>Company Name</h6>
+                                                                <p>{{ $employee->company->company_name }}</p>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <h6>Company Code</h6>
+                                                                <p>{{ $employee->company->company_code }}</p>
+                                                            </div>
+                                                        </div>
+
+
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <h6>Employee Name</h6>
-                                                        <p>{{ $employee->employee_name }}</p>
-                                                        <!-- More fields... -->
+                                                        <div class="profile-frame">
+                                                            @if (!empty($employee->photo))
+                                                                <img src="{{ asset('/storage/' . $employee->photo) }}"
+                                                                    alt="Profile Image">
+                                                            @else
+                                                                <img src="{{ asset('images/no-profile.png') }}"
+                                                                    alt="No Profile Image">
+                                                            @endif
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-3">
-                                                        <h6>Company Name</h6>
-                                                        <p>{{ $employee->company->company_name }}</p>
-                                                        <!-- More fields... -->
-                                                    </div>
-                                                    <div class="col-md-3 d-flex justify-content-center align-items-center">
-                                                      <a href="{{route('master.employees.index')}}">Close</a> 
-                                                      
-                                                        <!-- More fields... -->
-                                                    </div>
-                                                    <!-- Repeat for all fields as per the modal layout -->
+
+
+
                                                 </div>
 
                                                 <hr>
@@ -186,7 +212,7 @@
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-4">
-                                                                <span class="font-weight-bold">Password No</span>
+                                                                <span class="font-weight-bold">Passport No</span>
                                                             </div>
                                                             <div class="col-md-8 ">
                                                                 <span>
@@ -508,7 +534,7 @@
                                                             </div>
                                                             <div class="col-md-8 ">
                                                                 <span>
-                                                                    {{ $employee->pfInfo->pf_applicable ?? '-' }}</span>
+                                                                    {{ isset($employee->pfInfo->pf_applicable) ? ($employee->pfInfo->pf_applicable == 1 ? 'Yes' : ($employee->pfInfo->pf_applicable === 0 ? 'No' : '-')) : '-' }}</span>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -544,7 +570,8 @@
                                                             </div>
                                                             <div class="col-md-8 ">
                                                                 <span>
-                                                                    {{ $employee->pfInfo->pension_applicable ?? '-' }}</span>
+                                                                    {{ isset($employee->pfInfo->pension_applicable) ? ($employee->pfInfo->pension_applicable == 1 ? 'Yes' : ($employee->pfInfo->pension_applicable === 0 ? 'No' : '-')) : '-' }}</span>
+                                                                </span>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -569,7 +596,7 @@
                                                             </div>
                                                             <div class="col-md-8 ">
                                                                 <span>
-                                                                    {{ $employee->esiInfo->esi_applicable == 1 ? 'Yes' : ($employee->esiInfo->esi_applicable === 0 ? 'No' : '-') }}</span>
+                                                                    {{ isset($employee->esiInfo->esi_applicable) ? ($employee->esiInfo->esi_applicable == 1 ? 'Yes' : ($employee->esiInfo->esi_applicable === 0 ? 'No' : '-')) : '-' }}</span>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -625,62 +652,62 @@
                                                 </div>
 
                                                 {{-- Family Members --}}
-                                               <h5 class="font-weight-lighter mt-4 text-center">Family Member Details</h5>
-    <table class="table table-striped table-bordered dt-responsive nowrap"
-           style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Relation</th>
-                <th>Date of Birth</th>
-                <th>Residing</th>
-                <th>Remark</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($employee->familyMembers as $familyMember)
-                <tr>
-                    <td>{{ $familyMember->name }}</td>
-                    <td>{{ $familyMember->relation_with_emp }}</td>
-                    <td>{{ $familyMember->dob }}</td>
-                    <td>{{ $familyMember->is_residing ? 'Yes' : 'No' }}</td>
-                    <td>{{ $familyMember->remark }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+                                                <h5 class="font-weight-lighter mt-4 text-center">Family Member Details</h5>
+                                                <table class="table table-striped table-bordered dt-responsive nowrap"
+                                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Relation</th>
+                                                            <th>Date of Birth</th>
+                                                            <th>Residing</th>
+                                                            <th>Remark</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($employee->familyMembers as $familyMember)
+                                                            <tr>
+                                                                <td>{{ $familyMember->name }}</td>
+                                                                <td>{{ $familyMember->relation_with_emp }}</td>
+                                                                <td>{{ $familyMember->dob }}</td>
+                                                                <td>{{ $familyMember->is_residing ? 'Yes' : 'No' }}</td>
+                                                                <td>{{ $familyMember->remark }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
 
-     {{-- Nominess Members --}}
+                                                {{-- Nominess Members --}}
                                                 <h5 class="font-weight-lighter mt-4 text-center">Nominee Details</h5>
-    <table class="table table-striped table-bordered dt-responsive nowrap"
-           style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-        <thead>
-            <tr>
-                <th>Family Member</th>
-                <th>Gratuity Sharing</th>
-                <th>Marital Status</th>
-                <th>Religion ID</th>
-                <th>Forhus Name</th>
-                <th>Guardian Name</th>
-                <th>Guardian Address</th>
-                <th>Guardian Relation with Emp</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($employee->nominee as $nominees)
-                <tr>
-                    <td>{{ $nominees->familyMember->name }}</td>
-                    <td>{{ $nominees->gratuity_sharing }}</td>
-                    <td>{{ $nominees->marital_status }}</td>
-                    <td>{{ $nominees->religion_id }}</td>
-                    <td>{{ $nominees->faorhus_name }}</td>
-                    <td>{{ $nominees->guardian_name }}</td>
-                    <td>{{ $nominees->guardian_address }}</td>
-                    <td>{{ $nominees->guardian_relation_with_emp }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+                                                <table class="table table-striped table-bordered dt-responsive nowrap"
+                                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Family Member</th>
+                                                            <th>Gratuity Sharing</th>
+                                                            <th>Marital Status</th>
+                                                            <th>Religion ID</th>
+                                                            <th>Forhus Name</th>
+                                                            <th>Guardian Name</th>
+                                                            <th>Guardian Address</th>
+                                                            <th>Guardian Relation with Emp</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($employee->nominee as $nominees)
+                                                            <tr>
+                                                                <td>{{ $nominees->familyMember->name }}</td>
+                                                                <td>{{ $nominees->gratuity_sharing }}</td>
+                                                                <td>{{ $nominees->marital_status }}</td>
+                                                                <td>{{ $nominees->religion_id }}</td>
+                                                                <td>{{ $nominees->faorhus_name }}</td>
+                                                                <td>{{ $nominees->guardian_name }}</td>
+                                                                <td>{{ $nominees->guardian_address }}</td>
+                                                                <td>{{ $nominees->guardian_relation_with_emp }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
                                                 <div class="row">
                                                     {{-- Banking Info --}}
                                                     <div class="col-md-12">
