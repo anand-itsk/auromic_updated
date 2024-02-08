@@ -18,6 +18,7 @@ use App\Models\LocalOffice;
 use App\Models\Nationality;
 use App\Models\PaymentMode;
 use App\Models\Religion;
+use App\Models\ResigningReason;
 use App\Models\State;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -167,10 +168,12 @@ class EmployeeController extends Controller
     // Store Personal Data
     public function storePersonal(Request $request, $id)
     {
+        // dd($request->same_as_permanent_address);
         $rules = [
             'employee_code' => 'required',
             'employee_name' => 'required',
-            'dob'   => 'required'
+            'dob'   => 'required',
+            'joining_date' => 'required'
         ];
 
 
@@ -183,9 +186,9 @@ class EmployeeController extends Controller
         }
 
         $employee = Employee::findOrFail($id);
-
+        // dd($request);
         if ($request->hasFile('employee_profile')) {
-            $filename = $request->file('employee_profile')->store('profile_images/Sub_Client Company', 'public');
+            $filename = $request->file('employee_profile')->store('employee/profile/image', 'public');
             $employee->photo = $filename;
         }
         // Store data
@@ -255,12 +258,31 @@ class EmployeeController extends Controller
         $officeAddress->pincode = $request->office_pincode;
         $employee->addresses()->save($officeAddress);
 
-        if (
-            $request->corrs_address !== null ||
-            $request->corrs_country_id !== "1" ||
-            $request->corrs_area !== null ||
-            $request->corrs_pincode !== null
-        ) {
+        if ($request->same_as_permanent_address == null) {
+
+
+            if (
+                $request->corrs_address !== null ||
+                $request->corrs_country_id !== "1" ||
+                $request->corrs_area !== null ||
+                $request->corrs_pincode !== null
+            ) {
+                if ($employee->addresses()->where('address_type_id', 4)->exists()) {
+                    $corrs_Address = $employee->addresses()->where('address_type_id', 4)->first();
+                } else {
+                    $corrs_Address = new Address();
+                    $corrs_Address->address_type_id = 4; // Assuming this is the type ID for office addresses
+                }
+                // Update or set office address details
+                $corrs_Address->address = $request->corrs_address;
+                $corrs_Address->village_area = $request->corrs_area;
+                $corrs_Address->country_id = $request->corrs_country_id;
+                $corrs_Address->state_id = $request->corrs_state_id ?? 1;
+                $corrs_Address->district_id = $request->corrs_district_id ?? 1;
+                $corrs_Address->pincode = $request->corrs_pincode;
+                $employee->addresses()->save($corrs_Address);
+            }
+        } else {
             if ($employee->addresses()->where('address_type_id', 4)->exists()) {
                 $corrs_Address = $employee->addresses()->where('address_type_id', 4)->first();
             } else {
@@ -268,15 +290,14 @@ class EmployeeController extends Controller
                 $corrs_Address->address_type_id = 4; // Assuming this is the type ID for office addresses
             }
             // Update or set office address details
-            $corrs_Address->address = $request->corrs_address;
-            $corrs_Address->village_area = $request->corrs_area;
-            $corrs_Address->country_id = $request->corrs_country_id;
-            $corrs_Address->state_id = $request->corrs_state_id ?? 1;
-            $corrs_Address->district_id = $request->corrs_district_id ?? 1;
-            $corrs_Address->pincode = $request->corrs_pincode;
+            $corrs_Address->address = $request->office_address;
+            $corrs_Address->village_area = $request->office_area;
+            $corrs_Address->country_id = $request->office_country_id;
+            $corrs_Address->state_id = $request->office_state_id ?? 1;
+            $corrs_Address->district_id = $request->office_district_id ?? 1;
+            $corrs_Address->pincode = $request->office_pincode;
             $employee->addresses()->save($corrs_Address);
         }
-
 
         // Return success response
         return response()->json(['success' => true, 'message' => 'Step 1 completed successfully.']);
@@ -351,7 +372,7 @@ class EmployeeController extends Controller
                     'pf_no' => $request->pf_no,
                     'pf_last_date' => $request->pf_last_date,
                     'pension_joining_date' => $request->pension_joining_date,
-                    'pension_applicable' => $request->pension_applicable,
+                    'pension_applicable' => $request->pension_applicable ?? '0',
                 ]);
             } else {
                 $employee->pfInfo()->create([
@@ -360,7 +381,7 @@ class EmployeeController extends Controller
                     'pf_no' => $request->pf_no,
                     'pf_last_date' => $request->pf_last_date,
                     'pension_joining_date' => $request->pension_joining_date,
-                    'pension_applicable' => $request->pension_applicable,
+                    'pension_applicable' => $request->pension_applicable  ?? '0',
                 ]);
             }
         }
@@ -411,7 +432,7 @@ class EmployeeController extends Controller
             'name' => $request->name,
             'relation_with_emp' => $request->relation_with_emp,
             'dob' => $request->dob,
-            'is_residing' => $request->is_residing,
+            'is_residing' => $request->is_residing ?? "0",
             'remark' => $request->remark,
         ]);
 
@@ -465,17 +486,20 @@ class EmployeeController extends Controller
         ]);
     }
 
-    // Show Family Member table
+    // Show Nominees Member table
     public function getNominee(Request $request)
     {
         $employeeId = $request->employee_id; // Assuming you pass an employee ID
-        $employee = Employee::with('nominee', 'nominee.familyMember')->find($employeeId);
+        $employee = Employee::with('familyMember', 'nominee', 'nominee.familyMember')->find($employeeId);
 
         if (!$employee) {
             return response()->json(['message' => 'Employee not found'], 404);
         }
 
-        return response()->json($employee->nominee);
+        return response()->json(
+            $employee->nominee,
+            $employee->familyMembers
+        );
     }
 
     public function editNominee(Request $request, $id)
@@ -535,6 +559,16 @@ class EmployeeController extends Controller
         ]);
     }
 
+    public function employeeFamily($id)
+    {
+        // dd($id);
+        $employeeFamily = EmployeeFamilyMemberDetail::where('employee_id', $id)->get();
+        return response()->json([
+            'success' => 'Family member deleted successfully.',
+            'emp_family' => $employeeFamily
+        ]);
+    }
+
     public function deleteNominee($id)
     {
         $nominee = EmployeeNominee::find($id);
@@ -591,7 +625,8 @@ class EmployeeController extends Controller
         $payment_modes = PaymentMode::all();
         $local_offices = LocalOffice::all();
         $esi_despensaries = EsiDispensary::all();
-        $family_members = EmployeeFamilyMemberDetail::all();
+        $family_members = EmployeeFamilyMemberDetail::where('employee_id', $id)->get();
+        $resigning_reason = ResigningReason::all();
 
         return view('pages.master.employee.edit', [
             'employee' => $employee,
@@ -605,7 +640,8 @@ class EmployeeController extends Controller
             'payment_modes' => $payment_modes,
             'local_offices' => $local_offices,
             'esi_despensaries' => $esi_despensaries,
-            'family_members' => $family_members
+            'family_members' => $family_members,
+            'resigning_reason' => $resigning_reason
         ]);
     }
     // Update

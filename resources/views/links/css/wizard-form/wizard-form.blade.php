@@ -449,5 +449,14 @@
 
     }
 
+
+
+    .profile-frame img {
+        width: 150px;
+        height: auto;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
     /*Profile Pic End*/
 </style>

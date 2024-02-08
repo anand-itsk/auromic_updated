@@ -44,33 +44,58 @@ class Employee extends Model
         return $this->morphMany(Address::class, 'addressable');
     }
 
-    public function identityProof(){
+    public function identityProof()
+    {
         return $this->hasOne(EmployeeIdentityProof::class);
     }
-   
-    public function financeDetail(){
+
+    public function financeDetail()
+    {
         return $this->hasOne(EmployeeBankingInfo::class);
     }
-   
-    public function licInfo(){
+
+    public function licInfo()
+    {
         return $this->hasOne(LicInfo::class);
     }
-   
-    public function pfInfo(){
+
+    public function pfInfo()
+    {
         return $this->hasOne(PfInfo::class);
     }
-   
-    public function esiInfo(){
+
+    public function esiInfo()
+    {
         return $this->hasOne(EsiInfo::class);
     }
-   
-    public function familyMembers(){
+
+    public function familyMembers()
+    {
         return $this->hasMany(EmployeeFamilyMemberDetail::class);
     }
-   
-    public function nominee(){
+
+    public function nominee()
+    {
         return $this->hasMany(EmployeeNominee::class);
     }
 
+    public function religion()
+    {
+        return $this->belongsTo(Religion::class);
+    }
 
+    public function caste()
+    {
+        return $this->belongsTo(Caste::class);
+    }
+
+    public function nationality()
+    {
+        return $this->belongsTo(Nationality::class);
+    }
+
+    public function resigningReason()
+    {
+        return $this->belongsTo(ResigningReason::class);
+    }
 }
