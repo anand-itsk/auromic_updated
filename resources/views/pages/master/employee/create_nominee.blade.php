@@ -223,26 +223,27 @@
                     employee_id: employeeId
                 },
                 success: function(response) {
-                    console.log(response)
+                    console.log(response);
                     var tableBody = $('#nomineeTableBody');
                     tableBody.html('');
-                    if (response.length > 0) {
-                        response.forEach(function(item, index) {
+                    var nominees = response.nominee; // Assuming this is the array of nominee details
+                    console.log(nominees);
+                    if (nominees.length > 0) {
+                        console.log("inside Length")
+                        nominees.forEach(function(item, index) {
                             var residing = item.is_residing ? 'Yes' : 'No';
                             var row = `<tr>
-                        <td>${index + 1}</td>
-                        <td>${item.family_member.name}</td>
-                        <td>${item.gratuity_sharing}</td>
-                        <td>${item.marital_status}</td>
-                        <td>${item.guardian_name}</td>
-                        <td>${item.guardian_relation_with_emp}</td>
-                        <td>
-                        <button class="default-btn btn-primary" onclick="editNominee(${item.id})">Edit</button>
-                        <button class="default-btn btn-danger" onclick="deleteNominee(${item.id})">Delete</button>
-                        </td>
-                    </tr>`;
-
-
+                <td>${index + 1}</td>
+                <td>${item.family_member.name}</td>
+                <td>${item.gratuity_sharing}</td>
+                <td>${item.marital_status}</td>
+                <td>${item.guardian_name}</td>
+                <td>${item.guardian_relation_with_emp}</td>
+                <td>
+                <button class="default-btn btn-primary" onclick="editNominee(${item.id})">Edit</button>
+                <button class="default-btn btn-danger" onclick="deleteNominee(${item.id})">Delete</button>
+                </td>
+            </tr>`;
                             tableBody.append(row);
                         });
                     } else {
@@ -314,7 +315,5 @@
                 });
             }
         }
-
-        
     </script>
 </div>

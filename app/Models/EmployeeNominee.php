@@ -23,6 +23,6 @@ class EmployeeNominee extends Model
 
     public function familyMember()
     {
-        return $this->belongsTo(EmployeeFamilyMemberDetail::class);
+        return $this->belongsTo(EmployeeFamilyMemberDetail::class, 'family_member_id');
     }
 }
