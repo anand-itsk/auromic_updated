@@ -6,12 +6,15 @@ use Illuminate\Http\Request;
 
 class CountryController extends Controller
 {
+  
+
      public function index()
      {
-        
-        $country =Country::all()->slice(1);
+   
+        $countries = Country::paginate(10);
 
-        return view('settings.masters.country.index',compact('country'));
+
+        return view('settings.masters.country.index',compact('countries'));
 
      }
 
@@ -27,7 +30,7 @@ class CountryController extends Controller
         
         //   dd($request);
         $request->validate([
-            'name' => 'required|regex:/^[A-Za-z ]+$/',
+            'name' => 'required',
             'code' => 'required',
             
         ]);
@@ -55,7 +58,7 @@ class CountryController extends Controller
      public function update(Request $request, $id)
     {
           $request->validate([
-            'name' => 'required|regex:/^[A-Za-z ]+$/',
+            'name' => 'required',
             'code' => 'required',
             
         ]);

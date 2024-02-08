@@ -38,15 +38,15 @@
                                     <h4 class="mt-0 header-title">Common</h4>
                                     <a class="text-muted m-b-0 font-14" href="{{route('countries')}}">Country</a>
                                     <br>
-                                    <a class="text-muted m-b-0 font-14" href="">State</a> 
+                                    <a class="text-muted m-b-0 font-14" href="{{route('states')}}">State</a> 
                                     <br>
-                                    <a class="text-muted m-b-0 font-14" href="">Districts</a>
+                                    <a class="text-muted m-b-0 font-14" href="{{route('districts')}}">Districts</a>
                                     <br>
-                                    <a class="text-muted m-b-0 font-14" href="">Religion</a>
+                                    <a class="text-muted m-b-0 font-14" href="{{route('religions')}}">Religion</a>
                                     <br>
-                                    <a class="text-muted m-b-0 font-14" href="">Caste</a>
+                                    <a class="text-muted m-b-0 font-14" href="{{route('castes')}}">Caste</a>
                                      <br>
-                                    <a class="text-muted m-b-0 font-14" href="">Nationality</a>
+                                    <a class="text-muted m-b-0 font-14" href="{{route('nationalities')}}">Nationality</a>
                                 </div>
                             </div>
                         </div>
@@ -54,12 +54,14 @@
                             <div class="card m-b-30">
 
                                 <div class="card-body">
-                                    <h4 class="mt-0 header-title">Common</h4>
-                                    <a class="text-muted m-b-0 font-14" href="">Country</a>
+                                    <h4 class="mt-0 header-title">Specified</h4>
+                                    <a class="text-muted m-b-0 font-14" href="{{route('company_types')}}">Company Type for (companies)</a>
                                     <br>
-                                    <a class="text-muted m-b-0 font-14" href="">State</a> 
+                                    <a class="text-muted m-b-0 font-14" href="{{route('resigning_reasons')}}">Resigning Reason for (employee.personal)</a> 
                                     <br>
-                                    <a class="text-muted m-b-0 font-14" href="">Districts</a>
+                                    <a class="text-muted m-b-0 font-14" href="{{route('local_offices')}}">Local Offices for (employee.finance)</a>
+                                    <br>
+                                    <a class="text-muted m-b-0 font-14" href="{{route('esi_dispensaries')}}">ESI Dispensary for (employee.finance)</a>
                                 </div>
                             </div>
                         </div>
