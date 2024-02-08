@@ -67,10 +67,10 @@
                                                 @enderror
                                             </div>
 
-                                            <label for="maritalStatus" class="col-sm-2 col-form-label">Marital
+                                            <label for="marital_status" class="col-sm-2 col-form-label">Marital
                                                 Status</label>
                                             <div class="col-sm-4 mb-4">
-                                                <select name="maritalStatus" id="maritalStatus" class="form-control">
+                                                <select name="marital_status" id="marital_status" class="form-control">
                                                     <option value="">Select</option>
                                                     <option value="single">Single</option>
                                                     <option value="married">Married</option>
@@ -79,7 +79,7 @@
                                                     <option value="separated">Separated</option>
                                                     <option value="other">Other</option>
                                                 </select>
-                                                @error('maritalStatus')
+                                                @error('marital_status')
                                                     <span class="error" style="color: red;">{{ $message }}</span>
                                                 @enderror
                                             </div>
@@ -180,7 +180,7 @@
                     $('.employee-nominee-add').modal('hide');
                     nomineeTable(response
                         .emp_id);
-
+                    console.log(response.family_members);
                 },
                 error: function(response) {
                     if (response.status === 422) { // Unprocessable Entity (Validation Error)
@@ -264,12 +264,15 @@
                     // Populate modal fields with fetched data
                     $('#name').val(data.name);
                     $('#relation_with_emp').val(data.relation_with_emp);
-                    console.log();
-                    // $('#family_address').html(data.addresses[0].address);
-                    // $('#family_area').val(data.addresses[0].village_area);
-                    // $('#family_country_id').val(data.addresses[0].country_id);
-                    // $('#family_state_id').val(data.addresses[0].state_id);
-                    // $('#family_pincode').val(data.addresses[0].pincode);
+                    console.log(data);
+                    $('#family_member_id').val(data.family_member_id);
+                    $('#gratuity_sharing').val(data.gratuity_sharing);
+                    $('#marital_status').val(data.marital_status);
+                    $('#faorhus_name').val(data.faorhus_name);
+                    $('#guardian_name').val(data.guardian_name);
+                    $('#guardian_address').val(data.guardian_address);
+                    $('#guardian_relation_with_emp').val(data.guardian_relation_with_emp);
+                    $('#religion_id').val(data.religion_id);
 
                     $('#dob').val(data.dob);
                     $('#is_residing').val(data.is_residing);
@@ -311,5 +314,7 @@
                 });
             }
         }
+
+        
     </script>
 </div>

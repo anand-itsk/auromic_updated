@@ -27,6 +27,7 @@
             <section class="pt-5">
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-12">
+
                         <div class="wizard">
                             <div class="wizard-inner">
                                 <div class="connecting-line"></div>
@@ -51,6 +52,15 @@
                             </div>
                             <div class="row">
                                 <div class="col-12">
+                                    <div class="d-flex justify-content-end align-items-center">
+                                        {{-- <a class="mr-2" href="{{ route('master.employees.show' , $employee->id) }}"><button
+                                                class="btn btn-warning">
+                                                Preview</button></a> --}}
+                                        <a class="mr-2" href="{{ route('master.employees.index') }}"><button
+                                                class="btn btn-danger">
+                                                Close</button></a>
+
+                                    </div>
                                     <div class="card m-b-30">
                                         <div class="card-body">
                                             <div class="m-b-30">
@@ -141,8 +151,9 @@
                                                                                     class="picture-src"
                                                                                     id="wizardPicturePreview"
                                                                                     title="">
-                                                                                <input type="file" name="employee_profile" id="wizard-picture"
-                                                                                    class="">
+                                                                                <input type="file"
+                                                                                    name="employee_profile"
+                                                                                    id="wizard-picture" class="">
                                                                             </div>
                                                                             <h6 class="">Choose Picture</h6>
 
@@ -260,8 +271,9 @@
                                                                     </h5>
 
                                                                     <div class="">
-                                                                        <input class="" type="checkbox"
-                                                                            id="sameAsPermanentAddress">
+                                                                        <input class=""
+                                                                            name="same_as_permanent_address"
+                                                                            type="checkbox" id="sameAsPermanentAddress">
                                                                         <label class=""
                                                                             for="sameAsPermanentAddress">
                                                                             Same as Permanent Address
@@ -269,7 +281,7 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="form-group row w-100">
+                                                                <div class="form-group row w-100 corrs_address">
                                                                     <label for="corrs_address"
                                                                         class="col-sm-2 col-form-label">Address</label>
                                                                     <div class="col-sm-10 mb-4">
@@ -541,25 +553,25 @@
                                                                         <select name="marital_status" id="marital_status"
                                                                             class="form-control">
                                                                             <option value=""
-                                                                                {{ $employee->blood_group == null ? 'selected' : '' }}>
+                                                                                {{ $employee->marital_status == null ? 'selected' : '' }}>
                                                                                 Select</option>
                                                                             <option value="single"
-                                                                                {{ $employee->blood_group == 'Single' ? 'selected' : '' }}>
+                                                                                {{ $employee->marital_status == 'single' ? 'selected' : '' }}>
                                                                                 Single</option>
                                                                             <option value="married"
-                                                                                {{ $employee->blood_group == 'Married' ? 'selected' : '' }}>
+                                                                                {{ $employee->marital_status == 'married' ? 'selected' : '' }}>
                                                                                 Married</option>
                                                                             <option value="divorced"
-                                                                                {{ $employee->blood_group == 'Divorced' ? 'selected' : '' }}>
+                                                                                {{ $employee->marital_status == 'sivorced' ? 'selected' : '' }}>
                                                                                 Divorced</option>
                                                                             <option value="widowed"
-                                                                                {{ $employee->blood_group == 'Widowed' ? 'selected' : '' }}>
+                                                                                {{ $employee->marital_status == 'widowed' ? 'selected' : '' }}>
                                                                                 Widowed</option>
                                                                             <option value="separated"
-                                                                                {{ $employee->blood_group == 'Separated' ? 'selected' : '' }}>
+                                                                                {{ $employee->marital_status == 'separated' ? 'selected' : '' }}>
                                                                                 Separated</option>
                                                                             <option value="other"
-                                                                                {{ $employee->blood_group == 'Other' ? 'selected' : '' }}>
+                                                                                {{ $employee->marital_status == 'other' ? 'selected' : '' }}>
                                                                                 Other</option>
                                                                         </select>
                                                                         @error('marital_status')
@@ -594,7 +606,8 @@
                                                                         <select class="form-control select2"
                                                                             name="religion_id" id="religion_id">
                                                                             @foreach ($religions as $item)
-                                                                                <option value="{{ $item->id }}">
+                                                                                <option value="{{ $item->id }}"
+                                                                                    {{ $employee && $employee->religion_id == $item->id ? 'selected' : '' }}>
                                                                                     {{ $item->name }}</option>
                                                                             @endforeach
                                                                         </select>
@@ -609,7 +622,8 @@
                                                                         <select class="form-control select2"
                                                                             name="caste_id" id="caste_id">
                                                                             @foreach ($castes as $item)
-                                                                                <option value="{{ $item->id }}">
+                                                                                <option value="{{ $item->id }}"
+                                                                                    {{ $employee && $employee->caste_id == $item->id ? 'selected' : '' }}>
                                                                                     {{ $item->name }}</option>
                                                                             @endforeach
                                                                         </select>
@@ -625,7 +639,8 @@
                                                                         <select class="form-control select2"
                                                                             name="nationality_id" id="nationality_id">
                                                                             @foreach ($nationality as $item)
-                                                                                <option value="{{ $item->id }}">
+                                                                                <option value="{{ $item->id }}"
+                                                                                    {{ $employee && $employee->nationality_id == $item->id ? 'selected' : '' }}>
                                                                                     {{ $item->name }}</option>
                                                                             @endforeach
                                                                         </select>
@@ -636,7 +651,7 @@
                                                                     </div>
 
                                                                     <label for="joining_date"
-                                                                        class="col-sm-2 col-form-label">Joining
+                                                                        class="col-sm-2 col-form-label mandatory">Joining
                                                                         Date</label>
                                                                     <div class="col-sm-4 mb-4">
                                                                         <input class="form-control" type="date"
@@ -693,7 +708,7 @@
                                                                         <select class="form-control select2"
                                                                             name="resigning_reason_id"
                                                                             id="resigning_reason_id">
-                                                                            @foreach ($nationality as $item)
+                                                                            @foreach ($resigning_reason as $item)
                                                                                 <option value="{{ $item->id }}">
                                                                                     {{ $item->name }}</option>
                                                                             @endforeach
@@ -874,24 +889,17 @@
         }
 
         document.getElementById('sameAsPermanentAddress').addEventListener('change', function() {
+            var elements = document.getElementsByClassName("corrs_address");
             if (this.checked) {
-                // Copy values from Permanent Address fields to Correspondence Address fields
-                document.getElementById('address').value = document.getElementById('office_address').value;
-                document.getElementById('area').value = document.getElementById('office_area').value;
-                document.getElementById('corrs_country_id').value = document.getElementById('office_country_id')
-                    .value;
-                document.getElementById('state_id').value = document.getElementById('office_state_id').value;
-                document.getElementById('district_id').value = document.getElementById('office_district_id')
-                    .value;
-                document.getElementById('pincode').value = document.getElementById('office_pincode').value;
+                // Hide elements
+                for (var i = 0; i < elements.length; i++) {
+                    elements[i].style.display = 'none';
+                }
             } else {
-                // Clear the Correspondence Address fields
-                document.getElementById('address').value = '';
-                document.getElementById('area').value = '';
-                document.getElementById('corrs_country_id').value = '';
-                document.getElementById('state_id').value = '';
-                document.getElementById('district_id').value = '';
-                document.getElementById('pincode').value = '';
+                // Show elements by reverting display property to default
+                for (var i = 0; i < elements.length; i++) {
+                    elements[i].style.display = ''; // This will revert to the default display style
+                }
             }
         });
 
@@ -960,5 +968,31 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
+
+        $('a[href="#step4"]').click(function(e) {
+            e.preventDefault(); // Prevent the default anchor action
+            console.log("fetch_famail");
+            if ($(this).parent().hasClass('disabled')) {
+                // The element is disabled, perform AJAX call
+                $.ajax({
+                    url: `/master/employees/nominee/family/${employeeId}`,
+                    type: 'GET',
+                    dataType: 'json', // expected data format from server
+                    success: function(data) {
+                        console.log(data.emp_family);
+                        var familyMemberDropdown = $('#family_memeber_id');
+                        familyMemberDropdown.empty(); // Clear existing options
+                        $.each(data.emp_family, function(key, value) {
+                            familyMemberDropdown.append($('<option></option>').attr('value',
+                                value.id).text(value.name));
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error
+                        console.log('Error:', error);
+                    }
+                });
+            }
+        });
     </script>
 @endsection

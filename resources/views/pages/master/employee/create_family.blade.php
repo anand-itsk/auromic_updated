@@ -47,7 +47,7 @@
                                             <div class="form-group row">
                                                 <label for="name" class="col-sm-2 col-form-label">Name</label>
                                                 <div class="col-sm-4 mb-4">
-                                                    <input class="form-control" type="text" name="name"
+                                                    <input class="form-control mandatory" type="text" name="name"
                                                         id="name">
                                                     @error('name')
                                                         <span class="error" style="color: red;">{{ $message }}</span>
