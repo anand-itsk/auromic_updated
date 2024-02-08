@@ -155,7 +155,7 @@
                 <input type="file" name="employee_profile" id="wizard-picture" class="">
             </div>
                                                                             <h6 class="">Choose Picture</h6>
-
+                                                                            <p style="color: red;">500x500</p>
                                                                         </div>
                                                                     </div>
                                                                     {{-- <label for="employee_profile"
