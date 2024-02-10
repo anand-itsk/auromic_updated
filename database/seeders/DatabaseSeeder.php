@@ -40,7 +40,12 @@ class DatabaseSeeder extends Seeder
             CustomerTableSeeder::class,
             EmployeeTableSeeder::class,
             AuthorisedPeopleTableSeeder::class,
-            RawMaterialTypeTableSeeder::class
+            RawMaterialTypeTableSeeder::class,
+            RawMaterialTableSeeder::class,
+            ProductTableSeeder::class,
+            ProductSizeTableSeeder::class,
+            OrderStatusTableSeeder::class,
+            ProductColorTableSeeder::class
         ]);
     }
 }

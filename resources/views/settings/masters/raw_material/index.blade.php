@@ -1,0 +1,95 @@
+@extends('layouts.app')
+<!-- DataTables CSS -->
+
+
+@section('content')
+    @include('links.css.datatable.datatable-css')
+    @include('links.css.table.custom-css')
+    <div class="wrapper">
+        <div class="container-fluid">
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ session('success') }}
+                </div>
+            @endif
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="btn-group float-right">
+                            <ol class="breadcrumb hide-phone p-0 m-0">
+                                <li class="breadcrumb-item"><a href="#">Auromics</a></li>
+                                <li class="breadcrumb-item active">Raw Material</li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">Raw Material</h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card m-b-30">
+                                <div class="d-flex justify-content-between p-2 bd-highlight">
+                                    <div>
+
+                                    </div>
+                                    <div>
+                                        <a href="{{ route('raw_materials.create') }}" class="icon-link common-color"
+                                            title="Create New raw material">
+                                            <i class="fa fa-user-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap"
+                                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Raw Material Type</th>
+                                                <th>Name</th>
+                                                <th>Stock</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                               @if (!empty($raw_material))
+                                             @foreach ($raw_material as $item)
+                                                    <tr>
+                                                        <td>{{ $item->id }}</td>
+                                                        <td>{{$item->rawMaterialType->name}}</td>
+                                                        <td>{{ $item->name }}</td>
+                                                        <td>{{ $item->stock}} </td>
+                                                        <td>
+                                                            
+                                                                <a href="{{ route('raw_materials.edit', $item->id) }}" class="icon-link primary-color"><i
+                                                                        class="fa fa-edit"></i></a>
+                                                                <button class="icon-button delete-color" onclick="confirmDelete({{ $item->id }})"><i class="fa fa-trash"></i></button>
+
+
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+                                        </tbody>
+                                    </table>
+                             {{ $raw_material->links('pagination::bootstrap-4')}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- DataTables JS -->
+    @include('links.js.datatable.datatable-js')
+
+<script>
+    function confirmDelete(id) {
+        if (confirm("Are you sure you want to delete this Raw Material?")) {
+            window.location.href = "/raw_material-delete/" + id;
+        }
+    }
+</script>
+@endsection
