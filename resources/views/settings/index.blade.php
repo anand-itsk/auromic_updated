@@ -65,6 +65,25 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="card m-b-30">
+
+                                <div class="card-body">
+                                    <h4 class="mt-0 header-title">Products-Models-Master</h4>
+                                    <a class="text-muted m-b-0 font-14" href="{{route('raw_material_types')}}">Raw Material Type</a>
+                                    <br>
+                                    <a class="text-muted m-b-0 font-14" href="{{route('raw_materials')}}">Raw Material</a> 
+                                    <br>
+                                    <a class="text-muted m-b-0 font-14" href="{{route('products')}}">Product</a>
+                                    <br>
+                                    <a class="text-muted m-b-0 font-14" href="{{route('product_sizes')}}">Product Size</a>
+                                    <br>
+                                    <a class="text-muted m-b-0 font-14" href="{{route('product_colors')}}">Product Color</a>
+                                     <br>
+                                    <a class="text-muted m-b-0 font-14" href="{{route('order_statuses')}}">Order Status</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                 </div>

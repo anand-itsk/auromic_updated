@@ -252,6 +252,24 @@
                                     <li><a href="ui-navs.html">Incentive </a></li> --}}
                                 </ul>
                             </li>
+                             <li>
+                                <ul>
+                                    <li><a href="{{ route('master.product_model.index') }}">Product Model</a></li>
+                                    {{-- <li><a href="ui-cards.html">Product Model</a></li>
+                                    <li><a href="ui-modals.html">Product</a></li>
+                                    <li><a href="ui-progressbars.html">Finishing Product</a></li>
+                                    <li><a href="ui-navs.html">Incentive </a></li> --}}
+                                </ul>
+                            </li>
+                            <li>
+                                <ul>
+                                    <li><a href="">Order Details</a></li>
+                                    {{-- <li><a href="ui-cards.html">Product Model</a></li>
+                                    <li><a href="ui-modals.html">Product</a></li>
+                                    <li><a href="ui-progressbars.html">Finishing Product</a></li>
+                                    <li><a href="ui-navs.html">Incentive </a></li> --}}
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                 </ul>
