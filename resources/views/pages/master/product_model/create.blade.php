@@ -34,18 +34,18 @@
                                 @csrf
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Raw Material</label>
-                                    <div class="col-sm-4 mb-4">
-                                        <select class="form-control select2" name="raw_material_id "
-                                            id="raw_material_id ">
-                                            <option value="">Select Raw Material</option>
-                                            @foreach ($raw_material as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('raw_material_id ')
-                                        <span class="error" style="color: red;">{{ $message }}</span>
-                                        @enderror
-                                    </div>
+<div class="col-sm-4 mb-4">
+    <select class="form-control select2" name="raw_material_id" id="raw_material_id">
+        <option value="">Select Raw Material</option>
+        @foreach ($raw_material as $item)
+        <option value="{{ $item->id }}">{{ $item->name }}</option>
+        @endforeach
+    </select>
+    @error('raw_material_id')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
                                      <label class="col-sm-2 col-form-label mandatory">Product</label>
                                     <div class="col-sm-4 mb-4">
                                         <select class="form-control select2" name="product_id"
@@ -62,8 +62,8 @@
 
                                     <label class="col-sm-2 col-form-label">Product Size</label>
                                     <div class="col-sm-4 mb-4">
-                                        <select class="form-control select2" name="product_size_id "
-                                            id="product_size_id ">
+                                        <select class="form-control select2" name="product_size_id"
+                                            id="product_size_id">
                                             <option value="">Select Product Size</option>
                                             @foreach ($product_size as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -100,13 +100,14 @@
                                         @enderror
                                     </div>
 
-                                     <label for="customer_code" class="col-sm-2 col-form-label">Wages for 1 product</label>
-                                    <div class="col-sm-4 mb-4">
-                                        <input class="form-control" type="text" name="wages_product" id="wages_product">
-                                        @error('wages_product')
-                                        <span class="error" style="color: red;">{{ $message }}</span>
-                                        @enderror
-                                    </div>
+                                     <label for="wages_product" class="col-sm-2 col-form-label">Wages for 1 product</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="wages_product" id="wages_product" value="{{ old('wages_product', 0) }}">
+    @error('wages_product')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
 
 
 

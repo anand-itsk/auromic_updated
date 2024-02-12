@@ -97,12 +97,14 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Raw Material </th>
+                                            <th>R.M</th>
+                                            <th>Type </th>
+                                            <th>Stock </th>
                                             <th>Product Name</th>
                                             <th>Product Size</th>
                                             <th>Model Code</th>
                                             <th>Model Name</th>
-                                            <th>Raw Material Weight/item</th>
+                                            <th>R.M Weight/item</th>
                                             <th>Wages of one Product</th>
                                             <th>Action</th>
                                         </tr>
@@ -187,16 +189,25 @@ $(document).ready(function() {
                 name: 'id'
             },
             {
-                data: 'raw_material_id',
-                name: 'raw_material_id'
+                data: 'raw_material.name',
+                name: 'raw_material.name'
+            },
+{
+                data: 'raw_material.raw_material_type.name',
+                name: 'raw_material.raw_material_type.name'
             },
             {
-                data: 'product_id',
-                name: 'product_id'
+                data: 'raw_material.stock',
+                name: 'raw_material.stock'
+            },
+            
+            {
+                data: 'product.name',
+                name: 'product.name'
             },
             {
-                data: 'product_size_id',
-                name: 'product_size_id'
+                data: 'product_size.name',
+                name: 'product_size.name'
             },
             {
                 data: 'model_code',
@@ -261,7 +272,7 @@ $(document).ready(function() {
         if (confirm("Are you sure you want to delete these rows?")) {
             // Send AJAX request to delete the selected rows
             $.ajax({
-                url: '/master/customers/delete/selected',
+                url: '/master/product_model/delete/selected',
                 type: 'POST',
                 data: {
                     ids: ids,
@@ -279,15 +290,15 @@ $(document).ready(function() {
 function edit(id) {
     console.log("inside");
     // Redirect to the user edit page or open a modal for editing
-    window.location.href = '/master/customers/edit/' + id;
+    window.location.href = '/master/product_model/edit/' + id;
 }
 
 function deleteCustomer(id) {
     console.log("inside")
     // Send an AJAX request to delete the user
-    if (confirm('Are you sure you want to delete this user?')) {
+    if (confirm('Are you sure you want to delete this Product model?')) {
         $.ajax({
-            url: '/master/customers/delete/' + id,
+            url: '/master/product_model/delete/' + id,
             type: 'DELETE',
             data: {
                 _token: '{{ csrf_token() }}',

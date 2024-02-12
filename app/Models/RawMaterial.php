@@ -18,4 +18,9 @@ class RawMaterial extends Model
      public function rawMaterialType(){
         return $this->belongsTo(RawMaterialType::class);
     }
+    
+     public function productModels()
+    {
+        return $this->hasMany(ProductModel::class,'raw_material_type_id','stock');
+    }
 }
