@@ -8,6 +8,7 @@ use App\Http\Controllers\PageControllers\MasterCompanyController;
 use App\Http\Controllers\PageControllers\MasterControllers\CustomerController;
 use App\Http\Controllers\PageControllers\MasterControllers\EmployeeController;
 use App\Http\Controllers\PageControllers\MasterControllers\ProductModelController;
+use App\Http\Controllers\PageControllers\MasterControllers\OrderDetailController;
 use App\Http\Controllers\PageControllers\SubClientCompanyController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -304,6 +305,21 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/export', [ProductModelController::class, 'export']);
         });
 
+        Route::prefix('/order_detail')->name('order_detail.')->group(function () {
+
+            Route::get('/', [OrderDetailController::class, 'index'])->name('index');
+            Route::get('/data', [OrderDetailController::class, 'indexData'])->name('data');
+
+            Route::get('/create', [OrderDetailController::class, 'create'])->name('create');
+            Route::post('/store', [OrderDetailController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [OrderDetailController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [OrderDetailController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}',  [OrderDetailController::class, 'destroy'])->name('delete');
+            Route::get('/show/{id}', [OrderDetailController::class, 'showDetails']);
+            Route::post('/delete/selected', [OrderDetailController::class, 'deleteSelected']);
+            Route::post('/import', [OrderDetailController::class, 'import'])->name('import');
+            Route::get('/export', [OrderDetailController::class, 'export']);
+        });
 
         Route::prefix('/employees')->name('employees.')->group(function () {
 
