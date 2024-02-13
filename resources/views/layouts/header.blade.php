@@ -263,7 +263,7 @@
                             </li>
                             <li>
                                 <ul>
-                                    <li><a href="">Order Details</a></li>
+                                    <li><a href="{{ route('master.order_detail.index') }}">Order Details</a></li>
                                     {{-- <li><a href="ui-cards.html">Product Model</a></li>
                                     <li><a href="ui-modals.html">Product</a></li>
                                     <li><a href="ui-progressbars.html">Finishing Product</a></li>
