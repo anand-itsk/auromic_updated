@@ -42,7 +42,7 @@
 
                                      <label class="col-sm-2 col-form-label mandatory">Order Date</label>
                                     <div class="col-sm-4 mb-4">
-                                        <input type="date" name="order_date" id="">
+                                        <input type="date" class="form-control" name="order_date" id="">
                                         @error('product_id')
                                         <span class="error" style="color: red;">{{ $message }}</span>
                                         @enderror
@@ -62,32 +62,59 @@
                                         @enderror
                                     </div>
 
-                                    <label class="col-sm-2 col-form-label">Product</label>
+                                   <label class="col-sm-2 col-form-label">Product</label>
+<div class="col-sm-4 mb-4">
+    <select class="form-control" name="product" id="product">
+    <option value="">Select Product</option>
+    @foreach($products as $product)
+        <option value="{{ $product->id }}">{{ $product->name }}</option>
+    @endforeach
+</select>
+    @error('product_id')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label class="col-sm-2 col-form-label">Model</label>
+<div class="col-sm-4 mb-4">
+    <select class="form-control" name="product_model" id="product_model">
+    <option value="">Select Product Model</option>
+    @foreach($productModels as $productModel)
+        <option value="{{ $productModel->id }}" data-product-id="{{ $productModel->product_id }}">{{ $productModel->model_name }}-{{$productModel->model_code}}</option>
+    @endforeach
+</select>
+    @error('model_id')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+                                 <label for="customer_code" class="col-sm-2 col-form-label">R.M Type</label>
                                     <div class="col-sm-4 mb-4">
-                                        <select class="form-control select2" name="product_id"
-                                            id="product_id">
-                                            <option value="">Select Product</option>
-                                            @foreach ($product as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('product_id')
+                                        <input class="form-control" type="text" name="raw_material_type" id="model_code">
+                                        @error('raw_material_type')
                                         <span class="error" style="color: red;">{{ $message }}</span>
                                         @enderror
                                     </div>
-
-                                    <label class="col-sm-2 col-form-label">Model</label>
+                                     <label for="customer_code" class="col-sm-2 col-form-label ">R.M Name</label>
                                     <div class="col-sm-4 mb-4">
-                                        <select class="form-control select2" name="model_id"
-                                            id="product_id">
-                                            <option value="">Select Product</option>
-                                           
-                                        </select>
-                                        @error('product_id')
+                                        <input class="form-control" type="text" name="raw_material_name" id="model_code">
+                                        @error('raw_material_name')
                                         <span class="error" style="color: red;">{{ $message }}</span>
                                         @enderror
                                     </div>
-
+                                     <label for="customer_code" class="col-sm-2 col-form-label ">R.M Weight/Item</label>
+                                    <div class="col-sm-4 mb-4">
+                                        <input class="form-control" type="text" name="raw_material_weight_item" id="model_code">
+                                        @error('raw_material_weight_item')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                     <label for="customer_code" class="col-sm-2 col-form-label ">Wages of Employee</label>
+                                    <div class="col-sm-4 mb-4">
+                                        <input class="form-control" type="text" name="wages_employee" id="model_code">
+                                        @error('wages_employee')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                        @enderror
+                                    </div>
 
 
                                 <div class="form-group">
@@ -115,7 +142,23 @@
         </div>
     </div>
 </div>
-
-
+<!-- JavaScript to handle product selection -->
+<script>
+    document.getElementById('product').addEventListener('change', function() {
+        var productId = this.value;
+        var productModels = document.getElementById('product_model').getElementsByTagName('option');
+        
+        for (var i = 0; i < productModels.length; i++) {
+            if (productModels[i].getAttribute('data-product-id') === productId || productId === '') {
+                productModels[i].style.display = '';
+            } else {
+                productModels[i].style.display = 'none';
+            }
+        }
+    });
+</script>
+    
 @include('links.js.select2.select2')
+
 @endsection
+

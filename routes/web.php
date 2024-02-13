@@ -301,6 +301,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/data', [ProductModelController::class, 'indexData'])->name('data');
 
             Route::get('/create', [ProductModelController::class, 'create'])->name('create');
+           
             Route::post('/store', [ProductModelController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [ProductModelController::class, 'edit'])->name('edit');
             Route::post('/update/{id}', [ProductModelController::class, 'update'])->name('update');
@@ -317,6 +318,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/data', [OrderDetailController::class, 'indexData'])->name('data');
 
             Route::get('/create', [OrderDetailController::class, 'create'])->name('create');
+             Route::get('/get-models-by-product',[OrderDetailController::class, 'getModelsByProduct']);
             Route::post('/store', [OrderDetailController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [OrderDetailController::class, 'edit'])->name('edit');
             Route::post('/update/{id}', [OrderDetailController::class, 'update'])->name('update');
