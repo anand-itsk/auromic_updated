@@ -23,6 +23,7 @@ use App\Http\Controllers\CompanyTypeController;
 use App\Http\Controllers\ResigningReasonsController;
 use App\Http\Controllers\LocalOfficeController;
 use App\Http\Controllers\EsiDispensaryController;
+use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\RawMaterialTypeController;
 use App\Http\Controllers\RawMaterialController;
 use App\Http\Controllers\ProductController;
@@ -54,6 +55,11 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth'])->group(function () {
+
+    // My Profile
+
+    Route::get('/my-profile', [MyProfileController::class, 'index'])->name('my-profile');
+    Route::get('/my-profile/edit', [MyProfileController::class, 'edit'])->name('my-profile.edit');
 
     Route::get('/master-setting', [MasterSetting::class, 'setting'])->name('master.settings');
 
