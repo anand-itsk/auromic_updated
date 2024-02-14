@@ -318,9 +318,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/data', [OrderDetailController::class, 'indexData'])->name('data');
 
             Route::get('/create', [OrderDetailController::class, 'create'])->name('create');
-             Route::get('//get-product-model-data/{id}',[OrderDetailController::class, 'getProductModelData']);
-          
-
+    
             Route::post('/store', [OrderDetailController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [OrderDetailController::class, 'edit'])->name('edit');
             Route::post('/update/{id}', [OrderDetailController::class, 'update'])->name('update');
