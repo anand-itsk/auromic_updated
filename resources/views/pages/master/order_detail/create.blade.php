@@ -80,7 +80,7 @@
     <select class="form-control" name="product_model" id="product_model">
     <option value="">Select Product Model</option>
     @foreach($productModels as $productModel)
-        <option value="{{ $productModel->id }}" data-product-id="{{ $productModel->product_id }}">{{ $productModel->model_name }}-{{$productModel->model_code}}</option>
+        <option value="{{ $productModel->id }}" data-product-id="{{ $productModel->product_id }}" data-wage="{{ $productModel->wages_product }}" data-weight="{{ $productModel->raw_material_weight_item }}">{{ $productModel->model_name }}-{{$productModel->model_code}}</option>
     @endforeach
 </select>
     @error('model_id')
@@ -101,20 +101,28 @@
                                         <span class="error" style="color: red;">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                     <label for="customer_code" class="col-sm-2 col-form-label ">R.M Weight/Item</label>
-                                    <div class="col-sm-4 mb-4">
-                                        <input class="form-control" type="text" name="raw_material_weight_item" id="model_code">
-                                        @error('raw_material_weight_item')
-                                        <span class="error" style="color: red;">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                     <label for="customer_code" class="col-sm-2 col-form-label ">Wages of Employee</label>
-                                    <div class="col-sm-4 mb-4">
-                                        <input class="form-control" type="text" name="wages_employee" id="model_code">
-                                        @error('wages_employee')
-                                        <span class="error" style="color: red;">{{ $message }}</span>
-                                        @enderror
-                                    </div>
+                                     <label for="raw_material_weight_item" class="col-sm-2 col-form-label">R.M Weight/Item</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="raw_material_weight_item" id="raw_material_weight_item">
+    @error('raw_material_weight_item')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label for="wages_employee" class="col-sm-2 col-form-label ">Wages of Employee</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="wages_employee" id="wages_employee">
+    @error('wages_employee')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+<label for="wages_employee" class="col-sm-2 col-form-label ">Quantity</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="wages_employee" id="wages_employee">
+    @error('wages_employee')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
 
 
                                 <div class="form-group">
@@ -157,6 +165,24 @@
         }
     });
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const productModelSelect = document.getElementById('product_model');
+        const rawMaterialWeightItemInput = document.getElementById('raw_material_weight_item');
+        const wagesEmployeeInput = document.getElementById('wages_employee');
+
+        productModelSelect.addEventListener('change', function() {
+            const selectedOption = productModelSelect.options[productModelSelect.selectedIndex];
+            const rawMaterialWeight = selectedOption.dataset.weight;
+            const wagesEmployee = selectedOption.dataset.wage;
+
+            rawMaterialWeightItemInput.value = rawMaterialWeight;
+            wagesEmployeeInput.value = wagesEmployee;
+        });
+    });
+</script>
+
     
 @include('links.js.select2.select2')
 

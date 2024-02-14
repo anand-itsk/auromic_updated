@@ -21,5 +21,7 @@ class OrderDetailController extends Controller
          $productModels = ProductModel::all();
         return view('pages.master.order_detail.create',compact('customer','products','productModels'));
      }
+
+   
  
 }
