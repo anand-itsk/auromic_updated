@@ -30,7 +30,7 @@
                   <form action="{{ route('master.order_detail.store') }}" method="POST">
                      @csrf
                      <div class="form-group row">
-                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Oder No</label>
+                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Order No</label>
                         <div class="col-sm-4 mb-4">
                            <input class="form-control" type="text" name="order_no" id="order_no">
                            @error('order_no')
@@ -111,8 +111,8 @@
                         </div>
                         <label for="wages_employee" class="col-sm-2 col-form-label ">Quantity</label>
                         <div class="col-sm-4 mb-4">
-                           <input class="form-control" type="text" name="wages_employee" id="wages_employee">
-                           @error('wages_employee')
+                           <input class="form-control" type="text" name="quantity" id="quantity">
+                           @error('quantity')
                            <span class="error" style="color: red;">{{ $message }}</span>
                            @enderror
                         </div>
