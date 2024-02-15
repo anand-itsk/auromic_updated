@@ -189,42 +189,14 @@ $(document).ready(function() {
                 name: 'id'
             },
             {
-                data: 'raw_material.name',
-                name: 'raw_material.name'
-            },
-{
-                data: 'raw_material.raw_material_type.name',
-                name: 'raw_material.raw_material_type.name'
+                data: 'order_no',
+                name: 'order_no'
             },
             {
-                data: 'raw_material.stock',
-                name: 'raw_material.stock'
+                data: 'order_date',
+                name: 'order_date'
             },
-            
-            {
-                data: 'product.name',
-                name: 'product.name'
-            },
-            {
-                data: 'product_size.name',
-                name: 'product_size.name'
-            },
-            {
-                data: 'model_code',
-                name: 'model_code'
-            },
-            {
-                data: 'model_name',
-                name: 'model_name'
-            },
-            {
-                data: 'raw_material_weight_item',
-                name: 'raw_material_weight_item'
-            },
-            {
-                data: 'wages_product',
-                name: 'wages_product'
-            },
+           
             {
                 data: null,
                 orderable: false,
@@ -249,7 +221,7 @@ $(document).ready(function() {
             {
                 text: 'Export All',
                 action: function(e, dt, node, config) {
-                    window.location.href = '/master/customers/export?' + $.param(dt.ajax
+                    window.location.href = '/master/order_detail/export?' + $.param(dt.ajax
                         .params());
                 }
             }

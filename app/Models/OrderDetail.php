@@ -17,7 +17,7 @@ class OrderDetail extends Model
         'product_color_id',
         'quantity',
         'delivery_date	',
-        'oder_status_id ',
+        'order_status_id ',
         'total_raw_material',
     ];
 }

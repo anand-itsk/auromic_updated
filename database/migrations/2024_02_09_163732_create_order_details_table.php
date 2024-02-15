@@ -21,14 +21,14 @@ return new class extends Migration
             $table->unsignedBigInteger('product_color_id');
             $table->string('quantity')->nullable();
             $table->date('delivery_date')->nullable();
-            $table->unsignedBigInteger('oder_status_id');
+            $table->unsignedBigInteger('order_status_id');
             $table->string('total_raw_material')->nullable();
             $table->timestamps();
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->foreign('product_size_id')->references('id')->on('product_sizes')->onDelete('cascade');
             $table->foreign('product_model_id')->references('id')->on('product_models')->onDelete('cascade');
             $table->foreign('product_color_id')->references('id')->on('product_colors')->onDelete('cascade');
-            $table->foreign('oder_status_id')->references('id')->on('order_statuses')->onDelete('cascade');
+            $table->foreign('order_status_id')->references('id')->on('order_statuses')->onDelete('cascade');
         });
     }
 
