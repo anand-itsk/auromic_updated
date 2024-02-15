@@ -63,6 +63,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/master-setting', [MasterSetting::class, 'setting'])->name('master.settings');
 
+    Route::prefix('user-management')->name('user-management.')->group(function () {
     // Users
     Route::get('/users', [UserController::class, 'index'])->name('users');
     Route::get('/users/data', [UserController::class, 'usersData'])->name('users.data');
@@ -72,6 +73,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
     Route::post('/user-update/{id}', [UserController::class, 'update'])->name('user.update');
     Route::delete('/user/delete/{id}',  [UserController::class, 'destroy'])->name('user.delete');
+    Route::delete('/user/show/{id}',  [UserController::class, 'show'])->name('user.show');
     Route::post('/select-user-delete', [UserController::class, 'deleteSelected']);
     Route::get('/import-users-page', [UserController::class, 'importUserPage'])->name('import.users.page');
     Route::post('/import-users', [UserController::class, 'importUsers'])->name('import.users');
@@ -83,8 +85,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/permission-edit/{id}', [PermissionController::class, 'edit'])->name('permission.edit');
     Route::post('/permission-update/{id}', [PermissionController::class, 'update'])->name('permission.update');
     Route::get('/permission-delete/{id}', [PermissionController::class, 'delete'])->name('permission.delete');
+    });
 
-// Country
+    Route::prefix('common')->name('common.')->group(function () {
+
+    // Country
     Route::get('/country', [CountryController::class, 'index'])->name('countries');
     Route::get('/country-create', [CountryController::class, 'create'])->name('countries.create');
     Route::post('/country-store', [CountryController::class, 'store'])->name('countries.store');
@@ -92,7 +97,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/country-update/{id}', [CountryController::class, 'update'])->name('countries.update');
     Route::get('/country-delete/{id}', [CountryController::class, 'delete'])->name('countries.delete');
 
-  // state
+    // state
     Route::get('/state', [StateController::class, 'index'])->name('states');
     Route::get('/state-create', [StateController::class, 'create'])->name('states.create');
     Route::post('/state-store', [StateController::class, 'store'])->name('states.store');
@@ -100,7 +105,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/state-update/{id}', [StateController::class, 'update'])->name('states.update');
     Route::get('/state-delete/{id}', [StateController::class, 'delete'])->name('states.delete');
 
-     // Districts
+    // Districts
     Route::get('/district', [DistrictController::class, 'index'])->name('districts');
     Route::get('/district-create', [DistrictController::class, 'create'])->name('districts.create');
     Route::post('/district-store', [DistrictController::class, 'store'])->name('districts.store');
@@ -108,7 +113,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/district-update/{id}', [DistrictController::class, 'update'])->name('districts.update');
     Route::get('/district-delete/{id}', [DistrictController::class, 'delete'])->name('districts.delete');
 
-// Caste
+    // Caste
     Route::get('/caste', [CasteController::class, 'index'])->name('castes');
     Route::get('/caste-create', [CasteController::class, 'create'])->name('castes.create');
     Route::post('/caste-store', [CasteController::class, 'store'])->name('castes.store');
@@ -124,7 +129,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/religion-update/{id}', [ReligionController::class, 'update'])->name('religions.update');
     Route::get('/religion-delete/{id}', [ReligionController::class, 'delete'])->name('religions.delete');
 
-     //Nationality
+    //Nationality
     Route::get('/nationality', [NationalityController::class, 'index'])->name('nationalities');
     Route::get('/nationality-create', [NationalityController::class, 'create'])->name('nationalities.create');
     Route::post('/nationality-store', [NationalityController::class, 'store'])->name('nationalities.store');
@@ -132,14 +137,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/nationality-update/{id}', [NationalityController::class, 'update'])->name('nationalities.update');
     Route::get('/nationality-delete/{id}', [NationalityController::class, 'delete'])->name('nationalities.delete');
 
-//Company Type
+    });
+    //Company Type
     Route::get('/company_type', [CompanytypeController::class, 'index'])->name('company_types');
     Route::get('/company_type-create', [CompanytypeController::class, 'create'])->name('company_types.create');
     Route::post('/company_type-store', [CompanytypeController::class, 'store'])->name('company_types.store');
     Route::get('/company_type-edit/{id}', [CompanytypeController::class, 'edit'])->name('company_types.edit');
     Route::post('/company_type-update/{id}', [CompanytypeController::class, 'update'])->name('company_types.update');
     Route::get('/company_type-delete/{id}', [CompanytypeController::class, 'delete'])->name('company_types.delete');
-//Resigning Reason
+    //Resigning Reason
     Route::get('/resigning_reason', [ResigningReasonsController::class, 'index'])->name('resigning_reasons');
     Route::get('/resigning_reason-create', [ResigningReasonsController::class, 'create'])->name('resigning_reasons.create');
     Route::post('/resigning_reason-store', [ResigningReasonsController::class, 'store'])->name('resigning_reasons.store');
@@ -155,7 +161,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/local_office-update/{id}', [LocalOfficeController::class, 'update'])->name('local_offices.update');
     Route::get('/local_office-delete/{id}', [LocalOfficeController::class, 'delete'])->name('local_offices.delete');
 
-     //ESI Dispensary
+    //ESI Dispensary
     Route::get('/esi_dispensary', [EsiDispensaryController::class, 'index'])->name('esi_dispensaries');
     Route::get('/esi_dispensary-create', [EsiDispensaryController::class, 'create'])->name('esi_dispensaries.create');
     Route::post('/esi_dispensary-store', [EsiDispensaryController::class, 'store'])->name('esi_dispensaries.store');
@@ -163,7 +169,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/esi_dispensary-update/{id}', [EsiDispensaryController::class, 'update'])->name('esi_dispensaries.update');
     Route::get('/esi_dispensary-delete/{id}', [EsiDispensaryController::class, 'delete'])->name('esi_dispensaries.delete');
 
- //Raw Material Type
+    //Raw Material Type
     Route::get('/raw_material_type', [RawMaterialTypeController::class, 'index'])->name('raw_material_types');
     Route::get('/raw_material_type-create', [RawMaterialTypeController::class, 'create'])->name('raw_material_types.create');
     Route::post('/raw_material_type-store', [RawMaterialTypeController::class, 'store'])->name('raw_material_types.store');
@@ -193,7 +199,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product_size-edit/{id}', [ProductSizeController::class, 'edit'])->name('product_sizes.edit');
     Route::post('/product_size-update/{id}', [ProductSizeController::class, 'update'])->name('product_sizes.update');
     Route::get('/product_size-delete/{id}', [ProductSizeController::class, 'delete'])->name('product_sizes.delete');
-    
+
     //Product Color
     Route::get('/product_color', [ProductColorController::class, 'index'])->name('product_colors');
     Route::get('/product_color-create', [ProductColorController::class, 'create'])->name('product_colors.create');
@@ -201,7 +207,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product_color-edit/{id}', [ProductColorController::class, 'edit'])->name('product_colors.edit');
     Route::post('/product_color-update/{id}', [ProductColorController::class, 'update'])->name('product_colors.update');
     Route::get('/product_color-delete/{id}', [ProductColorController::class, 'delete'])->name('product_colors.delete');
-    
+
     //Order Status
     Route::get('/order_status', [OrderStatusController::class, 'index'])->name('order_statuses');
     Route::get('/order_status-create', [OrderStatusController::class, 'create'])->name('order_statuses.create');
@@ -209,7 +215,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/order_status-edit/{id}', [OrderStatusController::class, 'edit'])->name('order_statuses.edit');
     Route::post('/order_status-update/{id}', [OrderStatusController::class, 'update'])->name('order_statuses.update');
     Route::get('/order_status-delete/{id}', [OrderStatusController::class, 'delete'])->name('order_statuses.delete');
-    
+
     //Pages
     Route::get('/master-companies', [MasterCompanyController::class, 'index'])->name('master-companies');
 
@@ -295,13 +301,13 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/export', [CustomerController::class, 'export']);
         });
 
-         Route::prefix('/product_model')->name('product_model.')->group(function () {
+        Route::prefix('/product_model')->name('product_model.')->group(function () {
 
             Route::get('/', [ProductModelController::class, 'index'])->name('index');
             Route::get('/data', [ProductModelController::class, 'indexData'])->name('data');
 
             Route::get('/create', [ProductModelController::class, 'create'])->name('create');
-           
+
             Route::post('/store', [ProductModelController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [ProductModelController::class, 'edit'])->name('edit');
             Route::post('/update/{id}', [ProductModelController::class, 'update'])->name('update');
@@ -318,7 +324,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/data', [OrderDetailController::class, 'indexData'])->name('data');
 
             Route::get('/create', [OrderDetailController::class, 'create'])->name('create');
-    
+
             Route::post('/store', [OrderDetailController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [OrderDetailController::class, 'edit'])->name('edit');
             Route::post('/update/{id}', [OrderDetailController::class, 'update'])->name('update');
@@ -368,8 +374,6 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete/selected', [EmployeeController::class, 'deleteSelected']);
             Route::post('/import', [EmployeeController::class, 'import'])->name('import');
             Route::get('/export', [EmployeeController::class, 'export']);
-
-            
         });
     });
 
