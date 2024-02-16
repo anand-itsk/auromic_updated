@@ -81,6 +81,7 @@
                            <span class="error" style="color: red;">{{ $message }}</span>
                            @enderror
                         </div>
+                        
                         <label for="raw_material_type" class="col-sm-2 col-form-label">R.M Type</label>
                         <div class="col-sm-4 mb-4">
                            <input class="form-control" type="text" name="raw_material_type" id="raw_material_type" value="{{ $order_details->productModel->rawMaterial->rawMaterialType->name ?? '' }}" readonly>
@@ -236,6 +237,41 @@
            $('#product_model').prop('disabled', $(this).val() == '');
        });
    });
+</script>
+<script>
+    $(document).ready(function(){
+        $('#product').on('change', function(){
+            var productId = $(this).val(); // Get the selected product ID
+            // Assuming you have an input field with id 'product_model'
+            // You can update the value of the input field with the selected product ID
+            $('#product_model').val(productId);
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get references to the select elements
+        var productSelect = document.getElementById('product');
+        var productModelSelect = document.getElementById('product_model');
+
+        // Listen for change event on product model select
+        productModelSelect.addEventListener('change', function() {
+            // Get the selected option
+            var selectedModelOption = productModelSelect.options[productModelSelect.selectedIndex];
+
+            // Get the product id associated with the selected model
+            var productId = selectedModelOption.getAttribute('data-product-id');
+
+            // Find the corresponding product option and select it
+            for (var i = 0; i < productSelect.options.length; i++) {
+                if (productSelect.options[i].value === productId) {
+                    productSelect.selectedIndex = i;
+                    break;
+                }
+            }
+        });
+    });
 </script>
 @include('links.js.select2.select2')
 @endsection
