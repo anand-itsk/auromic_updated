@@ -64,110 +64,113 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/master-setting', [MasterSetting::class, 'setting'])->name('master.settings');
 
     Route::prefix('user-management')->name('user-management.')->group(function () {
-    // Users
-    Route::get('/users', [UserController::class, 'index'])->name('users');
-    Route::get('/users/data', [UserController::class, 'usersData'])->name('users.data');
+        // Users
+        Route::get('/users', [UserController::class, 'index'])->name('users');
+        Route::get('/users/data', [UserController::class, 'usersData'])->name('users.data');
 
-    Route::get('/user-create', [UserController::class, 'create'])->name('user.create');
-    Route::post('/user-store', [UserController::class, 'store'])->name('user.store');
-    Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
-    Route::post('/user-update/{id}', [UserController::class, 'update'])->name('user.update');
-    Route::delete('/user/delete/{id}',  [UserController::class, 'destroy'])->name('user.delete');
-    Route::delete('/user/show/{id}',  [UserController::class, 'show'])->name('user.show');
-    Route::post('/select-user-delete', [UserController::class, 'deleteSelected']);
-    Route::get('/import-users-page', [UserController::class, 'importUserPage'])->name('import.users.page');
-    Route::post('/import-users', [UserController::class, 'importUsers'])->name('import.users');
+        Route::get('/user-create', [UserController::class, 'create'])->name('user.create');
+        Route::post('/user-store', [UserController::class, 'store'])->name('user.store');
+        Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+        Route::post('/user-update/{id}', [UserController::class, 'update'])->name('user.update');
+        Route::delete('/user/delete/{id}',  [UserController::class, 'destroy'])->name('user.delete');
+        Route::delete('/user/show/{id}',  [UserController::class, 'show'])->name('user.show');
+        Route::post('/select-user-delete', [UserController::class, 'deleteSelected']);
+        Route::get('/import-users-page', [UserController::class, 'importUserPage'])->name('import.users.page');
+        Route::post('/import-users', [UserController::class, 'importUsers'])->name('import.users');
 
-    // permission
-    Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions');
-    Route::get('/permission-create', [PermissionController::class, 'create'])->name('permission.create');
-    Route::post('/permission-store', [PermissionController::class, 'store'])->name('permission.store');
-    Route::get('/permission-edit/{id}', [PermissionController::class, 'edit'])->name('permission.edit');
-    Route::post('/permission-update/{id}', [PermissionController::class, 'update'])->name('permission.update');
-    Route::get('/permission-delete/{id}', [PermissionController::class, 'delete'])->name('permission.delete');
+        // permission
+        Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions');
+        Route::get('/permission-create', [PermissionController::class, 'create'])->name('permission.create');
+        Route::post('/permission-store', [PermissionController::class, 'store'])->name('permission.store');
+        Route::get('/permission-edit/{id}', [PermissionController::class, 'edit'])->name('permission.edit');
+        Route::post('/permission-update/{id}', [PermissionController::class, 'update'])->name('permission.update');
+        Route::get('/permission-delete/{id}', [PermissionController::class, 'delete'])->name('permission.delete');
     });
 
     Route::prefix('common')->name('common.')->group(function () {
 
-    // Country
-    Route::get('/country', [CountryController::class, 'index'])->name('countries');
-    Route::get('/country-create', [CountryController::class, 'create'])->name('countries.create');
-    Route::post('/country-store', [CountryController::class, 'store'])->name('countries.store');
-    Route::get('/country-edit/{id}', [CountryController::class, 'edit'])->name('countries.edit');
-    Route::post('/country-update/{id}', [CountryController::class, 'update'])->name('countries.update');
-    Route::get('/country-delete/{id}', [CountryController::class, 'delete'])->name('countries.delete');
+        // Country
+        Route::get('/country', [CountryController::class, 'index'])->name('countries');
+        Route::get('/country-create', [CountryController::class, 'create'])->name('countries.create');
+        Route::post('/country-store', [CountryController::class, 'store'])->name('countries.store');
+        Route::get('/country-edit/{id}', [CountryController::class, 'edit'])->name('countries.edit');
+        Route::post('/country-update/{id}', [CountryController::class, 'update'])->name('countries.update');
+        Route::get('/country-delete/{id}', [CountryController::class, 'delete'])->name('countries.delete');
 
-    // state
-    Route::get('/state', [StateController::class, 'index'])->name('states');
-    Route::get('/state-create', [StateController::class, 'create'])->name('states.create');
-    Route::post('/state-store', [StateController::class, 'store'])->name('states.store');
-    Route::get('/state-edit/{id}', [StateController::class, 'edit'])->name('states.edit');
-    Route::post('/state-update/{id}', [StateController::class, 'update'])->name('states.update');
-    Route::get('/state-delete/{id}', [StateController::class, 'delete'])->name('states.delete');
+        // state
+        Route::get('/state', [StateController::class, 'index'])->name('states');
+        Route::get('/state-create', [StateController::class, 'create'])->name('states.create');
+        Route::post('/state-store', [StateController::class, 'store'])->name('states.store');
+        Route::get('/state-edit/{id}', [StateController::class, 'edit'])->name('states.edit');
+        Route::post('/state-update/{id}', [StateController::class, 'update'])->name('states.update');
+        Route::get('/state-delete/{id}', [StateController::class, 'delete'])->name('states.delete');
 
-    // Districts
-    Route::get('/district', [DistrictController::class, 'index'])->name('districts');
-    Route::get('/district-create', [DistrictController::class, 'create'])->name('districts.create');
-    Route::post('/district-store', [DistrictController::class, 'store'])->name('districts.store');
-    Route::get('/district-edit/{id}', [DistrictController::class, 'edit'])->name('districts.edit');
-    Route::post('/district-update/{id}', [DistrictController::class, 'update'])->name('districts.update');
-    Route::get('/district-delete/{id}', [DistrictController::class, 'delete'])->name('districts.delete');
+        // Districts
+        Route::get('/district', [DistrictController::class, 'index'])->name('districts');
+        Route::get('/district-create', [DistrictController::class, 'create'])->name('districts.create');
+        Route::post('/district-store', [DistrictController::class, 'store'])->name('districts.store');
+        Route::get('/district-edit/{id}', [DistrictController::class, 'edit'])->name('districts.edit');
+        Route::post('/district-update/{id}', [DistrictController::class, 'update'])->name('districts.update');
+        Route::get('/district-delete/{id}', [DistrictController::class, 'delete'])->name('districts.delete');
 
-    // Caste
-    Route::get('/caste', [CasteController::class, 'index'])->name('castes');
-    Route::get('/caste-create', [CasteController::class, 'create'])->name('castes.create');
-    Route::post('/caste-store', [CasteController::class, 'store'])->name('castes.store');
-    Route::get('/caste-edit/{id}', [CasteController::class, 'edit'])->name('castes.edit');
-    Route::post('/caste-update/{id}', [CasteController::class, 'update'])->name('castes.update');
-    Route::get('/caste-delete/{id}', [CasteController::class, 'delete'])->name('castes.delete');
+        // Caste
+        Route::get('/caste', [CasteController::class, 'index'])->name('castes');
+        Route::get('/caste-create', [CasteController::class, 'create'])->name('castes.create');
+        Route::post('/caste-store', [CasteController::class, 'store'])->name('castes.store');
+        Route::get('/caste-edit/{id}', [CasteController::class, 'edit'])->name('castes.edit');
+        Route::post('/caste-update/{id}', [CasteController::class, 'update'])->name('castes.update');
+        Route::get('/caste-delete/{id}', [CasteController::class, 'delete'])->name('castes.delete');
 
-    //Religion
-    Route::get('/religion', [ReligionController::class, 'index'])->name('religions');
-    Route::get('/religion-create', [ReligionController::class, 'create'])->name('religions.create');
-    Route::post('/religion-store', [ReligionController::class, 'store'])->name('religions.store');
-    Route::get('/religion-edit/{id}', [ReligionController::class, 'edit'])->name('religions.edit');
-    Route::post('/religion-update/{id}', [ReligionController::class, 'update'])->name('religions.update');
-    Route::get('/religion-delete/{id}', [ReligionController::class, 'delete'])->name('religions.delete');
+        //Religion
+        Route::get('/religion', [ReligionController::class, 'index'])->name('religions');
+        Route::get('/religion-create', [ReligionController::class, 'create'])->name('religions.create');
+        Route::post('/religion-store', [ReligionController::class, 'store'])->name('religions.store');
+        Route::get('/religion-edit/{id}', [ReligionController::class, 'edit'])->name('religions.edit');
+        Route::post('/religion-update/{id}', [ReligionController::class, 'update'])->name('religions.update');
+        Route::get('/religion-delete/{id}', [ReligionController::class, 'delete'])->name('religions.delete');
 
-    //Nationality
-    Route::get('/nationality', [NationalityController::class, 'index'])->name('nationalities');
-    Route::get('/nationality-create', [NationalityController::class, 'create'])->name('nationalities.create');
-    Route::post('/nationality-store', [NationalityController::class, 'store'])->name('nationalities.store');
-    Route::get('/nationality-edit/{id}', [NationalityController::class, 'edit'])->name('nationalities.edit');
-    Route::post('/nationality-update/{id}', [NationalityController::class, 'update'])->name('nationalities.update');
-    Route::get('/nationality-delete/{id}', [NationalityController::class, 'delete'])->name('nationalities.delete');
-
+        //Nationality
+        Route::get('/nationality', [NationalityController::class, 'index'])->name('nationalities');
+        Route::get('/nationality-create', [NationalityController::class, 'create'])->name('nationalities.create');
+        Route::post('/nationality-store', [NationalityController::class, 'store'])->name('nationalities.store');
+        Route::get('/nationality-edit/{id}', [NationalityController::class, 'edit'])->name('nationalities.edit');
+        Route::post('/nationality-update/{id}', [NationalityController::class, 'update'])->name('nationalities.update');
+        Route::get('/nationality-delete/{id}', [NationalityController::class, 'delete'])->name('nationalities.delete');
     });
-    //Company Type
-    Route::get('/company_type', [CompanytypeController::class, 'index'])->name('company_types');
-    Route::get('/company_type-create', [CompanytypeController::class, 'create'])->name('company_types.create');
-    Route::post('/company_type-store', [CompanytypeController::class, 'store'])->name('company_types.store');
-    Route::get('/company_type-edit/{id}', [CompanytypeController::class, 'edit'])->name('company_types.edit');
-    Route::post('/company_type-update/{id}', [CompanytypeController::class, 'update'])->name('company_types.update');
-    Route::get('/company_type-delete/{id}', [CompanytypeController::class, 'delete'])->name('company_types.delete');
-    //Resigning Reason
-    Route::get('/resigning_reason', [ResigningReasonsController::class, 'index'])->name('resigning_reasons');
-    Route::get('/resigning_reason-create', [ResigningReasonsController::class, 'create'])->name('resigning_reasons.create');
-    Route::post('/resigning_reason-store', [ResigningReasonsController::class, 'store'])->name('resigning_reasons.store');
-    Route::get('/resigning_reason-edit/{id}', [ResigningReasonsController::class, 'edit'])->name('resigning_reasons.edit');
-    Route::post('/resigning_reason-update/{id}', [ResigningReasonsController::class, 'update'])->name('resigning_reasons.update');
-    Route::get('/resigning_reason-delete/{id}', [ResigningReasonsController::class, 'delete'])->name('resigning_reasons.delete');
 
-    //Local Offices
-    Route::get('/local_office', [LocalOfficeController::class, 'index'])->name('local_offices');
-    Route::get('/local_office-create', [LocalOfficeController::class, 'create'])->name('local_offices.create');
-    Route::post('/local_office-store', [LocalOfficeController::class, 'store'])->name('local_offices.store');
-    Route::get('/local_office-edit/{id}', [LocalOfficeController::class, 'edit'])->name('local_offices.edit');
-    Route::post('/local_office-update/{id}', [LocalOfficeController::class, 'update'])->name('local_offices.update');
-    Route::get('/local_office-delete/{id}', [LocalOfficeController::class, 'delete'])->name('local_offices.delete');
+    Route::prefix('specified')->name('specified.')->group(function () {
 
-    //ESI Dispensary
-    Route::get('/esi_dispensary', [EsiDispensaryController::class, 'index'])->name('esi_dispensaries');
-    Route::get('/esi_dispensary-create', [EsiDispensaryController::class, 'create'])->name('esi_dispensaries.create');
-    Route::post('/esi_dispensary-store', [EsiDispensaryController::class, 'store'])->name('esi_dispensaries.store');
-    Route::get('/esi_dispensary-edit/{id}', [EsiDispensaryController::class, 'edit'])->name('esi_dispensaries.edit');
-    Route::post('/esi_dispensary-update/{id}', [EsiDispensaryController::class, 'update'])->name('esi_dispensaries.update');
-    Route::get('/esi_dispensary-delete/{id}', [EsiDispensaryController::class, 'delete'])->name('esi_dispensaries.delete');
+        //Company Type
+        Route::get('/company_type', [CompanytypeController::class, 'index'])->name('company_types');
+        Route::get('/company_type-create', [CompanytypeController::class, 'create'])->name('company_types.create');
+        Route::post('/company_type-store', [CompanytypeController::class, 'store'])->name('company_types.store');
+        Route::get('/company_type-edit/{id}', [CompanytypeController::class, 'edit'])->name('company_types.edit');
+        Route::post('/company_type-update/{id}', [CompanytypeController::class, 'update'])->name('company_types.update');
+        Route::get('/company_type-delete/{id}', [CompanytypeController::class, 'delete'])->name('company_types.delete');
+        //Resigning Reason
+        Route::get('/resigning_reason', [ResigningReasonsController::class, 'index'])->name('resigning_reasons');
+        Route::get('/resigning_reason-create', [ResigningReasonsController::class, 'create'])->name('resigning_reasons.create');
+        Route::post('/resigning_reason-store', [ResigningReasonsController::class, 'store'])->name('resigning_reasons.store');
+        Route::get('/resigning_reason-edit/{id}', [ResigningReasonsController::class, 'edit'])->name('resigning_reasons.edit');
+        Route::post('/resigning_reason-update/{id}', [ResigningReasonsController::class, 'update'])->name('resigning_reasons.update');
+        Route::get('/resigning_reason-delete/{id}', [ResigningReasonsController::class, 'delete'])->name('resigning_reasons.delete');
+
+        //Local Offices
+        Route::get('/local_office', [LocalOfficeController::class, 'index'])->name('local_offices');
+        Route::get('/local_office-create', [LocalOfficeController::class, 'create'])->name('local_offices.create');
+        Route::post('/local_office-store', [LocalOfficeController::class, 'store'])->name('local_offices.store');
+        Route::get('/local_office-edit/{id}', [LocalOfficeController::class, 'edit'])->name('local_offices.edit');
+        Route::post('/local_office-update/{id}', [LocalOfficeController::class, 'update'])->name('local_offices.update');
+        Route::get('/local_office-delete/{id}', [LocalOfficeController::class, 'delete'])->name('local_offices.delete');
+
+        //ESI Dispensary
+        Route::get('/esi_dispensary', [EsiDispensaryController::class, 'index'])->name('esi_dispensaries');
+        Route::get('/esi_dispensary-create', [EsiDispensaryController::class, 'create'])->name('esi_dispensaries.create');
+        Route::post('/esi_dispensary-store', [EsiDispensaryController::class, 'store'])->name('esi_dispensaries.store');
+        Route::get('/esi_dispensary-edit/{id}', [EsiDispensaryController::class, 'edit'])->name('esi_dispensaries.edit');
+        Route::post('/esi_dispensary-update/{id}', [EsiDispensaryController::class, 'update'])->name('esi_dispensaries.update');
+        Route::get('/esi_dispensary-delete/{id}', [EsiDispensaryController::class, 'delete'])->name('esi_dispensaries.delete');
+    });
 
     //Raw Material Type
     Route::get('/raw_material_type', [RawMaterialTypeController::class, 'index'])->name('raw_material_types');

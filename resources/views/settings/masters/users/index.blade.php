@@ -31,11 +31,11 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card m-b-30 rightsetup">
-                                <div class="card-header">
+                                <div class="card-header pb-0 pt-0 bg-white">
                                     <h5>User Details</h5>
                                 </div>
 
-                                <div class="card-body">
+                                <div class="card-body pt-0">
                                     <div class="row">
                                         <div class="col-md-6 rightsetup-details">
                                             <div class="d-flex justify-content-between p-2 bd-highlight">

@@ -23,10 +23,11 @@
                                 <div class="card-body">
                                     <h4 class="mt-0 extra-medium-font"> User Management</h4>
                                     <div class="link-list">
-                                        <a class="text-muted" href="{{ route('users') }}">Users</a>
+                                        <a class="text-muted" href="{{ route('user-management.users') }}">Users</a>
                                     </div>
                                     <div class="link-list">
-                                        <a class="text-muted" href="{{ route('permissions') }}">Permissions</a>
+                                        <a class="text-muted"
+                                            href="{{ route('user-management.permissions') }}">Permissions</a>
                                     </div>
                                 </div>
                             </div>
@@ -38,22 +39,22 @@
                                     <h4 class="mt-0 extra-medium-font">Common</h4>
 
                                     <div class="link-list">
-                                        <a class="text-muted" href="{{ route('countries') }}">Country</a>
+                                        <a class="text-muted" href="{{ route('common.countries') }}">Country</a>
                                     </div>
                                     <div class="link-list">
-                                        <a class="text-muted" href="{{ route('states') }}">State</a>
+                                        <a class="text-muted" href="{{ route('common.states') }}">State</a>
                                     </div>
                                     <div class="link-list">
-                                        <a class="text-muted" href="{{ route('districts') }}">Districts</a>
+                                        <a class="text-muted" href="{{ route('common.districts') }}">Districts</a>
                                     </div>
                                     <div class="link-list">
-                                        <a class="text-muted" href="{{ route('religions') }}">Religion</a>
+                                        <a class="text-muted" href="{{ route('common.religions') }}">Religion</a>
                                     </div>
                                     <div class="link-list">
-                                        <a class="text-muted" href="{{ route('castes') }}">Caste</a>
+                                        <a class="text-muted" href="{{ route('common.castes') }}">Caste</a>
                                     </div>
                                     <div class="link-list">
-                                        <a class="text-muted" href="{{ route('nationalities') }}">Nationality</a>
+                                        <a class="text-muted" href="{{ route('common.nationalities') }}">Nationality</a>
                                     </div>
                                 </div>
                             </div>
@@ -64,16 +65,18 @@
                                 <div class="card-body">
                                     <h4 class="mt-0 extra-medium-font">Specified</h4>
                                     <div class="link-list">
-                                        <a class="text-muted" href="{{ route('company_types') }}">Company Type</a>
+                                        <a class="text-muted" href="{{ route('specified.company_types') }}">Company Type</a>
                                     </div>
                                     <div class="link-list">
-                                        <a class="text-muted" href="{{ route('resigning_reasons') }}">Resigning</a>
+                                        <a class="text-muted"
+                                            href="{{ route('specified.resigning_reasons') }}">Resigning</a>
                                     </div>
                                     <div class="link-list">
-                                        <a class="text-muted" href="{{ route('local_offices') }}">Local Offices</a>
+                                        <a class="text-muted" href="{{ route('specified.local_offices') }}">Local
+                                            Offices</a>
                                     </div>
                                     <div class="link-list">
-                                        <a class="text-muted" href="{{ route('esi_dispensaries') }}">ESI
+                                        <a class="text-muted" href="{{ route('specified.esi_dispensaries') }}">ESI
                                             Dispensary</a>
                                     </div>
                                 </div>
