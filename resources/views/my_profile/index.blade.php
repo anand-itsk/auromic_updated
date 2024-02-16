@@ -48,8 +48,8 @@
                                 <div class="col-11">
                                     <div class="d-flex">
                                         <div class="p-2">
-                                            @if (!empty($employee->photo))
-                                                <img src="{{ asset('/storage/' . $employee->photo) }}" alt="Profile Image">
+                                            @if (!empty($user->profile_image))
+                                               <img src="{{ asset('/storage/' . $user->profile_image) }}" alt="Profile Image" style="width: 200px; height: 200px;">
                                             @else
                                                 <img class="profile-image rounded-circle"
                                                     src="{{ asset('assets/images/no-profile.png') }}"
@@ -82,28 +82,27 @@
                                 <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
                                     <div class="user-info">
                                         <span>USER ID</span>
-                                        <h5>818778</h5>
+                                        <h5>{{ $user->id }}</h5>
                                     </div>
                                 </div>
 
                                 <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
                                     <div class="user-info">
                                         <span>EMAIL</span>
-                                        <h5>ragulaust@gmail.com</h5>
+                                        <h5>{{ $user->email}}</h5>
                                     </div>
                                 </div>
 
                                 <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
                                     <div class="user-info">
                                         <span>COUNTRY</span>
-                                        <h5>India</h5>
+                                       <h5>{{ $user->country->name }}</h5>
                                     </div>
                                 </div>
 
                                 <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
                                     <div class="user-info">
-                                        <span>CREATED ON</span>
-                                        <h5>20/10/2020</h5>
+                                       
                                     </div>
                                 </div>
                             </div>
