@@ -11,7 +11,7 @@ class ModelExport implements FromCollection
     */
     public function collection()
     {
-        return Employee::all();
+        return ProductModel::all();
     }
 
 

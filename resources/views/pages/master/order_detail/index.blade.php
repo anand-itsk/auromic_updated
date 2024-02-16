@@ -99,13 +99,15 @@
                                             <th>ID</th>
                                             <th>Order No</th>
                                             <th>customer</th>
-                                            <th>Product Name</th>
-                                            <th>Product Size</th>
-                                            <th>Model Name</th>
-                                            <th>Product Color</th>
-                                            <th>Quantity</th>
-                                            <th>Order Status</th>
+                                              <th>Quantity</th>
                                             <th>Total R.M</th>
+                                            <th>Product Size</th>
+                                           
+                                            <th>Product Color</th>
+                                          
+                                            <th>Order Status</th>
+                                             <th>Model Name</th>
+                                       
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -196,7 +198,30 @@ $(document).ready(function() {
                 data: 'order_date',
                 name: 'order_date'
             },
-           
+           {
+                data: 'quantity',
+                name: 'quantity'
+            },
+            {
+                data: 'total_raw_material',
+                name: 'total_raw_material'
+            },
+          {
+                data: 'product_size.name',
+                name: 'product_size.name'
+            },
+            {
+                data: 'product_color.name',
+                name: 'product_color.name'
+            },
+             {
+               data: 'order_status.name', 
+               name: 'order_status.name'
+            },
+            {
+               data: 'product_model.model_name', 
+               name: 'product_model.model_name'
+            },
             {
                 data: null,
                 orderable: false,
