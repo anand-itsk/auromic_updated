@@ -5,7 +5,7 @@
             <!-- Logo container-->
             <div class="logo">
                 <!-- Image Logo -->
-                <a href="index.html" class="logo">
+                <a href="{{ route('home') }}" class="logo">
                     <img src="{{ asset('assets/images/logo-sm.png') }}" alt="" height="32" class="logo-small">
                     <img src="{{ asset('assets/images/logo.png') }}" alt="" height="20" class="logo-large">
                 </a>
@@ -159,7 +159,7 @@
                                 class="rounded-circle">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown ">
-                            <a class="dropdown-item" href="#"><i
+                            <a class="dropdown-item" href="{{ route('my-profile') }}"><i
                                     class="mdi mdi-account-circle m-r-5 text-muted"></i> Profile</a>
                             <a class="dropdown-item" href="{{ route('master.settings') }}"><i
                                     class="mdi mdi-settings m-r-5 text-muted"></i> Settings</a>
@@ -252,7 +252,7 @@
                                     <li><a href="ui-navs.html">Incentive </a></li> --}}
                                 </ul>
                             </li>
-                             <li>
+                            <li>
                                 <ul>
                                     <li><a href="{{ route('master.product_model.index') }}">Product Model</a></li>
                                     {{-- <li><a href="ui-cards.html">Product Model</a></li>
