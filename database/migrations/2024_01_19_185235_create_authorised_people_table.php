@@ -13,17 +13,21 @@ return new class extends Migration
     {
         Schema::create('authorised_people', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('company_id');
             $table->string('name');
-            $table->string('faorhus_name');
+            $table->string('faorhus_name')->nullable();
             $table->enum('gender', ['Male', 'Female', 'Other'])->nullable();
             $table->enum('blood_group', ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])->nullable();
             $table->date('dob')->nullable();
-            $table->string('email')->unique()->nullable();
-            $table->text('address')->nullable();
+            $table->string('person_email')->unique()->nullable();
             $table->string('pan_no')->nullable();
-            $table->string('percent');
-            $table->string('photo');
+            $table->string('std_code')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('mobile')->nullable();
+            $table->string('percent')->nullable();
+            $table->string('photo')->nullable();
             $table->boolean('status')->default(1);
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

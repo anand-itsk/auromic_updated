@@ -20,29 +20,28 @@ class PermissionController extends Controller
 
     public function create()
     {
-        return view('Master.usermanagement.permission.create');
+          $permissionGroups = PermissionGroup::with('permissions')->get();
+          $permission = Permission::get();
+  
+        return view('settings.masters.permission.create',compact('permissionGroups','permission'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-
-            'name' => 'required|regex:/^[A-Za-z ]+$/',
-
+         $request->validate([
+            'role' => 'required|regex:/^[A-Za-z ]+$/',
+            'permission' => 'required|array',
         ]);
 
-        $input = [
-            'name' => $request['name'],
-        ];
+         $role = Role::create(['name' => $request->input('role')]);
+         $permissionIds = $request->input('permission');
+         $permissions = Permission::whereIn('id', $permissionIds)->pluck('name');
+         $role->syncPermissions($permissions);
 
-        $permission = $input;
-        Permission::create($permission);
-
-        if ($permission) {
-            return redirect()->route('permission.index')
-                ->with('success', 'Permission created successfully');
+        if ($role) {
+            return redirect()->route('permissions')
+                ->with('success', 'Role & Permission created successfully');
         }
-
         return back()->with('failure', 'Please try again');
     }
 

@@ -42,6 +42,48 @@ File: Main Css File
 /* ==============
   General
 ===================*/
+
+:root {
+  --crm-base-font-size: 1.4rem;
+  --crm-medium-font-size: 1.5rem;
+  --crm-extra-medium-font-size: 1.4rem;
+  --crm-small-font-size: 1.3rem;
+  --crm-extra-small-font-size: 1.1rem;
+  --crm-medium-large-font-size: 1.8rem;
+  --crm-large-font-size: 2rem;
+}
+
+.base-font{
+  font-size: var(--crm-base-font-size);
+}
+
+.medium-font{
+  font-size: var(--crm-medium-font-size);
+}
+
+.extra-medium-font{
+  font-size: var(--crm-extra-medium-font-size);
+}
+
+.small-font{
+  font-size: var(--crm-small-font-size);
+}
+
+.extra-small-font{
+  font-size: var(--crm-extra-small-font-size);
+}
+
+.medium-large-font{
+  font-size: var(--crm-medium-large-font-size);
+}
+
+.large-font{
+  font-size: var(--crm-large-font-size);
+}
+
+
+
+
 body {
   background: #f2f5f7;
   font-family: "Mukta", sans-serif;
@@ -1406,9 +1448,10 @@ body {
 }
 
 .page-title-box .page-title {
-  font-size: 18px;
+  font-size: var(--crm-medium-large-font-size);
   margin-bottom: 0;
   margin-top: 0;
+  
 }
 
 .header-title {
@@ -3228,4 +3271,20 @@ File: Responsive
 .mandatory::after {
   content: " *"; /* Space before asterisk for separation */
   color: red;
+}
+
+button.default-btn {
+  font-size: 14px;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 2px;
+}
+
+.link-list{
+  width:100%;
+  padding:3px 0px 3px 0px;
+}
+
+.link-list a:hover{
+  color:#397be8 !important;
 }

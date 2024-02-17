@@ -22,6 +22,12 @@ class DatabaseSeeder extends Seeder
             PermissionGroupTableSeeder::class,
             PermissionTableSeeder::class,
             RoleTableSeeder::class,
+            PaymentModeTableSeeder::class,
+            ReligionTableSeeder::class,
+            CasteTableSeeder::class,
+            NationalityTableSeeder::class,
+            LocalOfficeTableSeeder::class,
+            EsiDispensaryTableSeeder::class,
             ResigningReasonTableSeeder::class,
             AddressTypeTableSeeder::class,
             UserTableSeeder::class,
@@ -32,7 +38,14 @@ class DatabaseSeeder extends Seeder
             BankDetailTableSeeder::class,
             CompanyBankDetailTableSeeder::class,
             CustomerTableSeeder::class,
-            EmployeeTableSeeder::class
+            EmployeeTableSeeder::class,
+            AuthorisedPeopleTableSeeder::class,
+            RawMaterialTypeTableSeeder::class,
+            RawMaterialTableSeeder::class,
+            ProductTableSeeder::class,
+            ProductSizeTableSeeder::class,
+            OrderStatusTableSeeder::class,
+            ProductColorTableSeeder::class
         ]);
     }
 }

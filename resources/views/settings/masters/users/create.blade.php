@@ -14,7 +14,7 @@
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="#">Aurmics</a></li>
                                 <li class="breadcrumb-item"><a href="{{ route('users') }}">Users</a></li>
-                                <li class="breadcrumb-item"><a href="#">Import</a></li>
+                                <li class="breadcrumb-item">Create</li>
                             </ol>
                         </div>
                         <h4 class="page-title">Create User</h4>
@@ -86,12 +86,14 @@
                                             <button type="submit" class="btn btn-primary waves-effect waves-light">
                                                 Submit
                                             </button>
-                                            <button type="reset" class="btn btn-warning waves-effect waves-light">
+                                            <a href="{{ route('user.create') }}"
+                                                class="btn btn-warning waves-effect waves-light">
                                                 Reset
-                                            </button>
-                                            <button type="cancel" class="btn btn-secondary waves-effect m-l-5">
+                                            </a>
+                                            <a href="{{ route('users') }}"
+                                                class="btn btn-secondary waves-effect m-l-5">
                                                 Cancel
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
 

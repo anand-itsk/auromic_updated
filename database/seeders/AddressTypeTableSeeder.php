@@ -20,6 +20,7 @@ class AddressTypeTableSeeder extends Seeder
             array('name' => "Office Address", 'code' => 'OFA'),
             array('name' => "Residential Address", 'code' => 'RA'),
             array('name' => "Permanent Address", 'code' => 'PA'),
+            array('name' => "Correspondence Address", 'code' => 'CA'),
         );
 
         DB::table('address_types')->insert($bank_details);

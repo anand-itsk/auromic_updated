@@ -23,4 +23,21 @@ class Address extends Model
     {
         return $this->morphTo();
     }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+    public function district()
+    {
+        return $this->belongsTo(District::class);
+    }
+    public function addressType()
+    {
+        return $this->belongsTo(AddressType::class);
+    }
 }

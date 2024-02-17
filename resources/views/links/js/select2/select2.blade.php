@@ -6,4 +6,14 @@
         $(document).ready(function() {
             $('.select2').select2();
         });
+
+        function showTextBox() {
+            var selectBox = document.getElementById('business_nature');
+            var textBox = document.getElementById('otherText');
+            if (selectBox.value === 'Others') {
+                textBox.style.display = 'block';
+            } else {
+                textBox.style.display = 'none';
+            }
+        }
     </script>
