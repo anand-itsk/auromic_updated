@@ -11,13 +11,15 @@ use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     // Index Page
     public function index()
     {
-        return view('settings.masters.users.index');
+        $user = Auth::user()->load('country', 'roles');
+        return view('settings.masters.users.index', ['user' => $user]);
     }
     // Index DataTable
     public function usersData()
@@ -53,11 +55,12 @@ class UserController extends Controller
         $input['password'] = Hash::make($input['password']);
         $input['created_by'] = $auth_id;
         $input['updated_by'] = $auth_id;
+        $input['remark'] = $request->input('remark');
         $user = User::create($input);
         $role = Role::findById($request->input('role'));
         $user->assignRole($role);
 
-        return redirect()->route('users')
+        return redirect()->route('user-management.users')
             ->with('success', 'User created successfully');
     }
     // Edit
@@ -89,7 +92,7 @@ class UserController extends Controller
         $user->update($input);
         $user->syncRoles($input['role']);
         if ($user) {
-            return redirect()->route('users')
+            return redirect()->route('user-management.users')
                 ->with('success', 'User updated successfully');
         }
 
@@ -101,6 +104,13 @@ class UserController extends Controller
         $user->delete();
 
         return response()->json(['success' => 'User deleted successfully']);
+    }
+
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
+
+        return response()->json(['user' =>  $user]);
     }
 
     public function block($id)

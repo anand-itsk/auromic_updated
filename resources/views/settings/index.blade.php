@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="wrapper">
-        <div class="container-fluid">
+        <div class="container">
 
             <!-- Page-Title -->
             <div class="row">
@@ -14,59 +14,106 @@
                                 <li class="breadcrumb-item active">Settings</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Masters</h4>
-
+                        <h4 class="page-title">Setup</h4>
                     </div>
-                    <div class="row">
+                    <div class="row extra-small-font">
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                            <div class="card m-b-30">
+                            <div class="card m-b-30 h-100">
 
                                 <div class="card-body">
-                                    <h4 class="mt-0 header-title"> User Management</h4>
-                                    <a class="text-muted m-b-0 font-14" href="{{ route('users') }}">Users</a>
-                                    {{-- <br>
-                                    <a class="text-muted m-b-0 font-14" href="{{ route('roles') }}">Roles</a> --}}
-                                    <br>
-                                    <a class="text-muted m-b-0 font-14" href="{{ route('permissions') }}">Permissions</a>
+                                    <h4 class="mt-0 extra-medium-font"> User Management</h4>
+                                    <div class="link-list">
+                                        <a class="text-muted" href="{{ route('user-management.users') }}">Users</a>
+                                    </div>
+                                    <div class="link-list">
+                                        <a class="text-muted"
+                                            href="{{ route('user-management.permissions') }}">Permissions</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                            <div class="card m-b-30">
+                            <div class="card m-b-30 h-100">
 
                                 <div class="card-body">
-                                    <h4 class="mt-0 header-title">Common</h4>
-                                    <a class="text-muted m-b-0 font-14" href="{{route('countries')}}">Country</a>
-                                    <br>
-                                    <a class="text-muted m-b-0 font-14" href="{{route('states')}}">State</a> 
-                                    <br>
-                                    <a class="text-muted m-b-0 font-14" href="{{route('districts')}}">Districts</a>
-                                    <br>
-                                    <a class="text-muted m-b-0 font-14" href="{{route('religions')}}">Religion</a>
-                                    <br>
-                                    <a class="text-muted m-b-0 font-14" href="{{route('castes')}}">Caste</a>
-                                     <br>
-                                    <a class="text-muted m-b-0 font-14" href="{{route('nationalities')}}">Nationality</a>
+                                    <h4 class="mt-0 extra-medium-font">Common</h4>
+
+                                    <div class="link-list">
+                                        <a class="text-muted" href="{{ route('common.countries') }}">Country</a>
+                                    </div>
+                                    <div class="link-list">
+                                        <a class="text-muted" href="{{ route('common.states') }}">State</a>
+                                    </div>
+                                    <div class="link-list">
+                                        <a class="text-muted" href="{{ route('common.districts') }}">Districts</a>
+                                    </div>
+                                    <div class="link-list">
+                                        <a class="text-muted" href="{{ route('common.religions') }}">Religion</a>
+                                    </div>
+                                    <div class="link-list">
+                                        <a class="text-muted" href="{{ route('common.castes') }}">Caste</a>
+                                    </div>
+                                    <div class="link-list">
+                                        <a class="text-muted" href="{{ route('common.nationalities') }}">Nationality</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                            <div class="card m-b-30">
+                            <div class="card m-b-30 h-100">
 
                                 <div class="card-body">
-                                    <h4 class="mt-0 header-title">Specified</h4>
-                                    <a class="text-muted m-b-0 font-14" href="{{route('company_types')}}">Company Type for (companies)</a>
-                                    <br>
-                                    <a class="text-muted m-b-0 font-14" href="{{route('resigning_reasons')}}">Resigning Reason for (employee.personal)</a> 
-                                    <br>
-                                    <a class="text-muted m-b-0 font-14" href="{{route('local_offices')}}">Local Offices for (employee.finance)</a>
-                                    <br>
-                                    <a class="text-muted m-b-0 font-14" href="{{route('esi_dispensaries')}}">ESI Dispensary for (employee.finance)</a>
+                                    <h4 class="mt-0 extra-medium-font">Specified</h4>
+                                    <div class="link-list">
+                                        <a class="text-muted" href="{{ route('specified.company_types') }}">Company Type</a>
+                                    </div>
+                                    <div class="link-list">
+                                        <a class="text-muted"
+                                            href="{{ route('specified.resigning_reasons') }}">Resigning</a>
+                                    </div>
+                                    <div class="link-list">
+                                        <a class="text-muted" href="{{ route('specified.local_offices') }}">Local
+                                            Offices</a>
+                                    </div>
+                                    <div class="link-list">
+                                        <a class="text-muted" href="{{ route('specified.esi_dispensaries') }}">ESI
+                                            Dispensary</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="card m-b-30 h-100">
+
+                                <div class="card-body">
+                                    <h4 class="mt-0 extra-medium-font">Products/Models</h4>
+                                    <div class="link-list">
+                                        <a class="text-muted m-b-0" href="{{ route('raw_material_types') }}">Raw
+                                            Material Type</a>
+                                    </div>
+                                    <div class="link-list">
+                                        <a class="text-muted m-b-0" href="{{ route('raw_materials') }}">Raw
+                                            Material</a>
+                                    </div>
+                                    <div class="link-list">
+                                        <a class="text-muted m-b-0" href="{{ route('products') }}">Product</a>
+                                    </div>
+                                    <div class="link-list">
+                                        <a class="text-muted m-b-0" href="{{ route('product_sizes') }}">Product
+                                            Size</a>
+                                    </div>
+                                    <div class="link-list">
+                                        <a class="text-muted m-b-0" href="{{ route('product_colors') }}">Product
+                                            Color</a>
+                                    </div>
+                                    <div class="link-list">
+                                        <a class="text-muted m-b-0" href="{{ route('order_statuses') }}">Order
+                                            Status</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
                 </div>
             </div>
             <!-- end page title end breadcrumb -->

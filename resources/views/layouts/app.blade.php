@@ -22,7 +22,7 @@
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
 </head>
 
-<body>
+<body class="pb-0">
     <div id="app">
         @include('layouts.header')
 

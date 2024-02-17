@@ -39,7 +39,7 @@ class CompanyTypeController extends Controller
    
         $company_type->save();
 
-        return redirect()->route('company_types')->with('success', 'company type added successfully!');
+        return redirect()->route('specified.company_types')->with('success', 'company type added successfully!');
 
 
      }
@@ -65,7 +65,7 @@ class CompanyTypeController extends Controller
         $company_type->code = $request->input('code');
         $company_type->save();
     
-         return redirect()->route('company_types')->with('success', 'company type Updated successfully!');
+         return redirect()->route('specified.company_types')->with('success', 'company type Updated successfully!');
     }
         public function delete($id)
     {
@@ -73,7 +73,7 @@ class CompanyTypeController extends Controller
 
          $company_type->delete();
 
-          return redirect()->route('company_types')->with('success', 'company type Deleted successfully!');
+          return redirect()->route('specified.company_types')->with('success', 'company type Deleted successfully!');
 
     }
 }

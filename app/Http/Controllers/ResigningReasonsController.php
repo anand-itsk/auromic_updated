@@ -39,7 +39,7 @@ class ResigningReasonsController extends Controller
    
         $resigning_reason->save();
 
-        return redirect()->route('resigning_reasons')->with('success', 'Resigning Reason added successfully!');
+        return redirect()->route('specified.resigning_reasons')->with('success', 'Resigning Reason added successfully!');
 
 
      }
@@ -65,7 +65,7 @@ class ResigningReasonsController extends Controller
         $resigning_reason->code = $request->input('code');
         $resigning_reason->save();
     
-         return redirect()->route('resigning_reasons')->with('success', 'Resigning Reason Updated successfully!');
+         return redirect()->route('specified.resigning_reasons')->with('success', 'Resigning Reason Updated successfully!');
     }
         public function delete($id)
     {
@@ -73,7 +73,7 @@ class ResigningReasonsController extends Controller
 
          $resigning_reason->delete();
 
-          return redirect()->route('resigning_reasons')->with('success', 'Resigning Reason Deleted successfully!');
+          return redirect()->route('specified.resigning_reasons')->with('success', 'Resigning Reason Deleted successfully!');
 
     }
 }

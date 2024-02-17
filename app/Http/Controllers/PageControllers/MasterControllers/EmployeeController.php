@@ -490,16 +490,17 @@ class EmployeeController extends Controller
     public function getNominee(Request $request)
     {
         $employeeId = $request->employee_id; // Assuming you pass an employee ID
-        $employee = Employee::with('familyMember', 'nominee', 'nominee.familyMember')->find($employeeId);
+        // dd($employeeId);
+        $employee = Employee::with('familyMembers', 'nominee', 'nominee.familyMember')->find($employeeId);
 
         if (!$employee) {
-            return response()->json(['message' => 'Employee not found'], 404);
+            return response()->json(['message' => 'Nominees not found'], 404);
         }
 
-        return response()->json(
-            $employee->nominee,
-            $employee->familyMembers
-        );
+        return response()->json([
+            'nominee' => $employee->nominee,
+            'employee' => $employee->familyMembers
+        ]);
     }
 
     public function editNominee(Request $request, $id)
@@ -627,6 +628,8 @@ class EmployeeController extends Controller
         $esi_despensaries = EsiDispensary::all();
         $family_members = EmployeeFamilyMemberDetail::where('employee_id', $id)->get();
         $resigning_reason = ResigningReason::all();
+        $photoPath = $employee->photo ?? null;
+
 
         return view('pages.master.employee.edit', [
             'employee' => $employee,
@@ -641,7 +644,8 @@ class EmployeeController extends Controller
             'local_offices' => $local_offices,
             'esi_despensaries' => $esi_despensaries,
             'family_members' => $family_members,
-            'resigning_reason' => $resigning_reason
+            'resigning_reason' => $resigning_reason,
+            'photoPath' => $photoPath
         ]);
     }
     // Update
