@@ -37,9 +37,9 @@
                     data-toggle="collapse" aria-expanded="true">Common</a>
                 <ul class="collapse list-unstyled {{ request()->is('common*') ? 'show' : '' }}" id="submenu2"
                     data-parent="#sidebarMenu">
-                    <li class="nav-item"><a class="nav-link {{ request()->is('common/country') ? 'show' : '' }}"
+                    <li class="nav-item"><a class="nav-link {{ request()->is('common/country*') ? 'show' : '' }}"
                             href="{{ route('common.countries') }}">Countries</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('common/states') ? 'active' : '' }}"
+                    <li class="nav-item"><a class="nav-link {{ request()->is('common/states*') ? 'active' : '' }}"
                             href="{{ route('common.states') }}">States</a></li>
                     <!-- More sub-items here -->
                 </ul>

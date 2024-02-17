@@ -42,7 +42,7 @@ class CountryController extends Controller
    
         $country->save();
 
-        return redirect()->route('countries')->with('success', 'Country added successfully!');
+        return redirect()->route('common.countries')->with('success', 'Country added successfully!');
 
 
      }
@@ -68,7 +68,7 @@ class CountryController extends Controller
         $country->code = $request->input('code');
         $country->save();
     
-         return redirect()->route('countries')->with('success', 'Country Updated successfully!');
+         return redirect()->route('common.countries')->with('success', 'Country Updated successfully!');
     }
         public function delete($id)
     {
@@ -76,7 +76,7 @@ class CountryController extends Controller
 
          $country->delete();
 
-          return redirect()->route('countries')->with('success', 'Country Deleted successfully!');
+          return redirect()->route('common.countries')->with('success', 'Country Deleted successfully!');
 
     }
 }

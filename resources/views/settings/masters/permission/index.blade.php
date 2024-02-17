@@ -34,8 +34,8 @@
 
                                     </div>
                                     <div>
-                                        <a href="{{ route('permission.create') }}" class="icon-link common-color"
-                                            title="Create New User">
+                                        <a href="{{ route('user-management.permission.create') }}"
+                                            class="icon-link common-color" title="Create New User">
                                             <i class="fa fa-user-plus"></i>
                                         </a>
                                     </div>
@@ -64,8 +64,9 @@
                                                         </td>
                                                         <td>
                                                             {{-- @can('Role Edit') --}}
-                                                                <a href="{{ route('permission.edit', $item->id) }}" class="icon-link primary-color"><i
-                                                                        class="fa fa-edit"></i></a>
+                                                            <a href="{{ route('user-management.permission.edit', $item->id) }}"
+                                                                class="icon-link primary-color"><i
+                                                                    class="fa fa-edit"></i></a>
                                                             {{-- @endcan --}}
                                                             {{--  <a href="{{route('role.delete',$item->id)}}" type="button"  data-bs-toggle="modal" data-bs-target="#exampleVerticallycenteredModal"><i class="fa-solid fa-trash-can"></i></a>  --}}
 
