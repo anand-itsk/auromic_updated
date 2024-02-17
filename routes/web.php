@@ -92,11 +92,11 @@ Route::middleware(['auth'])->group(function () {
 
         // Country
         Route::get('/country', [CountryController::class, 'index'])->name('countries');
-        Route::get('/country-create', [CountryController::class, 'create'])->name('countries.create');
-        Route::post('/country-store', [CountryController::class, 'store'])->name('countries.store');
-        Route::get('/country-edit/{id}', [CountryController::class, 'edit'])->name('countries.edit');
-        Route::post('/country-update/{id}', [CountryController::class, 'update'])->name('countries.update');
-        Route::get('/country-delete/{id}', [CountryController::class, 'delete'])->name('countries.delete');
+        Route::get('/country/create', [CountryController::class, 'create'])->name('country.create');
+        Route::post('/country/store', [CountryController::class, 'store'])->name('country.store');
+        Route::get('/country/edit/{id}', [CountryController::class, 'edit'])->name('country.edit');
+        Route::post('/country/update/{id}', [CountryController::class, 'update'])->name('country.update');
+        Route::get('/country/delete/{id}', [CountryController::class, 'delete'])->name('country.delete');
 
         // state
         Route::get('/state', [StateController::class, 'index'])->name('states');

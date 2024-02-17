@@ -7,6 +7,7 @@
     @include('links.css.table.custom-css')
     <div class="wrapper">
         <div class="container-fluid">
+            {{-- Status --}}
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -31,21 +32,19 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card m-b-30 rightsetup">
-                                <div class="card-header">
+                                <div class="card-header pb-0 pt-0">
                                     <h5>Countries</h5>
                                 </div>
 
-                                <div class="card-body">
+                                <div class="card-body pt-0">
                                     <div class="row">
                                         <div class="col-md-12 rightsetup-details">
                                             <div class="d-flex justify-content-between p-2 bd-highlight">
                                                 <div>
-                                                    <button id="deleteButton" class="icon-button delete-color"
-                                                        title="Delete Selected Record"><i
-                                                            class="fa fa-user-times"></i></button>
+
                                                 </div>
                                                 <div>
-                                                    <a href="{{ route('common.countries.create') }}"
+                                                    <a href="{{ route('common.country.create') }}"
                                                         class="icon-link common-color" title="Create New Country">
                                                         <i class="fa fa-user-plus"></i>
                                                     </a>
@@ -71,7 +70,7 @@
                                                                 <td>{{ $item->code }} </td>
                                                                 <td>
 
-                                                                    <a href="{{ route('common.countries.edit', $item->id) }}"
+                                                                    <a href="{{ route('common.country.edit', $item->id) }}"
                                                                         class="icon-link primary-color"><i
                                                                             class="fa fa-edit"></i></a>
                                                                     <button class="icon-button delete-color"
@@ -107,7 +106,7 @@
     <script>
         function confirmDelete(id) {
             if (confirm("Are you sure you want to delete this country?")) {
-                window.location.href = "/country-delete/" + id;
+                window.location.href = "/country/delete/" + id;
             }
         }
     </script>
