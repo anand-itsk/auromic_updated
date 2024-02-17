@@ -39,7 +39,7 @@ class LocalOfficeController extends Controller
    
         $local_office->save();
 
-        return redirect()->route('local_offices')->with('success', 'Local Office added successfully!');
+        return redirect()->route('specified.local_offices')->with('success', 'Local Office added successfully!');
 
 
      }
@@ -65,7 +65,7 @@ class LocalOfficeController extends Controller
         $local_office->code = $request->input('code');
         $local_office->save();
     
-         return redirect()->route('local_offices')->with('success', 'Local Office Updated successfully!');
+         return redirect()->route('specified.local_offices')->with('success', 'Local Office Updated successfully!');
     }
         public function delete($id)
     {
@@ -73,7 +73,7 @@ class LocalOfficeController extends Controller
 
          $local_office->delete();
 
-          return redirect()->route('local_offices')->with('success', 'Local Office Deleted successfully!');
+          return redirect()->route('specified.local_offices')->with('success', 'Local Office Deleted successfully!');
 
     }
 }
