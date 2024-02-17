@@ -39,7 +39,7 @@ class EsiDispensaryController extends Controller
    
         $esi_dispensary->save();
 
-        return redirect()->route('esi_dispensaries')->with('success', 'ESI Dispensary added successfully!');
+        return redirect()->route('specified.esi_dispensaries')->with('success', 'ESI Dispensary added successfully!');
 
 
      }
@@ -65,7 +65,7 @@ class EsiDispensaryController extends Controller
         $esi_dispensary->code = $request->input('code');
         $esi_dispensary->save();
     
-         return redirect()->route('esi_dispensaries')->with('success', 'ESI Dispensary Updated successfully!');
+         return redirect()->route('specified.esi_dispensaries')->with('success', 'ESI Dispensary Updated successfully!');
     }
         public function delete($id)
     {
@@ -73,7 +73,7 @@ class EsiDispensaryController extends Controller
 
          $esi_dispensary->delete();
 
-          return redirect()->route('esi_dispensaries')->with('success', 'ESI Dispensary Deleted successfully!');
+          return redirect()->route('specified.esi_dispensaries')->with('success', 'ESI Dispensary Deleted successfully!');
 
     }
 }

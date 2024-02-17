@@ -42,7 +42,7 @@ class DistrictController extends Controller
    
         $district->save();
 
-        return redirect()->route('districts')->with('success', 'District added successfully!');
+        return redirect()->route('common.districts')->with('success', 'District added successfully!');
 
 
      }
@@ -70,7 +70,7 @@ class DistrictController extends Controller
         $district->code = $request->input('code');
         $district->save();
     
-         return redirect()->route('districts')->with('success', 'District Updated successfully!');
+         return redirect()->route('common.districts')->with('success', 'District Updated successfully!');
     }
         public function delete($id)
     {
@@ -78,7 +78,7 @@ class DistrictController extends Controller
 
          $district->delete();
 
-          return redirect()->route('districts')->with('success', 'District Deleted successfully!');
+          return redirect()->route('common.districts')->with('success', 'District Deleted successfully!');
 
     }
 }

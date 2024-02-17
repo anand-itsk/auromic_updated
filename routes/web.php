@@ -142,12 +142,12 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('specified')->name('specified.')->group(function () {
 
         //Company Type
-        Route::get('/company_type', [CompanytypeController::class, 'index'])->name('company_types');
-        Route::get('/company_type-create', [CompanytypeController::class, 'create'])->name('company_types.create');
-        Route::post('/company_type-store', [CompanytypeController::class, 'store'])->name('company_types.store');
-        Route::get('/company_type-edit/{id}', [CompanytypeController::class, 'edit'])->name('company_types.edit');
-        Route::post('/company_type-update/{id}', [CompanytypeController::class, 'update'])->name('company_types.update');
-        Route::get('/company_type-delete/{id}', [CompanytypeController::class, 'delete'])->name('company_types.delete');
+        Route::get('/company_types', [CompanytypeController::class, 'index'])->name('company_types');
+        Route::get('/company_type/create', [CompanytypeController::class, 'create'])->name('company_types.create');
+        Route::post('/company_type/store', [CompanytypeController::class, 'store'])->name('company_types.store');
+        Route::get('/company_type/edit/{id}', [CompanytypeController::class, 'edit'])->name('company_types.edit');
+        Route::post('/company_type/update/{id}', [CompanytypeController::class, 'update'])->name('company_types.update');
+        Route::get('/company_type/delete/{id}', [CompanytypeController::class, 'delete'])->name('company_types.delete');
         //Resigning Reason
         Route::get('/resigning_reason', [ResigningReasonsController::class, 'index'])->name('resigning_reasons');
         Route::get('/resigning_reason-create', [ResigningReasonsController::class, 'create'])->name('resigning_reasons.create');

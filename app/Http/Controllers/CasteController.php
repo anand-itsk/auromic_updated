@@ -39,7 +39,7 @@ class CasteController extends Controller
    
         $caste->save();
 
-        return redirect()->route('castes')->with('success', 'Caste added successfully!');
+        return redirect()->route('common.castes')->with('success', 'Caste added successfully!');
 
 
      }
@@ -65,7 +65,7 @@ class CasteController extends Controller
         $caste->code = $request->input('code');
         $caste->save();
     
-         return redirect()->route('castes')->with('success', 'Caste Updated successfully!');
+         return redirect()->route('common.castes')->with('success', 'Caste Updated successfully!');
     }
         public function delete($id)
     {
@@ -73,7 +73,7 @@ class CasteController extends Controller
 
          $caste->delete();
 
-          return redirect()->route('castes')->with('success', 'Caste Deleted successfully!');
+          return redirect()->route('common.castes')->with('success', 'Caste Deleted successfully!');
 
     }
 }
