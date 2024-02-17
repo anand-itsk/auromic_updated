@@ -60,6 +60,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/my-profile', [MyProfileController::class, 'index'])->name('my-profile');
     Route::get('/my-profile/edit', [MyProfileController::class, 'edit'])->name('my-profile.edit');
+    Route::post('/my-profile/update', [MyProfileController::class, 'update'])->name('my-profile.update');
 
     Route::get('/master-setting', [MasterSetting::class, 'setting'])->name('master.settings');
 

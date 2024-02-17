@@ -35,9 +35,9 @@ public function productSize()
     return $this->belongsTo(ProductSize::class, 'product_size_id');
 }
 
-     public function orderDetail()
+    public function orderDetail()
     {
-        return $this->hasMany(OrderDetail::class, 'product_id');
+        return $this->hasMany(Product::class, 'product_id');
     }
 
  
