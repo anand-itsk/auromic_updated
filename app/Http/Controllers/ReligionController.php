@@ -39,7 +39,7 @@ class ReligionController extends Controller
    
         $religion->save();
 
-        return redirect()->route('religions')->with('success', 'Religion added successfully!');
+        return redirect()->route('common.religions')->with('success', 'Religion added successfully!');
 
 
      }
@@ -65,7 +65,7 @@ class ReligionController extends Controller
         $religion->code = $request->input('code');
         $religion->save();
     
-         return redirect()->route('religions')->with('success', 'Religion Updated successfully!');
+         return redirect()->route('common.religions')->with('success', 'Religion Updated successfully!');
     }
         public function delete($id)
     {
@@ -73,7 +73,7 @@ class ReligionController extends Controller
 
          $religion->delete();
 
-          return redirect()->route('religions')->with('success', 'Religion Deleted successfully!');
+          return redirect()->route('common.religions')->with('success', 'Religion Deleted successfully!');
 
     }
 }

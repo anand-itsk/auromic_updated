@@ -8,27 +8,27 @@
         <div class="container-fluid">
             <!-- Page-Title -->
             <div class="row">
-                <div class="col-sm-12">
-                    <div class="page-title-box">
-                        <div class="btn-group float-right">
-                            <ol class="breadcrumb hide-phone p-0 m-0">
-                                <li class="breadcrumb-item"><a href="#">Aurmics</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('esi_dispensaries') }}">ESI Dispensary</a></li>
-                                <li class="breadcrumb-item">Create</li>
-                            </ol>
+                <div class="col-xl-2">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card p-2 leftsetup">
+                                <h4 class="page-title">Setup</h4>
+                                <input type="text" placeholder="search" class="form-control">
+                                @include('settings.setup_nav')
+                            </div>
                         </div>
-                        <h4 class="page-title">Edit ESI Dispensary</h4>
                     </div>
                 </div>
-            </div>
-            <!-- end page title end breadcrumb -->
-
-           <div class="row">
-                <div class="col-12">
-                    <div class="card m-b-30">
-                        <div class="card-body">
+                <div class="col-xl-10">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card m-b-30">
+                                <div class="card-header pb-0 pt-0 bg-white">
+                                    <h5>Edit ESI Dispensary</h5>
+                                </div>
+                                <div class="card-body">
                             <div class="m-b-30">
-                                <form action="{{ route('esi_dispensaries.update', $esi_dispensary->id) }}" method="POST">
+                                <form action="{{ route('specified.esi_dispensaries.update', $esi_dispensary->id) }}" method="POST">
                                     @csrf
                                     <div class="form-group row">
                                         <div class="col-md-6">   
@@ -59,7 +59,7 @@
                                                 Update
                                             </button>
                                 
-                                            <a href="{{ route('esi_dispensaries') }}"
+                                            <a href="{{ route('specified.esi_dispensaries') }}"
                                                 class="btn btn-secondary waves-effect m-l-5">
                                                 Cancel
                                             </a>

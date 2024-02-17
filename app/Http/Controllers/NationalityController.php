@@ -39,7 +39,7 @@ class NationalityController extends Controller
    
         $nationality->save();
 
-        return redirect()->route('nationalities')->with('success', 'Nationality added successfully!');
+        return redirect()->route('common.nationalities')->with('success', 'Nationality added successfully!');
 
 
      }
@@ -65,7 +65,7 @@ class NationalityController extends Controller
         $nationality->code = $request->input('code');
         $nationality->save();
     
-         return redirect()->route('nationalities')->with('success', 'Nationality Updated successfully!');
+         return redirect()->route('common.nationalities')->with('success', 'Nationality Updated successfully!');
     }
         public function delete($id)
     {
@@ -73,7 +73,7 @@ class NationalityController extends Controller
 
          $nationality->delete();
 
-          return redirect()->route('nationalities')->with('success', 'Nationality Deleted successfully!');
+          return redirect()->route('common.nationalities')->with('success', 'Nationality Deleted successfully!');
 
     }
 }

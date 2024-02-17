@@ -39,7 +39,7 @@ class PermissionController extends Controller
          $role->syncPermissions($permissions);
 
         if ($role) {
-            return redirect()->route('permissions')
+            return redirect()->route('user-management.permissions')
                 ->with('success', 'Role & Permission created successfully');
         }
         return back()->with('failure', 'Please try again');
@@ -73,7 +73,7 @@ class PermissionController extends Controller
         $permissions = Permission::whereIn('id', $permissionIds)->pluck('name');
         $role->syncPermissions($permissions);
 
-        return redirect()->route('permissions')
+        return redirect()->route('user-management.permissions')
             ->with('success', 'Role & Permission updated successfully');
     }
 

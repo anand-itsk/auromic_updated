@@ -49,18 +49,20 @@
                                 <div class="d-flex">
                                     <div class="p-2">
                                         @if (!empty($user->profile_image))
-                                        <img src="{{ asset('/storage/' . $user->profile_image) }}" alt="Profile Image" style="width: 200px; height: 200px;">
+                                        <img src="{{ asset('/storage/' . $user->profile_image) }}" alt="Profile Image" style="width: 80px; height: 80px;">
                                         @else
                                         <img class="profile-image rounded-circle" src="{{ asset('assets/images/no-profile.png') }}" alt="No Profile Image">
                                         @endif
                                     </div>
                                     <div class="p-2 mt-1">
                                         <h4 class="card-title m-0">{{ $user->name }}</h4>
-                                        <h5 class="m-0">Admin</h5>
-                                        <!-- <h5 class="m-0">{{ $user->role }}</h5> -->
-                                        <p class="card-text mt-3">Some quick example text to build on the card title and
-                                            make
-                                            up the bulk of the card's content.</p>
+                                        <!-- <h5 class="m-0">Admin</h5> -->
+                                        @foreach($user->roles as $role)
+                                        <h5 class="m-0">{{ $role->name }}</h5>
+                                        @endforeach
+                                        <p class="card-text mt-3">
+                                            {{ $user->remark}}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
