@@ -57,10 +57,11 @@
                                  <h4 class="card-title m-0">
                                     <input type="text" class="form-control" placeholder="Name" name="name" value="{{ $user->name }}">
                                  </h4>
-                                 <h5 class="m-0">Admin</h5>
-                                 <p class="card-text mt-3">Some quick example text to build on the card title and
-                                    make
-                                    up the bulk of the card's content.
+                                 <!-- @foreach($user->roles as $role)
+                                 <h5 class="m-0">{{ $role->name }}</h5>
+                                 @endforeach -->
+                                 <p class="card-text mt-3">
+                                    <input type="text" class="form-control" name="remark" id="" value="{{ $user->remark }}">
                                  </p>
                               </div>
                            </div>

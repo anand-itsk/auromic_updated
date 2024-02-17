@@ -13,7 +13,7 @@ class MyProfileController extends Controller
     public function index()
     {
         // dd("test");
-       $user = Auth::user()->load('country');
+       $user = Auth::user()->load('country','roles');
 
 
         return view('my_profile.index', ['user' => $user]);
@@ -36,12 +36,14 @@ class MyProfileController extends Controller
           $request->validate([
             'name' => 'required',
             'email' => 'required',
+            'remark' => 'required',
             'country_id' => 'required',
             
         ]);
     
         $profile = Auth::user();
         $profile->name = $request->input('name');
+        $profile->remark = $request->input('remark');
         $profile->email = $request->input('email');
         $profile->country_id = $request->input('country_id');
         // dd($profile);
