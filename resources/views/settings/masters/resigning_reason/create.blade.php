@@ -30,18 +30,18 @@
                             <div class="m-b-30">
                                 <form action="{{ route('specified.resigning_reasons.store') }}" method="POST">
                                     @csrf
-                                    <div class="form-group row">
-                                        <div class="col-md-6">   
-                                       <div class="mb-3">
+                                 <div class="form-group row justify-content-center">
+                                                <div class="col-md-6">
+                                                    <div class="col-md-12">
+                                                        <div class="mb-3">
                                           <label for="firstNameinput" class="form-label">Name</label>
                                             <input class="form-control" type="text" name="name" id="name">
                                             @error('name')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-</div>
-                                     <div class="col-md-6">   
-                                       <div class="mb-3">
+</div>   <div class="col-md-12">
+                                                        <div class="mb-3">
                                           <label for="firstNameinput" class="form-label">Code</label>
                                         
                                             <input class="form-control" type="text" name="code" id="code">
