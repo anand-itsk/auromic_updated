@@ -29,9 +29,10 @@
                                 <div class="card-body">
                                 <form action="{{ route('common.states.update', $state->id) }}" method="POST">
                                     @csrf
-                                    <div class="form-group row">
-                                         <div class="col-md-6">   
-                                       <div class="mb-3">
+                                 <div class="form-group row justify-content-center">
+                                                <div class="col-md-6">
+                                                    <div class="col-md-12">
+                                                        <div class="mb-3">
                                           <label for="firstNameinput" class="form-label">Country</label>
                                            <select class="form-control" name="country_id">
                                                 <option value="">Select Country</option>
@@ -46,8 +47,8 @@
                                             @enderror
                                         </div>
 </div>
-                                        <div class="col-md-6">   
-                                       <div class="mb-3">
+                                         <div class="col-md-12">
+                                                        <div class="mb-3">
                                           <label for="firstNameinput" class="form-label">Name</label>
                                             <input class="form-control" type="text" name="name" id="name" value="{{ $state->name }}">
                                             @error('name')
@@ -55,8 +56,8 @@
                                             @enderror
                                         </div>
 </div>
-                                     <div class="col-md-6">   
-                                       <div class="mb-3">
+                                     <div class="col-md-12">
+                                                        <div class="mb-3">
                                           <label for="firstNameinput" class="form-label">Code</label>
                                         
                                             <input class="form-control" type="text" name="code" id="code" value="{{ $state->code}}">

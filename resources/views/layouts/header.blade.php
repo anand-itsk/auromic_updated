@@ -231,45 +231,26 @@
                     </li>
 
                     {{-- Master --}}
-                    <li class="has-submenu">
+                       <li class="has-submenu">
                         <a href="#"><i class="dripicons-briefcase"></i>Master</a>
-                        <ul class="submenu megamenu">
+                        <ul class="submenu">
                             <li>
-                                <ul>
-                                    <li><a href="{{ route('master.customers.index') }}">Customers</a></li>
-                                    {{-- <li><a href="ui-badge.html">Raw Material</a></li>
-                                    <li><a href="ui-dropdowns.html">Size</a></li>
-                                    <li><a href="ui-tabs-accordions.html">Colour</a></li>
-                                    <li><a href="ui-progressbars.html">Finishing Product</a></li> --}}
-                                </ul>
+                                <a href="{{ route('master.customers.index') }}">Customers</a>
+                            </li>
+                             <li>
+                                <a href="{{ route('master.employees.index') }}">Employees</a>
+                            </li>
+                             <li>
+                                <a href="{{ route('master.product_model.index') }}">Product Model</a>
                             </li>
                             <li>
-                                <ul>
-                                    <li><a href="{{ route('master.employees.index') }}">Employees</a></li>
-                                    {{-- <li><a href="ui-cards.html">Product Model</a></li>
-                                    <li><a href="ui-modals.html">Product</a></li>
-                                    <li><a href="ui-progressbars.html">Finishing Product</a></li>
-                                    <li><a href="ui-navs.html">Incentive </a></li> --}}
-                                </ul>
+                                <a href="{{ route('master.order_detail.index') }}">Order Details</a>
                             </li>
-                            <li>
-                                <ul>
-                                    <li><a href="{{ route('master.product_model.index') }}">Product Model</a></li>
-                                    {{-- <li><a href="ui-cards.html">Product Model</a></li>
-                                    <li><a href="ui-modals.html">Product</a></li>
-                                    <li><a href="ui-progressbars.html">Finishing Product</a></li>
-                                    <li><a href="ui-navs.html">Incentive </a></li> --}}
-                                </ul>
-                            </li>
-                            <li>
-                                <ul>
-                                    <li><a href="{{ route('master.order_detail.index') }}">Order Details</a></li>
-                                    {{-- <li><a href="ui-cards.html">Product Model</a></li>
-                                    <li><a href="ui-modals.html">Product</a></li>
-                                    <li><a href="ui-progressbars.html">Finishing Product</a></li>
-                                    <li><a href="ui-navs.html">Incentive </a></li> --}}
-                                </ul>
-                            </li>
+                           <li>
+                            <a href="{{ route('master.incentives.index') }}">Incentive</a>
+                        </li>
+
+
                         </ul>
                     </li>
                 </ul>
