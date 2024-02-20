@@ -96,7 +96,7 @@
             </div>
         </div>
     </div>
-    <!-- DataTables JS -->
+    <!-- DataTables JS dd -->
     @include('links.js.datatable.datatable-js')
 
 
