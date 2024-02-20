@@ -42,7 +42,7 @@ class StateController extends Controller
    
         $state->save();
 
-        return redirect()->route('states')->with('success', 'State added successfully!');
+        return redirect()->route('common.states')->with('success', 'State added successfully!');
 
 
      }
@@ -70,7 +70,7 @@ class StateController extends Controller
         $state->code = $request->input('code');
         $state->save();
     
-         return redirect()->route('states')->with('success', 'State Updated successfully!');
+         return redirect()->route('common.states')->with('success', 'State Updated successfully!');
     }
         public function delete($id)
     {
@@ -78,7 +78,7 @@ class StateController extends Controller
 
          $state->delete();
 
-          return redirect()->route('states')->with('success', 'State Deleted successfully!');
+          return redirect()->route('common.states')->with('success', 'State Deleted successfully!');
 
     }
 }

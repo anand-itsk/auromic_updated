@@ -9,6 +9,7 @@ use App\Http\Controllers\PageControllers\MasterControllers\CustomerController;
 use App\Http\Controllers\PageControllers\MasterControllers\EmployeeController;
 use App\Http\Controllers\PageControllers\MasterControllers\ProductModelController;
 use App\Http\Controllers\PageControllers\MasterControllers\OrderDetailController;
+use App\Http\Controllers\PageControllers\MasterControllers\IncentiveController;
 use App\Http\Controllers\PageControllers\SubClientCompanyController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -142,12 +143,12 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('specified')->name('specified.')->group(function () {
 
         //Company Type
-        Route::get('/company_type', [CompanytypeController::class, 'index'])->name('company_types');
-        Route::get('/company_type-create', [CompanytypeController::class, 'create'])->name('company_types.create');
-        Route::post('/company_type-store', [CompanytypeController::class, 'store'])->name('company_types.store');
-        Route::get('/company_type-edit/{id}', [CompanytypeController::class, 'edit'])->name('company_types.edit');
-        Route::post('/company_type-update/{id}', [CompanytypeController::class, 'update'])->name('company_types.update');
-        Route::get('/company_type-delete/{id}', [CompanytypeController::class, 'delete'])->name('company_types.delete');
+        Route::get('/company_types', [CompanytypeController::class, 'index'])->name('company_types');
+        Route::get('/company_type/create', [CompanytypeController::class, 'create'])->name('company_types.create');
+        Route::post('/company_type/store', [CompanytypeController::class, 'store'])->name('company_types.store');
+        Route::get('/company_type/edit/{id}', [CompanytypeController::class, 'edit'])->name('company_types.edit');
+        Route::post('/company_type/update/{id}', [CompanytypeController::class, 'update'])->name('company_types.update');
+        Route::get('/company_type/delete/{id}', [CompanytypeController::class, 'delete'])->name('company_types.delete');
         //Resigning Reason
         Route::get('/resigning_reason', [ResigningReasonsController::class, 'index'])->name('resigning_reasons');
         Route::get('/resigning_reason-create', [ResigningReasonsController::class, 'create'])->name('resigning_reasons.create');
@@ -320,6 +321,24 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete/selected', [ProductModelController::class, 'deleteSelected']);
             Route::post('/import', [ProductModelController::class, 'import'])->name('import');
             Route::get('/export', [ProductModelController::class, 'export']);
+        });
+
+          Route::prefix('/incentives')->name('incentives.')->group(function () {
+
+            Route::get('/', [IncentiveController::class, 'index'])->name('index');
+            Route::get('/data', [IncentiveController::class, 'indexData'])->name('data');
+
+            Route::get('/create', [IncentiveController::class, 'create'])->name('create');
+Route::get('/get-models/{product_id}', [IncentiveController::class, 'getModels'])->name('get.models');
+
+            Route::post('/store', [IncentiveController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [IncentiveController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [IncentiveController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}',  [IncentiveController::class, 'destroy'])->name('delete');
+            Route::get('/show/{id}', [IncentiveController::class, 'showDetails']);
+            Route::post('/delete/selected', [IncentiveController::class, 'deleteSelected']);
+            Route::post('/import', [IncentiveController::class, 'import'])->name('import');
+            Route::get('/export', [IncentiveController::class, 'export']);
         });
 
         Route::prefix('/order_detail')->name('order_detail.')->group(function () {
