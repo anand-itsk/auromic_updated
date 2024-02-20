@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="card-body">
                             <div class="m-b-30">
-                                <form action="{{ route('order_statuses.update', $order_status->id) }}" method="POST">
+                                <form action="{{ route('product-models.order_statuses.update', $order_status->id) }}" method="POST">
                                     @csrf
                                 <div class="form-group row justify-content-center">
                                                 <div class="col-md-6">
@@ -60,7 +60,7 @@
                                                 Update
                                             </button>
                                 
-                                            <a href="{{ route('order_statuses') }}"
+                                            <a href="{{ route('product-models.order_statuses') }}"
                                                 class="btn btn-secondary waves-effect m-l-5">
                                                 Cancel
                                             </a>

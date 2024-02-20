@@ -103,7 +103,7 @@
 
     <script>
         function confirmDelete(id) {
-            if (confirm("Are you sure you want to delete this country?")) {
+            if (confirm("Are you sure you want to delete this state?")) {
                 window.location.href = "/common/state-delete/" + id;
             }
         }

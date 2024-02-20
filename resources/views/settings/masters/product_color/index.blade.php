@@ -44,7 +44,7 @@
 
                                                 </div>
                                                 <div>
-                                                    <a href="{{ route('product_colors.create') }}"
+                                                    <a href="{{ route('product-models.product_colors.create') }}"
                                                         class="icon-link common-color" title="Create New Country">
                                                         <i class="fa fa-user-plus"></i>
                                                     </a>
@@ -70,7 +70,7 @@
                                                         <td>{{ $item->code}} </td>
                                                         <td>
                                                             
-                                                                <a href="{{ route('product_colors.edit', $item->id) }}" class="icon-link primary-color"><i
+                                                                <a href="{{ route('product-models.product_colors.edit', $item->id) }}" class="icon-link primary-color"><i
                                                                         class="fa fa-edit"></i></a>
                                                                 <button class="icon-button delete-color" onclick="confirmDelete({{ $item->id }})"><i class="fa fa-trash"></i></button>
 
@@ -102,8 +102,8 @@
 
     <script>
         function confirmDelete(id) {
-            if (confirm("Are you sure you want to delete this country?")) {
-               window.location.href = "/product_color-delete/" + id;
+            if (confirm("Are you sure you want to delete this product color?")) {
+               window.location.href = "/product-models/product_color-delete/" + id;
             }
         }
     </script>
