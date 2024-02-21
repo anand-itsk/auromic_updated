@@ -102,7 +102,7 @@
 
     <script>
         function confirmDelete(id) {
-            if (confirm("Are you sure you want to delete this country?")) {
+            if (confirm("Are you sure you want to delete this resigning reason?")) {
                  window.location.href = "/specified/resigning_reason-delete/" + id;
             }
         }

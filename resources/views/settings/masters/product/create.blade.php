@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="card-body">
                             <div class="m-b-30">
-                                <form action="{{ route('products.store') }}" method="POST">
+                                <form action="{{ route('product-models.products.store') }}" method="POST">
                                     @csrf
                                    <div class="form-group row justify-content-center">
                                                 <div class="col-md-6">
@@ -60,7 +60,7 @@
                                                 Submit
                                             </button>
                                 
-                                            <a href="{{ route('products') }}"
+                                            <a href="{{ route('product-models.products') }}"
                                                 class="btn btn-secondary waves-effect m-l-5">
                                                 Cancel
                                             </a>

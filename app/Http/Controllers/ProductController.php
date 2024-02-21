@@ -40,7 +40,7 @@ class ProductController extends Controller
    
         $product->save();
 
-        return redirect()->route('products')->with('success', 'Product added successfully!');
+        return redirect()->route('product-models.products')->with('success', 'Product added successfully!');
 
 
      }
@@ -66,7 +66,7 @@ class ProductController extends Controller
         $product->code = $request->input('code');
         $product->save();
     
-         return redirect()->route('products')->with('success', 'Product Updated successfully!');
+         return redirect()->route('product-models.products')->with('success', 'Product Updated successfully!');
     }
         public function delete($id)
     {
@@ -74,7 +74,7 @@ class ProductController extends Controller
 
          $product->delete();
 
-          return redirect()->route('products')->with('success', 'Product Deleted successfully!');
+          return redirect()->route('product-models.products')->with('success', 'Product Deleted successfully!');
 
     }
 }

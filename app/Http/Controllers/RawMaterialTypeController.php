@@ -40,7 +40,7 @@ class RawMaterialTypeController extends Controller
    
         $raw_material_type->save();
 
-        return redirect()->route('raw_material_types')->with('success', 'Raw Material Type added successfully!');
+        return redirect()->route('product-models.raw_material_types')->with('success', 'Raw Material Type added successfully!');
 
 
      }
@@ -66,7 +66,7 @@ class RawMaterialTypeController extends Controller
         $raw_material_type->code = $request->input('code');
         $raw_material_type->save();
     
-         return redirect()->route('raw_material_types')->with('success', 'Raw Material Type Updated successfully!');
+         return redirect()->route('product-models.raw_material_types')->with('success', 'Raw Material Type Updated successfully!');
     }
         public function delete($id)
     {
@@ -74,7 +74,7 @@ class RawMaterialTypeController extends Controller
 
          $raw_material_type->delete();
 
-          return redirect()->route('raw_material_types')->with('success', 'Raw Material Type Deleted successfully!');
+          return redirect()->route('product-models.raw_material_types')->with('success', 'Raw Material Type Deleted successfully!');
 
     }
 }

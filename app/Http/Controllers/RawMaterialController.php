@@ -42,7 +42,7 @@ class RawMaterialController extends Controller
    
         $raw_material->save();
 
-        return redirect()->route('raw_materials')->with('success', 'Raw Material added successfully!');
+        return redirect()->route('product-models.raw_materials')->with('success', 'Raw Material added successfully!');
 
 
      }
@@ -70,7 +70,7 @@ class RawMaterialController extends Controller
         $raw_material->stock = $request->input('stock');
         $raw_material->save();
     
-         return redirect()->route('raw_materials')->with('success', 'Raw Material Updated successfully!');
+         return redirect()->route('product-models.raw_materials')->with('success', 'Raw Material Updated successfully!');
     }
         public function delete($id)
     {
@@ -78,7 +78,7 @@ class RawMaterialController extends Controller
 
          $raw_material->delete();
 
-          return redirect()->route('raw_materials')->with('success', 'Raw Material Deleted successfully!');
+          return redirect()->route('product-models.raw_materials')->with('success', 'Raw Material Deleted successfully!');
 
     }
 }
