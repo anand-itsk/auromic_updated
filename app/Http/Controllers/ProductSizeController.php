@@ -40,7 +40,7 @@ class ProductSizeController extends Controller
    
         $product_size->save();
 
-        return redirect()->route('product_sizes')->with('success', 'Product Size added successfully!');
+        return redirect()->route('product-models.product_sizes')->with('success', 'Product Size added successfully!');
 
 
      }
@@ -66,7 +66,7 @@ class ProductSizeController extends Controller
         $product_size->code = $request->input('code');
         $product_size->save();
     
-         return redirect()->route('product_sizes')->with('success', 'Product Size Updated successfully!');
+         return redirect()->route('product-models.product_sizes')->with('success', 'Product Size Updated successfully!');
     }
         public function delete($id)
     {
@@ -74,7 +74,7 @@ class ProductSizeController extends Controller
 
          $product_size->delete();
 
-          return redirect()->route('product_sizes')->with('success', 'Product Size Deleted successfully!');
+          return redirect()->route('product-models.product_sizes')->with('success', 'Product Size Deleted successfully!');
 
     }
 }

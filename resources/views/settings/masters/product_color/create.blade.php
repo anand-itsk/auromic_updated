@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="card-body">
                             <div class="m-b-30">
-                                <form action="{{ route('product_colors.store') }}" method="POST">
+                                <form action="{{ route('product-models.product_colors.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group row justify-content-center">
                                                 <div class="col-md-6">

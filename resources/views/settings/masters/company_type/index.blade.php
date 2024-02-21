@@ -96,13 +96,13 @@
             </div>
         </div>
     </div>
-    <!-- DataTables JS -->
+    <!-- DataTables JS dd -->
     @include('links.js.datatable.datatable-js')
 
 
     <script>
         function confirmDelete(id) {
-            if (confirm("Are you sure you want to delete this country?")) {
+            if (confirm("Are you sure you want to delete this company type?")) {
                  window.location.href = "/specified/company_type-delete/" + id;
             }
         }

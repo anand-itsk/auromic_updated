@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="card-body">
                             <div class="m-b-30">
-                                <form action="{{ route('product_sizes.update', $product_size->id) }}" method="POST">
+                                <form action="{{ route('product-models.product_sizes.update', $product_size->id) }}" method="POST">
                                     @csrf
                                  <div class="form-group row justify-content-center">
                                                 <div class="col-md-6">
@@ -40,7 +40,7 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-</div>
+                        </div>
                                   <div class="col-md-12">
                                                         <div class="mb-3">
                                           <label for="firstNameinput" class="form-label">Code</label>
@@ -60,7 +60,7 @@
                                                 Update
                                             </button>
                                 
-                                            <a href="{{ route('product_sizes') }}"
+                                            <a href="{{ route('product-models.product_sizes') }}"
                                                 class="btn btn-secondary waves-effect m-l-5">
                                                 Cancel
                                             </a>

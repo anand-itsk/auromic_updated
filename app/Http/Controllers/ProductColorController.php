@@ -41,7 +41,7 @@ class ProductColorController extends Controller
    
         $product_color->save();
 
-        return redirect()->route('product_colors')->with('success', 'Product Color added successfully!');
+        return redirect()->route('product-models.product_colors')->with('success', 'Product Color added successfully!');
 
 
      }
@@ -67,7 +67,7 @@ class ProductColorController extends Controller
         $product_color->code = $request->input('code');
         $product_color->save();
     
-         return redirect()->route('product_colors')->with('success', 'Product Color Updated successfully!');
+         return redirect()->route('product-models.product_colors')->with('success', 'Product Color Updated successfully!');
     }
         public function delete($id)
     {
@@ -75,7 +75,7 @@ class ProductColorController extends Controller
 
          $product_color->delete();
 
-          return redirect()->route('product_colors')->with('success', 'Product Color Deleted successfully!');
+          return redirect()->route('product-models.product_colors')->with('success', 'Product Color Deleted successfully!');
 
     }
 }
