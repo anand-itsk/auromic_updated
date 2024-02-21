@@ -40,7 +40,7 @@ class OrderStatusController extends Controller
    
         $order_status->save();
 
-        return redirect()->route('order_statuses')->with('success', 'Order Status added successfully!');
+        return redirect()->route('product-models.order_statuses')->with('success', 'Order Status added successfully!');
 
 
      }
@@ -66,7 +66,7 @@ class OrderStatusController extends Controller
         $order_status->code = $request->input('code');
         $order_status->save();
     
-         return redirect()->route('order_statuses')->with('success', 'Order Status Updated successfully!');
+         return redirect()->route('product-models.order_statuses')->with('success', 'Order Status Updated successfully!');
     }
         public function delete($id)
     {
@@ -74,7 +74,7 @@ class OrderStatusController extends Controller
 
          $order_status->delete();
 
-          return redirect()->route('order_statuses')->with('success', 'Order Status Deleted successfully!');
+          return redirect()->route('product-models.order_statuses')->with('success', 'Order Status Deleted successfully!');
 
     }
 }
