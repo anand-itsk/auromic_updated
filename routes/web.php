@@ -194,7 +194,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/raw_materials/delete/{id}', [RawMaterialController::class, 'delete'])->name('raw_materials.delete');
 
         //Product
-        Route::get('/product', [ProductController::class, 'index'])->name('products');
+        Route::get('/products', [ProductController::class, 'index'])->name('products');
         Route::get('/product-create', [ProductController::class, 'create'])->name('products.create');
         Route::post('/product-store', [ProductController::class, 'store'])->name('products.store');
         Route::get('/product-edit/{id}', [ProductController::class, 'edit'])->name('products.edit');
@@ -209,12 +209,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/size/delete/{id}', [ProductSizeController::class, 'delete'])->name('product_sizes.delete');
 
         //Product Color
-        Route::get('/color', [ProductColorController::class, 'index'])->name('product_colors');
-        Route::get('/product_color-create', [ProductColorController::class, 'create'])->name('product_colors.create');
-        Route::post('/product_color-store', [ProductColorController::class, 'store'])->name('product_colors.store');
-        Route::get('/color/edit/{id}', [ProductColorController::class, 'edit'])->name('product_colors.edit');
-        Route::post('/color/update/{id}', [ProductColorController::class, 'update'])->name('product_colors.update');
-        Route::get('/color/delete/{id}', [ProductColorController::class, 'delete'])->name('product_colors.delete');
+        Route::get('/product_color', [ProductColorController::class, 'index'])->name('product_colors');
+        Route::get('/product_color/create', [ProductColorController::class, 'create'])->name('product_colors.create');
+        Route::post('/product_color/store', [ProductColorController::class, 'store'])->name('product_colors.store');
+        Route::get('/product_color/edit/{id}', [ProductColorController::class, 'edit'])->name('product_colors.edit');
+        Route::post('/product_color/update/{id}', [ProductColorController::class, 'update'])->name('product_colors.update');
+        Route::get('/product_color/delete/{id}', [ProductColorController::class, 'delete'])->name('product_colors.delete');
 
         //Order Status
         Route::get('/order_status', [OrderStatusController::class, 'index'])->name('order_statuses');

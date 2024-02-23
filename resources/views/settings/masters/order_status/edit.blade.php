@@ -27,55 +27,62 @@
                                     <h5>Edit Order Status</h5>
                                 </div>
                                 <div class="card-body">
-                            <div class="m-b-30">
-                                <form action="{{ route('product-models.order_statuses.update', $order_status->id) }}" method="POST">
-                                    @csrf
-                                <div class="form-group row justify-content-center">
+                                    <div class="m-b-30">
+                                        <form
+                                            action="{{ route('product-models.order_statuses.update', $order_status->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            <div class="form-group row justify-content-center">
                                                 <div class="col-md-6">
                                                     <div class="col-md-12">
                                                         <div class="mb-3">
-                                          <label for="firstNameinput" class="form-label">Name</label>
-                                            <input class="form-control" type="text" name="name" id="name" value="{{ $order_status->name }}">
-                                            @error('name')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-</div>
-                                      <div class="col-md-12">
+                                                            <label for="name" class="form-label mandatory">Name</label>
+                                                            <input class="form-control" type="text" name="name"
+                                                                id="name" value="{{ $order_status->name }}">
+                                                            @error('name')
+                                                                <span class="error"
+                                                                    style="color: red;">{{ $message }}</span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
                                                         <div class="mb-3">
-                                          <label for="firstNameinput" class="form-label">Code</label>
-                                        
-                                            <input class="form-control" type="text" name="code" id="code" value="{{ $order_status->code}}">
-                                            @error('code')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                                            <label for="code" class="form-label">Code</label>
 
+                                                            <input class="form-control" type="text" name="code"
+                                                                id="code" value="{{ $order_status->code }}">
+                                                            @error('code')
+                                                                <span class="error"
+                                                                    style="color: red;">{{ $message }}</span>
+                                                            @enderror
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <div class="d-flex justify-content-evenly">
+                                                            <button type="submit"
+                                                                class="btn btn-primary waves-effect waves-light">
+                                                                Update
+                                                            </button>
+
+                                                            <a href="{{ route('product-models.order_statuses') }}"
+                                                                class="btn btn-secondary waves-effect m-l-5">
+                                                                Cancel
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                        </form>
                                     </div>
-                                   
-
-                                    <div class="form-group">
-                                        <div class="d-flex justify-content-evenly">
-                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                                Update
-                                            </button>
-                                
-                                            <a href="{{ route('product-models.order_statuses') }}"
-                                                class="btn btn-secondary waves-effect m-l-5">
-                                                Cancel
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- DataTables JS -->
-    @include('links.js.datatable.datatable-js')
-    <script src="assets/plugins/dropzone/dist/dropzone.js"></script>
-@endsection
+            <!-- DataTables JS -->
+            @include('links.js.datatable.datatable-js')
+            <script src="assets/plugins/dropzone/dist/dropzone.js"></script>
+        @endsection

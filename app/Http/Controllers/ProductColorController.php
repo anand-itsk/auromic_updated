@@ -30,7 +30,6 @@ class ProductColorController extends Controller
         //   dd($request);
         $request->validate([
             'name' => 'required',
-            'code' => 'required',
             
         ]);
         
@@ -58,7 +57,6 @@ class ProductColorController extends Controller
     {
           $request->validate([
             'name' => 'required',
-            'code' => 'required',
             
         ]);
     
