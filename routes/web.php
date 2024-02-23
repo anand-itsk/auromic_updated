@@ -10,6 +10,8 @@ use App\Http\Controllers\PageControllers\MasterControllers\EmployeeController;
 use App\Http\Controllers\PageControllers\MasterControllers\ProductModelController;
 use App\Http\Controllers\PageControllers\MasterControllers\OrderDetailController;
 use App\Http\Controllers\PageControllers\MasterControllers\IncentiveController;
+use App\Http\Controllers\PageControllers\JobAllocationController\DirectJobGivingController;
+use App\Http\Controllers\PageControllers\JobAllocationController\DirectJobReceivedController;
 use App\Http\Controllers\PageControllers\SubClientCompanyController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -31,6 +33,10 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductSizeController;
 use App\Http\Controllers\ProductColorController;
 use App\Http\Controllers\OrderStatusController;
+use App\Http\Controllers\PageControllers\JobAllocation\DeliveryChallanController;
+use App\Http\Controllers\PageControllers\JobAllocation\JobGivingController;
+use App\Http\Controllers\PageControllers\JobAllocation\JobReallocationController;
+use App\Http\Controllers\PageControllers\JobAllocation\JobReceivedController;
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -178,6 +184,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('product-models')->name('product-models.')->group(function () {
 
         //Raw Material Type
+
         Route::get('/raw_material_types', [RawMaterialTypeController::class, 'index'])->name('raw_material_types');
         Route::get('/raw_material_type/create', [RawMaterialTypeController::class, 'create'])->name('raw_material_types.create');
         Route::post('/raw_material_type/store', [RawMaterialTypeController::class, 'store'])->name('raw_material_types.store');
@@ -203,6 +210,7 @@ Route::middleware(['auth'])->group(function () {
         //Product Size
         Route::get('/product_sizes', [ProductSizeController::class, 'index'])->name('product_sizes');
         Route::get('/product_size/create', [ProductSizeController::class, 'create'])->name('product_sizes.create');
+
         Route::post('/product_size-store', [ProductSizeController::class, 'store'])->name('product_sizes.store');
         Route::get('/size/edit/{id}', [ProductSizeController::class, 'edit'])->name('product_sizes.edit');
         Route::post('/size/update/{id}', [ProductSizeController::class, 'update'])->name('product_sizes.update');
@@ -401,6 +409,68 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete/selected', [EmployeeController::class, 'deleteSelected']);
             Route::post('/import', [EmployeeController::class, 'import'])->name('import');
             Route::get('/export', [EmployeeController::class, 'export']);
+        });
+    });
+     // Job Allocation
+    // Master > Customer
+    Route::prefix('job_allocation')->name('job_allocation.')->group(function () {
+        Route::prefix('/direct_job_giving')->name('direct_job_giving.')->group(function () {
+            Route::get('/', [DirectJobGivingController::class, 'index'])->name('index');
+            Route::get('/data', [DirectJobGivingController::class, 'indexData'])->name('data');
+            Route::get('/create', [DirectJobGivingController::class, 'create'])->name('create');
+            Route::post('/store', [DirectJobGivingController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [DirectJobGivingController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [DirectJobGivingController::class, 'update'])->name('update');
+            Route::post('/delete/selected', [DirectJobGivingController::class, 'deleteSelected']);
+        });
+          Route::prefix('/direct_job_received')->name('direct_job_received.')->group(function () {
+            Route::get('/', [DirectJobReceivedController::class, 'index'])->name('index');
+            Route::get('/data', [DirectJobReceivedController::class, 'indexData'])->name('data');
+            Route::get('/create', [DirectJobReceivedController::class, 'create'])->name('create');
+            Route::post('/store', [DirectJobReceivedController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [DirectJobReceivedController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [DirectJobReceivedController::class, 'update'])->name('update');
+            Route::post('/delete/selected', [DirectJobReceivedController::class, 'deleteSelected']);
+        });
+
+        
+        
+    });
+
+
+    // Job Allocation
+    // Master > Customer
+    Route::prefix('job_allocation')->name('job_allocation.')->group(function () {
+        Route::prefix('/delivery_challan')->name('delivery_challan.')->group(function () {
+            Route::get('/', [DeliveryChallanController::class, 'index'])->name('index');
+            Route::get('/data', [DeliveryChallanController::class, 'indexData'])->name('data');
+            Route::get('/create', [DeliveryChallanController::class, 'create'])->name('create');
+            Route::post('/store', [DeliveryChallanController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [DeliveryChallanController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [DeliveryChallanController::class, 'update'])->name('update');
+            Route::post('/delete/selected', [DeliveryChallanController::class, 'deleteSelected']);
+        });
+
+        Route::prefix('/job_giving')->name('job_giving.')->group(function () {
+            Route::get('/', [JobGivingController::class, 'index'])->name('index');
+            Route::get('/data', [JobGivingController::class, 'indexData'])->name('data');
+            Route::get('/create', [JobGivingController::class, 'create'])->name('create');
+            Route::post('/store', [JobGivingController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [JobGivingController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [JobGivingController::class, 'update'])->name('update');
+            Route::post('/delete/selected', [JobGivingController::class, 'deleteSelected']);
+        });
+        Route::prefix('/job_received')->name('job_received.')->group(function () {
+            Route::get('/', [JobReceivedController::class, 'index'])->name('index');
+            Route::get('/data', [JobReceivedController::class, 'indexData'])->name('data');
+            Route::post('/store', [JobReceivedController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [JobReceivedController::class, 'edit'])->name('edit');
+        });
+        Route::prefix('/job_reallocation')->name('job_reallocation.')->group(function () {
+            Route::get('/', [JobReallocationController::class, 'index'])->name('index');
+            Route::get('/data', [JobReallocationController::class, 'indexData'])->name('data');
+            Route::post('/store', [JobReallocationController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [JobReallocationController::class, 'edit'])->name('edit');
         });
     });
 

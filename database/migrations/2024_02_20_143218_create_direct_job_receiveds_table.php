@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('direct_job_giving_id')->nullable();
             $table->unsignedBigInteger('product_model_id')->nullable();
-            $table->enum('incentive_applicable',['Yes','No'])->default('Yes');
+            $table->enum('incentive_applicable', ['Yes', 'No'])->default(NULL)->nullable();
             $table->date('receving_date');
             $table->timestamps();
             $table->foreign('direct_job_giving_id')->references('id')->on('direct_job_givings')->onDelete('cascade');
