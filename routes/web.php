@@ -10,6 +10,8 @@ use App\Http\Controllers\PageControllers\MasterControllers\EmployeeController;
 use App\Http\Controllers\PageControllers\MasterControllers\ProductModelController;
 use App\Http\Controllers\PageControllers\MasterControllers\OrderDetailController;
 use App\Http\Controllers\PageControllers\MasterControllers\IncentiveController;
+use App\Http\Controllers\PageControllers\JobAllocationController\DirectJobGivingController;
+use App\Http\Controllers\PageControllers\JobAllocationController\DirectJobReceivedController;
 use App\Http\Controllers\PageControllers\SubClientCompanyController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -406,6 +408,31 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/import', [EmployeeController::class, 'import'])->name('import');
             Route::get('/export', [EmployeeController::class, 'export']);
         });
+    });
+     // Job Allocation
+    // Master > Customer
+    Route::prefix('job_allocation')->name('job_allocation.')->group(function () {
+        Route::prefix('/direct_job_giving')->name('direct_job_giving.')->group(function () {
+            Route::get('/', [DirectJobGivingController::class, 'index'])->name('index');
+            Route::get('/data', [DirectJobGivingController::class, 'indexData'])->name('data');
+            Route::get('/create', [DirectJobGivingController::class, 'create'])->name('create');
+            Route::post('/store', [DirectJobGivingController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [DirectJobGivingController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [DirectJobGivingController::class, 'update'])->name('update');
+            Route::post('/delete/selected', [DirectJobGivingController::class, 'deleteSelected']);
+        });
+          Route::prefix('/direct_job_received')->name('direct_job_received.')->group(function () {
+            Route::get('/', [DirectJobReceivedController::class, 'index'])->name('index');
+            Route::get('/data', [DirectJobReceivedController::class, 'indexData'])->name('data');
+            Route::get('/create', [DirectJobReceivedController::class, 'create'])->name('create');
+            Route::post('/store', [DirectJobReceivedController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [DirectJobReceivedController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [DirectJobReceivedController::class, 'update'])->name('update');
+            Route::post('/delete/selected', [DirectJobReceivedController::class, 'deleteSelected']);
+        });
+
+        
+        
     });
 
 
