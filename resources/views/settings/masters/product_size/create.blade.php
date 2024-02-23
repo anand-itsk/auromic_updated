@@ -34,7 +34,7 @@
                                                 <div class="col-md-6">
                                                     <div class="col-md-12">
                                                         <div class="mb-3">
-                                          <label for="firstNameinput" class="form-label">Name</label>
+                                          <label for="name" class="form-label mandatory">Name</label>
                                             <input class="form-control" type="text" name="name" id="name">
                                             @error('name')
                                                 <span class="error" style="color: red;">{{ $message }}</span>

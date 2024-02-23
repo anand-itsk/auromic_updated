@@ -41,14 +41,14 @@
                             href="{{ route('common.countries') }}">Countries</a></li>
                     <li class="nav-item"><a class="nav-link {{ request()->is('common/state*') ? 'show' : '' }}"
                             href="{{ route('common.states') }}">States</a></li>
-                            <li class="nav-item"><a class="nav-link {{ request()->is('common/district*') ? 'show' : '' }}"
-                                href="{{ route('common.districts') }}">Districts</a></li>
-                                <li class="nav-item"><a class="nav-link {{ request()->is('common/religion*') ? 'show' : '' }}"
-                                    href="{{ route('common.religions') }}">Religion</a></li>
-                                    <li class="nav-item"><a class="nav-link {{ request()->is('common/caste*') ? 'show' : '' }}"
-                                        href="{{ route('common.castes') }}">Caste</a></li>
-                                        <li class="nav-item"><a class="nav-link {{ request()->is('common/nationality*') ? 'show' : '' }}"
-                                            href="{{ route('common.nationalities') }}">Nationality</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('common/district*') ? 'show' : '' }}"
+                            href="{{ route('common.districts') }}">Districts</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('common/religion*') ? 'show' : '' }}"
+                            href="{{ route('common.religions') }}">Religion</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('common/caste*') ? 'show' : '' }}"
+                            href="{{ route('common.castes') }}">Caste</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('common/nationality*') ? 'show' : '' }}"
+                            href="{{ route('common.nationalities') }}">Nationality</a></li>
                     <!-- More sub-items here -->
                 </ul>
             </li>
@@ -64,39 +64,37 @@
                     <li class="nav-item"><a
                             class="nav-link {{ request()->is('specified/resigning_reason*') ? 'show' : '' }}"
                             href="{{ route('specified.resigning_reasons') }}">Resigning Reasons</a></li>
-                            <li class="nav-item"><a
-                                class="nav-link {{ request()->is('specified/local_office*') ? 'show' : '' }}"
-                                href="{{ route('specified.local_offices') }}">Local offices</a></li>
-                                <li class="nav-item"><a
-                                    class="nav-link {{ request()->is('specified/esi_dispensary*') ? 'show' : '' }}"
-                                    href="{{ route('specified.esi_dispensaries') }}">ESI Dispensary</a></li>
+                    <li class="nav-item"><a
+                            class="nav-link {{ request()->is('specified/local_office*') ? 'show' : '' }}"
+                            href="{{ route('specified.local_offices') }}">Local offices</a></li>
+                    <li class="nav-item"><a
+                            class="nav-link {{ request()->is('specified/esi_dispensary*') ? 'show' : '' }}"
+                            href="{{ route('specified.esi_dispensaries') }}">ESI Dispensary</a></li>
                     <!-- More sub-items here -->
                 </ul>
             </li>
             <!-- Add more items here -->
             <li class="nav-item">
-                <a class="nav-link dropdown-toggle {{ request()->is('product-models*') ? 'active' : '' }}" href="#submenu4"
-                    data-toggle="collapse" aria-expanded="true">Products/Models</a>
+                <a class="nav-link dropdown-toggle {{ request()->is('product-models*') ? 'active' : '' }}"
+                    href="#submenu4" data-toggle="collapse" aria-expanded="true">Products/Models</a>
                 <ul class="collapse list-unstyled {{ request()->is('product-models*') ? 'show' : '' }}" id="submenu4"
                     data-parent="#sidebarMenu">
                     <li class="nav-item"><a
-                            class="nav-link {{ request()->is('product-models/rawmaterialtypes*') ? 'show' : '' }}"
+                            class="nav-link {{ request()->is('product-models/raw_material_type*') ? 'show' : '' }}"
                             href="{{ route('product-models.raw_material_types') }}">Raw Material Type</a></li>
                     <li class="nav-item"><a
-                            class="nav-link {{ request()->is('product-models/raw_material*') ? 'show' : '' }}"
+                            class="nav-link {{ request()->is('product-models/raw_materials*') ? 'show' : '' }}"
                             href="{{ route('product-models.raw_materials') }}">Raw Material</a></li>
-                            <li class="nav-item"><a
-                                class="nav-link {{ request()->is('product-models/product*') ? 'show' : '' }}"
-                                href="{{ route('product-models.products') }}">Product</a></li>
-                                <li class="nav-item"><a
-                                    class="nav-link {{ request()->is('product-models/size*') ? 'show' : '' }}"
-                                    href="{{ route('product-models.product_sizes') }}">Product Size</a></li>
-                                    <li class="nav-item"><a
-                                        class="nav-link {{ request()->is('product-models/color*') ? 'show' : '' }}"
-                                        href="{{ route('product-models.product_colors') }}">Product Color</a></li>
-                                        <li class="nav-item"><a
-                                            class="nav-link {{ request()->is('product-models/order_status*') ? 'show' : '' }}"
-                                            href="{{ route('product-models.order_statuses') }}">Order Status</a></li>
+                    <li class="nav-item"><a
+                            class="nav-link {{ request()->is('product-models/product*') ? 'show' : '' }}"
+                            href="{{ route('product-models.products') }}">Product</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('product-models/size*') ? 'show' : '' }}"
+                            href="{{ route('product-models.product_sizes') }}">Product Size</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('product-models/color*') ? 'show' : '' }}"
+                            href="{{ route('product-models.product_colors') }}">Product Color</a></li>
+                    <li class="nav-item"><a
+                            class="nav-link {{ request()->is('product-models/order_status*') ? 'show' : '' }}"
+                            href="{{ route('product-models.order_statuses') }}">Order Status</a></li>
                     <!-- More sub-items here -->
                 </ul>
             </li>
