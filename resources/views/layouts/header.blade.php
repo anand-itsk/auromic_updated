@@ -231,24 +231,45 @@
                     </li>
 
                     {{-- Master --}}
-                       <li class="has-submenu">
+                    <li class="has-submenu">
                         <a href="#"><i class="dripicons-briefcase"></i>Master</a>
                         <ul class="submenu">
                             <li>
                                 <a href="{{ route('master.customers.index') }}">Customers</a>
                             </li>
-                             <li>
+                            <li>
                                 <a href="{{ route('master.employees.index') }}">Employees</a>
                             </li>
-                             <li>
+                            <li>
                                 <a href="{{ route('master.product_model.index') }}">Product Model</a>
                             </li>
                             <li>
                                 <a href="{{ route('master.order_detail.index') }}">Order Details</a>
                             </li>
-                           <li>
-                            <a href="{{ route('master.incentives.index') }}">Incentive</a>
-                        </li>
+                            <li>
+                                <a href="{{ route('master.incentives.index') }}">Incentive</a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+                    {{-- Job Allocation --}}
+                    <li class="has-submenu">
+                        <a href="#"><i class="dripicons-briefcase"></i>Job Allocation</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="{{ route('job_allocation.delivery_challan.index') }}">Delivery Challan</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('job_allocation.job_giving.index') }}">Job Giving</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('job_allocation.job_received.index') }}">Job Received</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('job_allocation.job_reallocation.index') }}">Job Reallocation</a>
+                            </li>
 
 
                         </ul>

@@ -25,5 +25,8 @@ class AuthorisedPerson extends Model
         'photo',
         'status',
     ];
-
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
+    }
 }
