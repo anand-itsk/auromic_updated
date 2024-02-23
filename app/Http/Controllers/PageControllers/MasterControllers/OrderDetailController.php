@@ -44,7 +44,6 @@ class OrderDetailController extends Controller
     {
 
       $validatedData = $request->validate([
-        
             'order_no' => 'required',
             'order_date' => 'required|date',
             'customer_id' => 'required|exists:customers,id', 

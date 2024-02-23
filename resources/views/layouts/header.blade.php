@@ -270,6 +270,14 @@
                             <li>
                                 <a href="{{ route('job_allocation.job_reallocation.index') }}">Job Reallocation</a>
                             </li>
+                             <li>
+                                <a href="{{ route('job_allocation.direct_job_giving.index') }}">Direct Job Giving</a>
+                            </li>
+
+                             <li>
+                                <a href="{{ route('job_allocation.direct_job_received.index') }}">Direct Job Received</a>
+                            </li>
+
 
 
                         </ul>
