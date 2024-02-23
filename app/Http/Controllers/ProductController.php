@@ -1,80 +1,70 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index()
-     {
-   
-        $product = Product::paginate(10);
+   public function index()
+   {
+
+      $product = Product::paginate(10);
 
 
-        return view('settings.masters.product.index',compact('product'));
+      return view('settings.masters.product.index', compact('product'));
+   }
 
-     }
+   public function create()
+   {
 
-      public function create()
-     {
-        
-        return view('settings.masters.product.create');
+      return view('settings.masters.product.create');
+   }
 
-     }
+   public function store(Request $request)
+   {
+      $request->validate([
+         'name' => 'required',
+      ]);
 
-       public function store(Request $request)
-     {
-        
-        //   dd($request);
-        $request->validate([
-            'name' => 'required',
-            'code' => 'required',
-            
-        ]);
-        
-        $product = new Product;
-        $product->name = $request->input('name');
-        $product->code = $request->input('code');
-       
-   
-        $product->save();
-
-        return redirect()->route('product-models.products')->with('success', 'Product added successfully!');
+      $product = new Product;
+      $product->name = $request->input('name');
+      $product->code = $request->input('code');
 
 
-     }
+      $product->save();
 
-      public function edit($id)
-     {
-        $product= Product::find($id);
-      
-        return view('settings.masters.product.edit', compact('product'));
-       
-     }
+      return redirect()->route('product-models.products')->with('success', 'Product added successfully!');
+   }
 
-     public function update(Request $request, $id)
-    {
-          $request->validate([
-            'name' => 'required',
-            'code' => 'required',
-            
-        ]);
-    
-        $product = Product::find($id);
-        $product->name = $request->input('name');
-        $product->code = $request->input('code');
-        $product->save();
-    
-         return redirect()->route('product-models.products')->with('success', 'Product Updated successfully!');
-    }
-        public function delete($id)
-    {
-          $product = Product::find($id);
+   public function edit($id)
+   {
+      $product = Product::find($id);
 
-         $product->delete();
+      return view('settings.masters.product.edit', compact('product'));
+   }
 
-          return redirect()->route('product-models.products')->with('success', 'Product Deleted successfully!');
+   public function update(Request $request, $id)
+   {
+      $request->validate([
+         'name' => 'required',
 
-    }
+      ]);
+
+      $product = Product::find($id);
+      $product->name = $request->input('name');
+      $product->code = $request->input('code');
+      $product->save();
+
+      return redirect()->route('product-models.products')->with('success', 'Product Updated successfully!');
+   }
+   public function delete($id)
+   {
+      $product = Product::find($id);
+
+      $product->delete();
+
+      return redirect()->route('product-models.products')->with('success', 'Product Deleted successfully!');
+   }
 }

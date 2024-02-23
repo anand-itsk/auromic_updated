@@ -103,7 +103,7 @@
     <script>
         function confirmDelete(id) {
             if (confirm("Are you sure you want to delete this raw material type?")) {
-                window.location.href = "/product-models/raw_material_type-delete/" + id;
+                window.location.href = "/product-models/raw_material_type/delete/" + id;
             }
         }
     </script>

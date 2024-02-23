@@ -55,37 +55,40 @@
                                                 style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                                 <thead>
                                                     <tr>
-                                                 <th>ID</th>
-                                                <th>Raw Material Type</th>
-                                                <th>Name</th>
-                                                <th>Stock</th>
-                                                <th>Action</th>
+                                                        <th>ID</th>
+                                                        <th>Raw Material Type</th>
+                                                        <th>Name</th>
+                                                        <th>Stock</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @if (!empty($raw_material))
-                                             @foreach ($raw_material as $item)
-                                                    <tr>
-                                                        <td>{{ $item->id }}</td>
-                                                        <td>{{$item->rawMaterialType->name}}</td>
-                                                        <td>{{ $item->name }}</td>
-                                                        <td>{{ $item->stock}} </td>
-                                                        <td>
-                                                            
-                                                                <a href="{{ route('product-models.raw_materials.edit', $item->id) }}" class="icon-link primary-color"><i
-                                                                        class="fa fa-edit"></i></a>
-                                                                <button class="icon-button delete-color" onclick="confirmDelete({{ $item->id }})"><i class="fa fa-trash"></i></button>
+                                                        @foreach ($raw_material as $item)
+                                                            <tr>
+                                                                <td>{{ $item->id }}</td>
+                                                                <td>{{ $item->rawMaterialType->name ?? 'N/s' }}</td>
+                                                                <td>{{ $item->name }}</td>
+                                                                <td>{{ $item->stock }} </td>
+                                                                <td>
+
+                                                                    <a href="{{ route('product-models.raw_materials.edit', $item->id) }}"
+                                                                        class="icon-link primary-color"><i
+                                                                            class="fa fa-edit"></i></a>
+                                                                    <button class="icon-button delete-color"
+                                                                        onclick="confirmDelete({{ $item->id }})"><i
+                                                                            class="fa fa-trash"></i></button>
 
 
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @endif
                                                 </tbody>
                                             </table>
 
                                             <div class="pagination">
-                                                {{   $raw_material->links('pagination::bootstrap-4') }}
+                                                {{ $raw_material->links('pagination::bootstrap-4') }}
                                             </div>
                                         </div>
 
@@ -105,7 +108,7 @@
     <script>
         function confirmDelete(id) {
             if (confirm("Are you sure you want to delete this raw material?")) {
-               window.location.href = "/product-models/raw_material-delete/" + id;
+                window.location.href = "/product-models/raw_materials/delete/" + id;
             }
         }
     </script>

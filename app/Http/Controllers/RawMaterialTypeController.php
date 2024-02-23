@@ -29,7 +29,6 @@ class RawMaterialTypeController extends Controller
         //   dd($request);
         $request->validate([
             'name' => 'required',
-            'code' => 'required',
             
         ]);
         
@@ -57,7 +56,6 @@ class RawMaterialTypeController extends Controller
     {
           $request->validate([
             'name' => 'required',
-            'code' => 'required',
             
         ]);
     
