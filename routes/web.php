@@ -184,20 +184,21 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('product-models')->name('product-models.')->group(function () {
 
         //Raw Material Type
-        Route::get('/rawmaterialtypes', [RawMaterialTypeController::class, 'index'])->name('raw_material_types');
-        Route::get('/raw_material_type-create', [RawMaterialTypeController::class, 'create'])->name('raw_material_types.create');
-        Route::post('/raw_material_type-store', [RawMaterialTypeController::class, 'store'])->name('raw_material_types.store');
-        Route::get('/rawmaterialtypes/edit/{id}', [RawMaterialTypeController::class, 'edit'])->name('raw_material_types.edit');
-        Route::post('/rawmaterialtypes/update/{id}', [RawMaterialTypeController::class, 'update'])->name('raw_material_types.update');
-        Route::get('/rawmaterialtypes/delete/{id}', [RawMaterialTypeController::class, 'delete'])->name('raw_material_types.delete');
+
+        Route::get('/raw_material_types', [RawMaterialTypeController::class, 'index'])->name('raw_material_types');
+        Route::get('/raw_material_type/create', [RawMaterialTypeController::class, 'create'])->name('raw_material_types.create');
+        Route::post('/raw_material_type/store', [RawMaterialTypeController::class, 'store'])->name('raw_material_types.store');
+        Route::get('/raw_material_type/edit/{id}', [RawMaterialTypeController::class, 'edit'])->name('raw_material_types.edit');
+        Route::post('/raw_material_type/update/{id}', [RawMaterialTypeController::class, 'update'])->name('raw_material_types.update');
+        Route::get('/raw_material_type/delete/{id}', [RawMaterialTypeController::class, 'delete'])->name('raw_material_types.delete');
 
         //Raw Material
-        Route::get('/raw_material', [RawMaterialController::class, 'index'])->name('raw_materials');
-        Route::get('/raw_material-create', [RawMaterialController::class, 'create'])->name('raw_materials.create');
-        Route::post('/raw_material-store', [RawMaterialController::class, 'store'])->name('raw_materials.store');
-        Route::get('/raw_material-edit/{id}', [RawMaterialController::class, 'edit'])->name('raw_materials.edit');
-        Route::post('/raw_material-update/{id}', [RawMaterialController::class, 'update'])->name('raw_materials.update');
-        Route::get('/raw_material-delete/{id}', [RawMaterialController::class, 'delete'])->name('raw_materials.delete');
+        Route::get('/raw_materials', [RawMaterialController::class, 'index'])->name('raw_materials');
+        Route::get('/raw_materials/create', [RawMaterialController::class, 'create'])->name('raw_materials.create');
+        Route::post('/raw_materials/store', [RawMaterialController::class, 'store'])->name('raw_materials.store');
+        Route::get('/raw_materials/edit/{id}', [RawMaterialController::class, 'edit'])->name('raw_materials.edit');
+        Route::post('/raw_materials/update/{id}', [RawMaterialController::class, 'update'])->name('raw_materials.update');
+        Route::get('/raw_materials/delete/{id}', [RawMaterialController::class, 'delete'])->name('raw_materials.delete');
 
         //Product
         Route::get('/product', [ProductController::class, 'index'])->name('products');
@@ -207,8 +208,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/product-update/{id}', [ProductController::class, 'update'])->name('products.update');
         Route::get('/product-delete/{id}', [ProductController::class, 'delete'])->name('products.delete');
         //Product Size
-        Route::get('/size', [ProductSizeController::class, 'index'])->name('product_sizes');
-        Route::get('/product_size-create', [ProductSizeController::class, 'create'])->name('product_sizes.create');
+        Route::get('/product_sizes', [ProductSizeController::class, 'index'])->name('product_sizes');
+        Route::get('/product_size/create', [ProductSizeController::class, 'create'])->name('product_sizes.create');
+
         Route::post('/product_size-store', [ProductSizeController::class, 'store'])->name('product_sizes.store');
         Route::get('/size/edit/{id}', [ProductSizeController::class, 'edit'])->name('product_sizes.edit');
         Route::post('/size/update/{id}', [ProductSizeController::class, 'update'])->name('product_sizes.update');
