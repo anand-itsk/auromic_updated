@@ -40,7 +40,8 @@
                                         <div class="col-sm-4 mb-4">
 
                                             <select class="form-control select2" name="employee_id" id="employee_id">
-                                                @foreach ($employee as $item)
+                                               <option value="">Select Employee</option>
+                                            @foreach ($employee as $item)
                                                     <option value="{{ $item->id }}">
                                                         {{ $item->employee_code }}/{{ $item->employee_name }}</option>
                                                 @endforeach
@@ -54,6 +55,7 @@
                                             ID</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="order_id" id="order_id">
+                                                <option value="">Select Order</option>
                                                 @foreach ($order_details as $item)
                                                     <option value="{{ $item->id }}">
                                                         {{ $item->order_no }}</option>
@@ -72,7 +74,8 @@
 
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="dc_number" id="dc_number" disabled>
-                                                @foreach ($delivery_challan as $item)
+                                               <option value="">Select DC</option>
+                                            @foreach ($delivery_challan as $item)
                                                     <option value="{{ $item->id }}">
                                                         {{ $item->dc_no }}</option>
                                                 @endforeach
@@ -95,6 +98,7 @@
                                         <label for="customer_code" class="col-sm-2 col-form-label mandatory">Status</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="status" id="status">
+                                                <option value="">Select Status</option>
                                                 <option value="Incomplete">Incomplete</option>
                                                 <option value="Complete">Complete</option>
                                                 <option value="Pending">Pending</option>

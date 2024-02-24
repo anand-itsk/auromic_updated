@@ -249,6 +249,9 @@
                             <li>
                                 <a href="{{ route('master.incentives.index') }}">Incentive</a>
                             </li>
+                              <li>
+                                <a href="{{ route('master.finishing_product.index') }}">Finishing Product</a>
+                            </li>
 
 
                         </ul>

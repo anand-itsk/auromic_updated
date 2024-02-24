@@ -13,10 +13,11 @@
                         <div class="btn-group float-right">
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Auromics</a></li>
+                                <li class="breadcrumb-item">Job Allocation</li>
                                 <li class="breadcrumb-item"><a
-                                        href="{{ route('job_allocation.delivery_challan.index') }}">Job Allocation</a>
+                                        href="{{ route('job_allocation.delivery_challan.index') }}">Delivery Challan</a>
                                 </li>
-                                <li class="breadcrumb-item">Create</li>
+                                <li class="breadcrumb-item">Edit</li>
                             </ol>
                         </div>
                         <h4 class="page-title">Edit Delivery Challan</h4>
@@ -92,11 +93,8 @@
                                             <button type="submit" class="btn btn-primary waves-effect waves-light">
                                                 Submit
                                             </button>
-                                            <a href="{{ route('master.customers.create') }}"
-                                                class="btn btn-warning waves-effect waves-light">
-                                                Reset
-                                            </a>
-                                            <a href="{{ route('master.customers.index') }}"
+                                            
+                                            <a href="{{ route('job_allocation.delivery_challan.index') }}"
                                                 class="btn btn-secondary waves-effect m-l-5">
                                                 Cancel
                                             </a>

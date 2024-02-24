@@ -10,6 +10,7 @@ use App\Http\Controllers\PageControllers\MasterControllers\EmployeeController;
 use App\Http\Controllers\PageControllers\MasterControllers\ProductModelController;
 use App\Http\Controllers\PageControllers\MasterControllers\OrderDetailController;
 use App\Http\Controllers\PageControllers\MasterControllers\IncentiveController;
+use App\Http\Controllers\PageControllers\MasterControllers\FinishingProductController;
 use App\Http\Controllers\PageControllers\JobAllocationController\DirectJobGivingController;
 use App\Http\Controllers\PageControllers\JobAllocationController\DirectJobReceivedController;
 use App\Http\Controllers\PageControllers\SubClientCompanyController;
@@ -353,6 +354,24 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/export', [IncentiveController::class, 'export']);
         });
 
+         Route::prefix('/finishing_product')->name('finishing_product.')->group(function () {
+
+            Route::get('/', [FinishingProductController::class, 'index'])->name('index');
+            Route::get('/data', [FinishingProductController::class, 'indexData'])->name('data');
+
+            Route::get('/create', [FinishingProductController::class, 'create'])->name('create');
+            Route::get('/get-models/{product_id}', [FinishingProductController::class, 'getModels'])->name('get.models');
+
+            Route::post('/store', [FinishingProductController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [FinishingProductController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [FinishingProductController::class, 'update'])->name('update');
+            Route::get('/delete/{id}',  [FinishingProductController::class, 'delete'])->name('delete');
+            Route::get('/show/{id}', [FinishingProductController::class, 'showDetails']);
+            Route::post('/delete/selected', [FinishingProductController::class, 'deleteSelected']);
+            Route::post('/import', [FinishingProductController::class, 'import'])->name('import');
+            Route::get('/export', [FinishingProductController::class, 'export']);
+        });
+
         Route::prefix('/order_detail')->name('order_detail.')->group(function () {
 
             Route::get('/', [OrderDetailController::class, 'index'])->name('index');
@@ -449,6 +468,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/edit/{id}', [DeliveryChallanController::class, 'edit'])->name('edit');
             Route::post('/update/{id}', [DeliveryChallanController::class, 'update'])->name('update');
             Route::post('/delete/selected', [DeliveryChallanController::class, 'deleteSelected']);
+            Route::get('/delete/{id}', [DeliveryChallanController::class, 'delete'])->name('delete');
+            
         });
 
         Route::prefix('/job_giving')->name('job_giving.')->group(function () {

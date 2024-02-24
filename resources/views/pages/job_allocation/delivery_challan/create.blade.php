@@ -13,8 +13,9 @@
                         <div class="btn-group float-right">
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Auromics</a></li>
+                                <li class="breadcrumb-item">Job Allocation</li>
                                 <li class="breadcrumb-item"><a
-                                        href="{{ route('job_allocation.delivery_challan.index') }}">Job Allocation</a>
+                                        href="{{ route('job_allocation.delivery_challan.index') }}">Delivery Challan</a>
                                 </li>
                                 <li class="breadcrumb-item">Create</li>
                             </ol>
@@ -35,11 +36,29 @@
                                     @csrf
                                     <div class="form-group row">
                                         <label for="customer_code" class="col-sm-2 col-form-label mandatory">
+                                            Company Type
+                                        </label>
+                                        <div class="col-sm-4 mb-4">
+
+                                            <select class="form-control select2" name="company_type_id" id="company_type_id">
+                                                <option value="">Select Company Type</option>
+                                                @foreach ($company_type as $item)
+                                                    <option value="{{ $item->id }}">
+                                                       {{ $item->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('company_type_id')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">
                                             Company Name
                                         </label>
                                         <div class="col-sm-4 mb-4">
 
                                             <select class="form-control select2" name="company_id" id="company_id">
+                                                <option value="">Select Company Name</option>
                                                 @foreach ($authorised_people as $item)
                                                     <option value="{{ $item->id }}">
                                                         {{ $item->company->company_name }}/{{ $item->name }}</option>
@@ -66,6 +85,7 @@
                                             ID</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="order_id" id="order_id">
+                                                <option value="">Select Order</option>
                                                 @foreach ($order_details as $item)
                                                     <option value="{{ $item->id }}">
                                                         {{ $item->order_no }}</option>
@@ -85,11 +105,11 @@
                                             <button type="submit" class="btn btn-primary waves-effect waves-light">
                                                 Submit
                                             </button>
-                                            <a href="{{ route('master.customers.create') }}"
+                                            <a href="{{ route('job_allocation.delivery_challan.create') }}"
                                                 class="btn btn-warning waves-effect waves-light">
                                                 Reset
                                             </a>
-                                            <a href="{{ route('master.customers.index') }}"
+                                            <a href="{{ route('job_allocation.delivery_challan.index') }}"
                                                 class="btn btn-secondary waves-effect m-l-5">
                                                 Cancel
                                             </a>

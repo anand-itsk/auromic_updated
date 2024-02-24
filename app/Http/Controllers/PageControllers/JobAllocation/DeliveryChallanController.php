@@ -5,6 +5,7 @@ namespace App\Http\Controllers\PageControllers\JobAllocation;
 use App\Http\Controllers\Controller;
 use App\Models\AuthorisedPerson;
 use App\Models\Company;
+use App\Models\CompanyType;
 use App\Models\DeliveryChallan;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
@@ -28,10 +29,12 @@ class DeliveryChallanController extends Controller
     public function create()
     {
         $company = Company::all();
+        $company_type = CompanyType::all();
         $authorised_people = AuthorisedPerson::all();
         $order_details = OrderDetail::all();
-        return view('pages.job_allocation.delivery_challan.create', compact('company', 'authorised_people', 'order_details'));
+        return view('pages.job_allocation.delivery_challan.create', compact('company', 'authorised_people', 'order_details','company_type'));
     }
+    
     // Store Date
     public function store(Request $request)
     {
@@ -94,5 +97,15 @@ class DeliveryChallanController extends Controller
 
         DeliveryChallan::destroy($ids);
         return response()->json(['status' => 'success']);
+    }
+
+       public function delete($id)
+    {
+         $delivery_challan = DeliveryChallan::find($id);
+
+         $delivery_challan->delete();
+
+          return redirect()->route('job_allocation.delivery_challan.index')->with('success', 'Delivery Challan Deleted successfully!');
+
     }
 }
