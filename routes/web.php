@@ -470,7 +470,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete/selected', [DeliveryChallanController::class, 'deleteSelected']);
             Route::get('/delete/{id}', [DeliveryChallanController::class, 'delete'])->name('delete');
             Route::get('/get-companies/{companyTypeId}', [DeliveryChallanController::class, 'getCompanies'])->name('get-companies');
-           Route::get('/get-orders/{customerId}', [DeliveryChallanController ::class, 'getOrders'])->name('get-orders');
+              Route::get('/get-model-details/{id}', [DeliveryChallanController ::class, 'getModelDetails'])->name('get-models');
+            Route::get('/get-orders/{customerId}', [DeliveryChallanController ::class, 'getOrders'])->name('get-orders');
         });
 
         Route::prefix('/job_giving')->name('job_giving.')->group(function () {

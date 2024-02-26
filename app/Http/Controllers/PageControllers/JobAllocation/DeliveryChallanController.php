@@ -7,6 +7,9 @@ use App\Models\AuthorisedPerson;
 use App\Models\Company;
 use App\Models\Customer;
 use App\Models\CompanyType;
+use App\Models\ProductModel;
+use App\Models\ProductSize;
+use App\Models\ProductColor;
 use App\Models\DeliveryChallan;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
@@ -23,7 +26,7 @@ class DeliveryChallanController extends Controller
     // Index DataTable
     public function indexData()
     {
-        $delivery_challans = DeliveryChallan::with('company', 'order_details')->get();
+        $delivery_challans = DeliveryChallan::with('company', 'order_details','productSize','productColor')->get();
         return DataTables::of($delivery_challans)->make(true);
     }
     // Create Page
@@ -34,8 +37,11 @@ class DeliveryChallanController extends Controller
         $company_types = CompanyType::all();
         $authorised_people = AuthorisedPerson::all();
         $order_details = OrderDetail::all();
+        $productModels = ProductModel::with(['rawMaterial.rawMaterialType'])->get();
+        $product_size= ProductSize::all();
+        $product_color = ProductColor::all();
         
-        return view('pages.job_allocation.delivery_challan.create', compact('company', 'authorised_people', 'order_details','company_types','customer'));
+        return view('pages.job_allocation.delivery_challan.create', compact('company', 'authorised_people', 'order_details','company_types','customer','productModels','product_size','product_color'));
     }
 
        public function getCompanies($companytypeid)
@@ -44,19 +50,36 @@ class DeliveryChallanController extends Controller
         return response()->json($companies);
     }
 
-     public function getOrders($customerid)
+     public function getOrders($customerId)
+{
+    $orders = OrderDetail::select('id', 'order_no', 'order_date') // Select the desired columns
+                        ->where('customer_id', $customerId)
+                        ->get();
+    return response()->json($orders);
+}
+
+
+public function getModelDetails($id)
     {
-        $customers = OrderDetail::where('customer_id', $customerid)->get();
-        return response()->json($customers);
+        $productModel = ProductModel::with('product', 'rawMaterial.rawMaterialType')->find($id);
+
+        if (!$productModel) {
+            return response()->json(['error' => 'Model not found'], 404);
+        }
+
+        $data = [
+            'product_name' => $productModel->product->name,
+            'raw_material_name' => $productModel->rawMaterial->name,
+            'raw_material_type' => $productModel->rawMaterial->rawMaterialType->name,
+        ];
+
+        return response()->json($data);
     }
-
-
-
-
     
     // Store Date
     public function store(Request $request)
     {
+        // dd($request);
         $validatedData = $request->validate([
             'company_id' => 'required',
             'dc_number' => 'required',
@@ -67,7 +90,11 @@ class DeliveryChallanController extends Controller
         $delivery_challan->company_id = $input['company_id'];
         $delivery_challan->dc_no = $input['dc_number'];
         $delivery_challan->order_id = $input['order_id'];
-
+        $delivery_challan->dc_date = $input['dc_date'];
+        $delivery_challan->quantity = $input['quantity'];
+        $delivery_challan->product_size_id = $input['product_size_id'];
+        $delivery_challan->product_color_id = $input['product_color_id'];
+// dd($delivery_challan);
         $delivery_challan->save();
 
         return redirect()->route('job_allocation.delivery_challan.index')

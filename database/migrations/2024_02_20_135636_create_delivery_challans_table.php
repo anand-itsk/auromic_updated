@@ -15,10 +15,16 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('company_id');
             $table->unsignedBigInteger('order_id');
+            $table->unsignedBigInteger('product_size_id')->nullable();
+            $table->unsignedBigInteger('product_color_id')->nullable();
             $table->string('dc_no');
+            $table->date('dc_date');
+            $table->string('quantity')->nullable();
             $table->timestamps();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->foreign('order_id')->references('id')->on('order_details')->onDelete('cascade');
+            $table->foreign('product_size_id')->references('id')->on('product_sizes')->onDelete('cascade');
+            $table->foreign('product_color_id')->references('id')->on('product_colors')->onDelete('cascade');
         });
     }
 
