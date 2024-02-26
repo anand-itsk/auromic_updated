@@ -22,10 +22,10 @@
                         <ol class="breadcrumb hide-phone p-0 m-0">
                             <li class="breadcrumb-item"><a href="#">Auromics</a></li>
                             <li class="breadcrumb-item"><a href="#">Master</a></li>
-                            <li class="breadcrumb-item active">Order Detail</li>
+                            <li class="breadcrumb-item active">Finishing Product</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Order Detail</h4>
+                    <h4 class="page-title">Finishing Product</h4>
                 </div>
                 <div class="row">
                     <div class="col-12">
@@ -40,8 +40,8 @@
                                         data-target=".bs-example-modal-center" title="Create Customer"><i
                                             class="fa fa-upload"></i></button>
 
-                                    <a href="{{ route('master.order_detail.create') }}" class="icon-link common-color"
-                                        title="Create Order Detail">
+                                    <a href="{{ route('master.finishing_product.create') }}" class="icon-link common-color"
+                                        title="Create Incentive">
                                         <i class="fa fa-user-plus"></i>
                                     </a>
                                 </div>
@@ -62,7 +62,7 @@
                                                 <div class="col-12">
                                                     <div class="card m-b-30">
                                                         <div class="card-body">
-                                                            <form action="{{ route('master.order_detail.import') }}"
+                                                            <form action="{{ route('master.incentives.import') }}"
                                                                 method="POST" enctype="multipart/form-data">
                                                                 @csrf
                                                                 <input type="file" name="file" required>
@@ -82,7 +82,7 @@
                                                 .xlsx or .csv)</p>
                                             <p class="text-muted font-14">To upload sample document, it
                                                 must have concern fields.
-                                                <a href="{{ asset('assets/sample_excels/order_detail_import.xlsx') }}"
+                                                <a href="{{ asset('assets/sample_excels/incentives.xlsx') }}"
                                                     download>Click
                                                     to download sample document</a>
                                             </p>
@@ -97,17 +97,12 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Order No</th>
-                                            <th>customer</th>
-                                              <th>Quantity</th>
-                                            <th>Total R.M</th>
-                                            <th>Product Size</th>
-                                           
-                                            <th>Product Color</th>
-                                          
-                                            <th>Order Status</th>
-                                             <th>Model Name</th>
-                                       
+                                            <th>Product Name</th>
+                                            <th>Product size</th>
+                                            <th>Model Code</th>
+                                            <th>Model Name</th>
+                                            <th>Wages One Prodcut</th>
+                                            <th>Date</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -185,42 +180,35 @@ $(document).ready(function() {
     table = $('#users-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{{ route('master.order_detail.data') }}',
+        ajax: '{{ route('master.finishing_product.data') }}',
         columns: [{
+
                 data: 'id',
                 name: 'id'
             },
             {
-                data: 'order_no',
-                name: 'order_no'
+                data: 'product.name',
+                name: 'product.name'
             },
             {
-                data: 'customer.customer_name',
-                name: 'customer.customer_name'
-            },
-           {
-                data: 'quantity',
-                name: 'quantity'
-            },
-            {
-                data: 'total_raw_material',
-                name: 'total_raw_material'
-            },
-          {
                 data: 'product_size.name',
                 name: 'product_size.name'
             },
-            {
-                data: 'product_color.name',
-                name: 'product_color.name'
+             {
+                data: 'model_code',
+                name: 'model_code'
+            },
+           {
+                data: 'model_name',
+                name: 'model_name'
             },
              {
-               data: 'order_status.name', 
-               name: 'order_status.name'
+                data: 'wages_one_product',
+                name: 'wages_one_product'
             },
             {
-               data: 'product_model.model_name', 
-               name: 'product_model.model_name'
+                data: 'date',
+                name: 'date'
             },
             {
                 data: null,
@@ -246,7 +234,7 @@ $(document).ready(function() {
             {
                 text: 'Export All',
                 action: function(e, dt, node, config) {
-                    window.location.href = '/master/order_detail/export?' + $.param(dt.ajax
+                    window.location.href = '/master/incentives/export?' + $.param(dt.ajax
                         .params());
                 }
             }
@@ -269,7 +257,7 @@ $(document).ready(function() {
         if (confirm("Are you sure you want to delete these rows?")) {
             // Send AJAX request to delete the selected rows
             $.ajax({
-                url: '/master/order_detail/delete/selected',
+                url: '/master/finishing_product/delete/selected',
                 type: 'POST',
                 data: {
                     ids: ids,
@@ -287,16 +275,16 @@ $(document).ready(function() {
 function edit(id) {
     console.log("inside");
     // Redirect to the user edit page or open a modal for editing
-    window.location.href = '/master/order_detail/edit/' + id;
+    window.location.href = '/master/finishing_product/edit/' + id;
 }
 
 function deleteCustomer(id) {
     console.log("inside")
     // Send an AJAX request to delete the user
-    if (confirm('Are you sure you want to delete this Product model?')) {
+    if (confirm('Are you sure you want to delete this Finishing Product?')) {
         $.ajax({
-            url: '/master/product_model/delete/' + id,
-            type: 'DELETE',
+            url: '/master/finishing_product/delete/' + id,
+            type: 'get',
             data: {
                 _token: '{{ csrf_token() }}',
             },
@@ -310,7 +298,7 @@ function deleteCustomer(id) {
 function showDetails(userId) {
     // Fetch user details using AJAX
     $.ajax({
-        url: '/master/order_detail/show/' + userId,
+        url: '/master/incentives/show/' + userId,
         type: 'GET',
         success: function(response) {
 

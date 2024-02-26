@@ -21,7 +21,7 @@
                         <div class="btn-group float-right">
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="#">Auromics</a></li>
-                                <li class="breadcrumb-item"><a href="#">Master</a></li>
+                                <li class="breadcrumb-item"><a href="#">Job Allocation</a></li>
                                 <li class="breadcrumb-item active">Delivery Challan</li>
                             </ol>
                         </div>
@@ -99,7 +99,7 @@
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Company ID</th>
-                                                <th>Order Numbrer</th>
+                                                <th>Order Number</th>
                                                 <th>DC NO</th>
                                                 <th>Action</th>
                                             </tr>
@@ -221,7 +221,7 @@
                     {
                         text: 'Export All',
                         action: function(e, dt, node, config) {
-                            window.location.href = '/master/customers/export?' + $.param(dt.ajax
+                            window.location.href = '/job_allocation/delivery_challan/export?' + $.param(dt.ajax
                                 .params());
                         }
                     }
@@ -268,10 +268,10 @@
         function deleteCustomer(id) {
             console.log("inside")
             // Send an AJAX request to delete the user
-            if (confirm('Are you sure you want to delete this user?')) {
+            if (confirm('Are you sure you want to delete this Delivery challan?')) {
                 $.ajax({
-                    url: '/master/customers/delete/' + id,
-                    type: 'DELETE',
+                    url: '/job_allocation/delivery_challan/delete/' + id,
+                    type: 'get',
                     data: {
                         _token: '{{ csrf_token() }}',
                     },

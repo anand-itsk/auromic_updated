@@ -33,5 +33,7 @@ class OrderDetail extends Model
     public function productModel(){
         return $this->belongsTo(ProductModel::class,'product_model_id');
     }
-    
+     public function customer(){
+        return $this->belongsTo(Customer::class,'customer_id');
+    }
 }
