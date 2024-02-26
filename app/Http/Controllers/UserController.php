@@ -49,13 +49,15 @@ class UserController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6|confirmed',
-            'role' => 'required'
+            'role' => 'required',
+            'remark'=>'nullable'
         ]);
+        
         $input = $request->all();
+
         $input['password'] = Hash::make($input['password']);
         $input['created_by'] = $auth_id;
         $input['updated_by'] = $auth_id;
-        $input['remark'] = $request->input('remark');
         $user = User::create($input);
         $role = Role::findById($request->input('role'));
         $user->assignRole($role);
@@ -74,21 +76,27 @@ class UserController extends Controller
     // Updata
     public function update(Request $request, $id)
     {
+        // dd($request);
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'confirmed',
             'role' => 'required',
+            'remark' => 'nullable|string',
 
         ]);
 
+
         $input = $request->all();
+        // dd($input);
         if (!empty($input['password'])) {
             $input['password'] = Hash::make($input['password']);
         } else {
             $input = Arr::except($input, array('password'));
         }
+     
         $user = User::with('roles')->find($id);
+        // dd($user);
         $user->update($input);
         $user->syncRoles($input['role']);
         if ($user) {

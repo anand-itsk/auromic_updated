@@ -61,7 +61,7 @@
                                  <h5 class="m-0">{{ $role->name }}</h5>
                                  @endforeach -->
                                  <p class="card-text mt-3">
-                                    <input type="text" class="form-control" name="remark" id="" value="{{ $user->remark }}">
+                                    <!-- <input type="text" class="form-control" name="remark" id="" value="{{ $user->remark }}"> -->
                                  </p>
                               </div>
                            </div>

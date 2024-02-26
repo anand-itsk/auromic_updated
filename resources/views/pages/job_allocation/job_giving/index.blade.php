@@ -21,7 +21,7 @@
                         <div class="btn-group float-right">
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="#">Auromics</a></li>
-                                <li class="breadcrumb-item"><a href="#">Master</a></li>
+                                <li class="breadcrumb-item"><a href="#">Job Allocation</a></li>
                                 <li class="breadcrumb-item active">Job Giving</li>
                             </ol>
                         </div>
@@ -186,7 +186,8 @@
                     },
                     {
                         data: 'employee.employee_name',
-                        name: 'employee.employee_name'
+                        name: 'employee.employee_name',
+                        
                     },
 
                     {
@@ -196,6 +197,7 @@
                     {
                         data: 'delivery_chellan.dc_no',
                         name: 'delivery_chellan.dc_no'
+                        
                     },
                     {
                         data: 'status',

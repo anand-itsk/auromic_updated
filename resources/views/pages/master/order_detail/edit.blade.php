@@ -64,13 +64,14 @@
                                         <label class="col-sm-2 col-form-label">Product</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control" name="product" id="product">
-                                                <option value="">Select Product</option>
-                                                @foreach ($products as $product)
-                                                    <option value="{{ $product->id }}"
-                                                        @if ($order_details->productModel->product_id == $product->id) selected @endif>
-                                                        {{ $product->name }}</option>
-                                                @endforeach
-                                            </select>
+    <option value="">Select Product</option>
+    @foreach ($products as $product)
+        <option value="{{ $product->id }}"
+            @if ($order_details->productModel && $order_details->productModel->product_id == $product->id) selected @endif>
+            {{ $product->name }}
+        </option>
+    @endforeach
+</select>
                                             @error('product')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -111,7 +112,7 @@
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="raw_material_name"
                                                 id="raw_material_name"
-                                                value="{{ $order_details->productModel->rawMaterial->name }}" readonly>
+                                                value="{{ $order_details->productModel->rawMaterial->name ??'' }}" readonly>
                                             @error('raw_material_name')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -121,7 +122,7 @@
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="raw_material_weight_item"
                                                 id="raw_material_weight_item"
-                                                value="{{ $order_details->productModel->raw_material_weight_item }}"
+                                                value="{{ $order_details->productModel->raw_material_weight_item ??''}}"
                                                 readonly>
                                             @error('raw_material_weight_item')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
@@ -132,7 +133,7 @@
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="wages_employee"
                                                 id="wages_employee"
-                                                value="{{ $order_details->productModel->wages_product }}" readonly>
+                                                value="{{ $order_details->productModel->wages_product ??''}}" readonly>
                                             @error('wages_employee')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror

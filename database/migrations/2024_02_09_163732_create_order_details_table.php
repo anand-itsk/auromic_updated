@@ -16,12 +16,12 @@ return new class extends Migration
             $table->string('order_no');
             $table->date('order_date');
             $table->unsignedBigInteger('customer_id');
-            $table->unsignedBigInteger('product_size_id');
-            $table->unsignedBigInteger('product_model_id');
-            $table->unsignedBigInteger('product_color_id');
+            $table->unsignedBigInteger('product_size_id')->nullable();
+            $table->unsignedBigInteger('product_model_id')->nullable();
+            $table->unsignedBigInteger('product_color_id')->nullable();
             $table->string('quantity')->nullable();
             $table->date('delivery_date')->nullable();
-            $table->unsignedBigInteger('order_status_id');
+            $table->unsignedBigInteger('order_status_id')->nullable();
             $table->string('total_raw_material')->nullable();
             $table->timestamps();
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
