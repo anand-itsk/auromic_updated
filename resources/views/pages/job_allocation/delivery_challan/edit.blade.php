@@ -35,57 +35,60 @@
                                     method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group row">
-                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">
-                                            Company Name
-                                        </label>
-                                        <div class="col-sm-4 mb-4">
+                   <label for="customer_code" class="col-sm-2 col-form-label mandatory">
+    Company Type
+</label>
+<div class="col-sm-4 mb-4">
+    <select class="form-control select2" name="company_type_id" id="company_type_id">
+        <option value="">Select Company Type</option>
+        @foreach ($company_types as $item)
+            <option value="{{ $item->id }}" {{ $delivery_challans->company->company_type_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
+        @endforeach
+    </select>
+    @error('company_type_id')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+<label for="customer_code" class="col-sm-2 col-form-label mandatory">
+    Company Name
+</label>
+<div class="col-sm-4 mb-4">
+    <select class="form-control select2 w-100" name="company_id" id="company_id">
+        <option value="">Select Company</option>
+        @foreach ($company as $companyItem)
+            <option value="{{ $companyItem->id }}" {{ $delivery_challans->company_id == $companyItem->id ? 'selected' : '' }}>{{ $companyItem->company_name }}</option>
+        @endforeach
+    </select>
+    @error('company_id')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
 
-                                            <select class="form-control select2" name="company_id" id="company_id">
-                                                @foreach ($authorised_people as $item)
-                                                    <option value="{{ $item->id }}"
-                                                        @if ($delivery_challans->company_id == $item->id) selected @endif>
-                                                        {{ $item->company->company_name }}/{{ $item->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('company_id')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-
-
-                                        <label for="customer_name" class="col-sm-2 col-form-label mandatory">DC
-                                            Number</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="dc_number" id="dc_number"
-                                                value={{ $delivery_challans->dc_no }}>
-                                            @error('dc_number')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Order
-                                            ID</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="order_id" id="order_id">
-                                                @foreach ($order_details as $item)
-                                                    {{-- <option value="{{ $item->id }}">
-                                                        {{ $item->order_no }}
-                                                    </option> --}}
-
-                                                    <option value="{{ $item->id }}"
-                                                        @if ($delivery_challans->order_id == $item->id) selected @endif>
-                                                        {{ $item->order_no }}</option>
-                                                @endforeach
-                                            </select>
-                                            {{-- <input class="form-control" type="text" name="order_id" id="order_id"> --}}
-                                            @error('order_id')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
+                           <label for="customer_name" class="col-sm-2 col-form-label mandatory">DC
+                           Number</label>
+                           <div class="col-sm-4 mb-4">
+                              <input class="form-control" type="text" name="dc_number" id="dc_number">
+                              @error('dc_number')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                           <label for="customer_code" class="col-sm-2 col-form-label mandatory">Order
+                           ID</label>
+                           <div class="col-sm-4 mb-4">
+                              <select class="form-control select2" name="order_id" id="order_id">
+                                 <option value="">Select Order</option>
+                                 @foreach ($order_details as $item)
+                                 <option value="{{ $item->id }}">
+                                    {{ $item->order_no }}
+                                 </option>
+                                 @endforeach
+                              </select>
+                              {{-- <input class="form-control" type="text" name="order_id" id="order_id"> --}}
+                              @error('order_id')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                        </div>
 
 
                                     <div class="form-group">
@@ -110,7 +113,42 @@
             </div>
         </div>
     </div>
+<script>
+    $(document).ready(function() {
+        $('#company_type_id').on('change', function() {
+            var companyTypeId = $(this).val();
+            var deliveryChallanId = {{ $delivery_challans->id }};
+            $.ajax({
+                url: '/get-company-by-type/' + companyTypeId + '/' + deliveryChallanId,
+                type: 'GET',
+                success: function(company) {
+                    $('#company_id').empty().append('<option value="">Select Company</option>');
+                    $('#company_id').append('<option value="' + company.id + '" selected>' + company.company_name + '</option>');
+                    
+                }
+            });
+        });
+   
+        // Trigger the change event initially if a company type is already selected
+        var selectedCompanyTypeId = $('#company_type_id').val();
+        if (selectedCompanyTypeId) {
+            $('#company_type_id').trigger('change');
+        }
+    });
+</script>
 
+<script>
+    $(document).ready(function() {
+        $('#company_type_id').on('change', function() {
+            var companyTypeId = $(this).val();
+            if (companyTypeId !== '') {
+                $('#company_id').prop('disabled', false);
+            } else {
+                $('#company_id').prop('disabled', true);
+            }
+        });
+    });
+</script>
 
     @include('links.js.select2.select2')
 @endsection

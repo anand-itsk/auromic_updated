@@ -22,7 +22,7 @@ class OrderDetailController extends Controller
     public function indexData()
 {
     // Eager load the related models
-    $order_details = OrderDetail::with('productSize', 'productColor', 'orderStatus','productModel')->get();
+    $order_details = OrderDetail::with('productSize', 'productColor', 'orderStatus','productModel','customer')->get();
 
     return DataTables::of($order_details)->make(true);
 }

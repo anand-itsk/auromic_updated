@@ -195,8 +195,8 @@ $(document).ready(function() {
                 name: 'order_no'
             },
             {
-                data: 'order_date',
-                name: 'order_date'
+                data: 'customer.customer_name',
+                name: 'customer.customer_name'
             },
            {
                 data: 'quantity',

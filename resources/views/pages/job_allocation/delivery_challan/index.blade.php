@@ -99,7 +99,7 @@
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Company ID</th>
-                                                <th>Order Numbrer</th>
+                                                <th>Order Number</th>
                                                 <th>DC NO</th>
                                                 <th>Action</th>
                                             </tr>
@@ -221,7 +221,7 @@
                     {
                         text: 'Export All',
                         action: function(e, dt, node, config) {
-                            window.location.href = '/master/customers/export?' + $.param(dt.ajax
+                            window.location.href = '/job_allocation/delivery_challan/export?' + $.param(dt.ajax
                                 .params());
                         }
                     }

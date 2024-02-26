@@ -5,6 +5,7 @@ namespace App\Http\Controllers\PageControllers\JobAllocation;
 use App\Http\Controllers\Controller;
 use App\Models\AuthorisedPerson;
 use App\Models\Company;
+use App\Models\Customer;
 use App\Models\CompanyType;
 use App\Models\DeliveryChallan;
 use App\Models\OrderDetail;
@@ -28,12 +29,30 @@ class DeliveryChallanController extends Controller
     // Create Page
     public function create()
     {
+        $customer= Customer::all();
         $company = Company::all();
-        $company_type = CompanyType::all();
+        $company_types = CompanyType::all();
         $authorised_people = AuthorisedPerson::all();
         $order_details = OrderDetail::all();
-        return view('pages.job_allocation.delivery_challan.create', compact('company', 'authorised_people', 'order_details','company_type'));
+        
+        return view('pages.job_allocation.delivery_challan.create', compact('company', 'authorised_people', 'order_details','company_types','customer'));
     }
+
+       public function getCompanies($companytypeid)
+    {
+        $companies = Company::where('company_type_id', $companytypeid)->with('authorisedPerson')->get();
+        return response()->json($companies);
+    }
+
+     public function getOrders($customerid)
+    {
+        $customers = OrderDetail::where('customer_id', $customerid)->get();
+        return response()->json($customers);
+    }
+
+
+
+
     
     // Store Date
     public function store(Request $request)
@@ -60,9 +79,10 @@ class DeliveryChallanController extends Controller
     {
         $delivery_challans = DeliveryChallan::find($id);
         $company = Company::all();
+        $company_types = CompanyType::all();
         $authorised_people = AuthorisedPerson::all();
         $order_details = OrderDetail::all();
-        return view('pages.job_allocation.delivery_challan.edit', compact('company', 'authorised_people', 'order_details', 'delivery_challans'));
+        return view('pages.job_allocation.delivery_challan.edit', compact('company', 'authorised_people', 'order_details', 'delivery_challans','company_types'));
     }
     // Update
     public function update(Request $request, $id)
