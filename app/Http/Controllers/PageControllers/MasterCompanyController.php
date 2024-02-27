@@ -49,8 +49,6 @@ class MasterCompanyController extends Controller
             'company_code' => 'required|max:255',
             'company_name' => 'required|max:255',
             'name' => 'required',
-            'company_email' => 'nullable|email|unique:companies,email',
-             'person_email' => 'nullable|email|unique:authorised_people,email',
              'photo' => 'nullable|image|max:200000',
         ]);
         $input = $request->all();

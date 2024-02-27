@@ -5,6 +5,7 @@ namespace App\Http\Controllers\PageControllers\JobAllocation;
 use App\Http\Controllers\Controller;
 use App\Models\DeliveryChallan;
 use App\Models\Employee;
+use App\Models\Company;
 use App\Models\JobGiving;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
@@ -30,8 +31,12 @@ class JobGivingController extends Controller
         $delivery_challan = DeliveryChallan::all();
         $order_details = OrderDetail::all();
         $employee = Employee::all();
+
+        
         return view('pages.job_allocation.job_giving.create', compact('delivery_challan', 'order_details', 'employee'));
     }
+
+ 
     // Store Date
     public function store(Request $request)
     {

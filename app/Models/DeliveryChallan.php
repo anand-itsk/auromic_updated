@@ -11,7 +11,10 @@ class DeliveryChallan extends Model
     protected $fillable = [
         'company_id',
         'dc_id',
-        'order_id'
+        'order_id',
+        'product_size_id',
+        'product_color_id',
+        'quantity'
     ];
 
     public function company()
@@ -21,5 +24,12 @@ class DeliveryChallan extends Model
     public function order_details()
     {
         return $this->belongsTo(OrderDetail::class, 'order_id');
+    }
+      public function productSize(){
+        return $this->belongsTo(ProductSize::class,'product_size_id');
+    }
+
+     public function productColor(){
+        return $this->belongsTo(ProductColor::class,'product_color_id');
     }
 }
