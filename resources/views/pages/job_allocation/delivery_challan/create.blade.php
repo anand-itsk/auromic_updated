@@ -93,19 +93,89 @@
 <div class="col-sm-4 mb-4">
     <select class="form-control select2" name="order_id" id="order_id" disabled>
         <option value="">Select Order</option>
+            @foreach ($order_details as $item)
+            <option value="{{ $item->id }}">{{ $item->order_no}}</option>
+        @endforeach
     </select>
     @error('order_id')
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
 </div>
 
-                         <label for="customer_name" class="col-sm-2 col-form-label mandatory">Order Date</label>
-                           <div class="col-sm-4 mb-4">
-                              <input class="form-control" type="date" name="order_date" id="order_date">
-                              @error('order_date')
-                              <span class="error" style="color: red;">{{ $message }}</span>
-                              @enderror
-                           </div>
+   <label for="order_date" class="col-sm-2 col-form-label mandatory">Order Date</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="order_date" id="order_date" readonly>
+    @error('order_date')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label for="customer_code" class="col-sm-2 col-form-label mandatory">Model</label>
+<div class="col-sm-4 mb-4">
+    <select class="form-control select2" name="product_model" id="product_model">
+       <option value="">Select Model</option>
+                              @foreach($productModels as $productModel)
+                              <option value="{{ $productModel->id }}" >{{ $productModel->model_name }}-{{ $productModel->model_code }}</option>
+                              @endforeach
+    </select>
+    @error('product_model')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label for="order_date" class="col-sm-2 col-form-label ">Product Name</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="product" id="product" readonly>
+    @error('product_id')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+<label for="order_date" class="col-sm-2 col-form-label ">Raw Material Name</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="raw_material_name" id="raw_material_name" readonly>
+    @error('raw_material')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+<label for="order_date" class="col-sm-2 col-form-label">Raw Material Type</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="raw_material_type" id="raw_material_type" readonly>
+    @error('raw_material_type')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label for="customer_code" class="col-sm-2 col-form-label">Product Size</label>
+<div class="col-sm-4 mb-4">
+    <select class="form-control select2" name="product_size_id" id="product_size_id">
+        <option value="">Select Product Size</option>
+        @foreach ($product_size as $item)
+            <option value="{{ $item->id }}">{{ $item->name}}</option>
+        @endforeach
+    </select>
+    @error('product_size_id')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+<label for="customer_code" class="col-sm-2 col-form-label">Product Color</label>
+<div class="col-sm-4 mb-4">
+    <select class="form-control select2" name="product_color_id" id="product_color_id">
+        <option value="">Select Product color</option>
+        @foreach ($product_color as $item)
+            <option value="{{ $item->id }}">{{ $item->name}}</option>
+        @endforeach
+    </select>
+    @error('product_color_id')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+<label for="order_date" class="col-sm-2 col-form-label">Quantity</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="quantity" id="quantity">
+    @error('quantity')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
                         <div class="form-group">
                            <div class="d-flex justify-content-evenly">
                               <button type="submit" class="btn btn-primary waves-effect waves-light">
@@ -153,12 +223,11 @@
         }
     });
 </script>
-
 <script>
     $(document).ready(function() {
         $('#company_type_id').on('change', function() {
-            var companyTypeId = $(this).val();
-            if (companyTypeId !== '') {
+            var customerId = $(this).val();
+            if (customerId !== '') {
                 $('#company_id').prop('disabled', false);
             } else {
                 $('#company_id').prop('disabled', true);
@@ -166,37 +235,37 @@
         });
     });
 </script>
-
-
-
 <script>
     $(document).ready(function() {
-        $('#order_no').on('change', function() {
-            var orderNo = $(this).val();
-            var orderDate = $('#order_date').val();
-
-            if (orderNo && orderDate) {
-                $.ajax({
-                    url: '/get-customer-id-by-order',
-                    type: 'GET',
-                    data: {
-                        order_no: orderNo,
-                        order_date: orderDate
-                    },
-                    success: function(response) {
-                        if (response.customer_id) {
-                            $('#customer_id').val(response.customer_id);
-                        } else {
-                            $('#customer_id').val('');
-                            alert('Order not found');
-                        }
-                    },
-                    error: function() {
-                        alert('Error occurred while fetching customer ID.');
-                    }
-                });
-            }
+        $('#customer_id').on('change', function() {
+            var customerId = $(this).val();
+            $.ajax({
+                url: '/job_allocation/delivery_challan/get-orders/' + customerId,
+                type: 'GET',
+                success: function(orders) {
+                    $('#order_id').empty().append('<option value="">Select Order</option>');
+                    $.each(orders, function(index, order) {
+                        $('#order_id').append('<option value="' + order.id + '" data-order-date="' + order.order_date + '">' + order.order_no + '</option>');
+                    });
+                    $('#order_id').prop('disabled', false); // Enable the order dropdown
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    // Handle error
+                }
+            });
         });
+
+        $('#order_id').on('change', function() {
+            var orderDate = $(this).find(':selected').data('order-date');
+            $('#order_date').val(orderDate);
+        });
+
+        // Trigger the change event initially if an order is already selected
+        var selectedOrderId = $('#order_id').val();
+        if (selectedOrderId) {
+            $('#order_id').trigger('change');
+        }
     });
 </script>
 
@@ -210,6 +279,25 @@
                 $('#order_id').prop('disabled', false);
             } else {
                 $('#order_id').prop('disabled', true);
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#product_model').change(function() {
+            var modelId = $(this).val();
+            if (modelId) {
+                $.ajax({
+                    url: '/job_allocation/delivery_challan/get-model-details/' + modelId,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        $('#product').val(data.product_name);
+                        $('#raw_material_name').val(data.raw_material_name);
+                        $('#raw_material_type').val(data.raw_material_type);
+                    }
+                });
             }
         });
     });

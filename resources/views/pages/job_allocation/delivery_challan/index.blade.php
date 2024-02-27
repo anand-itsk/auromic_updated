@@ -101,6 +101,10 @@
                                                 <th>Company ID</th>
                                                 <th>Order Number</th>
                                                 <th>DC NO</th>
+                                                 <th>DC Date</th>
+                                                  <th>Product Size</th>
+                                                   <th>Product color</th>
+                                                    <th>Quantity</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -195,6 +199,22 @@
                     {
                         data: 'dc_no',
                         name: 'dc_no'
+                    },
+                    {
+                        data: 'dc_date',
+                        name: 'dc_date'
+                    },
+                    {
+                        data: 'product_size.name',
+                        name: 'product_size.name'
+                    },
+                     {
+                        data: 'product_color.name',
+                        name: 'product_color.name'
+                    },
+                     {
+                        data: 'quantity',
+                        name: 'quantity'
                     },
 
                     {
