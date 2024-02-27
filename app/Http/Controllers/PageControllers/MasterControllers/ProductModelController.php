@@ -11,14 +11,15 @@ use App\Models\ProductSize;
 use App\Models\ProductModel;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
+
 class ProductModelController extends Controller
 {
-     public function index()
-     {
+    public function index()
+    {
         return view('pages.master.product_model.index');
-     }
+    }
 
-      public function indexData()
+    public function indexData()
     {
         // Eager load the roles relationship
         $product_model = ProductModel::with(['rawMaterial.rawMaterialType', 'product', 'productSize'])->get();
@@ -26,47 +27,47 @@ class ProductModelController extends Controller
         return DataTables::of($product_model)->make(true);
     }
 
-      public function create()
+    public function create()
     {
         $raw_material = RawMaterial::all();
-         $product = Product::all();
-         $product_size = ProductSize::all();
-        return view('pages.master.product_model.create',compact('raw_material','product','product_size'));
+        $product = Product::all();
+        $product_size = ProductSize::all();
+        return view('pages.master.product_model.create', compact('raw_material', 'product', 'product_size'));
     }
 
     public function store(Request $request)
     {
         // dd($request);
         $validatedData = $request->validate([
-             'product_id' => 'required',
-             'model_code' => 'required',
-             'model_name' => 'required',  
+            'product_id' => 'required',
+            'model_code' => 'required',
+            'model_name' => 'required',
         ]);
-       
-         $product_model = new ProductModel;
-         $product_model->raw_material_id = $request->input('raw_material_id');
-         $product_model->product_id = $request->input('product_id');
-         $product_model->product_size_id  = $request->input('product_size_id');
-         $product_model->model_code = $request->input('model_code');
-         $product_model->model_name = $request->input('model_name');
-         $product_model->raw_material_weight_item = $request->input('raw_material_weight_item');
+
+        $product_model = new ProductModel;
+        $product_model->raw_material_id = $request->input('raw_material_id');
+        $product_model->product_id = $request->input('product_id');
+        $product_model->product_size_id  = $request->input('product_size_id');
+        $product_model->model_code = $request->input('model_code');
+        $product_model->model_name = $request->input('model_name');
+        $product_model->raw_material_weight_item = $request->input('raw_material_weight_item');
         $product_model->wages_product = $request->input('wages_product');
-    //    dd($product_model);
+        //    dd($product_model);
         $product_model->save();
 
-      
+
         return redirect()->route('master.product_model.index')
             ->with('success', 'Product Model created successfully');
     }
 
     public function edit($id)
     {
-         $product_model = ProductModel::find($id);
-         $raw_material = RawMaterial::all();
-         $product = Product::all();
-         $product_size = ProductSize::all();
+        $product_model = ProductModel::find($id);
+        $raw_material = RawMaterial::all();
+        $product = Product::all();
+        $product_size = ProductSize::all();
 
-          return view('pages.master.product_model.edit', compact('product_model','raw_material','product','product_size'));
+        return view('pages.master.product_model.edit', compact('product_model', 'raw_material', 'product', 'product_size'));
     }
 
 
@@ -74,35 +75,34 @@ class ProductModelController extends Controller
     {
         // dd($request);
         $validatedData = $request->validate([
-             'product_id' => 'required',
-             'model_code' => 'required',
-             'model_name' => 'required',  
+            'product_id' => 'required',
+            'model_code' => 'required',
+            'model_name' => 'required',
         ]);
-       
-         $product_model = ProductModel::find($id);
-         $product_model->raw_material_id = $request->input('raw_material_id');
-         $product_model->product_id = $request->input('product_id');
-         $product_model->product_size_id  = $request->input('product_size_id');
-         $product_model->model_code = $request->input('model_code');
-         $product_model->model_name = $request->input('model_name');
-         $product_model->raw_material_weight_item = $request->input('raw_material_weight_item');
+
+        $product_model = ProductModel::find($id);
+        $product_model->raw_material_id = $request->input('raw_material_id');
+        $product_model->product_id = $request->input('product_id');
+        $product_model->product_size_id  = $request->input('product_size_id');
+        $product_model->model_code = $request->input('model_code');
+        $product_model->model_name = $request->input('model_name');
+        $product_model->raw_material_weight_item = $request->input('raw_material_weight_item');
         $product_model->wages_product = $request->input('wages_product');
-    //    dd($product_model);
+        //    dd($product_model);
         $product_model->save();
 
-      
+
         return redirect()->route('master.product_model.index')
             ->with('success', 'Product Model Updated successfully');
     }
 
-           public function delete($id)
+    public function delete($id)
     {
-         $product_model = ProductModel::find($id);
+        $product_model = ProductModel::find($id);
 
-           $product_model->delete();
+        $product_model->delete();
 
-          return redirect()->route('religions')->with('success', 'Product Model Deleted successfully!');
-
+        return redirect()->route('religions')->with('success', 'Product Model Deleted successfully!');
     }
 
     public function deleteSelected(Request $request)
@@ -134,4 +134,10 @@ class ProductModelController extends Controller
         return redirect()->route('master.product_model.index')->with('success', 'Data imported successfully');
     }
 
+    public function destroy($id)
+    {
+        $raw_material = ProductModel::find($id);
+
+        $raw_material->delete();
+    }
 }

@@ -86,11 +86,13 @@
                             class="nav-link {{ request()->is('product-models/raw_materials*') ? 'show' : '' }}"
                             href="{{ route('product-models.raw_materials') }}">Raw Material</a></li>
                     <li class="nav-item"><a
-                            class="nav-link {{ request()->is('product-models/product*') ? 'show' : '' }}"
+                            class="nav-link {{ request()->is('product-models/products*') ? 'show' : '' }}"
                             href="{{ route('product-models.products') }}">Product</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('product-models/size*') ? 'show' : '' }}"
+                    <li class="nav-item"><a
+                            class="nav-link {{ request()->is('product-models/product_size*') ? 'show' : '' }}"
                             href="{{ route('product-models.product_sizes') }}">Product Size</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('product-models/color*') ? 'show' : '' }}"
+                    <li class="nav-item"><a
+                            class="nav-link {{ request()->is('product-models/product_color*') ? 'show' : '' }}"
                             href="{{ route('product-models.product_colors') }}">Product Color</a></li>
                     <li class="nav-item"><a
                             class="nav-link {{ request()->is('product-models/order_status*') ? 'show' : '' }}"
