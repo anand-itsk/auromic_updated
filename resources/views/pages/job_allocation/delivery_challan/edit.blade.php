@@ -63,33 +63,129 @@
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
 </div>
-
-                           <label for="customer_name" class="col-sm-2 col-form-label mandatory">DC
+    <label for="customer_name" class="col-sm-2 col-form-label mandatory">DC Date</label>
+                           <div class="col-sm-4 mb-4">
+                              <input class="form-control" type="date" name="dc_date" id="dc_date" value="{{$delivery_challans->dc_date}}">
+                              @error('dc_date')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                            <label for="customer_name" class="col-sm-2 col-form-label mandatory">DC
                            Number</label>
                            <div class="col-sm-4 mb-4">
-                              <input class="form-control" type="text" name="dc_number" id="dc_number">
+                              <input class="form-control" type="text" name="dc_number" id="dc_number"value="{{$delivery_challans->dc_no}}">
                               @error('dc_number')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="customer_code" class="col-sm-2 col-form-label mandatory">Order
-                           ID</label>
-                           <div class="col-sm-4 mb-4">
-                              <select class="form-control select2" name="order_id" id="order_id">
-                                 <option value="">Select Order</option>
-                                 @foreach ($order_details as $item)
-                                 <option value="{{ $item->id }}">
-                                    {{ $item->order_no }}
-                                 </option>
-                                 @endforeach
-                              </select>
-                              {{-- <input class="form-control" type="text" name="order_id" id="order_id"> --}}
-                              @error('order_id')
-                              <span class="error" style="color: red;">{{ $message }}</span>
-                              @enderror
-                           </div>
-                        </div>
 
+<label for="customer_code" class="col-sm-2 col-form-label mandatory">Customer</label>
+<div class="col-sm-4 mb-4">
+    <select class="form-control select2" name="customer_id" id="customer_id">
+        <option value="">Select Customer</option>
+        @foreach ($customer as $item)
+            <option value="{{ $item->id }}" @if($item->id == $delivery_challans->order_details->customer_id) selected @endif>{{ $item->customer_name}}/{{ $item->customer_code}}</option>
+        @endforeach
+    </select>
+    @error('customer_id')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label for="customer_code" class="col-sm-2 col-form-label mandatory">Order ID</label>
+<div class="col-sm-4 mb-4">
+    <select class="form-control select2" name="order_id" id="order_id">
+        <option value="">Select Order</option>
+        @foreach ($order_details as $orderDetail)
+            <option value="{{ $orderDetail->id }}" @if($orderDetail->id == $delivery_challans->order_id) selected @endif>{{ $orderDetail->order_no }}</option>
+        @endforeach
+    </select>
+    @error('order_id')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+ <label for="order_date" class="col-sm-2 col-form-label mandatory">Order Date</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="order_date" id="order_date" value="{{ $delivery_challans->order_details->order_date }}" readonly>
+    @error('order_date')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label for="customer_code" class="col-sm-2 col-form-label mandatory">Model</label>
+<div class="col-sm-4 mb-4">
+    <select class="form-control select2" name="product_model" id="product_model">
+        <option value="">Select Model</option>
+        @foreach($productModels as $item)
+            <option value="{{ $item->id }}" @if($item->id == $delivery_challans->order_details->product_model_id) selected @endif>{{ $item->model_name }}-{{ $item->model_code }}</option>
+        @endforeach
+        
+    </select>
+    @error('product_model')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label for="order_date" class="col-sm-2 col-form-label ">Product Name</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="product" id="product" readonly value="{{$item->product->name }}">
+    @error('product_id')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label for="order_date" class="col-sm-2 col-form-label ">Raw Material Name</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="raw_material_name" id="raw_material_name" readonly value="{{$item->rawMaterial->name }}">
+    @error('raw_material')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label for="order_date" class="col-sm-2 col-form-label">Raw Material Type</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="raw_material_type" id="raw_material_type" readonly value="{{$item->rawMaterial->rawMaterialType->name }}">
+    @error('raw_material_type')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label for="customer_code" class="col-sm-2 col-form-label">Product Size</label>
+<div class="col-sm-4 mb-4">
+    <select class="form-control select2" name="product_size_id" id="product_size_id">
+        <option value="">Select Product Size</option>
+        @foreach ($product_size as $item)
+           <option value="{{ $item->id }}"
+            @if ($delivery_challans->product_size_id == $item->id) selected @endif>
+                                                        {{ $item->name }}</option>
+        @endforeach
+    </select>
+    @error('product_size_id')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+<label for="customer_code" class="col-sm-2 col-form-label">Product Color</label>
+<div class="col-sm-4 mb-4">
+    <select class="form-control select2" name="product_color_id" id="product_color_id">
+        <option value="">Select Product color</option>
+        @foreach ($product_color as $item)
+            <option value="{{ $item->id }}"
+            @if ($delivery_challans->product_color_id == $item->id) selected @endif>
+                                                        {{ $item->name }}</option>
+        @endforeach
+    </select>
+    @error('product_color_id')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+<label for="order_date" class="col-sm-2 col-form-label">Quantity</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="quantity" id="quantity"value="{{$delivery_challans->quantity}}">
+    @error('quantity')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
 
                                     <div class="form-group">
                                         <div class="d-flex justify-content-evenly">
@@ -149,6 +245,111 @@
         });
     });
 </script>
+<script>
+    $(document).ready(function() {
+        $('#customer_id').on('change', function() {
+            var customerId = $(this).val();
+            $.ajax({
+                url: '/job_allocation/delivery_challan/get-orders/' + customerId,
+                type: 'GET',
+                success: function(orders) {
+                    $('#order_id').empty().append('<option value="">Select Order</option>');
+                    $.each(orders, function(index, order) {
+                        $('#order_id').append('<option value="' + order.id + '" data-order-date="' + order.order_date + '">' + order.order_no + '</option>');
+                    });
+                    $('#order_id').prop('disabled', false); // Enable the order dropdown
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    // Handle error
+                }
+            });
+        });
 
+        $('#order_id').on('change', function() {
+            var orderDate = $(this).find(':selected').data('order-date');
+            $('#order_date').val(orderDate);
+        });
+
+        // Trigger the change event initially if an order is already selected
+        var selectedOrderId = $('#order_id').val();
+        if (selectedOrderId) {
+            $('#order_id').trigger('change');
+        }
+    });
+</script>
+
+
+
+<script>
+    $(document).ready(function() {
+        $('#customer_id').on('change', function() {
+            var customerId = $(this).val();
+            if (customerId !== '') {
+                $('#order_id').prop('disabled', false);
+            } else {
+                $('#order_id').prop('disabled', true);
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#product_model').change(function() {
+            var modelId = $(this).val();
+            if (modelId) {
+                $.ajax({
+                    url: '/job_allocation/delivery_challan/get-model-details/' + modelId,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        $('#product').val(data.product_name);
+                        $('#raw_material_name').val(data.raw_material_name);
+                        $('#raw_material_type').val(data.raw_material_type);
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+<script>
+    $('#order_id').change(function(){
+        var orderId = $(this).val();
+        if(orderId) {
+            $.ajax({
+                   url: '/job_allocation/delivery_challan/get-orders/' + customerId,
+                type: "GET",
+                data: {"orderId": orderId},
+                dataType: "json",
+                success:function(data) {
+                    $('#customer_id').val(data.customer_id);
+                    $('#product_model').val(data.product_model_id);
+                    $('#order_date').val(data.order_date);
+                }
+            });
+        }
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        $('#product_model').change(function(){
+            var productModelId = $(this).val();
+            $.ajax({
+                url: '{{ route("job_allocation.delivery_challan.fetchProductDetails") }}',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    product_model_id: productModelId
+                },
+                success: function(data){
+                    $('#product').val(data.product_name);
+                    $('#raw_material_name').val(data.raw_material_name);
+                    $('#raw_material_type').val(data.raw_material_type);
+                }
+            });
+        });
+    });
+</script>
     @include('links.js.select2.select2')
 @endsection

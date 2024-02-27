@@ -472,6 +472,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/get-companies/{companyTypeId}', [DeliveryChallanController::class, 'getCompanies'])->name('get-companies');
               Route::get('/get-model-details/{id}', [DeliveryChallanController ::class, 'getModelDetails'])->name('get-models');
             Route::get('/get-orders/{customerId}', [DeliveryChallanController ::class, 'getOrders'])->name('get-orders');
+           Route::post('/fetch-product-details', [DeliveryChallanController::class, 'fetchProductDetails'])->name('fetchProductDetails');
+
         });
 
         Route::prefix('/job_giving')->name('job_giving.')->group(function () {
@@ -482,6 +484,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/edit/{id}', [JobGivingController::class, 'edit'])->name('edit');
             Route::post('/update/{id}', [JobGivingController::class, 'update'])->name('update');
             Route::post('/delete/selected', [JobGivingController::class, 'deleteSelected']);
+     
+
         });
         Route::prefix('/job_received')->name('job_received.')->group(function () {
             Route::get('/', [JobReceivedController::class, 'index'])->name('index');
