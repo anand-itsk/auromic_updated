@@ -37,23 +37,45 @@
                                 <form action="{{ route('job_allocation.job_giving.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
-                                    <div class="form-group row">
-                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">
-                                            Employee Name
-                                        </label>
-                                        <div class="col-sm-4 mb-4">
+                                        <div class="form-group row">
+                                            <label for="customer_code" class="col-sm-2 col-form-label mandatory">
+                                                Employee Name
+                                            </label>
+                                            <div class="col-sm-4 mb-4">
 
-                                            <select class="form-control select2" name="employee_id" id="employee_id">
-                                               <option value="">Select Employee</option>
-                                            @foreach ($employee as $item)
-                                                    <option value="{{ $item->id }}">
-                                                        {{ $item->employee_code }}/{{ $item->employee_name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('employee_id')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                                <select class="form-control select2" name="employee_id" id="employee_id">
+                                                <option value="">Select Employee</option>
+                                                @foreach ($employee as $item)
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->employee_code }}/{{ $item->employee_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('employee_id')
+                                                    <span class="error" style="color: red;">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <label for="customer_code" class="col-sm-2 col-form-label mandatory">
+                                                Company Type
+                                            </label>
+                                            <div class="col-sm-4 mb-4">
+
+                                                <input type="text" class="form-control " name="company_type" id="company_type" readonly>
+                                                @error('company_type')
+                                                    <span class="error" style="color: red;">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">
+                                                Company Name
+                                            </label>
+                                            <div class="col-sm-4 mb-4">
+
+                                                <input type="text" class="form-control " name="company_name" id="company_name" readonly>
+                                                @error('company_name')
+                                                    <span class="error" style="color: red;">{{ $message }}</span>
+                                                @enderror
+                                            </div>
 
                                         <label for="customer_code" class="col-sm-2 col-form-label mandatory">Order
                                             ID</label>
@@ -155,4 +177,7 @@
             });
         });
     </script>
+
+    
+
 @endsection

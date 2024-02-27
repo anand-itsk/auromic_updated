@@ -52,7 +52,7 @@ class DeliveryChallanController extends Controller
 
      public function getOrders($customerId)
 {
-    $orders = OrderDetail::select('id', 'order_no', 'order_date') // Select the desired columns
+    $orders = OrderDetail::select('id', 'order_no', 'order_date','customer_id', 'product_model_id') // Select the desired columns
                         ->where('customer_id', $customerId)
                         ->get();
     return response()->json($orders);
@@ -76,6 +76,14 @@ public function getModelDetails($id)
         return response()->json($data);
     }
     
+//     public function getOrders($customerId)
+// {
+//     $orders = OrderDetail::select('id', 'order_no', 'order_date', 'customer_id', 'product_model_id') // Include customer_id and product_model_id
+//                     ->where('customer_id', $customerId)
+//                     ->get();
+//     return response()->json($orders);
+// }
+
     // Store Date
     public function store(Request $request)
     {
@@ -106,11 +114,36 @@ public function getModelDetails($id)
     {
         $delivery_challans = DeliveryChallan::find($id);
         $company = Company::all();
+        $customer= Customer::all();
         $company_types = CompanyType::all();
         $authorised_people = AuthorisedPerson::all();
         $order_details = OrderDetail::all();
-        return view('pages.job_allocation.delivery_challan.edit', compact('company', 'authorised_people', 'order_details', 'delivery_challans','company_types'));
+        $productModels = ProductModel::with(['rawMaterial.rawMaterialType','product'])->get();
+
+        // dd($productModels);
+        $product_size= ProductSize::all();
+        $product_color = ProductColor::all();
+           // Fetch order details based on conditions
+    $order_detail = OrderDetail::where('customer_id', $request->customer_id)
+        ->where('order_date', $request->order_date)
+        ->where('product_model_id', $request->product_model)
+        ->get();
+
+        
+        return view('pages.job_allocation.delivery_challan.edit', compact('company', 'authorised_people', 'order_details', 'delivery_challans','company_types','productModels','product_size','product_color','customer','order_detail'));
     }
+
+public function getProductDetails(Request $request)
+{
+    $productModelId = $request->input('product_model_id');
+    $productDetails = ProductModel::with(['product', 'rawMaterial.rawMaterialType'])->find($productModelId);
+
+    return response()->json([
+        'product_name' => $productDetails->product->name,
+        'raw_material_name' => $productDetails->rawMaterial->name,
+        'raw_material_type' => $productDetails->rawMaterial->rawMaterialType->name,
+    ]);
+}
     // Update
     public function update(Request $request, $id)
     {
