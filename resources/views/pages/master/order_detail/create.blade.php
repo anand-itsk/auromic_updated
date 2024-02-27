@@ -74,7 +74,7 @@
                            <select class="form-control" name="product_model" id="product_model" disabled>
                               <option value="">Select Product Model</option>
                               @foreach($productModels as $productModel)
-                              <option value="{{ $productModel->id }}" data-product-id="{{ $productModel->product_id }}" data-wage="{{ $productModel->wages_product }}" data-weight="{{ $productModel->raw_material_weight_item }}" data-raw-material-id="{{ $productModel->raw_material_id }}" data-raw-material-type="{{ $productModel->rawMaterial->rawMaterialType->name ?? '' }}" data-raw-material-name="{{ $productModel->rawMaterial->name }}">{{ $productModel->model_name }}-{{ $productModel->model_code }}</option>
+                              <option value="{{ $productModel->id }}" data-product-id="{{ $productModel->product_id }}" data-wage="{{ $productModel->wages_product }}" data-weight="{{ $productModel->raw_material_weight_item }}" data-raw-material-id="{{ $productModel->raw_material_id }}" data-raw-material-type="{{ $productModel->rawMaterial->rawMaterialType->name ?? '' }}" data-raw-material-name="{{ $productModel->rawMaterial->name ?? '' }}">{{ $productModel->model_name }}-{{ $productModel->model_code }}</option>
                               @endforeach
                            </select>
                            @error('model_id')
