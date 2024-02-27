@@ -16,10 +16,8 @@
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/home.css') }}" rel="stylesheet" type="text/css">
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-
-    <!-- Scripts -->
-    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
 </head>
 
 <body class="pb-0">
@@ -34,5 +32,4 @@
 
 
 <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-
 </html>
