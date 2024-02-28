@@ -101,6 +101,8 @@
                                                 <th>Employee Name</th>
                                                 <th>Order ID</th>
                                                 <th>DC NO</th>
+                                                <th>Model</th>
+                                                <th>Quantity</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -187,21 +189,49 @@
                     {
                         data: 'employee.employee_name',
                         name: 'employee.employee_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                         
                     },
 
                     {
                         data: 'order_details.order_no',
-                        name: 'order_details.order_no'
+                        name: 'order_details.order_no',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'delivery_chellan.dc_no',
-                        name: 'delivery_chellan.dc_no'
+                        name: 'delivery_chellan.dc_no',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                    {
+                        data: 'product_model.model_name',
+                        name: 'product_model.model_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                    {
+                        data: 'quantity',
+                        name: 'quantity',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                         
                     },
                     {
                         data: 'status',
-                        name: 'status'
+                        name: 'status',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
 
                     {
@@ -275,10 +305,10 @@
         function deleteCustomer(id) {
             console.log("inside")
             // Send an AJAX request to delete the user
-            if (confirm('Are you sure you want to delete this user?')) {
+            if (confirm('Are you sure you want to delete this Job Giving?')) {
                 $.ajax({
-                    url: '/master/customers/delete/' + id,
-                    type: 'DELETE',
+                    url: '/job_allocation/job_giving/delete/' + id,
+                    type: 'get',
                     data: {
                         _token: '{{ csrf_token() }}',
                     },

@@ -52,4 +52,8 @@ class Company extends Model
     {
         return $this->belongsToMany(BankDetail::class, 'company_bank_details');
     }
+    public function companyType()
+{
+    return $this->belongsTo(CompanyType::class, 'company_type_id');
+}
 }
