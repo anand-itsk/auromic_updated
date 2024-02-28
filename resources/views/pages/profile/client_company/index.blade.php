@@ -1,7 +1,5 @@
 @extends('layouts.app')
 <!-- DataTables CSS -->
-
-
 @section('content')
     @include('links.css.datatable.datatable-css')
     @include('links.css.table.custom-css')
@@ -31,19 +29,28 @@
                         <div class="col-12">
                             <div class="card m-b-30">
                                 <div class="d-flex justify-content-between p-2 bd-highlight">
-                                    <div>
+                                    {{-- <div>
                                         <button id="deleteButton" class="icon-button delete-color"
                                             title="Delete Selected Record"><i class="fa fa-user-times"></i></button>
+                                    </div> --}}
+
+                                    <div>
+                                        <button id="deleteButton" style="display: none;"
+                                            class="icon-button text-white bg-danger rounded fs-14"
+                                            title="Delete Selected Record">
+                                            Delete Selected Record</button>
                                     </div>
                                     <div>
-                                        <button type="button" class="icon-button common-color" data-toggle="modal"
-                                            data-target=".bs-example-modal-center" title="Create Customer"><i
-                                                class="fa fa-upload"></i></button>
+                                        <button type="button" class="icon-button common-color  bg-secondary rounded"
+                                            data-toggle="modal" data-target=".bs-example-modal-center"
+                                            title="Create Customer"><i class="fa fa-upload text-white"></i></button>
 
-                                        <a href="{{ route('profile.clients.create') }}" class="icon-link common-color"
-                                            title="Create New User">
-                                            <i class="fa fa-user-plus"></i>
-                                        </a>
+                                        <button class="icon-button  bg-primary rounded">
+                                            <a href="{{ route('profile.clients.create') }}"
+                                                class="icon-link common-color text-white" title="Create New User">
+                                                <i class="fa fa-user-plus"></i>
+                                            </a>
+                                        </button>
                                     </div>
                                 </div>
                                 {{-- Import Modal --}}
@@ -221,8 +228,18 @@
                 ]
 
             });
+            // Listen for row selection event
+            $('#data-table').on('select.dt deselect.dt', function() {
+                var selectedRows = table.rows({
+                    selected: true
+                }).count();
 
-
+                if (selectedRows > 0) {
+                    $('#deleteButton').show(); // Show delete button if rows are selected
+                } else {
+                    $('#deleteButton').hide(); // Hide delete button if no rows are selected
+                }
+            });
 
             $('#deleteButton').click(function() {
                 var ids = $.map(table.rows('.selected').data(), function(item) {
