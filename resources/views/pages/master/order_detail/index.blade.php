@@ -192,35 +192,59 @@ $(document).ready(function() {
             },
             {
                 data: 'order_no',
-                name: 'order_no'
+                name: 'order_no',
+                render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
             },
             {
                 data: 'customer.customer_name',
-                name: 'customer.customer_name'
+                name: 'customer.customer_name',
+                render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
             },
            {
                 data: 'quantity',
-                name: 'quantity'
+                name: 'quantity',
+                render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
             },
             {
                 data: 'total_raw_material',
-                name: 'total_raw_material'
+                name: 'total_raw_material',
+                render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
             },
           {
                 data: 'product_size.name',
-                name: 'product_size.name'
+                name: 'product_size.name',
+                render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
             },
             {
                 data: 'product_color.name',
-                name: 'product_color.name'
+                name: 'product_color.name',
+                render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
             },
              {
                data: 'order_status.name', 
-               name: 'order_status.name'
+               name: 'order_status.name',
+               render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
             },
             {
                data: 'product_model.model_name', 
-               name: 'product_model.model_name'
+               name: 'product_model.model_name',
+               render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
             },
             {
                 data: null,

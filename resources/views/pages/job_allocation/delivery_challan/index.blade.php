@@ -189,32 +189,53 @@
                     },
                     {
                         data: 'company.company_name',
-                        name: 'company.company_name'
+                        name: 'company.company_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
 
                     {
                         data: 'order_details.order_no',
-                        name: 'order_details.order_no'
+                        name: 'order_details.order_no',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'dc_no',
-                        name: 'dc_no'
+                        name: 'dc_no',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'dc_date',
-                        name: 'dc_date'
+                        name: 'dc_date',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'product_size.name',
-                        name: 'product_size.name'
+                        name: 'product_size.name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                      {
                         data: 'product_color.name',
-                        name: 'product_color.name'
+                        name: 'product_color.name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                      {
                         data: 'quantity',
-                        name: 'quantity'
+                        name: 'quantity',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
 
                     {
