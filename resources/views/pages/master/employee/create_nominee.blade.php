@@ -1,7 +1,9 @@
 <div class="tab-pane" role="tabpanel" id="step4">
     <h4 class="text-center pb-4">Nominee</h4>
-    <button type="button" class="default-btn icon-button btn-primary" data-toggle="modal"
-        data-target=".employee-nominee-add" title="Add Famil Member"><i class="fa fa-user-plus"></i></button>
+    <div class="d-flex justify-content-end mb-2">
+        <button type="button" class="btn icon-button btn-primary" data-toggle="modal"
+            data-target=".employee-nominee-add" title="Add Famil Member"><i class="fa fa-user-plus"></i></button>
+    </div>
     <table class="table table-striped table-bordered dt-responsive nowrap"
         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
         <thead>

@@ -74,14 +74,20 @@
 /* style for the scrolling div Ends */
 
 /* index page styles starts */
-button.dt-button, div.dt-button, a.dt-button, input.dt-button{
+button.dt-button,
+div.dt-button,
+a.dt-button,
+input.dt-button {
     background: #508aeb !important;
     color: #fff !important;
     padding: 5px 13px !important;
-    border: 1px solid #FFF !important;
+    border: 1px solid #fff !important;
     border-radius: 5px !important;
 }
-button.dt-button:hover, div.dt-button, a.dt-button, input.dt-button:hover{
+button.dt-button:hover,
+div.dt-button,
+a.dt-button,
+input.dt-button:hover {
     background-color: #5089ebdf !important;
     transition: 0.5s;
 }
@@ -95,21 +101,23 @@ button.dt-button:hover, div.dt-button, a.dt-button, input.dt-button:hover{
     margin: 6px 0px !important;
     padding: 0px 6px !important;
 }
-.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
     /* color: #ffffff !important; */
     background: #508aeb !important;
     /* background: transparent !important; */
 }
-.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
     /* color: #ffffff !important; */
 }
-.dataTables_wrapper .dataTables_paginate .paginate_button.current{
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
     color: red !important;
 }
 .dataTables_wrapper .dataTables_filter input {
     padding: 0px !important;
 }
-.cancel_btn{
+.cancel_btn {
     padding: 0px 20px;
     height: 34px !important;
 }
@@ -117,7 +125,10 @@ div#data-table_paginate {
     font-size: 17px;
 }
 /* datatable style Ends */
-.fs-14{
+.fs-14 {
     font-size: 14px !important;
 }
 
+.wizard > div.wizard-inner {
+    margin-bottom: 35px !important;
+}

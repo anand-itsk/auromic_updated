@@ -41,7 +41,7 @@
                                             Delete Selected Record</button>
                                     </div>
                                     <div>
-                                        <button type="button" class="icon-button common-color  bg-secondary rounded"
+                                        <button type="button" class="icon-button common-color bg-secondary rounded"
                                             data-toggle="modal" data-target=".bs-example-modal-center"
                                             title="Create Customer"><i class="fa fa-upload text-white"></i></button>
 

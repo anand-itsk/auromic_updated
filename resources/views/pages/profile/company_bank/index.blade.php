@@ -33,10 +33,12 @@
 
                                     </div>
                                     <div>
-                                        <a href="{{ route('profile.bank_details.create') }}" class="icon-link common-color"
-                                            title="Create ">
-                                            <i class="fa fa-user-plus"></i>
-                                        </a>
+                                        <button class="icon-button  bg-primary rounded">
+                                            <a href="{{ route('profile.bank_details.create') }}"
+                                                class="icon-link common-color" title="Create ">
+                                                <i class="fa fa-user-plus text-white"></i>
+                                            </a>
+                                        </button>
                                     </div>
                                 </div>
                                 {{-- Import Modal --}}

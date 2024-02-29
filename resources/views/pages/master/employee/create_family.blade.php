@@ -1,7 +1,10 @@
 <div class="tab-pane" role="tabpanel" id="step3">
-    <h4 class="text-center pb-4">Family</h4>
-    <button type="button" class="default-btn icon-button btn-primary" data-toggle="modal" data-target=".employe-family-add"
-        title="Add Famil Member"><i class="fa fa-user-plus"></i></button>
+    <h4 class="text-center">Family</h4>
+
+    <div class="d-flex justify-content-end mb-2">
+        <button type="button" class="btn icon-button btn-primary" data-toggle="modal" data-target=".employe-family-add"
+            title="Add Famil Member"><i class="fa fa-user-plus"></i></button>
+    </div>
     <table class="table table-striped table-bordered dt-responsive nowrap"
         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
         <thead>
@@ -31,11 +34,11 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body py-0">
                     <div class="row">
                         <div class="col-12">
                             <div class="card m-b-30">
-                                <div class="card-body">
+                                <div class="card-body p-0">
                                     <form role="form"
                                         action="{{ route('master.employees.store.family', $employee->id) }}"
                                         method="post" class="login-box">
@@ -65,7 +68,7 @@
                                                 </div>
 
                                                 <label for="address" class="col-sm-2 col-form-label">Address</label>
-                                                <div class="col-sm-10 mb-4">
+                                                <div class="col-sm-4 mb-4">
                                                     <textarea class="form-control" name="family_address" id="family_address" cols="10" rows="3"></textarea>
 
                                                     @error('family_address')
@@ -160,7 +163,7 @@
                                                 </div>
 
                                                 <label for="remark" class="col-sm-2 col-form-label">Remarks</label>
-                                                <div class="col-sm-4 mb-4">
+                                                <div class="col-sm-4">
                                                     <textarea class="form-control" name="remark" id="remark" cols="10" rows="3"></textarea>
 
                                                     @error('remark')
@@ -172,7 +175,8 @@
                                         </div>
 
                                         <ul class="list-inline pull-right">
-                                            <li><button type="button" class="default-btn next-step3"
+                                            <li><button type="button"
+                                                    class="default-btn next-step3 m-0 bg-primary rounded text-white"
                                                     id="next-step3">Add</button>
                                             </li>
                                         </ul>
@@ -338,7 +342,7 @@
         }
 
 
-        // For Create 
+        // For Create
         // Fetch State
         $('#family_country_id').on('change', function() {
             var countryId = this.value;
