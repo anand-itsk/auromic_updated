@@ -15,11 +15,15 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('employee_id');
             $table->unsignedBigInteger('order_id');
+            $table->unsignedBigInteger('product_model_id');
             $table->unsignedBigInteger('dc_id')->nullable();
             $table->enum('status',['Pending','Incomplete','Complete'])->default('Pending');
+            $table->string('quantity')->nullable();
+            $table->date('date')->nullable();
             $table->timestamps();
             $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
             $table->foreign('order_id')->references('id')->on('order_details')->onDelete('cascade');
+             $table->foreign('product_model_id')->references('id')->on('product_models')->onDelete('cascade');
             $table->foreign('dc_id')->references('id')->on('delivery_challans')->onDelete('cascade');
             
         });

@@ -265,20 +265,32 @@
                     },
                     {
                         data: 'employee.employee_name',
-                        name: 'employee.employee_name'
+                        name: 'employee.employee_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
 
                     {
                         data: 'order_details.order_no',
-                        name: 'order_details.order_no'
+                        name: 'order_details.order_no',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'delivery_chellan.dc_no',
-                        name: 'delivery_chellan.dc_no'
+                        name: 'delivery_chellan.dc_no',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'status',
-                        name: 'status'
+                        name: 'status',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
 
                     {

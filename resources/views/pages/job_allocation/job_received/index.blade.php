@@ -120,7 +120,7 @@
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="detailsModalLabel">Customer Details</h5>
+                            <h5 class="modal-title" id="detailsModalLabel">Job Received Details</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -131,7 +131,7 @@
                             </div>
                         </div>
 
-                        <div class="modal-footer">
+                        <!-- <div class="modal-footer">
 
                             <div class="row w-100">
                                 <div class="col-md-10">
@@ -162,7 +162,7 @@
 
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -287,20 +287,32 @@
                     },
                     {
                         data: 'employee.employee_name',
-                        name: 'employee.employee_name'
+                        name: 'employee.employee_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
 
                     {
                         data: 'order_details.order_no',
-                        name: 'order_details.order_no'
+                        name: 'order_details.order_no',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'delivery_chellan.dc_no',
-                        name: 'delivery_chellan.dc_no'
+                        name: 'delivery_chellan.dc_no',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'status',
-                        name: 'status'
+                        name: 'status',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
 
                     {
@@ -365,25 +377,12 @@
             });
         });
 
+       
         function edit(id) {
             console.log("inside");
-            $('#job_giving_id').val(id);
-
-            $.ajax({
-                url: '/job_allocation/job_received/edit/' + id,
-                type: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    console.log(response);
-
-                    $('#received_status').val(response.status);
-                    // Show the edit modal after populating the form fields
-                    $('#editModal').modal('show');
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
+      
+            // Redirect to the user edit page or open a modal for editing
+            window.location.href = '/job_allocation/job_received/edit/' + id;
         }
 
 
@@ -405,24 +404,19 @@
             }
         }
 
-        function showDetails(userId) {
+        function showDetails(id) {
             // Fetch user details using AJAX
             $.ajax({
-                url: '/master/customers/show/' + userId,
+                url: '/job_allocation/job_received/show/'+ id,
                 type: 'GET',
                 success: function(response) {
 
-                    const createdAt = response.data.created_at;
-                    const formattedCreatedAt = formatTimestamp(createdAt);
-                    const updatedAt = response.data.updated_at;
-                    const formattedUpdatedAt = formatTimestamp(updatedAt);
+                    console.log(response);
+                    
                     $('#detailsContent').html(response.html);
-                    $('#created_by').html(response.data.created_by);
-                    $('#updated_by').html(response.data.updated_by);
-                    $('#created_at').html(formattedCreatedAt);
-                    $('#updated_at').html(formattedUpdatedAt);
+                    
 
-                    console.log(formattedCreatedAt);
+                    // console.log(formattedCreatedAt);
                     $('#detailsModal').modal('show');
 
                 }

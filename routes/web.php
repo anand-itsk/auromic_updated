@@ -483,8 +483,12 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/store', [JobGivingController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [JobGivingController::class, 'edit'])->name('edit');
             Route::post('/update/{id}', [JobGivingController::class, 'update'])->name('update');
+       
             Route::post('/delete/selected', [JobGivingController::class, 'deleteSelected']);
-     
+             Route::get('/delete/{id}', [JobGivingController::class, 'delete'])->name('delete');
+            Route::get('/get-order-details/{orderId}', [JobGivingController::class,'getOrderDetails']);
+            Route::get('/get-model-details/{id}', [JobGivingController ::class, 'getModelDetails'])->name('get-models');
+
 
         });
         Route::prefix('/job_received')->name('job_received.')->group(function () {
@@ -492,6 +496,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/data', [JobReceivedController::class, 'indexData'])->name('data');
             Route::post('/store', [JobReceivedController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [JobReceivedController::class, 'edit'])->name('edit');
+            Route::get('/show/{id}', [JobReceivedController::class, 'showDetails']);
         });
         Route::prefix('/job_reallocation')->name('job_reallocation.')->group(function () {
             Route::get('/', [JobReallocationController::class, 'index'])->name('index');

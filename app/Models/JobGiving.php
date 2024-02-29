@@ -12,7 +12,10 @@ class JobGiving extends Model
         'employee_id',
         'order_id',
         'dc_id',
-        'status'
+        'status',
+        'product_model_id',
+        'quantity',
+        'date'
     ];
     public function employee()
     {
@@ -26,4 +29,12 @@ class JobGiving extends Model
     {
         return $this->belongsTo(DeliveryChallan::class, 'dc_id');
     }
+    public function product_model()
+    {
+        return $this->belongsTo(ProductModel::class, 'product_model_id');
+    }
+ public function job_received()
+{
+    return $this->hasOne(JobReceived::class, 'job_giving_id');
+}
 }
