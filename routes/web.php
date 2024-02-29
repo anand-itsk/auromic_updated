@@ -441,6 +441,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/edit/{id}', [DirectJobGivingController::class, 'edit'])->name('edit');
             Route::post('/update/{id}', [DirectJobGivingController::class, 'update'])->name('update');
             Route::post('/delete/selected', [DirectJobGivingController::class, 'deleteSelected']);
+             Route::get('/get-model-details/{id}', [DirectJobGivingController ::class, 'getModelDetails'])->name('get-models');
         });
           Route::prefix('/direct_job_received')->name('direct_job_received.')->group(function () {
             Route::get('/', [DirectJobReceivedController::class, 'index'])->name('index');
@@ -450,6 +451,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/edit/{id}', [DirectJobReceivedController::class, 'edit'])->name('edit');
             Route::post('/update/{id}', [DirectJobReceivedController::class, 'update'])->name('update');
             Route::post('/delete/selected', [DirectJobReceivedController::class, 'deleteSelected']);
+             Route::get('/get-model-details/{id}', [DirectJobReceivedController ::class, 'getModelDetails'])->name('get-models');
         });
 
         
