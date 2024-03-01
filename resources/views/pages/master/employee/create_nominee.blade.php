@@ -1,8 +1,8 @@
 <div class="tab-pane" role="tabpanel" id="step4">
     <h4 class="text-center pb-4">Nominee</h4>
     <div class="d-flex justify-content-end mb-2">
-        <button type="button" class="btn icon-button btn-primary" data-toggle="modal"
-            data-target=".employee-nominee-add" title="Add Famil Member"><i class="fa fa-user-plus"></i></button>
+        <button type="button" class="btn icon-button btn-primary" data-toggle="modal" data-target=".employee-nominee-add"
+            title="Add Family Member"><i class="fa fa-user-plus"></i></button>
     </div>
     <table class="table table-striped table-bordered dt-responsive nowrap"
         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -25,7 +25,7 @@
     {{-- Add Nominee Member --}}
     <div class="modal fade employee-nominee-add" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title mt-0">Add Nominee</h5>
@@ -33,11 +33,11 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body pb-0">
                     <div class="row">
                         <div class="col-12">
                             <div class="card m-b-30">
-                                <div class="card-body">
+                                <div class="card-body py-0">
                                     <form role="form"
                                         action="{{ route('master.employees.store.nominee', $employee->id) }}"
                                         method="post" class="login-box">
@@ -142,7 +142,9 @@
                                         </div>
 
                                         <ul class="list-inline pull-right">
-                                            <li><button type="button" class="default-btn next-step4"
+
+                                            <li><button type="button"
+                                                    class="default-btn next-step3 m-0 bg-primary rounded text-white"
                                                     data-url="{{ route('master.employees.store.nominee', $employee->id) }}">Add</button>
                                             </li>
                                         </ul>

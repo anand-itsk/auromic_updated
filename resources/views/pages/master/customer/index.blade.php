@@ -126,13 +126,13 @@
                 aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="detailsModalLabel">Customer Details</h5>
+                        <div class="modal-header py-3">
+                            <h5 class="modal-title  text-primary mt-0" id="detailsModalLabel">Customer Details</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body pt-0">
                             <div id="detailsContent">
                                 <!-- Content loaded via AJAX -->
                             </div>

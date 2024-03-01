@@ -29,9 +29,9 @@
                         <div class="col-12">
                             <div class="card m-b-30">
                                 <div class="d-flex justify-content-between p-2 bd-highlight">
-                                    <div>
+                                    {{-- <div>
 
-                                    </div>
+                                    </div> --}}
                                     <div>
                                         <button class="icon-button  bg-primary rounded">
                                             <a href="{{ route('profile.bank_details.create') }}"
@@ -113,8 +113,8 @@
                 aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="detailsModalLabel">Company Bank Details</h5>
+                        <div class="modal-header py-3">
+                            <h5 class="modal-title text-primary m-0" id="detailsModalLabel">Company Bank Details</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
