@@ -29,7 +29,7 @@
                   <div class="m-b-30">
                      <form action="{{ route('job_allocation.direct_job_received.store') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="direct_job_giving_id" value="{{ $id }}">
+                        <input type="hidden" name="direct_job_giving_id" value="{{$id}}">
                         <div class="form-group row">
                            <label for="customer_code" class="col-sm-2 col-form-label mandatory">
                            Employee
@@ -108,7 +108,6 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-
                            <label for="order_date" class="col-sm-2 col-form-label ">  Incentive Applicable</label>
                            <div class="col-sm-4 mb-4">
                               <select class="form-control select2" name="incentive_applicable"
@@ -120,11 +119,9 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                        
-
-                            <label for="order_date" class="col-sm-2 col-form-label "> Model</label>
+                           <!-- <label for="order_date" class="col-sm-2 col-form-label "> Model</label>
                            <div class="col-sm-4 mb-4">
-                               <select class="form-control select2" name="product_models_id" id="product_models_id" disabled>
+                              <select class="form-control select2" name="product_models_id" id="product_models_id" disabled>
                                  <option value="">Select Model</option>
                                  @foreach($product_model as $productModel)
                                  <option value="{{ $productModel->id }}" 
@@ -136,14 +133,10 @@
                               @error('employee_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
-                           </div>
-                        
-                        
-                         
-                             
-                            <label for="order_date" class="col-sm-2 col-form-label ">Product Color</label>
+                           </div> -->
+                           <label for="order_date" class="col-sm-2 col-form-label ">Product Color</label>
                            <div class="col-sm-4 mb-4">
-                               <select class="form-control select2" name="product_color_id" id="product_color_id">
+                              <select class="form-control select2" name="product_color_id" id="product_color_id">
                                  <option value="">Select Product color</option>
                                  @foreach ($product_color as $item)
                                  <option value="{{ $item->id }}">{{ $item->name}}</option>
@@ -153,32 +146,31 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           </div>
-                              
-                           <div class="ml-3 d-flex flex-wrap px-4">
-                              <label>
-                              <input class="form-check-input" name="Direct_Job_Received_Without_Giving" type="checkbox"
-                                 value="1" id="Direct_Job_Received_Without_Giving">
-                              Direct Job Received Without Giving</label>
-                           </div>
                         </div>
-                        <div class="form-group">
-                           <div class="d-flex justify-content-evenly">
-                              <button type="submit" class="btn btn-primary waves-effect waves-light">
-                              Submit
-                              </button>
-                              <a href="{{ route('job_allocation.direct_job_giving.index') }}" class="btn btn-secondary waves-effect m-l-5">
-                              Cancel
-                              </a>
-                           </div>
+                        <div class="ml-3 d-flex flex-wrap px-4">
+                           <label>
+                           <input class="form-check-input" name="Direct_Job_Received_Without_Giving" type="checkbox"
+                              value="1" id="Direct_Job_Received_Without_Giving">
+                           Direct Job Received Without Giving</label>
                         </div>
-                     </form>
                   </div>
+                  <div class="form-group">
+                  <div class="d-flex justify-content-evenly">
+                  <button type="submit" class="btn btn-primary waves-effect waves-light">
+                  Submit
+                  </button>
+                  <a href="{{ route('job_allocation.direct_job_giving.index') }}" class="btn btn-secondary waves-effect m-l-5">
+                  Cancel
+                  </a>
+                  </div>
+                  </div>
+                  </form>
                </div>
             </div>
          </div>
       </div>
    </div>
+</div>
 </div>
 <script>
    $(document).ready(function() {
@@ -214,10 +206,10 @@
 <script>
    $('#Direct_Job_Received_Without_Giving').change(function() {
               if (this.checked) {
-                  $('#product_models_id').prop('disabled', false);
+                
                   $('#Incentive_status').prop('disabled', false);
               } else {
-                  $('#product_models_id').prop('disabled', true);
+                  
                   $('#Incentive_status').prop('disabled', true);
               }
           });

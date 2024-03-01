@@ -84,16 +84,26 @@ class DirectJobGivingController extends Controller
 
   public function edit($id)
      {
+
         $direct_job_giving = DirectJobGiving::find($id);
-        $employee = Employee::all();
+    $employee = Employee::with(['company' => function ($query) {
+                $query->with('companyType');
+                 }])->get();
+               
         $product_model = ProductModel::all();
-        return view('pages.job_allocation.direct_job_giving.edit',compact('direct_job_giving','employee','product_model'));
+        $product_size = ProductSize::get();
+        $product_color = ProductColor::get();
+        return view('pages.job_allocation.direct_job_giving.edit',compact('direct_job_giving','employee','product_model','product_size','product_color'));
      }
+
+     
+
+
 public function update(Request $request, $id)
     {
       //   dd($request);
       $validatedData = $request->validate([
- 'employee_id' => 'required',
+         'employee_id' => 'required',
          'product_model_id' => 'required',
     ]);
        
@@ -101,6 +111,10 @@ public function update(Request $request, $id)
     $direct_job_giving =  DirectJobGiving::find($id);
      $direct_job_giving->employee_id = $request->input('employee_id');
      $direct_job_giving->product_model_id = $request->input('product_model_id');
+     $direct_job_giving->product_size_id = $request->input('product_size_id');
+     $direct_job_giving->product_color_id = $request->input('product_color_id');
+     $direct_job_giving->quantity = $request->input('quantity');
+     $direct_job_giving->weight = $request->input('weight');
 
    // dd($direct_job_giving);
 
