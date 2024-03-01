@@ -32,18 +32,20 @@
                         method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
-                           <label for="customer_code" class="col-sm-2 col-form-label mandatory">
+                            <label for="employee_id" class="col-sm-2 col-form-label mandatory">
                            Employee Name
                            </label>
                            <div class="col-sm-4 mb-4">
                               <select class="form-control select2" name="employee_id" id="employee_id">
-                              @foreach ($employee as $item)
-                              <option value="{{ $item->id }}"
-                              @if ($item->id == $JobGiving->employee_id) selected @endif>
-                              {{ $item->employee_code }}/{{ $item->employee_name }}
-                              </option>
-                              @endforeach
-                              </select>
+    @foreach ($employee as $item)
+        <option value="{{ $item->id }}" 
+            data-company-name="{{ $item->company->company_name }}" 
+            data-company-type="{{ $item->company->companyType->name }}"
+            {{ $item->id == $JobGiving->employee_id ? 'selected' : '' }}>
+            {{ $item->employee_code }}/{{ $item->employee_name }}
+        </option>
+    @endforeach
+</select>
                               @error('employee_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
@@ -52,7 +54,7 @@
                            Company Type
                            </label>
                            <div class="col-sm-4 mb-4">
-                              <input type="text" class="form-control" name="company_type" id="company_type" readonly value="{{$item->company->companyType->name}}">
+                              <input type="text" class="form-control" name="company_type" id="company_type" readonly >
                               @error('company_type')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
@@ -61,7 +63,7 @@
                            Company Name
                            </label>
                            <div class="col-sm-4 mb-4">
-                              <input type="text" class="form-control" name="company_name" id="company_name" readonly value="{{$item->company->company_name}}">
+                              <input type="text" class="form-control" name="company_name" id="company_name" readonly>
                               @error('company_name')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
@@ -218,4 +220,24 @@
        });
    });
 </script>
+<!-- 
+<script>
+   $(document).ready(function() {
+       $('#employee_id').change(function() {
+           var companyName = $(this).find(':selected').data('company-name');
+           var companyType = $(this).find(':selected').data('company-type');
+           $('#company_name').val(companyName);
+           $('#company_type').val(companyType);
+       });
+   });
+</script> -->
+
+<script>
+        $(document).ready(function() {
+            var companyName = $('#employee_id').find(':selected').data('company-name');
+            var companyType = $('#employee_id').find(':selected').data('company-type');
+            $('#company_name').val(companyName);
+            $('#company_type').val(companyType);
+        });
+    </script>
 @endsection
