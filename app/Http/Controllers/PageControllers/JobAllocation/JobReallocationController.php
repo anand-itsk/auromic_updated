@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\PageControllers\JobAllocation;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\Employee;
 use App\Models\JobAllocationHistory;
 use App\Models\JobGiving;
@@ -49,18 +50,33 @@ class JobReallocationController extends Controller
             ->with('success', 'Job Reallocation Updated Successfully');
     }
     // Edit
-    public function edit(Request $request, $id)
-    {
-        $job_received_data = JobGiving::find($id);
-        $employee = Employee::all();
-        // Combine data into an array
-        $data = [
-            'direct_job_giving' => $job_received_data,
-            'empolyee_data' => $employee,
-        ];
+    // public function edit(Request $request, $id)
+    // {
+    //     $job_received_data = JobGiving::find($id);
+    //     $employee = Employee::all();
+    //     // Combine data into an array
+    //     $data = [
+    //         'direct_job_giving' => $job_received_data,
+    //         'empolyee_data' => $employee,
+    //     ];
 
-        // Return combined data as JSON response
-        return response()->json($data);
-        // return response()->json($job_received_data);
+    //     // Return combined data as JSON response
+    //     return response()->json($data);
+    //     // return response()->json($job_received_data);
+    // }
+
+        public function edit(Request $request, $id)
+    {
+       
+                $Job_Giving = JobGiving::with('employee', 'order_details','product_model')->find($id);
+         
+               $received_date = $Job_Giving->job_received->receving_date ?? '';
+
+               $employee = Employee::with(['company' => function ($query) {
+                $query->with('companyType');
+                 }])->get();
+
+        // dd($JobGiving);
+        return view('pages.job_allocation.job_reallocation.edit', compact('Job_Giving','received_date','id','employee'));
     }
 }

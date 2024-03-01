@@ -55,7 +55,7 @@ class JobReceivedController extends Controller
        
                 $Job_Giving = JobGiving::with('employee', 'order_details','product_model')->find($id);
          
-               $received_date = $Job_Giving->job_received->receving_date;
+               $received_date = $Job_Giving->job_received->receving_date ?? '';
         // dd($JobGiving);
         return view('pages.job_allocation.job_received.edit', compact('Job_Giving','received_date','id'));
     }

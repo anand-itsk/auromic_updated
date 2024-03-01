@@ -10,7 +10,7 @@
             <!-- Page-Title -->
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="page-title-box">
+                    <div class="page-title-box pb-0">
                         <div class="btn-group float-right">
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Auromics</a></li>
@@ -19,7 +19,7 @@
                                 <li class="breadcrumb-item">Create</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Create Employee</h4>
+                        <h4 class="page-title">Create Employee ss</h4>
                     </div>
                 </div>
             </div>
@@ -52,22 +52,22 @@
                             </div>
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="d-flex justify-content-end align-items-center">
-                                        <a class="mr-2" href="{{ route('master.employees.show' , $employee->id) }}"><button
-                                                class="btn btn-warning">
-                                                Preview</button></a> 
+                                    <div class="d-flex justify-content-end align-items-center mb-2">
+                                        <a class="mr-2" href="{{ route('master.employees.show', $employee->id) }}"><button
+                                                class="btn btn-warning py-1">
+                                                Preview</button></a>
                                         <a class="mr-2" href="{{ route('master.employees.index') }}"><button
-                                                class="btn btn-danger">
+                                                class="btn btn-danger py-1">
                                                 Close</button></a>
 
                                     </div>
                                     <div class="card m-b-30">
-                                        <div class="card-body">
-                                            <div class="m-b-30">
+                                        <div class="card-body pt-0">
+                                            <div class="">
                                                 {{-- <form role="form" action="index.html" class="login-box"> --}}
                                                 <div class="tab-content" id="main_form">
                                                     <div class="tab-pane active" role="tabpanel" id="step1">
-                                                        <h4 class="text-center pb-4">Personal</h4>
+                                                        <h4 class="text-center m-0">Personal</h4>
                                                         <form role="form"
                                                             action="{{ route('master.employees.store.personal', $employee->id) }}"
                                                             method="post" class="login-box" enctype="multipart/form-data">
@@ -77,7 +77,7 @@
                                                             <div class="row m-2">
                                                                 <h5 class="text-primary w-100">Company Info</h5>
                                                                 <div class="col-md-10">
-                                                                    <div class="form-group row w-100">
+                                                                    <div class="form-group row w-100 mb-0">
 
                                                                         <label for="company_type_id"
                                                                             class="col-sm-2 col-form-label">Company
@@ -116,7 +116,7 @@
                                                                         <label for="employee_code"
                                                                             class="col-sm-2 col-form-label mandatory">Employee
                                                                             Code</label>
-                                                                        <div class="col-sm-4 mb-4">
+                                                                        <div class="col-sm-4">
 
                                                                             <input class="form-control" type="text"
                                                                                 value="{{ $employee->employee_code }}"
@@ -129,7 +129,7 @@
                                                                         <label for="employee_name"
                                                                             class="col-sm-2 col-form-label mandatory">Employee
                                                                             Name</label>
-                                                                        <div class="col-sm-4 mb-4">
+                                                                        <div class="col-sm-4">
 
                                                                             <input class="form-control" type="text"
                                                                                 value="{{ $employee->employee_name }}"
@@ -147,15 +147,25 @@
                                                                     <div class="container">
                                                                         <div class="picture-container">
                                                                             <div class="picture">
-                                                                               @if($photoPath)
-                    <img src="{{ asset('storage/' . $photoPath) }}" class="picture-src" id="wizardPicturePreview" title="">
-                @else
-                    <img src="" class="picture-src" id="wizardPicturePreview" title="" style="display: none;">
-                @endif
-                <input type="file" name="employee_profile" id="wizard-picture" class="">
-            </div>
-                                                                            <h6 class="">Choose Picture</h6>
-                                                                            <p style="color: red;">500x500</p>
+                                                                                @if ($photoPath)
+                                                                                    <img src="{{ asset('storage/' . $photoPath) }}"
+                                                                                        class="picture-src"
+                                                                                        id="wizardPicturePreview"
+                                                                                        title="">
+                                                                                @else
+                                                                                    <img src=""
+                                                                                        class="picture-src"
+                                                                                        id="wizardPicturePreview"
+                                                                                        title=""
+                                                                                        style="display: none;">
+                                                                                @endif
+                                                                                <input type="file"
+                                                                                    name="employee_profile"
+                                                                                    id="wizard-picture" class="">
+                                                                            </div>
+                                                                            <h6 class="m-0">Choose Picture</h6>
+                                                                            <p style="color: red;" class="mb-0">500x500
+                                                                            </p>
                                                                         </div>
                                                                     </div>
                                                                     {{-- <label for="employee_profile"
@@ -171,19 +181,19 @@
                                                                     </div> --}}
                                                                 </div>
                                                             </div>
-
+                                                            <hr />
                                                             {{-- Permanent Address --}}
-                                                            <div class="row m-2">
+                                                            <div class="row mx-2 mt-0">
                                                                 @php
                                                                     $officeAddress = $employee->addresses->where('address_type_id', 3)->first();
                                                                 @endphp
                                                                 {{-- {{ dd($officeAddress->district_id) }} --}}
-                                                                <h5 class="text-primary w-100">Permanent Address</h5>
+                                                                <h5 class="text-primary w-100 mt-0">Permanent Address</h5>
 
                                                                 <div class="form-group row w-100">
                                                                     <label for="office_address"
                                                                         class="col-sm-2 col-form-label">Address</label>
-                                                                    <div class="col-sm-10 mb-4">
+                                                                    <div class="col-sm-4 mb-4">
                                                                         <textarea class="form-control" name="office_address" id="office_address" cols="10" rows="3"> {{ $officeAddress->address ?? '' }}</textarea>
 
                                                                         @error('office_address')
@@ -235,7 +245,7 @@
                                                                     </div>
 
                                                                     <label class="col-sm-2 col-form-label">District</label>
-                                                                    <div class="col-sm-4 mb-4">
+                                                                    <div class="col-sm-4">
                                                                         <select class="form-control select2 w-100"
                                                                             name="office_district_id"
                                                                             id="office_district_id" disabled>
@@ -248,7 +258,7 @@
 
                                                                     <label for="office_pincode"
                                                                         class="col-sm-2 col-form-label">Pincode</label>
-                                                                    <div class="col-sm-4 mb-4">
+                                                                    <div class="col-sm-4">
                                                                         <input class="form-control" type="text"
                                                                             value="{{ $officeAddress->pincode ?? '' }}"
                                                                             name="office_pincode" id="office_pincode">
@@ -260,13 +270,15 @@
                                                                 </div>
                                                             </div>
 
+                                                            <hr />
                                                             {{-- Correspondence Address --}}
                                                             @php
                                                                 $corrs_address = $employee->addresses->where('address_type_id', 4)->first();
                                                             @endphp
                                                             <div class="row m-2">
                                                                 <div class="d-flex" style="flex-wrap: inherit">
-                                                                    <h5 class="text-primary w-100">Correspondence Address
+                                                                    <h5 class="text-primary w-100 mt-0">Correspondence
+                                                                        Address
                                                                     </h5>
 
                                                                     <div class="">
@@ -283,7 +295,7 @@
                                                                 <div class="form-group row w-100 corrs_address">
                                                                     <label for="corrs_address"
                                                                         class="col-sm-2 col-form-label">Address</label>
-                                                                    <div class="col-sm-10 mb-4">
+                                                                    <div class="col-sm-4 mb-4">
                                                                         <textarea class="form-control" name="corrs_address" id="corrs_address" cols="10" rows="3"> {{ $corrs_address->address ?? '' }} </textarea>
 
                                                                         @error('corrs_address')
@@ -333,7 +345,7 @@
                                                                     </div>
 
                                                                     <label class="col-sm-2 col-form-label">District</label>
-                                                                    <div class="col-sm-4 mb-4">
+                                                                    <div class="col-sm-4">
                                                                         <select class="form-control select2 w-100"
                                                                             name="corrs_district_id"
                                                                             id="corrs_district_id" disabled>
@@ -346,7 +358,7 @@
 
                                                                     <label for="corrs_pincode"
                                                                         class="col-sm-2 col-form-label">Pincode</label>
-                                                                    <div class="col-sm-4 mb-4">
+                                                                    <div class="col-sm-4">
                                                                         <input class="form-control" type="text"
                                                                             name="corrs_pincode" id="corrs_pincode">
                                                                         @error('corrs_pincode')
@@ -357,9 +369,10 @@
                                                                 </div>
                                                             </div>
 
+                                                            <hr />
                                                             {{-- Identity  Proof --}}
                                                             <div class="row m-2">
-                                                                <h5 class="text-primary w-100">Identity Proof
+                                                                <h5 class="text-primary w-100 mt-0">Identity Proof
                                                                 </h5>
                                                                 <div class="form-group row">
 
@@ -403,7 +416,7 @@
                                                                     <label for="passport_number"
                                                                         class="col-sm-2 col-form-label">Passport
                                                                         Number</label>
-                                                                    <div class="col-sm-4 mb-4">
+                                                                    <div class="col-sm-4">
                                                                         <input class="form-control" type="text"
                                                                             value="{{ $employee->identityProof->passport_number ?? '' }}"
                                                                             name="passport_number" id="passport_number">
@@ -415,7 +428,7 @@
                                                                     <label for="identity_mark"
                                                                         class="col-sm-2 col-form-label">Identity
                                                                         Mark</label>
-                                                                    <div class="col-sm-4 mb-4">
+                                                                    <div class="col-sm-4">
                                                                         <input class="form-control" type="text"
                                                                             value="{{ $employee->identityProof->identity_mark ?? '' }}"
                                                                             name="identity_mark" id="identity_mark">
@@ -427,9 +440,11 @@
                                                                 </div>
                                                             </div>
 
+                                                            <hr />
+
                                                             {{-- Other  Details --}}
                                                             <div class="row m-2">
-                                                                <h5 class="text-primary w-100">Other Details
+                                                                <h5 class="text-primary w-100 mt-0">Other Details
                                                                 </h5>
                                                                 <div class="form-group row">
                                                                     <label for="dob"
@@ -691,7 +706,7 @@
                                                                     <label for="resigning_date"
                                                                         class="col-sm-2 col-form-label">Resigning Date
                                                                         Date</label>
-                                                                    <div class="col-sm-4 mb-4">
+                                                                    <div class="col-sm-4">
                                                                         <input class="form-control" type="date"
                                                                             value="{{ $employee->resigning_date }}"
                                                                             name="resigning_date" id="resigning_date">
@@ -703,7 +718,7 @@
 
                                                                     <label class="col-sm-2 col-form-label">Select with
                                                                         reason</label>
-                                                                    <div class="col-sm-4 mb-4">
+                                                                    <div class="col-sm-4">
                                                                         <select class="form-control select2"
                                                                             name="resigning_reason_id"
                                                                             id="resigning_reason_id">
@@ -722,7 +737,8 @@
                                                             </div>
 
                                                             <ul class="list-inline pull-right">
-                                                                <li><button type="button" class="default-btn next-step"
+                                                                <li><button type="button"
+                                                                        class="default-btn next-step mt-0 text-white"
                                                                         data-url="{{ route('master.employees.store.personal', $employee->id) }}">Continue
                                                                         to next step</button></li>
                                                             </ul>
@@ -850,7 +866,7 @@
         });
 
 
-        // Fetch Datas's 
+        // Fetch Datas's
         var selectedOfficeStateId = "{{ $officeAddress->state_id ?? '' }}";
         var selectedOfficeDistrictId = "{{ $officeAddress->district_id ?? '' }}";
         var selectedStateId = "{{ $address->state_id ?? '' }}";
@@ -971,7 +987,7 @@
         $('a[href="#step4"]').click(function(e) {
             e.preventDefault(); // Prevent the default anchor action
             console.log("fetch_famail");
-            if ($(this).parent().hasClass('disabled')) {    
+            if ($(this).parent().hasClass('disabled')) {
                 // The element is disabled, perform AJAX call
                 $.ajax({
                     url: `/master/employees/nominee/family/${employeeId}`,

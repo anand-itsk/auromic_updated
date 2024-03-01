@@ -10,8 +10,12 @@ class DirectJobGiving extends Model
     use HasFactory;
 
      protected $fillable = [
-        'employee_id',
-        'product_model_id',
+         'employee_id',
+         'product_model_id',
+         'product_size_id',
+         'product_color_id',
+         'quantity',
+         'weight',
     ];
    public function employee(){
         return $this->belongsTo(Employee::class,'employee_id');
@@ -19,5 +23,13 @@ class DirectJobGiving extends Model
     public function productModel(){
         return $this->belongsTo(ProductModel::class,'product_model_id');
     }  
+
+     public function productSize(){
+        return $this->belongsTo(ProductSize::class,'product_size_id');
+    }
+
+     public function productColor(){
+        return $this->belongsTo(ProductColor::class,'product_color_id');
+    }
 
 }

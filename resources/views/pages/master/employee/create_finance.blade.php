@@ -1,11 +1,11 @@
 <div class="tab-pane" role="tabpanel" id="step2">
-    <h4 class="text-center pb-4">Finance</h4>
+    <h4 class="text-center m-0">Finance</h4>
     <form role="form" action="{{ route('master.employees.store.finance', $employee->id) }}" method="post"
         class="login-box">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         {{-- Banking Info --}}
         <div class="row m-2">
-            <h5 class="text-primary w-100">Banking Info</h5>
+            <h5 class="text-primary w-100 mt-0">Banking Info</h5>
             <div class="form-group row">
                 <label for="bank_name" class="col-sm-2 col-form-label">Bank Name</label>
                 <div class="col-sm-4 mb-4">
@@ -26,7 +26,7 @@
                 </div>
 
                 <label for="address" class="col-sm-2 col-form-label">Address</label>
-                <div class="col-sm-10 mb-4">
+                <div class="col-sm-4 mb-4">
                     <textarea class="form-control" name="address" id="address" cols="10" rows="3"> {{ $employee->financeDetail ? $employee->financeDetail->address : '' }}</textarea>
 
                     @error('address')
@@ -98,7 +98,7 @@
                 </div>
 
                 <label for="range" class="col-sm-2 col-form-label">Ward/ Circle/ Range</label>
-                <div class="col-sm-4 mb-4">
+                <div class="col-sm-4">
                     <input class="form-control" type="text" name="range" id="range"
                         value={{ $employee->financeDetail ? $employee->financeDetail->range : '' }}>
                     @error('range')
@@ -109,9 +109,10 @@
             </div>
         </div>
 
+        <hr />
         {{-- LIC Info --}}
         <div class="row m-2">
-            <h5 class="text-primary w-100">LIC Info</h5>
+            <h5 class="text-primary w-100 mt-0">LIC Info</h5>
 
             <div class="form-group row">
                 <label for="policy_no" class="col-sm-2 col-form-label">Policy No</label>
@@ -133,7 +134,7 @@
                 </div>
 
                 <label for="lic_id" class="col-sm-2 col-form-label">LIC ID</label>
-                <div class="col-sm-4 mb-4">
+                <div class="col-sm-4">
                     <input class="form-control" type="text" name="lic_id" id="lic_id"
                         value= "{{ $employee->licInfo ? $employee->licInfo->lic_id : '' }}">
                     @error('lic_id')
@@ -142,7 +143,7 @@
                 </div>
 
                 <label for="annual_renewable_date" class="col-sm-2 col-form-label">Annual Renewable Date</label>
-                <div class="col-sm-4 mb-4">
+                <div class="col-sm-4">
                     <input class="form-control" type="date"
                         value= "{{ $employee->licInfo ? $employee->licInfo->annual_renewable_date : '' }}"
                         name="annual_renewable_date" id="annual_renewable_date">
@@ -153,10 +154,10 @@
             </div>
         </div>
 
+        <hr />
         {{-- PF Info --}}
         <div class="row m-2">
-            <h5 class="text-primary w-100">PF Info</h5>
-
+            <h5 class="text-primary w-100 mt-0">PF Info</h5>
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">PF Applicable</label>
                 <div class="col-sm-4 mb-4">
@@ -207,7 +208,7 @@
                 </div>
 
                 <label class="col-sm-2 col-form-label">Pension Applicable</label>
-                <div class="col-sm-4 mb-4">
+                <div class="col-sm-4">
                     <select class="form-control" name="pension_applicable" id="pension_applicable">
                         <option value=""
                             {{ $employee->pfInfo && $employee->pfInfo->pension_applicable == null ? 'selected' : '' }}>
@@ -226,7 +227,7 @@
                 </div>
 
                 <label for="pension_joining_date" class="col-sm-2 col-form-label">Pension Joining Date</label>
-                <div class="col-sm-4 mb-4">
+                <div class="col-sm-4">
                     <input class="form-control" type="date"
                         value="{{ $employee->pfInfo->pension_joining_date ?? '' }}" name="pension_joining_date"
                         id="pension_joining_date">
@@ -234,14 +235,13 @@
                         <span class="error" style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>
-
             </div>
         </div>
 
+        <hr />
         {{-- ESI Info --}}
         <div class="row m-2">
-            <h5 class="text-primary w-100">ESI Info</h5>
-
+            <h5 class="text-primary w-100 mt-0">ESI Info</h5>
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">ESI Applicable</label>
                 <div class="col-sm-4 mb-4">
@@ -292,7 +292,7 @@
                 </div>
 
                 <label class="col-sm-2 col-form-label">Local Office</label>
-                <div class="col-sm-4 mb-4">
+                <div class="col-sm-4">
                     <select class="form-control select2" name="local_office_id" id="local_office_id">
                         @foreach ($local_offices as $item)
                             <option value="{{ $item->id }}"
@@ -307,7 +307,7 @@
                 </div>
 
                 <label class="col-sm-2 col-form-label">ESI Dispensary</label>
-                <div class="col-sm-4 mb-4">
+                <div class="col-sm-4">
                     <select class="form-control select2" name="esi_dispensary_id" id="esi_dispensary_id">
                         @foreach ($esi_despensaries as $item)
                             <option value="{{ $item->id }}"
@@ -324,12 +324,12 @@
             </div>
         </div>
 
-        <ul class="list-inline pull-right">
-            <li><button type="button" class="default-btn prev-step">Back</button>
+        <ul class="list-inline pull-right mt-0">
+            <li><button type="button" class="default-btn prev-step m-0">Back</button>
             </li>
-            <li><button type="button" class="default-btn next-step skip-btn">Skip</button>
+            <li><button type="button" class="default-btn next-step skip-btn m-0">Skip</button>
             </li>
-            <li><button type="button" class="default-btn next-step2"
+            <li><button type="button" class="default-btn next-step2 m-0"
                     data-url="{{ route('master.employees.store.finance', $employee->id) }}">Continue</button>
             </li>
         </ul>

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\DirectJobGiving;
 use App\Models\ProductModel;
+use App\Models\ProductSize;
+use App\Models\ProductColor;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 class DirectJobGivingController extends Controller
@@ -20,18 +22,39 @@ class DirectJobGivingController extends Controller
       public function indexData()
     {
         
-        $direct_job_giving = DirectJobGiving::with(['employee','productModel'])->get();
+        $direct_job_giving = DirectJobGiving::with(['employee','productModel','productSize','productColor'])->get();
         return DataTables::of($direct_job_giving)->make(true);
     }
 
         public function create()
      {
 
-        $employee = Employee::all();
+       $employee = Employee::with(['company' => function ($query) {
+                $query->with('companyType');
+                 }])->get();
         $product_model = ProductModel::all();
-        return view('pages.job_allocation.direct_job_giving.create',compact('employee','product_model'));
+        $product_size = ProductSize::get();
+        $product_color = ProductColor::get();
+        return view('pages.job_allocation.direct_job_giving.create',compact('employee','product_model','product_size','product_color'));
      }
 
+
+     public function getModelDetails($id)
+    {
+        $productModel = ProductModel::with('product', 'rawMaterial.rawMaterialType')->find($id);
+
+        if (!$productModel) {
+            return response()->json(['error' => 'Model not found'], 404);
+        }
+
+        $data = [
+            'product_name' => $productModel->product->name,
+            'raw_material_name' => $productModel->rawMaterial->name,
+            'raw_material_type' => $productModel->rawMaterial->rawMaterialType->name,
+        ];
+
+        return response()->json($data);
+    }
       public function store(Request $request)
 {
    //  dd($request);
@@ -44,6 +67,10 @@ class DirectJobGivingController extends Controller
      $direct_job_giving = new DirectJobGiving;
      $direct_job_giving->employee_id = $request->input('employee_id');
      $direct_job_giving->product_model_id = $request->input('product_model_id');
+     $direct_job_giving->product_size_id = $request->input('product_size_id');
+     $direct_job_giving->product_color_id = $request->input('product_color_id');
+     $direct_job_giving->quantity = $request->input('quantity');
+     $direct_job_giving->weight = $request->input('weight');
     
 
    // dd($direct_job_giving); 
@@ -57,16 +84,26 @@ class DirectJobGivingController extends Controller
 
   public function edit($id)
      {
+
         $direct_job_giving = DirectJobGiving::find($id);
-        $employee = Employee::all();
+    $employee = Employee::with(['company' => function ($query) {
+                $query->with('companyType');
+                 }])->get();
+               
         $product_model = ProductModel::all();
-        return view('pages.job_allocation.direct_job_giving.edit',compact('direct_job_giving','employee','product_model'));
+        $product_size = ProductSize::get();
+        $product_color = ProductColor::get();
+        return view('pages.job_allocation.direct_job_giving.edit',compact('direct_job_giving','employee','product_model','product_size','product_color'));
      }
+
+     
+
+
 public function update(Request $request, $id)
     {
       //   dd($request);
       $validatedData = $request->validate([
- 'employee_id' => 'required',
+         'employee_id' => 'required',
          'product_model_id' => 'required',
     ]);
        
@@ -74,6 +111,10 @@ public function update(Request $request, $id)
     $direct_job_giving =  DirectJobGiving::find($id);
      $direct_job_giving->employee_id = $request->input('employee_id');
      $direct_job_giving->product_model_id = $request->input('product_model_id');
+     $direct_job_giving->product_size_id = $request->input('product_size_id');
+     $direct_job_giving->product_color_id = $request->input('product_color_id');
+     $direct_job_giving->quantity = $request->input('quantity');
+     $direct_job_giving->weight = $request->input('weight');
 
    // dd($direct_job_giving);
 

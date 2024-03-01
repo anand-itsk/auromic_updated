@@ -99,6 +99,10 @@
                                             <th>ID</th>
                                             <th>Employee</th>
                                             <th>Product Model</th>
+                                            <th>Product Size</th>
+                                            <th>Product Color</th>
+                                             <th>quantity</th>
+                                             <th>Weight</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -189,6 +193,22 @@ $(document).ready(function() {
             {
                 data: 'product_model.model_name',
                 name: 'product_model.model_name'
+            },
+            {
+                data: 'product_size.name',
+                name: 'product_size.name'
+            },
+            {
+                data: 'product_color.name',
+                name: 'product_color.name'
+            },
+            {
+                data: 'quantity',
+                name: 'quantity'
+            },
+            {
+                data: 'weight',
+                name: 'weight'
             },
              
            

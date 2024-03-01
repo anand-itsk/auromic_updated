@@ -355,34 +355,40 @@
             });
         });
 
-        function edit(id) {
+        // function edit(id) {
+        //     console.log("inside");
+        //     $('#job_giving_id').val(id);
+
+        //     $.ajax({
+        //         url: '/job_allocation/job_reallocation/edit/' + id,
+        //         type: 'GET',
+        //         dataType: 'json',
+        //         success: function(response) {
+        //             console.log(response);
+
+        //             $('#received_status').val(response.status);
+        //             // Clear existing options
+        //             $('#empolyee_id').empty();
+
+        //             // Populate dropdown with product models
+        //             response.empolyee_data.forEach(function(empolyee_data) {
+        //                 $('#employee_id').append('<option value="' + empolyee_data.id + '">' +
+        //                     empolyee_data.employee_name + "/ " + empolyee_data.employee_code +
+        //                     '</option>');
+        //             });
+        //             // Show the edit modal after populating the form fields
+        //             $('#editModal').modal('show');
+        //         },
+        //         error: function(xhr, status, error) {
+        //             console.error(xhr.responseText);
+        //         }
+        //     });
+        // }
+           function edit(id) {
             console.log("inside");
-            $('#job_giving_id').val(id);
-
-            $.ajax({
-                url: '/job_allocation/job_reallocation/edit/' + id,
-                type: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    console.log(response);
-
-                    $('#received_status').val(response.status);
-                    // Clear existing options
-                    $('#empolyee_id').empty();
-
-                    // Populate dropdown with product models
-                    response.empolyee_data.forEach(function(empolyee_data) {
-                        $('#employee_id').append('<option value="' + empolyee_data.id + '">' +
-                            empolyee_data.employee_name + "/ " + empolyee_data.employee_code +
-                            '</option>');
-                    });
-                    // Show the edit modal after populating the form fields
-                    $('#editModal').modal('show');
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
+      
+            // Redirect to the user edit page or open a modal for editing
+            window.location.href = '/job_allocation/job_reallocation/edit/' + id;
         }
 
 

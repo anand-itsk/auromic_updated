@@ -111,8 +111,10 @@ public function getModelDetails($id)
     }])->get();
         $JobGiving = JobGiving::find($id);
         // dd($JobGiving);
-        return view('pages.job_allocation.job_giving.edit', compact('delivery_challan', 'order_details', 'employee', 'JobGiving','productModels'));
+        return view('pages.job_allocation.job_giving.edit', compact('delivery_challan', 'order_details', 'employee', 'JobGiving','productModels','id'));
     }
+
+     
     // Update
     public function update(Request $request, $id)
     {

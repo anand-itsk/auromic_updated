@@ -99,6 +99,10 @@
                                             <th>ID</th>
                                             <th>Employee</th>
                                             <th>Product Model</th>
+                                            <th>Product Size</th>
+                                            <th>Product Color</th>
+                                             <th>quantity</th>
+                                             <th>Weight</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -283,7 +287,7 @@ $(document).ready(function() {
                 data: 'id',
                 name: 'id'
             },
-            {
+             {
                 data: 'employee.employee_name',
                 name: 'employee.employee_name'
             },
@@ -291,7 +295,22 @@ $(document).ready(function() {
                 data: 'product_model.model_name',
                 name: 'product_model.model_name'
             },
-             
+            {
+                data: 'product_size.name',
+                name: 'product_size.name'
+            },
+            {
+                data: 'product_color.name',
+                name: 'product_color.name'
+            },
+            {
+                data: 'quantity',
+                name: 'quantity'
+            },
+            {
+                data: 'weight',
+                name: 'weight'
+            },
            
             {
                 data: null,
@@ -364,40 +383,40 @@ $(document).ready(function() {
             });
 });
 
-// function edit(id) {
-//     console.log("inside");
-//     // Redirect to the user edit page or open a modal for editing
-//     window.location.href = '/job_allocation/direct_job_giving/edit/' + id;
-// }
- function edit(id)
- {
-            console.log("inside");
-            // $('#job_giving_id').val(id);
-            $.ajax({
-                url: '/job_allocation/direct_job_received/edit/' + id,
-                type: 'GET',
-                dataType: 'json',
-               success: function(response) {
-    console.log(response);
+function edit(id) {
+    console.log("inside");
+    // Redirect to the user edit page or open a modal for editing
+    window.location.href = '/job_allocation/direct_job_received/edit/' + id;
+}
+//  function edit(id)
+//  {
+//             console.log("inside");
+//             // $('#job_giving_id').val(id);
+//             $.ajax({
+//                 url: '/job_allocation/direct_job_received/edit/' + id,
+//                 type: 'GET',
+//                 dataType: 'json',
+//                success: function(response) {
+//     console.log(response);
 
     
-    $('#direct_job_giving_id').val(id);
-    // Clear existing options
-    $('#product_model_id').empty();
+//     $('#direct_job_giving_id').val(id);
+//     // Clear existing options
+//     $('#product_model_id').empty();
 
-    // Populate dropdown with product models
-    response.product_model.forEach(function(product) {
-        $('#product_model_id').append('<option value="' + product.id + '">' + product.model_name + '</option>');
-    });
+//     // Populate dropdown with product models
+//     response.product_model.forEach(function(product) {
+//         $('#product_model_id').append('<option value="' + product.id + '">' + product.model_name + '</option>');
+//     });
 
-    // Show the edit modal after populating the form fields
-    $('#editModal').modal('show');
-},
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
-        }
+//     // Show the edit modal after populating the form fields
+//     $('#editModal').modal('show');
+// },
+//                 error: function(xhr, status, error) {
+//                     console.error(xhr.responseText);
+//                 }
+//             });
+//         }
 
 function deleteCustomer(id) {
     console.log("inside")

@@ -1,7 +1,10 @@
 <div class="tab-pane" role="tabpanel" id="step3">
-    <h4 class="text-center pb-4">Family</h4>
-    <button type="button" class="default-btn icon-button btn-primary" data-toggle="modal" data-target=".employe-family-add"
-        title="Add Famil Member"><i class="fa fa-user-plus"></i></button>
+    <h4 class="text-center">Family</h4>
+
+    <div class="d-flex justify-content-end mb-2">
+        <button type="button" class="btn icon-button btn-primary" data-toggle="modal" data-target=".employe-family-add"
+            title="Add Famil Member"><i class="fa fa-user-plus"></i></button>
+    </div>
     <table class="table table-striped table-bordered dt-responsive nowrap"
         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
         <thead>
@@ -23,7 +26,7 @@
     {{-- Add Family Member --}}
     <div class="modal fade employe-family-add" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title mt-0">Add Family Member</h5>
@@ -31,154 +34,147 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body py-0">
                     <div class="row">
                         <div class="col-12">
-                            <div class="card m-b-30">
-                                <div class="card-body">
-                                    <form role="form"
-                                        action="{{ route('master.employees.store.family', $employee->id) }}"
-                                        method="post" class="login-box">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <div class="row m-2">
-                                            <h5 class="text-primary w-100">Family Member Details</h5>
+                            {{-- <div class="card m-b-30"> --}}
+                            {{-- <div class="card-body p-0"> --}}
+                            <form role="form" action="{{ route('master.employees.store.family', $employee->id) }}"
+                                method="post" class="login-box">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <div class="row m-2">
+                                    <h5 class="text-primary w-100">Family Member Details</h5>
 
 
-                                            <div class="form-group row">
-                                                <label for="name" class="col-sm-2 col-form-label">Name</label>
-                                                <div class="col-sm-4 mb-4">
-                                                    <input class="form-control mandatory" type="text" name="name"
-                                                        id="name">
-                                                    @error('name')
-                                                        <span class="error" style="color: red;">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-
-                                                <label for="relation_with_emp" class="col-sm-2 col-form-label">Relation
-                                                    with employee</label>
-                                                <div class="col-sm-4 mb-4">
-                                                    <input class="form-control" type="text" name="relation_with_emp"
-                                                        id="relation_with_emp">
-                                                    @error('relation_with_emp')
-                                                        <span class="error" style="color: red;">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-
-                                                <label for="address" class="col-sm-2 col-form-label">Address</label>
-                                                <div class="col-sm-10 mb-4">
-                                                    <textarea class="form-control" name="family_address" id="family_address" cols="10" rows="3"></textarea>
-
-                                                    @error('family_address')
-                                                        <span class="error" style="color: red;">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-
-                                                <label for="area"
-                                                    class="col-sm-2 col-form-label">Village/Area</label>
-                                                <div class="col-sm-4 mb-4">
-                                                    <input class="form-control" type="text" name="family_area"
-                                                        id="family_area">
-
-                                                    @error('family_area')
-                                                        <span class="error" style="color: red;">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-
-                                                <label class="col-sm-2 col-form-label">Country</label>
-                                                <div class="col-sm-4 mb-4">
-                                                    <select class="form-control" name="family_country_id"
-                                                        id="family_country_id">
-                                                        @foreach ($countries as $item)
-                                                            <option value="{{ $item->id }}">
-                                                                {{ $item->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('family_country_id')
-                                                        <span class="error" style="color: red;">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-
-                                                <label class="col-sm-2 col-form-label">State</label>
-                                                <div class="col-sm-4 mb-4">
-                                                    <select class="form-control w-100" name="family_state_id"
-                                                        id="family_state_id" disabled>
-                                                    </select>
-                                                    @error('family_state_id')
-                                                        <span class="error" style="color: red;">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-
-                                                <label class="col-sm-2 col-form-label">District</label>
-                                                <div class="col-sm-4 mb-4">
-                                                    <select class="form-control w-100" name="family_district_id"
-                                                        id="family_district_id" disabled>
-                                                    </select>
-                                                    @error('family_district_id')
-                                                        <span class="error"
-                                                            style="color: red;">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-
-                                                <label for="family_pincode"
-                                                    class="col-sm-2 col-form-label">Pincode</label>
-                                                <div class="col-sm-4 mb-4">
-                                                    <input class="form-control" type="text" name="family_pincode"
-                                                        id="family_pincode">
-                                                    @error('family_pincode')
-                                                        <span class="error"
-                                                            style="color: red;">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-
-
-                                                <label for="dob" class="col-sm-2 col-form-label">Date of
-                                                    Birth</label>
-                                                <div class="col-sm-4 mb-4">
-                                                    <input class="form-control" type="date" name="dob"
-                                                        id="dob">
-                                                    @error('dob')
-                                                        <span class="error"
-                                                            style="color: red;">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-
-
-
-                                                <label class="col-sm-2 col-form-label">Whether Residing with him or
-                                                    Not</label>
-                                                <div class="col-sm-4 mb-4">
-                                                    <select class="form-control" name="is_residing" id="is_residing">
-                                                        <option value="">Select</option>
-                                                        <option value="1">Yes</option>
-                                                        <option value="0">No</option>
-                                                    </select>
-                                                    @error('payment_mode_id')
-                                                        <span class="error"
-                                                            style="color: red;">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-
-                                                <label for="remark" class="col-sm-2 col-form-label">Remarks</label>
-                                                <div class="col-sm-4 mb-4">
-                                                    <textarea class="form-control" name="remark" id="remark" cols="10" rows="3"></textarea>
-
-                                                    @error('remark')
-                                                        <span class="error"
-                                                            style="color: red;">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                            </div>
+                                    <div class="form-group row">
+                                        <label for="name" class="col-sm-2 col-form-label">Name</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control mandatory" type="text" name="name"
+                                                id="name">
+                                            @error('name')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
                                         </div>
 
-                                        <ul class="list-inline pull-right">
-                                            <li><button type="button" class="default-btn next-step3"
-                                                    id="next-step3">Add</button>
-                                            </li>
-                                        </ul>
-                                    </form>
+                                        <label for="relation_with_emp" class="col-sm-2 col-form-label">Relation
+                                            with employee</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="relation_with_emp"
+                                                id="relation_with_emp">
+                                            @error('relation_with_emp')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="address" class="col-sm-2 col-form-label">Address</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <textarea class="form-control" name="family_address" id="family_address" cols="10" rows="3"></textarea>
+
+                                            @error('family_address')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="area" class="col-sm-2 col-form-label">Village/Area</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="family_area"
+                                                id="family_area">
+
+                                            @error('family_area')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label class="col-sm-2 col-form-label">Country</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <select class="form-control" name="family_country_id"
+                                                id="family_country_id">
+                                                @foreach ($countries as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('family_country_id')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label class="col-sm-2 col-form-label">State</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <select class="form-control w-100" name="family_state_id"
+                                                id="family_state_id" disabled>
+                                            </select>
+                                            @error('family_state_id')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label class="col-sm-2 col-form-label">District</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <select class="form-control w-100" name="family_district_id"
+                                                id="family_district_id" disabled>
+                                            </select>
+                                            @error('family_district_id')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="family_pincode" class="col-sm-2 col-form-label">Pincode</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="family_pincode"
+                                                id="family_pincode">
+                                            @error('family_pincode')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+
+                                        <label for="dob" class="col-sm-2 col-form-label">Date of
+                                            Birth</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="date" name="dob"
+                                                id="dob">
+                                            @error('dob')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+
+
+                                        <label class="col-sm-2 col-form-label">Whether Residing with him or
+                                            Not</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <select class="form-control" name="is_residing" id="is_residing">
+                                                <option value="">Select</option>
+                                                <option value="1">Yes</option>
+                                                <option value="0">No</option>
+                                            </select>
+                                            @error('payment_mode_id')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="remark" class="col-sm-2 col-form-label">Remarks</label>
+                                        <div class="col-sm-4">
+                                            <textarea class="form-control" name="remark" id="remark" cols="10" rows="3"></textarea>
+
+                                            @error('remark')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+
+                                <ul class="list-inline pull-right">
+                                    <li><button type="button"
+                                            class="default-btn next-step3 m-0 bg-primary rounded text-white"
+                                            id="next-step3">Add</button>
+                                    </li>
+                                </ul>
+                            </form>
+                            {{-- </div> --}}
+                            {{-- </div> --}}
                         </div>
                     </div>
                 </div>
@@ -338,7 +334,7 @@
         }
 
 
-        // For Create 
+        // For Create
         // Fetch State
         $('#family_country_id').on('change', function() {
             var countryId = this.value;
