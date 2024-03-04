@@ -35,6 +35,9 @@
                                         <button id="deleteButton" class="icon-button delete-color"
                                             title="Delete Selected Record"><i class="fa fa-user-times"></i></button>
                                     </div> --}}
+                                    @error('file')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
                                     <div>
                                         <button id="deleteButton" style="display: none;"
                                             class="icon-button text-white bg-danger rounded fs-14"
@@ -44,7 +47,7 @@
                                     <div>
                                         <button type="button" class="icon-button common-color bg-secondary rounded"
                                             data-toggle="modal" data-target=".bs-example-modal-center"
-                                            title="Create Customer"><i class="fa fa-upload text-white"></i></button>
+                                            title="Import file"><i class="fa fa-upload text-white"></i></button>
 
                                         <button class="icon-button  bg-primary rounded">
                                             <a href="{{ route('master.order_detail.create') }}"

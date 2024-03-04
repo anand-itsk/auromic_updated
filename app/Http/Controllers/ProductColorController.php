@@ -71,7 +71,7 @@ class ProductColorController extends Controller
     {
           $product_color = ProductColor::find($id);
 
-         $product_color->delete();
+          $product_color->delete();
 
           return redirect()->route('product-models.product_colors')->with('success', 'Product Color Deleted successfully!');
 

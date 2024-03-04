@@ -11,6 +11,8 @@ use App\Models\CompanyType;
 use App\Models\Country;
 use App\Models\Customer;
 use App\Models\Employee;
+use App\Exports\EmployeeExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\EmployeeFamilyMemberDetail;
 use App\Models\EmployeeNominee;
 use App\Models\EsiDispensary;
@@ -702,10 +704,10 @@ class EmployeeController extends Controller
     // Delete
     public function destroy($id)
     {
-        $user = Customer::findOrFail($id);
-        $user->delete();
+        $employee = Employee::findOrFail($id);
+        $employee->delete();
 
-        return response()->json(['success' => 'Customer deleted successfully']);
+        return response()->json(['success' => 'Employee deleted successfully']);
     }
     // Multi Delete
     public function deleteSelected(Request $request)
@@ -717,7 +719,7 @@ class EmployeeController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Invalid input'], 400);
         }
 
-        Customer::destroy($ids);
+        Employee::destroy($ids);
         return response()->json(['status' => 'success']);
     }
     // Import Users
@@ -729,12 +731,12 @@ class EmployeeController extends Controller
 
         Excel::import(new CustomerDataImport, request()->file('file'));
 
-        return redirect()->route('master.customers.index')->with('success', 'Data imported successfully');
+        return redirect()->route('master.employees.index')->with('success', 'Data imported successfully');
     }
     // Import Users
     public function export(Request $request)
     {
-        return Excel::download(new CustomersExport($request->all()), 'CustomerDatas_' . date('d-m-Y') . '.xlsx');
+        return Excel::download(new EmployeeExport($request->all()), 'EmployeeDatas_' . date('d-m-Y') . '.xlsx');
     }
 
     public function getCompanies($companytypeid)

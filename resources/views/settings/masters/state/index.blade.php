@@ -22,7 +22,7 @@
                         <div class="col-12">
                             <div class="card p-2 leftsetup">
                                 <h4 class="page-title">Setup</h4>
-                                <input type="text" placeholder="search" class="form-control">
+                                
                                 @include('settings.setup_nav')
                             </div>
                         </div>

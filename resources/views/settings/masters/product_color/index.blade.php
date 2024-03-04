@@ -22,7 +22,7 @@
                         <div class="col-12">
                             <div class="card p-2 leftsetup">
                                 <h4 class="page-title">Setup</h4>
-                                <input type="text" placeholder="search" class="form-control">
+                               
                                 @include('settings.setup_nav')
                             </div>
                         </div>
@@ -103,7 +103,7 @@
     <script>
         function confirmDelete(id) {
             if (confirm("Are you sure you want to delete this product color?")) {
-               window.location.href = "/product-models/product_color-delete/" + id;
+               window.location.href = "/product-models/product_color/delete/" + id;
             }
         }
     </script>

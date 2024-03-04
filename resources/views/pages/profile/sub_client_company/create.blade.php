@@ -436,7 +436,7 @@
                                             <button type="submit" class="btn btn-primary waves-effect waves-light">
                                                 Submit
                                             </button>
-                                            <a href="{{ route('profile.masters.create') }}"
+                                            <a href="{{ route('profile.sub_clients.create') }}"
                                                 class="btn btn-warning waves-effect waves-light">
                                                 Reset
                                             </a>

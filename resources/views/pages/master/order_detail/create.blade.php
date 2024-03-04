@@ -201,11 +201,11 @@
                                             <button type="submit" class="btn btn-primary waves-effect waves-light">
                                                 Submit
                                             </button>
-                                            <a href="{{ route('master.product_model.create') }}"
+                                            <a href="{{ route('master.order_detail.create') }}"
                                                 class="btn btn-warning waves-effect waves-light">
                                                 Reset
                                             </a>
-                                            <a href="{{ route('master.product_model.index') }}"
+                                            <a href="{{ route('master.order_detail.index') }}"
                                                 class="btn btn-secondary waves-effect m-l-5">
                                                 Cancel
                                             </a>

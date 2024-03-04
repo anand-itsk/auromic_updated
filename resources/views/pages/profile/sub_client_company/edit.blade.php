@@ -296,21 +296,24 @@
                                         </div>
 
                                         <label for="faorhus_name" class="col-sm-2 col-form-label">Profile Image</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input type="file" name="photo" id="imageInput">
-                                            @error('photo')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                            <br>
-
-                                            <h6 style="font-weight: bold;">Current Image:</h6>
-                                            <img src="{{ asset('storage/' . $company->authorisedPerson->photo ?? '') }}"
-                                                alt="Current Image" style="max-width: 100px; max-height: 100px;">
-
-                                            <h6 style="font-weight: bold;">Change Image:</h6>
-                                            <div id="imagePreviewContainer"></div>
-                                        </div>
-
+<div class="col-sm-4 mb-4">
+    <input type="file" name="photo" id="imageInput">
+    @error('photo')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+    <br>
+    
+    <h6 style="font-weight: bold;">Current Image:</h6>
+    @if($company->authorisedPerson)
+        <img src="{{ asset('storage/' . $company->authorisedPerson->photo) }}" alt="Current Image"
+             style="max-width: 100px; max-height: 100px;">
+    @else
+        <p>No image available</p>
+    @endif
+    
+    <h6 style="font-weight: bold;">Change Image:</h6>
+    <div id="imagePreviewContainer"></div>
+</div>
                                         <label for="gender" class="col-sm-2 col-form-label">Gender</label>
                                         <div class="col-sm-2 mb-4">
                                             <select class="form-control" name="gender" id="gender">

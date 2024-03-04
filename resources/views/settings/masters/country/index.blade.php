@@ -22,7 +22,7 @@
                         <div class="col-12">
                             <div class="card p-2 leftsetup">
                                 <h4 class="page-title">Setup</h4>
-                                <input type="text" placeholder="search" class="form-control">
+                               
                                 @include('settings.setup_nav')
                             </div>
                         </div>
@@ -156,7 +156,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap"
+                                    <table id="country-table" class="table table-striped table-bordered dt-responsive nowrap"
                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
@@ -186,10 +186,10 @@
     <script>
         var table;
         $(document).ready(function() {
-            table = $('#users-table').DataTable({
+            table = $('#country-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('users.data') }}',
+                ajax: '{{ route('common.countries.data') }}',
                 columns: [{
                         data: 'id',
                         name: 'id'
@@ -199,13 +199,10 @@
                         name: 'name'
                     },
                     {
-                        data: 'email',
-                        name: 'email'
+                        data: 'code',
+                        name: 'code'
                     },
-                    {
-                        data: 'role',
-                        name: 'role'
-                    },
+                 
                     {
                         data: null,
                         orderable: false,

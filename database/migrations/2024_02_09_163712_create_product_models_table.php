@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('model_code');
             $table->string('model_name');
             $table->string('raw_material_weight_item')->nullable();
-            $table->boolean('wages_product')->default(0);
+            $table->string('wages_product')->default(0);
             $table->timestamps();
             $table->foreign('raw_material_id')->references('id')->on('raw_materials')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

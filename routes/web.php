@@ -100,6 +100,7 @@ Route::middleware(['auth'])->group(function () {
 
         // Country
         Route::get('/country', [CountryController::class, 'index'])->name('countries');
+        Route::get('/data', [CountryController::class, 'indexData'])->name('data');
         Route::get('/country/create', [CountryController::class, 'create'])->name('country.create');
         Route::post('/country/store', [CountryController::class, 'store'])->name('country.store');
         Route::get('/country/edit/{id}', [CountryController::class, 'edit'])->name('country.edit');
@@ -347,7 +348,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/store', [IncentiveController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [IncentiveController::class, 'edit'])->name('edit');
             Route::post('/update/{id}', [IncentiveController::class, 'update'])->name('update');
-            Route::delete('/delete/{id}',  [IncentiveController::class, 'destroy'])->name('delete');
+            Route::get('/delete/{id}',  [IncentiveController::class, 'destroy'])->name('delete');
             Route::get('/show/{id}', [IncentiveController::class, 'showDetails']);
             Route::post('/delete/selected', [IncentiveController::class, 'deleteSelected']);
             Route::post('/import', [IncentiveController::class, 'import'])->name('import');
@@ -423,7 +424,7 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/nominee/delete/{id}', [EmployeeController::class, 'deleteNominee'])->name('nominee.delete');
 
             Route::post('/update/{id}', [EmployeeController::class, 'update'])->name('update');
-            Route::delete('/delete/{id}',  [EmployeeController::class, 'destroy'])->name('delete');
+            Route::get('/delete/{id}',  [EmployeeController::class, 'destroy'])->name('delete');
             // Route::get('/show/{id}', [EmployeeController::class, 'showDetails']);
             Route::post('/delete/selected', [EmployeeController::class, 'deleteSelected']);
             Route::post('/import', [EmployeeController::class, 'import'])->name('import');

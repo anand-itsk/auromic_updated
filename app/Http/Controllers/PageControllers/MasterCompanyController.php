@@ -101,7 +101,7 @@ class MasterCompanyController extends Controller
         }
 
         return redirect()->route('profile.masters.index')
-            ->with('success', 'Customer created successfully');
+            ->with('success', 'Master Company created successfully');
     }
     // Edit
     public function edit(Address $address, $id)
@@ -205,7 +205,7 @@ class MasterCompanyController extends Controller
             $company->addresses()->save($homeAddress);
         }
         return redirect()->route('profile.masters.index')
-            ->with('success', 'Customer Updated successfully');
+            ->with('success', 'Master Company Updated successfully');
     }
     // Show
     public function showDetails($id)
@@ -258,6 +258,6 @@ class MasterCompanyController extends Controller
     // Import Users
     public function export(Request $request)
     {
-        return Excel::download(new CompanyExport($request->all()), 'CustomerDatas_' . date('d-m-Y') . '.xlsx');
+      return Excel::download(new CompanyExport($request->all()), 'CustomerDatas_' . date('d-m-Y') . '.xlsx');
     }
 }

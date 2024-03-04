@@ -33,7 +33,7 @@
                                 <form action="{{ route('profile.bank_details.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
-                                    <h5 class="text-primary">Company Info</h5>
+                                    <!-- <h5 class="text-primary">Company Info</h5> -->
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Companies</label>
                                         <div class="col-sm-4 mb-4">

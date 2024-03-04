@@ -22,6 +22,8 @@ class DeliveryChallanExport implements FromCollection
             'Company Name',
             'Order Number',
             'DC NO',
+            'created_at',
+            'updated_at'
         ];
     }
 }

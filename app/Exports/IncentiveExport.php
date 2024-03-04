@@ -3,8 +3,8 @@
 namespace App\Exports;
 use App\Models\Incentive;
 use Maatwebsite\Excel\Concerns\FromCollection;
-
-class IncentiveExport implements FromCollection
+use Maatwebsite\Excel\Concerns\WithHeadings;
+class IncentiveExport implements FromCollection,WithHeadings
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -20,6 +20,8 @@ class IncentiveExport implements FromCollection
             'Product name',
             'Model Size',
             'Duration Period',
+            'created_at',
+            'updated_at'
         ];
     }
 }

@@ -30,6 +30,9 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card m-b-30">
+                                 @error('file')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
                                 <div class="d-flex justify-content-between p-2 bd-highlight">
                                     <div>
                                         <button id="deleteButton" style="display: none;"
@@ -37,6 +40,7 @@
                                             title="Delete Selected Record">
                                             Delete Selected Record</button>
                                     </div>
+                                    
                                     <div>
                                         <button type="button" class="icon-button common-color bg-secondary rounded"
                                             data-toggle="modal" data-target=".bs-example-modal-center"
@@ -49,6 +53,7 @@
                                             title="Create New User">
                                             <i class="fa fa-user-plus"></i>
                                         </a> --}}
+
                                     </div>
                                 </div>
                                 {{-- Import Modal --}}
@@ -298,7 +303,7 @@
                     {
                         text: 'Export All',
                         action: function(e, dt, node, config) {
-                            window.location.href = '/master/Employees/export?' + $.param(dt.ajax
+                            window.location.href = '/master/employees/export?' + $.param(dt.ajax
                                 .params());
                         }
                     }
@@ -333,7 +338,7 @@
                 if (confirm("Are you sure you want to delete these rows?")) {
                     // Send AJAX request to delete the selected rows
                     $.ajax({
-                        url: '/master/Employees/delete/selected',
+                        url: '/master/employees/delete/selected',
                         type: 'POST',
                         data: {
                             ids: ids,
@@ -357,10 +362,10 @@
         function deleteCustomer(id) {
             console.log("inside")
             // Send an AJAX request to delete the user
-            if (confirm('Are you sure you want to delete this user?')) {
+            if (confirm('Are you sure you want to delete this Employee?')) {
                 $.ajax({
-                    url: '/master/Employees/delete/' + id,
-                    type: 'DELETE',
+                    url: '/master/employees/delete/' + id,
+                    type: 'get',
                     data: {
                         _token: '{{ csrf_token() }}',
                     },

@@ -1,35 +1,30 @@
 <?php
 
 namespace App\Exports;
-use App\Models\ProductModel;
+use App\Models\FinishingProductModel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class ModelExport implements FromCollection,WithHeadings
+class FinishingProductExport implements FromCollection,WithHeadings
 {
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return ProductModel::all();
- 
+         return FinishingProductModel::all();
     }
 
-
-    public function headings(): array
+     public function headings(): array
     {
         return [
             'Id',
-            'R.M',
-            'R.M Type',
-            'R.M Stock',
-            'Product Name',
+            'Product Id',
             'Product Size',
             'Model Code',
             'Model Name',
-            'R.M Weight/Item',
-            'Wages of one Product',
+            'Wages of Product',
+            'Date',
             'created_at',
             'updated_at'
         ];

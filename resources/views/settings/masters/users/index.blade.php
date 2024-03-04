@@ -21,7 +21,7 @@
                     <div class="col-12">
                         <div class="card p-2 leftsetup">
                             <h4 class="page-title">Setup</h4>
-                            <input type="text" placeholder="search" class="form-control">
+                            
                             @include('settings.setup_nav')
                         </div>
                     </div>
@@ -186,7 +186,7 @@ $(document).ready(function() {
                         <button onclick="editUser(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
                         <button onclick="deleteUser(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
                         <button onclick="blockUser(${row.id})" class="icon-button common-color"><i class="fa fa-user-times"></i></button>
-                        <button onclick="showUser(${row.id})" class="icon-button common-color"><i class="fa fa-eye"></i></button>
+                       
                     `;
                 }
 
@@ -406,7 +406,6 @@ $(document).ready(function() {
                     return `
                         <button onclick="editUser(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
                         <button onclick="deleteUser(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
-                        <button onclick="blockUser(${row.id})" class="icon-button common-color"><i class="fa fa-user-times"></i></button>
                     `;
                 }
 
