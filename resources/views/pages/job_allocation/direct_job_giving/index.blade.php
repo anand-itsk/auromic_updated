@@ -31,13 +31,15 @@
                     <div class="col-12">
                         <div class="card m-b-30">
                             <div class="d-flex justify-content-between p-2 bd-highlight">
+                                
                                 <div>
                                     <button id="deleteButton" class="icon-button delete-color"
                                         title="Delete Selected Record"><i class="fa fa-user-times"></i></button>
                                 </div>
+                                
                                 <div>
                                     <button type="button" class="icon-button common-color" data-toggle="modal"
-                                        data-target=".bs-example-modal-center" title="Create Customer"><i
+                                        data-target=".bs-example-modal-center" title="Import file"><i
                                             class="fa fa-upload"></i></button>
 
                                     <a href="{{ route('job_allocation.direct_job_giving.create') }}" class="icon-link common-color"
@@ -62,7 +64,7 @@
                                                 <div class="col-12">
                                                     <div class="card m-b-30">
                                                         <div class="card-body">
-                                                            <form action="{{ route('master.incentives.import') }}"
+                                                            <form action="{{ route('job_allocation.direct_job_giving.import') }}"
                                                                 method="POST" enctype="multipart/form-data">
                                                                 @csrf
                                                                 <input type="file" name="file" required>
@@ -82,7 +84,7 @@
                                                 .xlsx or .csv)</p>
                                             <p class="text-muted font-14">To upload sample document, it
                                                 must have concern fields.
-                                                <a href="{{ asset('assets/sample_excels/incentives.xlsx') }}"
+                                                <a href="{{ asset('assets/sample_excels/direct_job_giving_import.xlsx') }}"
                                                     download>Click
                                                     to download sample document</a>
                                             </p>
@@ -188,27 +190,45 @@ $(document).ready(function() {
             },
             {
                 data: 'employee.employee_name',
-                name: 'employee.employee_name'
+                name: 'employee.employee_name',
+                 render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
             },
             {
                 data: 'product_model.model_name',
-                name: 'product_model.model_name'
+                name: 'product_model.model_name',
+                 render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
             },
             {
                 data: 'product_size.name',
-                name: 'product_size.name'
+                name: 'product_size.name',
+                 render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
             },
             {
                 data: 'product_color.name',
-                name: 'product_color.name'
+                name: 'product_color.name',
+                 render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
             },
             {
                 data: 'quantity',
-                name: 'quantity'
+                name: 'quantity',
+                 render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
             },
             {
                 data: 'weight',
-                name: 'weight'
+                name: 'weight',
+                 render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
             },
              
            
@@ -220,7 +240,7 @@ $(document).ready(function() {
                     return `
                         <button onclick="edit(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
                         <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
-                        <button onclick="showDetails(${row.id})" class="icon-button common-color"><i class="fa fa-eye"></i></button>
+                       
                     `;
                 }
 
@@ -236,7 +256,7 @@ $(document).ready(function() {
             {
                 text: 'Export All',
                 action: function(e, dt, node, config) {
-                    window.location.href = '/master/incentives/export?' + $.param(dt.ajax
+                    window.location.href = '/job_allocation/direct_job_giving/export?' + $.param(dt.ajax
                         .params());
                 }
             }
@@ -283,10 +303,10 @@ function edit(id) {
 function deleteCustomer(id) {
     console.log("inside")
     // Send an AJAX request to delete the user
-    if (confirm('Are you sure you want to delete this Product model?')) {
+    if (confirm('Are you sure you want to delete this Direct job giving?')) {
         $.ajax({
-            url: '/master/product_model/delete/' + id,
-            type: 'DELETE',
+            url: '/job_allocation/direct_job_giving/delete/' + id,
+            type: 'get',
             data: {
                 _token: '{{ csrf_token() }}',
             },

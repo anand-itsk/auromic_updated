@@ -49,7 +49,7 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="company_type" class="col-sm-2 col-form-label mandatory">
+                           <label for="company_type" class="col-sm-2 col-form-label">
                            Company Type
                            </label>
                            <div class="col-sm-4 mb-4">
@@ -58,7 +58,7 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="company_name" class="col-sm-2 col-form-label mandatory">
+                           <label for="company_name" class="col-sm-2 col-form-label ">
                            Company Name
                            </label>
                            <div class="col-sm-4 mb-4">

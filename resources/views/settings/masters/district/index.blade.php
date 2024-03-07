@@ -41,7 +41,9 @@
                                         <div class="col-md-12 rightsetup-details">
                                             <div class="d-flex justify-content-between p-2 bd-highlight">
                                                 <div>
-
+ <button id="deleteButton" class="icon-button delete-color"
+                                                    title="Delete Selected Record"><i
+                                                        class="fa fa-user-times"></i></button>
                                                 </div>
                                                 <div>
                                                     <a href="{{ route('common.districts.create') }}"
@@ -62,30 +64,11 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @if (!empty($district))
-                                             @foreach ($district as $item)
-                                                    <tr>
-                                                        <td>{{ $item->id }}</td>
-                                                        <td>{{ $item->state->name }}</td>
-                                                        <td>{{ $item->name }}</td>
-                                                        <td>{{ $item->code}} </td>
-                                                        <td>
-                                                            
-                                                                <a href="{{ route('common.districts.edit', $item->id) }}" class="icon-link primary-color"><i
-                                                                        class="fa fa-edit"></i></a>
-                                                                <button class="icon-button delete-color" onclick="confirmDelete({{ $item->id }})"><i class="fa fa-trash"></i></button>
-
-
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
+                                                    
                                                 </tbody>
                                             </table>
 
-                                            <div class="pagination">
-                                                {{  $district->links('pagination::bootstrap-4') }}
-                                            </div>
+                                            
                                         </div>
 
                                     </div>
@@ -100,12 +83,102 @@
     <!-- DataTables JS -->
     @include('links.js.datatable.datatable-js')
 
+<script>
+var table;
+$(document).ready(function() {
+    table = $('#users-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{{route('common.districts.data')}}',
+        columns: [{
+                data: 'id',
+                name: 'id'
+            },
+            {
+                data: 'name',
+                name: 'name'
+            },
+            {
+                data: 'code',
+                name: 'code'
+            },
+           
+            {
+                data: null,
+                orderable: false,
+                searchable: false,
+                render: function(data, type, row) {
+                    return `
+                        <button onclick="editUser(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
+                        <button onclick="deleteUser(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
+                                              
+                    `;
+                }
 
-    <script>
-        function confirmDelete(id) {
-            if (confirm("Are you sure you want to delete this district?")) {
-                  window.location.href = "/common/district-delete/" + id;
-            }
+            },
+        ],
+        order: [
+            [0, 'asc']
+        ],
+        select: true,
+        dom: 'lBfrtip',
+        buttons: [
+            'excel', 'print'
+        ],
+        pageLength: 8
+    });
+
+    $('#deleteButton').click(function() {
+        var ids = $.map(table.rows('.selected').data(), function(item) {
+            return item.id;
+        });
+
+        if (ids.length === 0) {
+            alert('No rows selected!');
+            return;
         }
-    </script>
+
+        if (confirm("Are you sure you want to delete these rows?")) {
+            // Send AJAX request to delete the selected rows
+            $.ajax({
+                url: 'district/select-district-delete',
+                type: 'POST',
+                data: {
+                    ids: ids,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    // Handle response here
+                    table.ajax.reload(); // Reload the DataTable
+                }
+            });
+        }
+    });
+});
+
+function editUser(id) {
+    console.log("inside");
+    // Redirect to the user edit page or open a modal for editing
+    window.location.href = 'district/edit/' + id;
+}
+
+
+
+function deleteUser(id) {
+    // Send an AJAX request to delete the user
+    if (confirm('Are you sure you want to delete this District?')) {
+        $.ajax({
+            url: 'district-delete/' + id,
+            type: 'get',
+            data: {
+                _token: '{{ csrf_token() }}',
+            },
+            success: function(result) {
+                table.ajax.reload(); // Reload the DataTable
+            }
+        });
+    }
+}
+</script>
+   
 @endsection

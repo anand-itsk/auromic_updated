@@ -4,6 +4,7 @@ namespace App\Http\Controllers\PageControllers\JobAllocation;
 
 use App\Http\Controllers\Controller;
 use App\Models\AuthorisedPerson;
+use App\Exports\DeliveryChallanExport;
 use App\Models\Company;
 use App\Models\Customer;
 use App\Models\CompanyType;
@@ -14,6 +15,7 @@ use App\Models\DeliveryChallan;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DeliveryChallanController extends Controller
 {
@@ -89,8 +91,12 @@ public function getModelDetails($id)
     {
         // dd($request);
         $validatedData = $request->validate([
+            'company_type_id' => 'required',
             'company_id' => 'required',
+            'customer_id'=>'required',
+            'product_model'=>'required',
             'dc_number' => 'required',
+            'dc_date' => 'required',
             'order_id' => 'required'
         ]);
         $input = $request->all();
@@ -147,17 +153,17 @@ public function getProductDetails(Request $request)
     // Update
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'company_id' => 'required',
-            'dc_number' => 'required',
-            'order_id' => 'required'
-        ]);
+       
         $input = $request->all();
 
         $delivery_challan = DeliveryChallan::find($id);
         $delivery_challan->company_id = $input['company_id'];
         $delivery_challan->dc_no = $input['dc_number'];
         $delivery_challan->order_id = $input['order_id'];
+        $delivery_challan->dc_date = $input['dc_date'];
+        $delivery_challan->quantity = $input['quantity'];
+        $delivery_challan->product_size_id = $input['product_size_id'];
+        $delivery_challan->product_color_id = $input['product_color_id'];
 
         $delivery_challan->save();
 
@@ -187,5 +193,21 @@ public function getProductDetails(Request $request)
 
           return redirect()->route('job_allocation.delivery_challan.index')->with('success', 'Delivery Challan Deleted successfully!');
 
+    }
+
+     public function export(Request $request)
+    {
+        return Excel::download(new DeliveryChallanExport($request->all()), 'DeliveryChallanDatas_' . date('d-m-Y') . '.xlsx');
+    }
+
+     public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,csv'
+        ]);
+
+        Excel::import(new DeliveryChallanImport, request()->file('file'));
+
+        return redirect()->route('job_allocation.delivery_challan.index')->with('success', 'Data imported successfully');
     }
 }

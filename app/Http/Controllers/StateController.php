@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\State;
 use App\Models\Country;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StateController extends Controller
 {
@@ -15,6 +17,14 @@ class StateController extends Controller
         return view('settings.masters.state.index',compact('state'));
 
      }
+
+        public function indexData()
+    {
+        
+        $state = State::get();
+        
+        return DataTables::of($state)->make(true);
+    }
 
       public function create()
      {
@@ -72,11 +82,24 @@ class StateController extends Controller
     
          return redirect()->route('common.states')->with('success', 'State Updated successfully!');
     }
+       public function deleteSelected(Request $request)
+    {
+
+        $ids = $request->ids;
+
+        if (!is_array($ids)) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid input'], 400);
+        }
+
+        State::destroy($ids);
+        return response()->json(['status' => 'success']);
+    }
+    
         public function delete($id)
     {
-         $state = State::find($id);
+          $state = State::find($id);
 
-         $state->delete();
+           $state->delete();
 
           return redirect()->route('common.states')->with('success', 'State Deleted successfully!');
 

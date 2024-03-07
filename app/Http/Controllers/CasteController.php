@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Caste;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CasteController extends Controller
 {
@@ -14,6 +16,14 @@ class CasteController extends Controller
         return view('settings.masters.caste.index',compact('caste'));
 
      }
+
+      public function indexData()
+    {
+        
+        $caste = Caste::get();
+        
+        return DataTables::of($caste)->make(true);
+    }
 
       public function create()
      {
@@ -75,5 +85,18 @@ class CasteController extends Controller
 
           return redirect()->route('common.castes')->with('success', 'Caste Deleted successfully!');
 
+    }
+
+     public function deleteSelected(Request $request)
+    {
+
+        $ids = $request->ids;
+
+        if (!is_array($ids)) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid input'], 400);
+        }
+
+        Caste::destroy($ids);
+        return response()->json(['status' => 'success']);
     }
 }

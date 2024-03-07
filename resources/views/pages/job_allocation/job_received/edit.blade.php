@@ -136,7 +136,7 @@
                            Product Color
                            </label>
                            <div class="col-sm-4 mb-4">
-                              <input type="text" class="form-control" name="company_type" id="company_type" readonly value="{{ $Job_Giving->order_details->productColor->name}}">
+                              <input type="text" class="form-control" name="company_type" id="company_type" readonly value="{{ $Job_Giving->order_details->productColor->name??''}}">
                               @error('employee_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
@@ -157,20 +157,21 @@
                            <div class="col-sm-4 mb-4">
                               <select class="form-control select2" name="Incentive_status"
                                  id="Incentive_status">
+                                 
                                  <option value="Yes">Yes</option>
                                  <option value="No">No</option>
                               </select>
-                              @error('employee_id')
+                              @error('Incentive_status')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="customer_code" class="col-sm-2 col-form-label">
+                           <label for="customer_code" class="col-sm-2 col-form-label mandatory">
                            Receiving Date
                            </label>
                            <div class="col-sm-4 mb-4">
                               <input class="form-control" type="date" name="receiving_date"
-                                 id="receiving_date" required="">
-                              @error('order_id')
+                                 id="receiving_date" required>
+                              @error('receiving_date')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>

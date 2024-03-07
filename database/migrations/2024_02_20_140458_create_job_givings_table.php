@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('product_model_id');
             $table->unsignedBigInteger('dc_id')->nullable();
-            $table->enum('status',['Pending','Incomplete','Complete'])->default('Pending');
+            $table->enum('status',['Pending','Incomplete','Complete','Cancelled'])->default('Pending');
             $table->string('quantity')->nullable();
             $table->date('date')->nullable();
             $table->timestamps();

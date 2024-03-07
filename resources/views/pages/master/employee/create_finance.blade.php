@@ -187,25 +187,21 @@
                         <span class="error" style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>
+<label for="pf_joining_date" class="col-sm-2 col-form-label">PF Joining Date</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="date" value="{{ $employee->pfInfo->pf_joining_date ?? '' }}" name="pf_joining_date" id="pf_joining_date">
+    @error('pf_joining_date')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
 
-                <label for="pf_joining_date" class="col-sm-2 col-form-label">PF Joining Date</label>
-                <div class="col-sm-4 mb-4">
-                    <input class="form-control" type="date"
-                        value="{{ $employee->pfInfo->pf_joining_date ?? '' }}" name="pf_joining_date"
-                        id="pf_joining_date">
-                    @error('pf_joining_date')
-                        <span class="error" style="color: red;">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <label for="pf_last_date" class="col-sm-2 col-form-label">PF Last Date</label>
-                <div class="col-sm-4 mb-4">
-                    <input class="form-control" type="date" value="{{ $employee->pfInfo->pf_last_date ?? '' }}"
-                        name="pf_last_date" id="pf_last_date">
-                    @error('pf_last_date')
-                        <span class="error" style="color: red;">{{ $message }}</span>
-                    @enderror
-                </div>
+<label for="pf_last_date" class="col-sm-2 col-form-label">PF Last Date</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="date" value="{{ $employee->pfInfo->pf_last_date ?? '' }}" name="pf_last_date" id="pf_last_date">
+    @error('pf_last_date')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
 
                 <label class="col-sm-2 col-form-label">Pension Applicable</label>
                 <div class="col-sm-4">
@@ -389,4 +385,36 @@
             });
         });
     </script>
+    
+<script>
+    // Get references to the date input fields
+    var joiningDateInput = document.getElementById('pf_joining_date');
+    var lastDateInput = document.getElementById('pf_last_date');
+
+    // Add event listener to the joining date input field
+    joiningDateInput.addEventListener('change', function() {
+        // Get the selected date in the joining date field
+        var selectedDate = new Date(joiningDateInput.value);
+        // Set the minimum selectable date in the last date field to one day after the selected date
+        var minSelectableDate = new Date(selectedDate.getTime() + 24 * 60 * 60 * 1000);
+        lastDateInput.min = minSelectableDate.toISOString().split('T')[0];
+    });
+</script>
+
+<script>
+    // Get references to the date input fields
+    var joiningDateInput = document.getElementById('esi_joining_date');
+    var lastDateInput = document.getElementById('esi_last_date');
+
+    // Add event listener to the joining date input field
+    joiningDateInput.addEventListener('change', function() {
+        // Get the selected date in the joining date field
+        var selectedDate = new Date(joiningDateInput.value);
+        // Set the minimum selectable date in the last date field to one day after the selected date
+        var minSelectableDate = new Date(selectedDate.getTime() + 24 * 60 * 60 * 1000);
+        lastDateInput.min = minSelectableDate.toISOString().split('T')[0];
+    });
+</script>
+
+
 </div>

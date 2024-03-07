@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\CompanyType;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CompanyTypeController extends Controller
 {
@@ -14,6 +16,14 @@ class CompanyTypeController extends Controller
         return view('settings.masters.company_type.index',compact('company_type'));
 
      }
+
+     public function indexData()
+    {
+        
+        $company_type = CompanyType::get();
+        
+        return DataTables::of($company_type)->make(true);
+    }
 
       public function create()
      {
@@ -75,5 +85,18 @@ class CompanyTypeController extends Controller
 
           return redirect()->route('specified.company_types')->with('success', 'company type Deleted successfully!');
 
+    }
+
+       public function deleteSelected(Request $request)
+    {
+
+        $ids = $request->ids;
+
+        if (!is_array($ids)) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid input'], 400);
+        }
+
+        CompanyType::destroy($ids);
+        return response()->json(['status' => 'success']);
     }
 }

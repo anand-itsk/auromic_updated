@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\RawMaterialType;
 use App\Models\RawMaterial;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RawMaterialController extends Controller
 {
@@ -15,6 +17,14 @@ class RawMaterialController extends Controller
 
       return view('settings.masters.raw_material.index', compact('raw_material'));
    }
+
+    public function indexData()
+    {
+        
+        $raw_material = RawMaterial::with('rawMaterialType')->get();
+        
+        return DataTables::of($raw_material)->make(true);
+    }
 
    public function create()
    {
@@ -83,4 +93,17 @@ class RawMaterialController extends Controller
 
       return redirect()->route('product-models.raw_materials')->with('success', 'Raw Material Deleted successfully!');
    }
+   
+    public function deleteSelected(Request $request)
+    {
+
+        $ids = $request->ids;
+
+        if (!is_array($ids)) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid input'], 400);
+        }
+
+        RawMaterial::destroy($ids);
+        return response()->json(['status' => 'success']);
+    }
 }

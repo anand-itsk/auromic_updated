@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Nationality;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class NationalityController extends Controller
 {
@@ -14,6 +16,14 @@ class NationalityController extends Controller
         return view('settings.masters.nationality.index',compact('nationality'));
 
      }
+
+      public function indexData()
+    {
+        
+        $nationality = Nationality::get();
+        
+        return DataTables::of($nationality)->make(true);
+    }
 
       public function create()
      {
@@ -75,5 +85,19 @@ class NationalityController extends Controller
 
           return redirect()->route('common.nationalities')->with('success', 'Nationality Deleted successfully!');
 
+    }
+
+    
+     public function deleteSelected(Request $request)
+    {
+
+        $ids = $request->ids;
+
+        if (!is_array($ids)) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid input'], 400);
+        }
+
+        Nationality::destroy($ids);
+        return response()->json(['status' => 'success']);
     }
 }
