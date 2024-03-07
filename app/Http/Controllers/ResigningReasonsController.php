@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\ResigningReason;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ResigningReasonsController extends Controller
 {
@@ -14,6 +16,15 @@ class ResigningReasonsController extends Controller
         return view('settings.masters.resigning_reason.index',compact('resigning_reason'));
 
      }
+
+     
+        public function indexData()
+    {
+        
+        $resigning_reason = ResigningReason::get();
+        
+        return DataTables::of($resigning_reason)->make(true);
+    }
 
       public function create()
      {
@@ -75,5 +86,18 @@ class ResigningReasonsController extends Controller
 
           return redirect()->route('specified.resigning_reasons')->with('success', 'Resigning Reason Deleted successfully!');
 
+    }
+
+     public function deleteSelected(Request $request)
+    {
+
+        $ids = $request->ids;
+
+        if (!is_array($ids)) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid input'], 400);
+        }
+
+        ResigningReason::destroy($ids);
+        return response()->json(['status' => 'success']);
     }
 }

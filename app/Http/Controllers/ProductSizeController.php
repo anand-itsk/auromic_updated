@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\ProductSize;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductSizeController extends Controller
 {
@@ -15,6 +17,14 @@ class ProductSizeController extends Controller
 
       return view('settings.masters.product_size.index', compact('product_size'));
    }
+
+    public function indexData()
+    {
+        
+        $product_size = ProductSize::get();
+        
+        return DataTables::of($product_size)->make(true);
+    }
 
    public function create()
    {
@@ -69,4 +79,16 @@ class ProductSizeController extends Controller
 
       return redirect()->route('product-models.product_sizes')->with('success', 'Product Size Deleted successfully!');
    }
+   public function deleteSelected(Request $request)
+    {
+
+        $ids = $request->ids;
+
+        if (!is_array($ids)) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid input'], 400);
+        }
+
+        ProductSize::destroy($ids);
+        return response()->json(['status' => 'success']);
+    }
 }

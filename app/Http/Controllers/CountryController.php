@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Country;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CountryController extends Controller
 {
@@ -78,11 +80,25 @@ class CountryController extends Controller
     
          return redirect()->route('common.countries')->with('success', 'Country Updated successfully!');
     }
+
+     public function deleteSelected(Request $request)
+    {
+
+        $ids = $request->ids;
+
+        if (!is_array($ids)) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid input'], 400);
+        }
+
+        Country::destroy($ids);
+        return response()->json(['status' => 'success']);
+    }
+    
         public function delete($id)
     {
           $country = Country::find($id);
 
-         $country->delete();
+           $country->delete();
 
           return redirect()->route('common.countries')->with('success', 'Country Deleted successfully!');
 

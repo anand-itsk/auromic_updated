@@ -60,7 +60,7 @@
                                                 Update
                                             </button>
                                 
-                                            <a href="{{ route('common.countries') }}"
+                                            <a href="{{ route('common.castes') }}"
                                                 class="btn btn-secondary waves-effect m-l-5">
                                                 Cancel
                                             </a>

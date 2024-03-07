@@ -36,13 +36,7 @@
                                             title="Delete Selected Record"><i class="fa fa-user-times"></i></button>
                                     </div>
                                     <div>
-                                        <button type="button" class="icon-button common-color" data-toggle="modal"
-                                            data-target=".bs-example-modal-center" title="Job Giving"><i
-                                                class="fa fa-upload"></i></button>
-
-                                        <a href="" class="icon-link common-color" title="Create Job Giving">
-                                            <i class="fa fa-user-plus"></i>
-                                        </a>
+                                        
                                     </div>
                                 </div>
                                 {{-- Import Modal --}}
@@ -300,8 +294,8 @@
                         render: function(data, type, row) {
                             return `
                         <button onclick="edit(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
-                        <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
-                        <button onclick="showDetails(${row.id})" class="icon-button common-color"><i class="fa fa-eye"></i></button>
+                        
+                       
                     `;
                         }
 
@@ -317,7 +311,7 @@
                     {
                         text: 'Export All',
                         action: function(e, dt, node, config) {
-                            window.location.href = '/master/customers/export?' + $.param(dt.ajax
+                            window.location.href = '/job_allocation/job_giving/export?' + $.param(dt.ajax
                                 .params());
                         }
                     }

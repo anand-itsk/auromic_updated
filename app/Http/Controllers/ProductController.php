@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -15,6 +17,14 @@ class ProductController extends Controller
 
       return view('settings.masters.product.index', compact('product'));
    }
+
+    public function indexData()
+    {
+        
+        $product = Product::get();
+        
+        return DataTables::of($product)->make(true);
+    }
 
    public function create()
    {
@@ -67,4 +77,17 @@ class ProductController extends Controller
 
       return redirect()->route('product-models.products')->with('success', 'Product Deleted successfully!');
    }
+
+    public function deleteSelected(Request $request)
+    {
+
+        $ids = $request->ids;
+
+        if (!is_array($ids)) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid input'], 400);
+        }
+
+        Product::destroy($ids);
+        return response()->json(['status' => 'success']);
+    }
 }

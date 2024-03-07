@@ -52,7 +52,7 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="company_type" class="col-sm-2 col-form-label mandatory">
+                           <label for="company_type" class="col-sm-2 col-form-label ">
                            Company Type
                            </label>
                            <div class="col-sm-4 mb-4">
@@ -61,7 +61,7 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="company_name" class="col-sm-2 col-form-label mandatory">
+                           <label for="company_name" class="col-sm-2 col-form-label ">
                            Company Name
                            </label>
                            <div class="col-sm-4 mb-4">
@@ -78,7 +78,7 @@
                                  <option value="{{ $productModel->id }}" >{{ $productModel->model_name }}-{{ $productModel->model_code }}</option>
                                  @endforeach
                               </select>
-                              @error('product_model')
+                              @error('product_model_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
@@ -128,16 +128,17 @@
     @enderror
 </div>
    
+</div>
                                 <div class="form-group">
                                     <div class="d-flex justify-content-evenly">
                                         <button type="submit" class="btn btn-primary waves-effect waves-light">
                                             Submit
                                         </button>
-                                        <a href="{{ route('master.incentives.create') }}"
+                                        <a href="{{ route('job_allocation.direct_job_giving.create') }}"
                                             class="btn btn-warning waves-effect waves-light">
                                             Reset
                                         </a>
-                                        <a href="{{ route('master.incentives.index') }}"
+                                        <a href="{{ route('job_allocation.direct_job_giving.index') }}"
                                             class="btn btn-secondary waves-effect m-l-5">
                                             Cancel
                                         </a>

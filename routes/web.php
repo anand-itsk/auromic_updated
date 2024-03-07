@@ -100,86 +100,106 @@ Route::middleware(['auth'])->group(function () {
 
         // Country
         Route::get('/country', [CountryController::class, 'index'])->name('countries');
-        Route::get('/data', [CountryController::class, 'indexData'])->name('data');
+        Route::get('country/data', [CountryController::class, 'indexData'])->name('country.data');
         Route::get('/country/create', [CountryController::class, 'create'])->name('country.create');
         Route::post('/country/store', [CountryController::class, 'store'])->name('country.store');
         Route::get('/country/edit/{id}', [CountryController::class, 'edit'])->name('country.edit');
         Route::post('/country/update/{id}', [CountryController::class, 'update'])->name('country.update');
         Route::get('/country/delete/{id}', [CountryController::class, 'delete'])->name('country.delete');
+        Route::post('/country/select-country-delete', [CountryController::class, 'deleteSelected']);
 
         // state
         Route::get('/state', [StateController::class, 'index'])->name('states');
+        Route::get('state/data', [StateController::class, 'indexData'])->name('states.data');
         Route::get('/state-create', [StateController::class, 'create'])->name('states.create');
         Route::post('/state-store', [StateController::class, 'store'])->name('states.store');
         Route::get('/state-edit/{id}', [StateController::class, 'edit'])->name('states.edit');
         Route::post('/state-update/{id}', [StateController::class, 'update'])->name('states.update');
         Route::get('/state-delete/{id}', [StateController::class, 'delete'])->name('states.delete');
+        Route::post('state/select-state-delete', [StateController::class, 'deleteSelected']);
 
         // Districts
         Route::get('/district', [DistrictController::class, 'index'])->name('districts');
+        Route::get('district/data', [DistrictController::class, 'indexData'])->name('districts.data');
         Route::get('/district-create', [DistrictController::class, 'create'])->name('districts.create');
         Route::post('/district-store', [DistrictController::class, 'store'])->name('districts.store');
         Route::get('/district-edit/{id}', [DistrictController::class, 'edit'])->name('districts.edit');
         Route::post('/district-update/{id}', [DistrictController::class, 'update'])->name('districts.update');
         Route::get('/district-delete/{id}', [DistrictController::class, 'delete'])->name('districts.delete');
+        Route::post('district/select-district-delete', [DistrictController::class, 'deleteSelected']);
 
         // Caste
         Route::get('/caste', [CasteController::class, 'index'])->name('castes');
+          Route::get('caste/data', [CasteController::class, 'indexData'])->name('castes.data');
         Route::get('/caste-create', [CasteController::class, 'create'])->name('castes.create');
         Route::post('/caste-store', [CasteController::class, 'store'])->name('castes.store');
         Route::get('/caste-edit/{id}', [CasteController::class, 'edit'])->name('castes.edit');
         Route::post('/caste-update/{id}', [CasteController::class, 'update'])->name('castes.update');
         Route::get('/caste-delete/{id}', [CasteController::class, 'delete'])->name('castes.delete');
+         Route::post('caste/select-caste-delete', [CasteController::class, 'deleteSelected']);
 
         //Religion
         Route::get('/religion', [ReligionController::class, 'index'])->name('religions');
+          Route::get('religion/data', [ReligionController::class, 'indexData'])->name('religions.data');
         Route::get('/religion-create', [ReligionController::class, 'create'])->name('religions.create');
         Route::post('/religion-store', [ReligionController::class, 'store'])->name('religions.store');
         Route::get('/religion-edit/{id}', [ReligionController::class, 'edit'])->name('religions.edit');
         Route::post('/religion-update/{id}', [ReligionController::class, 'update'])->name('religions.update');
         Route::get('/religion-delete/{id}', [ReligionController::class, 'delete'])->name('religions.delete');
+         Route::post('religion/select-religion-delete', [ReligionController::class, 'deleteSelected']);
 
         //Nationality
         Route::get('/nationality', [NationalityController::class, 'index'])->name('nationalities');
+           Route::get('nationality/data', [NationalityController::class, 'indexData'])->name('nationalities.data');
         Route::get('/nationality-create', [NationalityController::class, 'create'])->name('nationalities.create');
         Route::post('/nationality-store', [NationalityController::class, 'store'])->name('nationalities.store');
         Route::get('/nationality-edit/{id}', [NationalityController::class, 'edit'])->name('nationalities.edit');
         Route::post('/nationality-update/{id}', [NationalityController::class, 'update'])->name('nationalities.update');
         Route::get('/nationality-delete/{id}', [NationalityController::class, 'delete'])->name('nationalities.delete');
+        Route::post('nationality/select-nationality-delete', [NationalityController::class, 'deleteSelected']);
     });
 
     Route::prefix('specified')->name('specified.')->group(function () {
 
         //Company Type
-        Route::get('/company_types', [CompanytypeController::class, 'index'])->name('company_types');
+        Route::get('/company_type', [CompanytypeController::class, 'index'])->name('company_types');
+         Route::get('company_type/data', [CompanytypeController::class, 'indexData'])->name('company_types.data');
         Route::get('/company_type/create', [CompanytypeController::class, 'create'])->name('company_types.create');
         Route::post('/company_type/store', [CompanytypeController::class, 'store'])->name('company_types.store');
         Route::get('/company_type/edit/{id}', [CompanytypeController::class, 'edit'])->name('company_types.edit');
         Route::post('/company_type/update/{id}', [CompanytypeController::class, 'update'])->name('company_types.update');
         Route::get('/company_type/delete/{id}', [CompanytypeController::class, 'delete'])->name('company_types.delete');
+        Route::post('company_type/select-company_type-delete', [CompanytypeController::class, 'deleteSelected']);
         //Resigning Reason
         Route::get('/resigning_reason', [ResigningReasonsController::class, 'index'])->name('resigning_reasons');
+         Route::get('resigning_reason/data', [ResigningReasonsController::class, 'indexData'])->name('resigning_reasons.data');
         Route::get('/resigning_reason-create', [ResigningReasonsController::class, 'create'])->name('resigning_reasons.create');
         Route::post('/resigning_reason-store', [ResigningReasonsController::class, 'store'])->name('resigning_reasons.store');
         Route::get('/resigning_reason-edit/{id}', [ResigningReasonsController::class, 'edit'])->name('resigning_reasons.edit');
         Route::post('/resigning_reason-update/{id}', [ResigningReasonsController::class, 'update'])->name('resigning_reasons.update');
         Route::get('/resigning_reason-delete/{id}', [ResigningReasonsController::class, 'delete'])->name('resigning_reasons.delete');
+         Route::post('resigning_reason/select-resigning_reason-delete', [ResigningReasonsController::class, 'deleteSelected']);
 
         //Local Offices
         Route::get('/local_office', [LocalOfficeController::class, 'index'])->name('local_offices');
+        Route::get('local_office/data', [LocalOfficeController::class, 'indexData'])->name('local_offices.data');
         Route::get('/local_office-create', [LocalOfficeController::class, 'create'])->name('local_offices.create');
         Route::post('/local_office-store', [LocalOfficeController::class, 'store'])->name('local_offices.store');
         Route::get('/local_office-edit/{id}', [LocalOfficeController::class, 'edit'])->name('local_offices.edit');
         Route::post('/local_office-update/{id}', [LocalOfficeController::class, 'update'])->name('local_offices.update');
         Route::get('/local_office-delete/{id}', [LocalOfficeController::class, 'delete'])->name('local_offices.delete');
+        Route::post('local_office/select-local_office-delete', [LocalOfficeController::class, 'deleteSelected']);
+
 
         //ESI Dispensary
         Route::get('/esi_dispensary', [EsiDispensaryController::class, 'index'])->name('esi_dispensaries');
+         Route::get('esi_dispensary/data', [EsiDispensaryController::class, 'indexData'])->name('esi_dispensaries.data');
         Route::get('/esi_dispensary-create', [EsiDispensaryController::class, 'create'])->name('esi_dispensaries.create');
         Route::post('/esi_dispensary-store', [EsiDispensaryController::class, 'store'])->name('esi_dispensaries.store');
         Route::get('/esi_dispensary-edit/{id}', [EsiDispensaryController::class, 'edit'])->name('esi_dispensaries.edit');
         Route::post('/esi_dispensary-update/{id}', [EsiDispensaryController::class, 'update'])->name('esi_dispensaries.update');
         Route::get('/esi_dispensary-delete/{id}', [EsiDispensaryController::class, 'delete'])->name('esi_dispensaries.delete');
+        Route::post('esi_dispensary/select-esi_dispensary-delete', [EsiDispensaryController::class, 'deleteSelected']);
     });
 
 
@@ -187,52 +207,63 @@ Route::middleware(['auth'])->group(function () {
 
         //Raw Material Type
 
-        Route::get('/raw_material_types', [RawMaterialTypeController::class, 'index'])->name('raw_material_types');
+        Route::get('/raw_material_type', [RawMaterialTypeController::class, 'index'])->name('raw_material_types');
+         Route::get('raw_material_type/data', [RawMaterialTypeController::class, 'indexData'])->name('raw_material_types.data');
         Route::get('/raw_material_type/create', [RawMaterialTypeController::class, 'create'])->name('raw_material_types.create');
         Route::post('/raw_material_type/store', [RawMaterialTypeController::class, 'store'])->name('raw_material_types.store');
         Route::get('/raw_material_type/edit/{id}', [RawMaterialTypeController::class, 'edit'])->name('raw_material_types.edit');
         Route::post('/raw_material_type/update/{id}', [RawMaterialTypeController::class, 'update'])->name('raw_material_types.update');
         Route::get('/raw_material_type/delete/{id}', [RawMaterialTypeController::class, 'delete'])->name('raw_material_types.delete');
+         Route::post('raw_material_type/select-raw_material_type-delete', [RawMaterialTypeController::class, 'deleteSelected']);
 
         //Raw Material
         Route::get('/raw_materials', [RawMaterialController::class, 'index'])->name('raw_materials');
+              Route::get('raw_materials/data', [RawMaterialController::class, 'indexData'])->name('raw_materials.data');
         Route::get('/raw_materials/create', [RawMaterialController::class, 'create'])->name('raw_materials.create');
         Route::post('/raw_materials/store', [RawMaterialController::class, 'store'])->name('raw_materials.store');
         Route::get('/raw_materials/edit/{id}', [RawMaterialController::class, 'edit'])->name('raw_materials.edit');
         Route::post('/raw_materials/update/{id}', [RawMaterialController::class, 'update'])->name('raw_materials.update');
         Route::get('/raw_materials/delete/{id}', [RawMaterialController::class, 'delete'])->name('raw_materials.delete');
+             Route::post('raw_materials/select-raw_materials-delete', [RawMaterialController::class, 'deleteSelected']);
 
         //Product
         Route::get('/products', [ProductController::class, 'index'])->name('products');
+        Route::get('product/data', [ProductController::class, 'indexData'])->name('products.data');
         Route::get('/product-create', [ProductController::class, 'create'])->name('products.create');
         Route::post('/product-store', [ProductController::class, 'store'])->name('products.store');
         Route::get('/product-edit/{id}', [ProductController::class, 'edit'])->name('products.edit');
         Route::post('/product-update/{id}', [ProductController::class, 'update'])->name('products.update');
         Route::get('/product-delete/{id}', [ProductController::class, 'delete'])->name('products.delete');
+               Route::post('product/select-product-delete', [ProductController::class, 'deleteSelected']);
         //Product Size
         Route::get('/product_sizes', [ProductSizeController::class, 'index'])->name('product_sizes');
+        Route::get('product_sizes/data', [ProductSizeController::class, 'indexData'])->name('product_sizes.data');
         Route::get('/product_size/create', [ProductSizeController::class, 'create'])->name('product_sizes.create');
-
         Route::post('/product_size-store', [ProductSizeController::class, 'store'])->name('product_sizes.store');
-        Route::get('/size/edit/{id}', [ProductSizeController::class, 'edit'])->name('product_sizes.edit');
-        Route::post('/size/update/{id}', [ProductSizeController::class, 'update'])->name('product_sizes.update');
-        Route::get('/size/delete/{id}', [ProductSizeController::class, 'delete'])->name('product_sizes.delete');
+        Route::get('/product_sizes/edit/{id}', [ProductSizeController::class, 'edit'])->name('product_sizes.edit');
+        Route::post('/product_sizes/update/{id}', [ProductSizeController::class, 'update'])->name('product_sizes.update');
+        Route::get('/product_sizes/delete/{id}', [ProductSizeController::class, 'delete'])->name('product_sizes.delete');
+        Route::post('product_sizes/select-product_sizes-delete', [ProductSizeController::class, 'deleteSelected']);
 
         //Product Color
         Route::get('/product_color', [ProductColorController::class, 'index'])->name('product_colors');
+         Route::get('product_color/data', [ProductColorController::class, 'indexData'])->name('product_colors.data');
         Route::get('/product_color/create', [ProductColorController::class, 'create'])->name('product_colors.create');
         Route::post('/product_color/store', [ProductColorController::class, 'store'])->name('product_colors.store');
         Route::get('/product_color/edit/{id}', [ProductColorController::class, 'edit'])->name('product_colors.edit');
         Route::post('/product_color/update/{id}', [ProductColorController::class, 'update'])->name('product_colors.update');
         Route::get('/product_color/delete/{id}', [ProductColorController::class, 'delete'])->name('product_colors.delete');
+        Route::post('product_color/select-product_color-delete', [ProductColorController::class, 'deleteSelected']);
 
         //Order Status
         Route::get('/order_status', [OrderStatusController::class, 'index'])->name('order_statuses');
+        Route::get('order_status/data', [OrderStatusController::class, 'indexData'])->name('order_statuses.data');
         Route::get('/order_status-create', [OrderStatusController::class, 'create'])->name('order_statuses.create');
         Route::post('/order_status-store', [OrderStatusController::class, 'store'])->name('order_statuses.store');
         Route::get('/order_status-edit/{id}', [OrderStatusController::class, 'edit'])->name('order_statuses.edit');
         Route::post('/order_status-update/{id}', [OrderStatusController::class, 'update'])->name('order_statuses.update');
         Route::get('/order_status-delete/{id}', [OrderStatusController::class, 'delete'])->name('order_statuses.delete');
+        Route::post('order_status/select-order_status-delete', [OrderStatusController::class, 'deleteSelected']);
     });
 
     //Pages

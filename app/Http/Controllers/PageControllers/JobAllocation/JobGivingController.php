@@ -11,6 +11,8 @@ use App\Models\JobGiving;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use App\Exports\JobgivingExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class JobGivingController extends Controller
 {
@@ -76,6 +78,13 @@ public function getModelDetails($id)
     public function store(Request $request)
     {
         // dd($request);
+
+        $validatedData = $request->validate([
+            'employee_id' => 'required',
+            'order_id' => 'required',
+            'product_model_id'=>'required',
+    
+        ]);
         $input = $request->all();
         // dd($input);
         $job_giving = new JobGiving();
@@ -119,6 +128,7 @@ public function getModelDetails($id)
     public function update(Request $request, $id)
     {
         // dd($request);
+    
         $input = $request->all();
 
         $job_giving = JobGiving::find($id);
@@ -165,5 +175,21 @@ public function getModelDetails($id)
 
           return redirect()->route('job_allocation.job_giving.index')->with('success', 'Job Giving Deleted successfully!');
 
+    }
+
+     public function export(Request $request)
+    {
+        return Excel::download(new JobgivingExport($request->all()), 'JobgivingDatas_' . date('d-m-Y') . '.xlsx');
+    }
+
+     public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,csv'
+        ]);
+
+        Excel::import(new JobGivingImport, request()->file('file'));
+
+        return redirect()->route('job_allocation.job_giving.index')->with('success', 'Data imported successfully');
     }
 }

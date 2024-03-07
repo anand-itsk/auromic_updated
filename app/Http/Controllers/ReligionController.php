@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 use App\Models\Religion;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class ReligionController extends Controller
 {
@@ -14,6 +17,14 @@ class ReligionController extends Controller
         return view('settings.masters.religion.index',compact('religion'));
 
      }
+      public function indexData()
+    {
+        
+        $religion = Religion::get();
+        
+        return DataTables::of($religion)->make(true);
+    }
+
 
       public function create()
      {
@@ -75,5 +86,17 @@ class ReligionController extends Controller
 
           return redirect()->route('common.religions')->with('success', 'Religion Deleted successfully!');
 
+    }
+     public function deleteSelected(Request $request)
+    {
+
+        $ids = $request->ids;
+
+        if (!is_array($ids)) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid input'], 400);
+        }
+
+        Religion::destroy($ids);
+        return response()->json(['status' => 'success']);
     }
 }

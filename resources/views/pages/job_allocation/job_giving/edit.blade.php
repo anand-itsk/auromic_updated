@@ -32,7 +32,7 @@
                         method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
-                            <label for="employee_id" class="col-sm-2 col-form-label mandatory">
+                            <label for="employee_id" class="col-sm-2 col-form-label ">
                            Employee Name
                            </label>
                            <div class="col-sm-4 mb-4">
@@ -50,7 +50,7 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="company_type" class="col-sm-2 col-form-label mandatory">
+                           <label for="company_type" class="col-sm-2 col-form-label ">
                            Company Type
                            </label>
                            <div class="col-sm-4 mb-4">
@@ -59,7 +59,7 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="company_name" class="col-sm-2 col-form-label mandatory">
+                           <label for="company_name" class="col-sm-2 col-form-label ">
                            Company Name
                            </label>
                            <div class="col-sm-4 mb-4">
@@ -68,7 +68,7 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="customer_code" class="col-sm-2 col-form-label mandatory">Order
+                           <label for="customer_code" class="col-sm-2 col-form-label ">Order
                            ID</label>
                            <div class="col-sm-4 mb-4">
                               <select class="form-control select2" name="order_id" id="order_id">
@@ -83,7 +83,7 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="customer_code" class="col-sm-2 col-form-label mandatory">Order
+                           <label for="customer_code" class="col-sm-2 col-form-label ">Order
                            Date</label>
                            <div class="col-sm-4 mb-4">
                               <input type="text" class="form-control" name="order_date" id="order_date" readonly value="{{$item->order_date }}">
@@ -91,14 +91,14 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="customer_code" class="col-sm-2 col-form-label mandatory">Customer Name</label>
+                           <label for="customer_code" class="col-sm-2 col-form-label ">Customer Name</label>
                            <div class="col-sm-4 mb-4">
                               <input type="text" class="form-control" name="customer_name" id="customer_name" readonly value="{{$item->customer->customer_name}}">
                               @error('customer_name')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="customer_code" class="col-sm-2 col-form-label mandatory">Model</label>
+                           <label for="customer_code" class="col-sm-2 col-form-label ">Model</label>
                            <div class="col-sm-4 mb-4">
                               <select class="form-control select2" name="product_model_id" id="product_model_id">
     <option value="">Select Model</option>
@@ -173,7 +173,7 @@
                                  </label>
                               </div>
                            </div>
-                           <label for="customer_code" class="col-sm-2 col-form-label mandatory">Status</label>
+                           <label for="customer_code" class="col-sm-2 col-form-label ">Status</label>
                            <div class="col-sm-4 mb-4">
                               <select class="form-control select2" name="status" id="status">
                               <option value="Incomplete"
