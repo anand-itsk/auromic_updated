@@ -22,7 +22,7 @@
                         <div class="col-12">
                             <div class="card p-2 leftsetup">
                                 <h4 class="page-title">Setup</h4>
-                                <input type="text" placeholder="search" class="form-control">
+                                
                                 @include('settings.setup_nav')
                             </div>
                         </div>
@@ -33,7 +33,7 @@
                         <div class="col-12">
                             <div class="card m-b-30 rightsetup">
                                 <div class="card-header pb-0 pt-0">
-                                    <h5>Countries</h5>
+                                    <h5>Product Size Master</h5>
                                 </div>
 
                                 <div class="card-body pt-0">
@@ -44,7 +44,7 @@
 
                                                 </div>
                                                 <div>
-                                                    <a href="{{ route('product_sizes.create') }}"
+                                                    <a href="{{ route('product-models.product_sizes.create') }}"
                                                         class="icon-link common-color" title="Create New Country">
                                                         <i class="fa fa-user-plus"></i>
                                                     </a>
@@ -55,35 +55,38 @@
                                                 style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                                 <thead>
                                                     <tr>
-                                                 <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Code</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                               @if (!empty($product_size))
-                                             @foreach ($product_size as $item)
-                                                    <tr>
-                                                        <td>{{ $item->id }}</td>
-                                                        <td>{{ $item->name }}</td>
-                                                        <td>{{ $item->code}} </td>
-                                                        <td>
-                                                            
-                                                                <a href="{{ route('product_sizes.edit', $item->id) }}" class="icon-link primary-color"><i
-                                                                        class="fa fa-edit"></i></a>
-                                                                <button class="icon-button delete-color" onclick="confirmDelete({{ $item->id }})"><i class="fa fa-trash"></i></button>
-
-
-                                                        </td>
+                                                        <th>ID</th>
+                                                        <th>Name</th>
+                                                        <th>Code</th>
+                                                        <th>Action</th>
                                                     </tr>
-                                                @endforeach
-                                            @endif
+                                                </thead>
+                                                <tbody>
+                                                    @if (!empty($product_size))
+                                                        @foreach ($product_size as $item)
+                                                            <tr>
+                                                                <td>{{ $item->id }}</td>
+                                                                <td>{{ $item->name }}</td>
+                                                                <td>{{ $item->code }} </td>
+                                                                <td>
+
+                                                                    <a href="{{ route('product-models.product_sizes.edit', $item->id) }}"
+                                                                        class="icon-link primary-color"><i
+                                                                            class="fa fa-edit"></i></a>
+                                                                    <button class="icon-button delete-color"
+                                                                        onclick="confirmDelete({{ $item->id }})"><i
+                                                                            class="fa fa-trash"></i></button>
+
+
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @endif
                                                 </tbody>
                                             </table>
 
                                             <div class="pagination">
-                                                {{    $product_size->links('pagination::bootstrap-4') }}
+                                                {{ $product_size->links('pagination::bootstrap-4') }}
                                             </div>
                                         </div>
 
@@ -102,8 +105,8 @@
 
     <script>
         function confirmDelete(id) {
-            if (confirm("Are you sure you want to delete this country?")) {
-              window.location.href = "/product_size-delete/" + id;
+            if (confirm("Are you sure you want to delete this product size?")) {
+                window.location.href = "/product-models/size/delete/" + id;
             }
         }
     </script>

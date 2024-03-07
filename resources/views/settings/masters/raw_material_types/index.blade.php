@@ -22,7 +22,7 @@
                         <div class="col-12">
                             <div class="card p-2 leftsetup">
                                 <h4 class="page-title">Setup</h4>
-                                <input type="text" placeholder="search" class="form-control">
+                               
                                 @include('settings.setup_nav')
                             </div>
                         </div>
@@ -44,7 +44,7 @@
 
                                                 </div>
                                                 <div>
-                                                    <a href="{{ route('raw_material_types.create') }}"
+                                                    <a href="{{ route('product-models.raw_material_types.create') }}"
                                                         class="icon-link common-color" title="Create New Country">
                                                         <i class="fa fa-user-plus"></i>
                                                     </a>
@@ -70,7 +70,7 @@
                                                         <td>{{ $item->code}} </td>
                                                         <td>
                                                             
-                                                                <a href="{{ route('raw_material_types.edit', $item->id) }}" class="icon-link primary-color"><i
+                                                                <a href="{{ route('product-models.raw_material_types.edit', $item->id) }}" class="icon-link primary-color"><i
                                                                         class="fa fa-edit"></i></a>
                                                                 <button class="icon-button delete-color" onclick="confirmDelete({{ $item->id }})"><i class="fa fa-trash"></i></button>
 
@@ -102,8 +102,8 @@
 
     <script>
         function confirmDelete(id) {
-            if (confirm("Are you sure you want to delete this country?")) {
-                window.location.href = "/raw_material_type-delete/" + id;
+            if (confirm("Are you sure you want to delete this raw material type?")) {
+                window.location.href = "/product-models/raw_material_type/delete/" + id;
             }
         }
     </script>

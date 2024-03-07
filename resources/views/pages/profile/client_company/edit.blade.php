@@ -304,8 +304,12 @@
     <br>
     
     <h6 style="font-weight: bold;">Current Image:</h6>
-    <img src="{{ asset('storage/' . $company->authorisedPerson->photo) }}" alt="Current Image"
-         style="max-width: 100px; max-height: 100px;">
+    @if($company->authorisedPerson)
+        <img src="{{ asset('storage/' . $company->authorisedPerson->photo) }}" alt="Current Image"
+             style="max-width: 100px; max-height: 100px;">
+    @else
+        <p>No image available</p>
+    @endif
     
     <h6 style="font-weight: bold;">Change Image:</h6>
     <div id="imagePreviewContainer"></div>

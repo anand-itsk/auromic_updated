@@ -13,7 +13,7 @@
                         <div class="col-12">
                             <div class="card p-2 leftsetup">
                                 <h4 class="page-title">Setup</h4>
-                                <input type="text" placeholder="search" class="form-control">
+                               
                                 @include('settings.setup_nav')
                             </div>
                         </div>
@@ -30,9 +30,10 @@
                             <div class="m-b-30">
                                 <form action="{{ route('common.districts.store') }}" method="POST">
                                     @csrf
-                                    <div class="form-group row">
-                                        <div class="col-md-6">   
-                                       <div class="mb-3">
+                                <div class="form-group row justify-content-center">
+                                                <div class="col-md-6">
+                                                    <div class="col-md-12">
+                                                        <div class="mb-3">
                                           <label for="firstNameinput" class="form-label">State</label>
                                            <select class="form-control" name="state_id">
                                                 <option value="">Select State</option>
@@ -45,8 +46,8 @@
                                             @enderror
                                         </div>
 </div>
-                                        <div class="col-md-6">   
-                                       <div class="mb-3">
+                                        <div class="col-md-12">
+                                                        <div class="mb-3">
                                           <label for="firstNameinput" class="form-label">Name</label>
                                             <input class="form-control" type="text" name="name" id="name">
                                             @error('name')
@@ -54,8 +55,8 @@
                                             @enderror
                                         </div>
 </div>
-                                     <div class="col-md-6">   
-                                       <div class="mb-3">
+                               <div class="col-md-12">
+                                                        <div class="mb-3">
                                           <label for="firstNameinput" class="form-label">Code</label>
                                         
                                             <input class="form-control" type="text" name="code" id="code">
@@ -66,9 +67,8 @@
 
                                     </div>
                                    
-
-                                    <div class="form-group">
-                                        <div class="d-flex justify-content-center">
+ <div class="form-group">
+                                                        <div class="d-flex justify-content-evenly">
                                             <button type="submit" class="btn btn-primary waves-effect waves-light">
                                                 Submit
                                             </button>

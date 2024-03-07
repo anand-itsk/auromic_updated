@@ -1,7 +1,5 @@
 @extends('layouts.app')
 <!-- DataTables CSS -->
-
-
 @section('content')
     @include('links.css.datatable.datatable-css')
     @include('links.css.table.custom-css')
@@ -31,14 +29,16 @@
                         <div class="col-12">
                             <div class="card m-b-30">
                                 <div class="d-flex justify-content-between p-2 bd-highlight">
-                                    <div>
+                                    {{-- <div>
 
-                                    </div>
+                                    </div> --}}
                                     <div>
-                                        <a href="{{ route('profile.bank_details.create') }}" class="icon-link common-color"
-                                            title="Create ">
-                                            <i class="fa fa-user-plus"></i>
-                                        </a>
+                                        <button class="icon-button  bg-primary rounded">
+                                            <a href="{{ route('profile.bank_details.create') }}"
+                                                class="icon-link common-color" title="Create ">
+                                                <i class="fa fa-user-plus text-white"></i>
+                                            </a>
+                                        </button>
                                     </div>
                                 </div>
                                 {{-- Import Modal --}}
@@ -113,8 +113,8 @@
                 aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="detailsModalLabel">Company Bank Details</h5>
+                        <div class="modal-header py-3">
+                            <h5 class="modal-title text-primary m-0" id="detailsModalLabel">Company Bank Details</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>

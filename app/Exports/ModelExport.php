@@ -3,8 +3,9 @@
 namespace App\Exports;
 use App\Models\ProductModel;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class ModelExport implements FromCollection
+class ModelExport implements FromCollection,WithHeadings
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -12,6 +13,7 @@ class ModelExport implements FromCollection
     public function collection()
     {
         return ProductModel::all();
+ 
     }
 
 
@@ -28,6 +30,8 @@ class ModelExport implements FromCollection
             'Model Name',
             'R.M Weight/Item',
             'Wages of one Product',
+            'created_at',
+            'updated_at'
         ];
     }
 }

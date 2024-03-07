@@ -22,7 +22,7 @@
                         <div class="col-12">
                             <div class="card p-2 leftsetup">
                                 <h4 class="page-title">Setup</h4>
-                                <input type="text" placeholder="search" class="form-control">
+                               
                                 @include('settings.setup_nav')
                             </div>
                         </div>
@@ -102,7 +102,7 @@
 
     <script>
         function confirmDelete(id) {
-            if (confirm("Are you sure you want to delete this country?")) {
+            if (confirm("Are you sure you want to delete this esi dispensary?")) {
                window.location.href = "/specified/esi_dispensary-delete/" + id;
             }
         }

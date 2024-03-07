@@ -30,6 +30,14 @@
                                 <form action="{{ route('master.customers.update', $customer->id) }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
+                                    <div class="d-flex justify-content-end mb-2">
+                                        {{-- <h5 class="text-primary">Company Info</h5> --}}
+                                        <button class="btn btn-secondary cancel_btn">
+                                            <a href="{{ route('master.customers.index') }}" class="text-white">
+                                                Cancel
+                                            </a>
+                                        </button>
+                                    </div>
                                     <div class="form-group row">
                                         <label for="customer_code" class="col-sm-2 col-form-label mandatory">Customer
                                             Code</label>
@@ -58,7 +66,7 @@
                                             $officeAddress = $customer->addresses->where('address_type_id', 2)->first();
                                         @endphp
                                         <label for="office_address" class="col-sm-2 col-form-label">Office Address</label>
-                                        <div class="col-sm-10 mb-4">
+                                        <div class="col-sm-4 mb-4">
                                             <textarea class="form-control" name="office_address" id="office_address" cols="10" rows="3">{{ $officeAddress->address ?? '' }}</textarea>
                                             @error('office_address')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
@@ -114,14 +122,14 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                    </div>
-                                    {{--  Addresses --}}
-                                    <div class="form-group row">
+                                        {{-- </div> --}}
+                                        {{--  Addresses --}}
+                                        {{-- <div class="form-group row"> --}}
                                         @php
                                             $address = $customer->addresses->where('address_type_id', 3)->first();
                                         @endphp
                                         <label for="address" class="col-sm-2 col-form-label">Address</label>
-                                        <div class="col-sm-10 mb-4">
+                                        <div class="col-sm-4 mb-4">
                                             <textarea class="form-control" name="address" id="address" cols="10" rows="3">{{ $address->address ?? '' }}</textarea>
                                             @error('address')
                                                 <span class="error" style="color: red;">{{ $message }}</span>

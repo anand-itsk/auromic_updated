@@ -36,14 +36,12 @@ class MyProfileController extends Controller
           $request->validate([
             'name' => 'required',
             'email' => 'required',
-            'remark' => 'required',
             'country_id' => 'required',
             
         ]);
     
         $profile = Auth::user();
         $profile->name = $request->input('name');
-        $profile->remark = $request->input('remark');
         $profile->email = $request->input('email');
         $profile->country_id = $request->input('country_id');
         // dd($profile);

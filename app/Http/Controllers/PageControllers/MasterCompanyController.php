@@ -49,17 +49,15 @@ class MasterCompanyController extends Controller
             'company_code' => 'required|max:255',
             'company_name' => 'required|max:255',
             'name' => 'required',
-            'company_email' => 'nullable|email|unique:companies,email',
-             'person_email' => 'nullable|email|unique:authorised_people,email',
-             'photo' => 'nullable|image|max:200000',
+            'photo' => 'nullable|image|max:200000',
         ]);
         $input = $request->all();
         // dd($input);
 
-     if ($request->hasFile('photo')) {
-        $filename = $request->file('photo')->store('profile_images/Master Company', 'public');
-        $input['photo'] = $filename;
-    }
+        if ($request->hasFile('photo')) {
+            $filename = $request->file('photo')->store('profile_images/Master Company', 'public');
+            $input['photo'] = $filename;
+        }
 
         $company = new Company();
 
@@ -68,7 +66,7 @@ class MasterCompanyController extends Controller
         $input['updated_by'] = $auth_id;
 
         $company = $company->create($input);
-// dd($company);
+        // dd($company);
         $input['company_id'] = $company->id;
         $company_registration_details = CompanyRegistrationDetails::create($input);
         $authorised_person = AuthorisedPerson::create($input);
@@ -103,16 +101,16 @@ class MasterCompanyController extends Controller
         }
 
         return redirect()->route('profile.masters.index')
-            ->with('success', 'Customer created successfully');
+            ->with('success', 'Master Company created successfully');
     }
     // Edit
     public function edit(Address $address, $id)
     {
         // dd($address);
         $user = User::with('roles')->find($id);
-        $company = Company::with('addresses','authorisedPerson')->find($id);
+        $company = Company::with('addresses', 'authorisedPerson')->find($id);
         $countries = Country::all();
-      
+
 
         // dd($customer);
         return view('pages.profile.master_company.edit', compact('company', 'user', 'countries', 'address'));
@@ -131,7 +129,7 @@ class MasterCompanyController extends Controller
 
         $input = $request->all();
 
-     
+
         $company = Company::findOrFail($id);
 
         $company->company_type_id = 2;
@@ -177,11 +175,11 @@ class MasterCompanyController extends Controller
         $authorised_person->phone = $input['phone'];
         $authorised_person->mobile = $input['mobile'];
 
-       if ($request->hasFile('photo')) {
-        $filename1 = $request->file('photo')->store('profile_images/Master Company', 'public');
-        $authorised_person->update(['photo' => $filename1]);
-    }
-    
+        if ($request->hasFile('photo')) {
+            $filename1 = $request->file('photo')->store('profile_images/Master Company', 'public');
+            $authorised_person->update(['photo' => $filename1]);
+        }
+
         $authorised_person->save();
 
 
@@ -207,7 +205,7 @@ class MasterCompanyController extends Controller
             $company->addresses()->save($homeAddress);
         }
         return redirect()->route('profile.masters.index')
-            ->with('success', 'Customer Updated successfully');
+            ->with('success', 'Master Company Updated successfully');
     }
     // Show
     public function showDetails($id)
@@ -217,7 +215,7 @@ class MasterCompanyController extends Controller
         return response()->json([
             'html' => $html,
             'data' => [
-                
+
                 'created_by' => $company->createdBy->name,
                 'created_at' => $company->created_at,
                 'updated_at' => $company->updated_at,
@@ -260,6 +258,6 @@ class MasterCompanyController extends Controller
     // Import Users
     public function export(Request $request)
     {
-        return Excel::download(new CompanyExport($request->all()), 'CustomerDatas_' . date('d-m-Y') . '.xlsx');
+      return Excel::download(new CompanyExport($request->all()), 'CustomerDatas_' . date('d-m-Y') . '.xlsx');
     }
 }

@@ -31,19 +31,29 @@
                         <div class="col-12">
                             <div class="card m-b-30">
                                 <div class="d-flex justify-content-between p-2 bd-highlight">
+                                    {{-- style="display: none;" --}}
+                                                                   @error('file')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
                                     <div>
-                                        <button id="deleteButton" class="icon-button delete-color"
-                                            title="Delete Selected Record"><i class="fa fa-user-times"></i></button>
+                                        <button id="deleteButton" style="display: none;"
+                                            class="icon-button text-white bg-danger rounded fs-14"
+                                            title="Delete Selected Record">
+                                            Delete Selected Record</button>
                                     </div>
-                                    <div>
-                                        <button type="button" class="icon-button common-color" data-toggle="modal"
-                                            data-target=".bs-example-modal-center" title="Create Customer"><i
-                                                class="fa fa-upload"></i></button>
 
-                                        <a href="{{ route('profile.masters.create') }}" class="icon-link common-color"
-                                            title="Create New User">
-                                            <i class="fa fa-user-plus"></i>
-                                        </a>
+                                    <div>
+                                        <button type="button" class="icon-button common-color bg-secondary  rounded"
+                                            data-toggle="modal" data-target=".bs-example-modal-center"
+                                            title="Import file"><i class="fa fa-upload text-white"></i></button>
+
+                                        <button class="icon-button  bg-primary rounded">
+                                            <a href="{{ route('profile.masters.create') }}"
+                                                class="icon-link common-color text-white" title="Create New User">
+                                                <i class="fa fa-user-plus"></i>
+                                            </a>
+                                        </button>
+
                                     </div>
                                 </div>
                                 {{-- Import Modal --}}
@@ -62,11 +72,13 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="card m-b-30">
+                                                            
                                                             <div class="card-body">
                                                                 <form action="{{ route('profile.masters.import') }}"
                                                                     method="POST" enctype="multipart/form-data">
                                                                     @csrf
                                                                     <input type="file" name="file" required>
+                                      
                                                                     <button type="submit"
                                                                         class="btn btn-primary">Import</button>
                                                                     <button type="button" class="btn btn-secondary"
@@ -116,15 +128,15 @@
             <!-- Modal -->
             <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel"
                 aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="detailsModalLabel">Master Company Details</h5>
+                        <div class="modal-header py-3">
+                            <h5 class="modal-title text-primary mt-0" id="detailsModalLabel">Master Company Details</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body pt-0">
                             <div id="detailsContent">
                                 <!-- Content loaded via AJAX -->
                             </div>
@@ -196,7 +208,7 @@
                         searchable: false,
                         render: function(data, type, row) {
                             return `
-                        <button onclick="edit(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
+                        <button onclick="edit(${row.id})" class="icon-button primary-color" title="Edit"><i class="fa fa-edit"></i></button>
                         <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
                         <button onclick="showDetails(${row.id})" class="icon-button common-color"><i class="fa fa-eye"></i></button>
                     `;
@@ -210,9 +222,11 @@
                 select: true,
                 dom: 'lBfrtip',
                 buttons: [
-                    'excel', 'print',
+                    'excel', 
+                    'print',
                     {
                         text: 'Export All',
+                        
                         action: function(e, dt, node, config) {
                             window.location.href = '/profile/masters/export?' + $.param(dt.ajax
                                 .params());
@@ -222,9 +236,22 @@
 
             });
 
+            // Listen for row selection event
+            $('#data-table').on('select.dt deselect.dt', function() {
+                console.log("yes done");
+                var selectedRows = table.rows({
+                    selected: true
+                }).count();
 
+                if (selectedRows > 0) {
+                    $('#deleteButton').show(); // Show delete button if rows are selected
+                } else {
+                    $('#deleteButton').hide(); // Hide delete button if no rows are selected
+                }
+            });
 
             $('#deleteButton').click(function() {
+                console.log("row is selected");
                 var ids = $.map(table.rows('.selected').data(), function(item) {
                     return item.id;
                 });
@@ -263,7 +290,7 @@
         function deleteCustomer(id) {
             console.log("inside")
             // Send an AJAX request to delete the user
-            if (confirm('Are you sure you want to delete this user?')) {
+            if (confirm('Are you sure you want to delete this master company?')) {
                 $.ajax({
                     url: '/profile/masters/delete/' + id,
                     type: 'DELETE',

@@ -152,6 +152,15 @@
 
                     </li> --}}
                     <!-- User-->
+                    <li class="list-inline-item text-white">
+                        <div>
+                            @guest
+                                <p class="text-capitalize">Welcome, Guest</p>
+                            @else
+                                <p class="text-capitalize">Welcome, {{ Auth::user()->name }}</p>
+                            @endguest
+                        </div>
+                    </li>
                     <li class="list-inline-item dropdown notification-list">
                         <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown"
                             href="#" role="button" aria-haspopup="false" aria-expanded="false">
@@ -233,43 +242,57 @@
                     {{-- Master --}}
                     <li class="has-submenu">
                         <a href="#"><i class="dripicons-briefcase"></i>Master</a>
-                        <ul class="submenu megamenu">
+                        <ul class="submenu">
                             <li>
-                                <ul>
-                                    <li><a href="{{ route('master.customers.index') }}">Customers</a></li>
-                                    {{-- <li><a href="ui-badge.html">Raw Material</a></li>
-                                    <li><a href="ui-dropdowns.html">Size</a></li>
-                                    <li><a href="ui-tabs-accordions.html">Colour</a></li>
-                                    <li><a href="ui-progressbars.html">Finishing Product</a></li> --}}
-                                </ul>
+                                <a href="{{ route('master.customers.index') }}">Customers</a>
                             </li>
                             <li>
-                                <ul>
-                                    <li><a href="{{ route('master.employees.index') }}">Employees</a></li>
-                                    {{-- <li><a href="ui-cards.html">Product Model</a></li>
-                                    <li><a href="ui-modals.html">Product</a></li>
-                                    <li><a href="ui-progressbars.html">Finishing Product</a></li>
-                                    <li><a href="ui-navs.html">Incentive </a></li> --}}
-                                </ul>
+                                <a href="{{ route('master.employees.index') }}">Employees</a>
                             </li>
                             <li>
-                                <ul>
-                                    <li><a href="{{ route('master.product_model.index') }}">Product Model</a></li>
-                                    {{-- <li><a href="ui-cards.html">Product Model</a></li>
-                                    <li><a href="ui-modals.html">Product</a></li>
-                                    <li><a href="ui-progressbars.html">Finishing Product</a></li>
-                                    <li><a href="ui-navs.html">Incentive </a></li> --}}
-                                </ul>
+                                <a href="{{ route('master.product_model.index') }}">Product Model</a>
                             </li>
                             <li>
-                                <ul>
-                                    <li><a href="{{ route('master.order_detail.index') }}">Order Details</a></li>
-                                    {{-- <li><a href="ui-cards.html">Product Model</a></li>
-                                    <li><a href="ui-modals.html">Product</a></li>
-                                    <li><a href="ui-progressbars.html">Finishing Product</a></li>
-                                    <li><a href="ui-navs.html">Incentive </a></li> --}}
-                                </ul>
+                                <a href="{{ route('master.order_detail.index') }}">Order Details</a>
                             </li>
+                            <li>
+                                <a href="{{ route('master.incentives.index') }}">Incentive</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('master.finishing_product.index') }}">Finishing Product</a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+                    {{-- Job Allocation --}}
+                    <li class="has-submenu">
+                        <a href="#"><i class="dripicons-briefcase"></i>Job Allocation</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="{{ route('job_allocation.delivery_challan.index') }}">Delivery Challan</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('job_allocation.job_giving.index') }}">Job Giving</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('job_allocation.job_received.index') }}">Job Received</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('job_allocation.job_reallocation.index') }}">Job Reallocation</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('job_allocation.direct_job_giving.index') }}">Direct Job Giving</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('job_allocation.direct_job_received.index') }}">Direct Job
+                                    Received</a>
+                            </li>
+
+
+
                         </ul>
                     </li>
                 </ul>

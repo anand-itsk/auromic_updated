@@ -50,9 +50,7 @@ class ClientCompanyController extends Controller
             'company_code' => 'required|max:255',
             'company_name' => 'required|max:255',
             'name' => 'required',
-             'company_email' => 'nullable|email|unique:companies,email',
-             'person_email' => 'nullable|email|unique:authorised_people,email',
-              'photo' => 'nullable|image|max:200000',
+            'photo' => 'nullable|image|max:200000',
         ]);
         $input = $request->all();
 
@@ -101,14 +99,14 @@ class ClientCompanyController extends Controller
         }
 
         return redirect()->route('profile.clients.index')
-            ->with('success', 'Customer created successfully');
+            ->with('success', 'Client Company created successfully');
     }
     // Edit
     public function edit(Address $address, $id)
     {
         // dd($address);
         $user = User::with('roles')->find($id);
-        $company = Company::with('addresses')->find($id);
+        $company = Company::with('addresses','authorisedPerson')->find($id);
         $countries = Country::all();
         return view('pages.profile.client_company.edit', compact('company', 'user', 'countries', 'address'));
     }
@@ -200,7 +198,7 @@ class ClientCompanyController extends Controller
             $company->addresses()->save($homeAddress);
         }
         return redirect()->route('profile.clients.index')
-            ->with('success', 'Customer Updated successfully');
+            ->with('success', 'Client Company Updated successfully');
     }
     // Show
     public function showDetails($id)
@@ -238,6 +236,8 @@ class ClientCompanyController extends Controller
         Company::destroy($ids);
         return response()->json(['status' => 'success']);
     }
+
+     
     // Import Users
     public function import(Request $request)
     {

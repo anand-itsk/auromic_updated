@@ -13,7 +13,8 @@
                         <div class="btn-group float-right">
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Auromics</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('profile.bank_details.index') }}">Company Bank Details</a>
+                                <li class="breadcrumb-item"><a href="{{ route('profile.bank_details.index') }}">Company Bank
+                                        Details</a>
                                 </li>
                                 <li class="breadcrumb-item">Create</li>
                             </ol>
@@ -32,10 +33,10 @@
                                 <form action="{{ route('profile.bank_details.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
-                                    <h5 class="text-primary">Company Info</h5>
+                                    <!-- <h5 class="text-primary">Company Info</h5> -->
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Companies</label>
-                                        <div class="col-sm-10 mb-4">
+                                        <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="company_id" id="company_id">
                                                 @foreach ($companies as $company)
                                                     <option value="{{ $company->id }}">
@@ -67,7 +68,7 @@
                                         </div>
 
                                         <label for="address" class="col-sm-2 col-form-label">Address</label>
-                                        <div class="col-sm-10 mb-4">
+                                        <div class="col-sm-4 mb-4">
                                             <textarea class="form-control" name="address" id="address" cols="10" rows="3"></textarea>
 
                                             @error('address')
@@ -75,7 +76,7 @@
                                             @enderror
                                         </div>
 
-                                    
+
                                         <label for="branch_code" class="col-sm-2 col-form-label">Branch
                                             Code</label>
                                         <div class="col-sm-4 mb-4">

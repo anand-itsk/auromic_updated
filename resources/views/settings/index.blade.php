@@ -88,26 +88,26 @@
                                 <div class="card-body">
                                     <h4 class="mt-0 extra-medium-font">Products/Models</h4>
                                     <div class="link-list">
-                                        <a class="text-muted m-b-0" href="{{ route('raw_material_types') }}">Raw
+                                        <a class="text-muted m-b-0" href="{{ route('product-models.raw_material_types') }}">Raw
                                             Material Type</a>
                                     </div>
                                     <div class="link-list">
-                                        <a class="text-muted m-b-0" href="{{ route('raw_materials') }}">Raw
+                                        <a class="text-muted m-b-0" href="{{ route('product-models.raw_materials') }}">Raw
                                             Material</a>
                                     </div>
                                     <div class="link-list">
-                                        <a class="text-muted m-b-0" href="{{ route('products') }}">Product</a>
+                                        <a class="text-muted m-b-0" href="{{ route('product-models.products') }}">Product</a>
                                     </div>
                                     <div class="link-list">
-                                        <a class="text-muted m-b-0" href="{{ route('product_sizes') }}">Product
+                                        <a class="text-muted m-b-0" href="{{ route('product-models.product_sizes') }}">Product
                                             Size</a>
                                     </div>
                                     <div class="link-list">
-                                        <a class="text-muted m-b-0" href="{{ route('product_colors') }}">Product
+                                        <a class="text-muted m-b-0" href="{{ route('product-models.product_colors') }}">Product
                                             Color</a>
                                     </div>
                                     <div class="link-list">
-                                        <a class="text-muted m-b-0" href="{{ route('order_statuses') }}">Order
+                                        <a class="text-muted m-b-0" href="{{ route('product-models.order_statuses') }}">Order
                                             Status</a>
                                     </div>
                                 </div>

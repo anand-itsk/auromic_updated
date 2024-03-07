@@ -18,6 +18,14 @@ class CountryController extends Controller
 
      }
 
+     public function indexData()
+    {
+        
+        $countries = Country::get();
+        
+        return DataTables::of($countries)->make(true);
+    }
+
       public function create()
      {
         

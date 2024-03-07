@@ -17,20 +17,30 @@ class CompanyTableSeeder extends Seeder
      */
     public function run(): void
     {
+        Company::create([
+            'company_type_id' => 2,
+            'company_code' => 'MC001',
+            'company_name' => 'Auromic',
+            'created_by' => 1,
+            'updated_by' => 1
+        ]);
 
-        MasterCompanyFactory::new()->count(10)->create();
-        ClientCompanyFactory::new()->count(50)->create();
-        SubClientCompanyFactory::new()->count(100)->create();
+        Company::create([
+            'company_type_id' => 2,
+            'company_code' => 'MC002',
+            'company_name' => 'Auromic2',
+            'created_by' => 1,
+            'updated_by' => 1
+        ]);
+
+        // MasterCompanyFactory::new()->count(10)->create();
+        ClientCompanyFactory::new()->count(25)->create();
+        SubClientCompanyFactory::new()->count(50)->create();
 
 
 
 
-        // Company::create([
-        //     'company_code' => 'C001',
-        //     'company_name' => 'Syscorp',
-        //     'created_by' => 1,
-        //     'updated_by' => 1
-        // ]);
+
         // DB::table('companies')->delete();
 
         // $companies = array(
