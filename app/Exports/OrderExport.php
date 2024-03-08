@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Exports;
-
+use App\Models\OrderDetail;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class OrderExport implements FromCollection
+class OrderExport implements FromCollection,WithHeadings
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -29,6 +30,8 @@ class OrderExport implements FromCollection
             'Delivery_date',
             'Order_status',
             'Total_raw_material	',
+            'created_at',
+            'updated_at'
         ];
     }
 }

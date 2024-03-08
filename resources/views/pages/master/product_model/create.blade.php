@@ -18,7 +18,7 @@
                                 <li class="breadcrumb-item">Create</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Create Customer</h4>
+                        <h4 class="page-title">Create Product Model</h4>
                     </div>
                 </div>
             </div>

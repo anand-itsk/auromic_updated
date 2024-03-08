@@ -18,6 +18,7 @@ class ModelDataImport implements ToModel
             'product_id'     => $row[0],
             'model_code'    => $row[1],
             'model_name'    => $row[2],
+            
         ]);
     }
 }

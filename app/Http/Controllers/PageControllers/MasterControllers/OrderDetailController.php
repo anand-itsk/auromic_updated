@@ -4,6 +4,7 @@ namespace App\Http\Controllers\PageControllers\MasterControllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Exports\OrderExport;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\ProductModel;
@@ -66,7 +67,7 @@ class OrderDetailController extends Controller
         $orderDetail->save();
    
         return redirect()->route('master.order_detail.index')
-            ->with('success', 'Order Ststus Stored successfully');
+            ->with('success', 'Order Details Stored successfully');
     }
 
     public function edit($id)
@@ -109,7 +110,7 @@ class OrderDetailController extends Controller
         $orderDetail->save();
       
        return redirect()->route('master.order_detail.index')
-            ->with('success', 'Order Ststus Updated successfully');
+            ->with('success', 'Order Details Updated successfully');
     }
 
      public function deleteSelected(Request $request)
@@ -127,7 +128,7 @@ class OrderDetailController extends Controller
 
      public function export(Request $request)
     {
-        return Excel::download(new OrderExport($request->all()), 'CustomerDatas_' . date('d-m-Y') . '.xlsx');
+        return Excel::download(new OrderExport($request->all()), 'OrderDetailDatas_' . date('d-m-Y') . '.xlsx');
     }
 
     public function import(Request $request)

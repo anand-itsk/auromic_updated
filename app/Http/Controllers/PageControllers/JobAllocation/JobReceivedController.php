@@ -50,15 +50,17 @@ class JobReceivedController extends Controller
             ->with('success', 'Job Received Created Successfully');
     }
    
-        public function edit(Request $request, $id)
-    {
-       
-                $Job_Giving = JobGiving::with('employee', 'order_details','product_model')->find($id);
-         
-               $received_date = $Job_Giving->job_received->receving_date ?? '';
-        // dd($JobGiving);
-        return view('pages.job_allocation.job_received.edit', compact('Job_Giving','received_date','id'));
-    }
+    public function edit(Request $request, $id)
+{
+    $Job_Giving = JobGiving::with('employee', 'order_details', 'product_model')->find($id);
+
+    // Fetch the job_received data
+  $jobReceivedData = JobReceived::where('job_giving_id', $id)->latest()->first();
+
+    
+
+    return view('pages.job_allocation.job_received.edit', compact('Job_Giving', 'jobReceivedData', 'id'));
+}
 
 
 }

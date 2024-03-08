@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\OrderStatus;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrderStatusController extends Controller
 {
@@ -15,6 +17,14 @@ class OrderStatusController extends Controller
         return view('settings.masters.order_status.index',compact('order_status'));
 
      }
+
+     public function indexData()
+    {
+        
+        $order_status = OrderStatus::get();
+        
+        return DataTables::of($order_status)->make(true);
+    }
 
       public function create()
      {
@@ -74,5 +84,18 @@ class OrderStatusController extends Controller
 
           return redirect()->route('product-models.order_statuses')->with('success', 'Order Status Deleted successfully!');
 
+    }
+
+    public function deleteSelected(Request $request)
+    {
+
+        $ids = $request->ids;
+
+        if (!is_array($ids)) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid input'], 400);
+        }
+
+        OrderStatus::destroy($ids);
+        return response()->json(['status' => 'success']);
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\LocalOffice;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LocalOfficeController extends Controller
 {
@@ -14,6 +16,15 @@ class LocalOfficeController extends Controller
         return view('settings.masters.local_office.index',compact('local_office'));
 
      }
+
+     
+        public function indexData()
+    {
+        
+        $local_office = LocalOffice::get();
+        
+        return DataTables::of($local_office)->make(true);
+    }
 
       public function create()
      {
@@ -75,5 +86,17 @@ class LocalOfficeController extends Controller
 
           return redirect()->route('specified.local_offices')->with('success', 'Local Office Deleted successfully!');
 
+    }
+       public function deleteSelected(Request $request)
+    {
+
+        $ids = $request->ids;
+
+        if (!is_array($ids)) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid input'], 400);
+        }
+
+        LocalOffice::destroy($ids);
+        return response()->json(['status' => 'success']);
     }
 }

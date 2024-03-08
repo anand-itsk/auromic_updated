@@ -2,7 +2,7 @@
     <h4 class="text-center pb-4">Nominee</h4>
     <div class="d-flex justify-content-end mb-2">
         <button type="button" class="btn icon-button btn-primary" data-toggle="modal" data-target=".employee-nominee-add"
-            title="Add Family Member"><i class="fa fa-user-plus"></i></button>
+            title="Add Nominee Member"><i class="fa fa-user-plus"></i></button>
     </div>
     <table class="table table-striped table-bordered dt-responsive nowrap"
         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -41,6 +41,7 @@
                                     <form role="form"
                                         action="{{ route('master.employees.store.nominee', $employee->id) }}"
                                         method="post" class="login-box">
+                                        @csrf
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Select Family Member</label>
@@ -144,8 +145,8 @@
                                         <ul class="list-inline pull-right">
 
                                             <li><button type="button"
-                                                    class="default-btn next-step3 m-0 bg-primary rounded text-white"
-                                                    data-url="{{ route('master.employees.store.nominee', $employee->id) }}">Add</button>
+                                                    class="default-btn next-step4 m-0 bg-primary rounded text-white"
+                                                    data-url="{{ route('master.employees.store.nominee', $employee->id)}}">Add</button>
                                             </li>
                                         </ul>
                                     </form>
@@ -167,7 +168,7 @@
         $(".next-step4").click(function(e) {
             console.log("click")
             e.preventDefault();
-
+ console.log($('meta[name="csrf-token"]').attr('content'));
             var activeTab = $('.wizard .nav-tabs li.active');
             var form = $(this).closest('form');
             var formData = new FormData(form[0]);

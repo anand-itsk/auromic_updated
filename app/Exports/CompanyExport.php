@@ -62,7 +62,9 @@ class CompanyExport implements FromCollection, WithHeadings
             'TIN No',
             'TIN Date',
             'CST No',
-            'CST Date'
+            'CST Date',
+            'created_at',
+            'updated_at'
         ];
     }
 }

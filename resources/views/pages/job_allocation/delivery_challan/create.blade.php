@@ -102,7 +102,7 @@
     @enderror
 </div>
 
-   <label for="order_date" class="col-sm-2 col-form-label mandatory">Order Date</label>
+   <label for="order_date" class="col-sm-2 col-form-label">Order Date</label>
 <div class="col-sm-4 mb-4">
     <input class="form-control" type="text" name="order_date" id="order_date" readonly>
     @error('order_date')
@@ -126,14 +126,14 @@
 <label for="order_date" class="col-sm-2 col-form-label ">Product Name</label>
 <div class="col-sm-4 mb-4">
     <input class="form-control" type="text" name="product" id="product" readonly>
-    @error('product_id')
+    @error('product')
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
 </div>
 <label for="order_date" class="col-sm-2 col-form-label ">Raw Material Name</label>
 <div class="col-sm-4 mb-4">
     <input class="form-control" type="text" name="raw_material_name" id="raw_material_name" readonly>
-    @error('raw_material')
+    @error('raw_material_name')
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
 </div>
@@ -175,6 +175,7 @@
     @error('quantity')
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
+</div>
 </div>
                         <div class="form-group">
                            <div class="d-flex justify-content-evenly">

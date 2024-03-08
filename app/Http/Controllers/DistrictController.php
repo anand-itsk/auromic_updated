@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\State;
 use App\Models\District;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DistrictController extends Controller
 {
@@ -15,6 +17,14 @@ class DistrictController extends Controller
         return view('settings.masters.district.index',compact('district'));
 
      }
+
+      public function indexData()
+    {
+        
+        $district = District::get();
+        
+        return DataTables::of($district)->make(true);
+    }
 
       public function create()
      {
@@ -81,4 +91,18 @@ class DistrictController extends Controller
           return redirect()->route('common.districts')->with('success', 'District Deleted successfully!');
 
     }
+
+     public function deleteSelected(Request $request)
+    {
+
+        $ids = $request->ids;
+
+        if (!is_array($ids)) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid input'], 400);
+        }
+
+        District::destroy($ids);
+        return response()->json(['status' => 'success']);
+    }
+    
 }

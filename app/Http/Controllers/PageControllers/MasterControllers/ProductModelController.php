@@ -5,6 +5,7 @@ namespace App\Http\Controllers\PageControllers\MasterControllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Imports\ModelDataImport;
+use App\Exports\ModelExport;
 use App\Models\RawMaterial;
 use App\Models\Product;
 use App\Models\ProductSize;
@@ -120,7 +121,7 @@ class ProductModelController extends Controller
 
     public function export(Request $request)
     {
-        return Excel::download(new ModelExport($request->all()), 'CustomerDatas_' . date('d-m-Y') . '.xlsx');
+        return Excel::download(new ModelExport($request->all()), 'ProductModelDatas_' . date('d-m-Y') . '.xlsx');
     }
 
     public function import(Request $request)

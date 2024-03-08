@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\pageControllers\MasterControllers;
 use App\Models\Product;
+use App\Exports\IncentiveExport;
 use App\Models\Incentive;
 use App\Models\ProductModel;
 use App\Http\Controllers\Controller;
@@ -91,13 +92,13 @@ class IncentiveController extends Controller
             ->with('success', 'Incentive Updated successfully');
     }
 
-           public function delete($id)
+           public function destroy($id)
     {
-         $product_model = ProductModel::find($id);
+         $incentive = Incentive::find($id);
 
-           $product_model->delete();
+           $incentive->delete();
 
-          return redirect()->route('religions')->with('success', 'Product Model Deleted successfully!');
+          return redirect()->route('master.incentives.index')->with('success', 'Incentive Deleted successfully!');
 
     }
 
@@ -116,7 +117,7 @@ class IncentiveController extends Controller
 
     public function export(Request $request)
     {
-        return Excel::download(new IncentiveExport($request->all()), 'CustomerDatas_' . date('d-m-Y') . '.xlsx');
+        return Excel::download(new IncentiveExport($request->all()), 'IncentiveDatas_' . date('d-m-Y') . '.xlsx');
     }
 
     public function import(Request $request)
@@ -125,8 +126,8 @@ class IncentiveController extends Controller
             'file' => 'required|file|mimes:xlsx,csv'
         ]);
 
-        Excel::import(new ModelDataImport, request()->file('file'));
+        Excel::import(new IncentiveImport, request()->file('file'));
 
-        return redirect()->route('master.product_model.index')->with('success', 'Data imported successfully');
+        return redirect()->route('master.incentives.index')->with('success', 'Data imported successfully');
     }
 }

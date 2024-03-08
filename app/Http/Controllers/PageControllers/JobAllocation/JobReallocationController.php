@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\Employee;
 use App\Models\JobAllocationHistory;
 use App\Models\JobGiving;
+use App\Models\JobReceived;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -49,34 +50,39 @@ class JobReallocationController extends Controller
         return redirect()->route('job_allocation.job_reallocation.index')
             ->with('success', 'Job Reallocation Updated Successfully');
     }
-    // Edit
-    // public function edit(Request $request, $id)
-    // {
-    //     $job_received_data = JobGiving::find($id);
-    //     $employee = Employee::all();
-    //     // Combine data into an array
-    //     $data = [
-    //         'direct_job_giving' => $job_received_data,
-    //         'empolyee_data' => $employee,
-    //     ];
-
-    //     // Return combined data as JSON response
-    //     return response()->json($data);
-    //     // return response()->json($job_received_data);
-    // }
+   
 
         public function edit(Request $request, $id)
     {
        
                 $Job_Giving = JobGiving::with('employee', 'order_details','product_model')->find($id);
          
-               $received_date = $Job_Giving->job_received->receving_date ?? '';
+         $jobReceivedData = JobReceived::where('job_giving_id', $id)->latest()->first();
 
                $employee = Employee::with(['company' => function ($query) {
                 $query->with('companyType');
                  }])->get();
 
         // dd($JobGiving);
-        return view('pages.job_allocation.job_reallocation.edit', compact('Job_Giving','received_date','id','employee'));
+        return view('pages.job_allocation.job_reallocation.edit', compact('Job_Giving','jobReceivedData','id','employee'));
     }
+
+    public function cancelJobGiving($id)
+{
+    // Find the job giving record
+    $jobGiving = JobGiving::find($id);
+
+    if ($jobGiving) {
+        // Update the status to 'Cancelled'
+        $jobGiving->status = 'Cancelled';
+        $jobGiving->save();
+
+        return redirect()->route('job_allocation.job_reallocation.index')
+            ->with('success', 'Job Giving Cancelled Successfully');
+    } else {
+        // Handle case where job giving record is not found
+        return redirect()->route('job_allocation.job_reallocation.index')
+            ->with('error', 'Job Giving not found');
+    }
+}
 }

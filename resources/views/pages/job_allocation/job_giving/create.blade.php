@@ -53,7 +53,7 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="company_type" class="col-sm-2 col-form-label mandatory">
+                           <label for="company_type" class="col-sm-2 col-form-label ">
                            Company Type
                            </label>
                            <div class="col-sm-4 mb-4">
@@ -62,7 +62,7 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="company_name" class="col-sm-2 col-form-label mandatory">
+                           <label for="company_name" class="col-sm-2 col-form-label ">
                            Company Name
                            </label>
                            <div class="col-sm-4 mb-4">
@@ -86,7 +86,7 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="customer_code" class="col-sm-2 col-form-label mandatory">Order
+                           <label for="customer_code" class="col-sm-2 col-form-label ">Order
                            Date</label>
                            <div class="col-sm-4 mb-4">
                               <input type="text" class="form-control" name="order_date" id="order_date" readonly>
@@ -94,7 +94,7 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="customer_code" class="col-sm-2 col-form-label mandatory">Customer Name</label>
+                           <label for="customer_code" class="col-sm-2 col-form-label ">Customer Name</label>
                            <div class="col-sm-4 mb-4">
                               <input type="text" class="form-control" name="customer_name" id="customer_name" readonly>
                               @error('customer_name')
@@ -109,7 +109,7 @@
                                  <option value="{{ $productModel->id }}" >{{ $productModel->model_name }}-{{ $productModel->model_code }}</option>
                                  @endforeach
                               </select>
-                              @error('product_model')
+                              @error('product_model_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
@@ -171,13 +171,14 @@
                                  With DC</label>
                               </div>
                            </div>
-                           <label for="customer_code" class="col-sm-2 col-form-label mandatory">Status</label>
+                           <label for="customer_code" class="col-sm-2 col-form-label ">Status</label>
                            <div class="col-sm-4 mb-4">
                               <select class="form-control select2" name="status" id="status">
                                  <option value="">Select Status</option>
                                  <option value="Incomplete">Incomplete</option>
                                  <option value="Complete">Complete</option>
                                  <option value="Pending">Pending</option>
+                                 <option value="cancelled">Cancelled</option>
                               </select>
                               @error('status')
                               <span class="error" style="color: red;">{{ $message }}</span>

@@ -34,6 +34,10 @@
                                     <button id="deleteButton" class="icon-button delete-color"
                                         title="Delete Selected Record"><i class="fa fa-user-times"></i></button>
                                 </div> --}}
+
+                                @error('file')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
                                     <div>
                                         <button id="deleteButton" style="display: none;"
                                             class="icon-button text-white bg-danger rounded fs-14"
@@ -43,7 +47,7 @@
                                     <div>
                                         <button type="button" class="icon-button common-color bg-secondary rounded"
                                             data-toggle="modal" data-target=".bs-example-modal-center"
-                                            title="Create Customer"><i class="fa fa-upload text-white"></i></button>
+                                            title="Import file"><i class="fa fa-upload text-white"></i></button>
 
                                         <button class="icon-button  bg-primary rounded">
                                             <a href="{{ route('master.incentives.create') }}" class="icon-link common-color"
@@ -90,7 +94,7 @@
                                                     .xlsx or .csv)</p>
                                                 <p class="text-muted font-14">To upload sample document, it
                                                     must have concern fields.
-                                                    <a href="{{ asset('assets/sample_excels/incentives.xlsx') }}"
+                                                    <a href="{{ asset('assets/sample_excels/incentive_import.xlsx') }}"
                                                         download>Click
                                                         to download sample document</a>
                                                 </p>
@@ -212,7 +216,6 @@
                             return `
                         <button onclick="edit(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
                         <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
-                        <button onclick="showDetails(${row.id})" class="icon-button common-color"><i class="fa fa-eye"></i></button>
                     `;
                         }
 
@@ -286,10 +289,10 @@
         function deleteCustomer(id) {
             console.log("inside")
             // Send an AJAX request to delete the user
-            if (confirm('Are you sure you want to delete this Product model?')) {
+            if (confirm('Are you sure you want to delete this Incentive?')) {
                 $.ajax({
-                    url: '/master/product_model/delete/' + id,
-                    type: 'DELETE',
+                    url: '/master/incentives/delete/' + id,
+                    type: 'get',
                     data: {
                         _token: '{{ csrf_token() }}',
                     },

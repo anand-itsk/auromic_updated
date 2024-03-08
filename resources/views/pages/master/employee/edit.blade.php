@@ -19,7 +19,7 @@
                                 <li class="breadcrumb-item">Create</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Create Employee ss</h4>
+                        <h4 class="page-title">Create Employee</h4>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,10 @@
                                     </li>
                                     <li role="presentation" class="disabled">
                                         <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab"><span
-                                                class="round-tab">4</span> <i>Nominee</i></a>
+                                                class="round-tab">4</span> <i>Nominee
+
+                                                
+                                                </i></a>
                                     </li>
                                 </ul>
                             </div>

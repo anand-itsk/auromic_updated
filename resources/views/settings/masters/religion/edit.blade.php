@@ -60,7 +60,7 @@
                                                 Update
                                             </button>
                                 
-                                            <a href="{{ route('common.countries') }}"
+                                            <a href="{{ route('common.religions') }}"
                                                 class="btn btn-secondary waves-effect m-l-5">
                                                 Cancel
                                             </a>

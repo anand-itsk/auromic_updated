@@ -50,8 +50,7 @@ class SubClientCompanyController extends Controller
             'company_code' => 'required|max:255',
             'company_name' => 'required|max:255',
             'name' => 'required',
-            'company_email' => 'nullable|email|unique:companies,email',
-             'person_email' => 'nullable|email|unique:authorised_people,email',
+           
               'photo' => 'nullable|image|max:200000',
         ]);
         $input = $request->all();
@@ -100,7 +99,7 @@ class SubClientCompanyController extends Controller
         }
 
         return redirect()->route('profile.sub_clients.index')
-            ->with('success', 'Customer created successfully');
+            ->with('success', 'SubClient Company created successfully');
     }
     // Edit
     public function edit(Address $address, $id)
@@ -200,7 +199,7 @@ class SubClientCompanyController extends Controller
             $company->addresses()->save($homeAddress);
         }
         return redirect()->route('profile.sub_clients.index')
-            ->with('success', 'Customer Updated successfully');
+            ->with('success', 'SubClient Company Updated successfully');
     }
     // Show
     public function showDetails($id)

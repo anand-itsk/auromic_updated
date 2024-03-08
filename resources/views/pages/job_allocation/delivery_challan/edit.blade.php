@@ -35,7 +35,7 @@
                                     method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group row">
-                   <label for="customer_code" class="col-sm-2 col-form-label mandatory">
+                   <label for="customer_code" class="col-sm-2 col-form-label">
     Company Type
 </label>
 <div class="col-sm-4 mb-4">
@@ -49,7 +49,7 @@
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
 </div>
-<label for="customer_code" class="col-sm-2 col-form-label mandatory">
+<label for="customer_code" class="col-sm-2 col-form-label">
     Company Name
 </label>
 <div class="col-sm-4 mb-4">
@@ -63,14 +63,14 @@
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
 </div>
-    <label for="customer_name" class="col-sm-2 col-form-label mandatory">DC Date</label>
+    <label for="customer_name" class="col-sm-2 col-form-label ">DC Date</label>
                            <div class="col-sm-4 mb-4">
                               <input class="form-control" type="date" name="dc_date" id="dc_date" value="{{$delivery_challans->dc_date}}">
                               @error('dc_date')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                            <label for="customer_name" class="col-sm-2 col-form-label mandatory">DC
+                            <label for="customer_name" class="col-sm-2 col-form-label">DC
                            Number</label>
                            <div class="col-sm-4 mb-4">
                               <input class="form-control" type="text" name="dc_number" id="dc_number"value="{{$delivery_challans->dc_no}}">
@@ -79,7 +79,7 @@
                               @enderror
                            </div>
 
-<label for="customer_code" class="col-sm-2 col-form-label mandatory">Customer</label>
+<label for="customer_code" class="col-sm-2 col-form-label ">Customer</label>
 <div class="col-sm-4 mb-4">
     <select class="form-control select2" name="customer_id" id="customer_id">
         <option value="">Select Customer</option>
@@ -92,7 +92,7 @@
     @enderror
 </div>
 
-<label for="customer_code" class="col-sm-2 col-form-label mandatory">Order ID</label>
+<label for="customer_code" class="col-sm-2 col-form-label ">Order ID</label>
 <div class="col-sm-4 mb-4">
     <select class="form-control select2" name="order_id" id="order_id">
         <option value="">Select Order</option>
@@ -105,7 +105,7 @@
     @enderror
 </div>
 
- <label for="order_date" class="col-sm-2 col-form-label mandatory">Order Date</label>
+ <label for="order_date" class="col-sm-2 col-form-label ">Order Date</label>
 <div class="col-sm-4 mb-4">
     <input class="form-control" type="text" name="order_date" id="order_date" value="{{ $delivery_challans->order_details->order_date }}" readonly>
     @error('order_date')
@@ -113,7 +113,7 @@
     @enderror
 </div>
 
-<label for="customer_code" class="col-sm-2 col-form-label mandatory">Model</label>
+<label for="customer_code" class="col-sm-2 col-form-label ">Model</label>
 <div class="col-sm-4 mb-4">
     <select class="form-control select2" name="product_model" id="product_model">
         <option value="">Select Model</option>
@@ -185,6 +185,7 @@
     @error('quantity')
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
+</div>
 </div>
 
                                     <div class="form-group">

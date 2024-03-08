@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\DirectJobGiving;
+use App\Exports\DirectJobGivingExport;
 use App\Models\ProductModel;
 use App\Models\ProductSize;
 use App\Models\ProductColor;
@@ -135,5 +136,31 @@ public function update(Request $request, $id)
 
         DirectJobGiving::destroy($ids);
         return response()->json(['status' => 'success']);
+    }
+
+      public function destroy($id)
+    {
+         $direct_job_giving = DirectJobGiving::find($id);
+
+         $direct_job_giving->delete();
+
+          return redirect()->route('job_allocation.direct_job_giving.index')->with('success', 'Direct Job Giving Deleted successfully!');
+
+    }
+
+      public function export(Request $request)
+    {
+        return Excel::download(new DirectJobGivingExport($request->all()), 'DirectJobGivingDatas_' . date('d-m-Y') . '.xlsx');
+    }
+
+     public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,csv'
+        ]);
+
+        Excel::import(new DirectJobGivingImport, request()->file('file'));
+
+        return redirect()->route('job_allocation.direct_job_giving.index')->with('success', 'Data imported successfully');
     }
 }

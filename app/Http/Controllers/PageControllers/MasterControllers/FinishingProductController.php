@@ -4,6 +4,7 @@ namespace App\Http\Controllers\PageControllers\MasterControllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Exports\FinishingProductExport;
 use App\Models\Product;
 use App\Models\ProductSize;
 use App\Models\FinishingProductModel;
@@ -88,6 +89,35 @@ class FinishingProductController extends Controller
 
           return redirect()->route('master.finishing_product.index')->with('success', 'Finishing Product Deleted successfully!');
 
+    }
+
+     public function deleteSelected(Request $request)
+    {
+
+        $ids = $request->ids;
+
+        if (!is_array($ids)) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid input'], 400);
+        }
+
+        FinishingProductModel::destroy($ids);
+        return response()->json(['status' => 'success']);
+    }
+
+     public function export(Request $request)
+    {
+        return Excel::download(new FinishingProductExport($request->all()), 'FinishingProductDatas_' . date('d-m-Y') . '.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,csv'
+        ]);
+
+        Excel::import(new FinishingProductImport, request()->file('file'));
+
+        return redirect()->route('master.finishing_product.index')->with('success', 'Data imported successfully');
     }
 
 }

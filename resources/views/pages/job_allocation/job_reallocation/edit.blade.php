@@ -129,7 +129,7 @@
                            Product Size
                            </label>
                            <div class="col-sm-4 mb-4">
-                              <input type="text" class="form-control" name="" id="" readonly value="{{ $Job_Giving->product_model->productSize->name}}">
+                              <input type="text" class="form-control" name="" id="" readonly value="{{ $Job_Giving->product_model->productSize->name ?? ''}}">
                               @error('employee_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
@@ -138,7 +138,7 @@
                            Product Color
                            </label>
                            <div class="col-sm-4 mb-4">
-                              <input type="text" class="form-control" name="" id="" readonly value="{{ $Job_Giving->order_details->productColor->name}}">
+                              <input type="text" class="form-control" name="" id="" readonly value="{{ $Job_Giving->order_details->productColor->name ??''}}">
                               @error('employee_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
@@ -147,7 +147,7 @@
                            Received Date
                            </label>
                            <div class="col-sm-4 mb-4">
-                              <input type="text" class="form-control" name="" id="" readonly value="{{ $received_date }}">
+                              <input type="text" class="form-control" name="" id="" readonly value="{{$jobReceivedData->receving_date}}">
                               @error('employee_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
@@ -179,7 +179,7 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="company_type" class="col-sm-2 col-form-label mandatory">
+                           <label for="company_type" class="col-sm-2 col-form-label">
                            Company Type
                            </label>
                            <div class="col-sm-4 mb-4">
@@ -188,7 +188,7 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="company_name" class="col-sm-2 col-form-label mandatory">
+                           <label for="company_name" class="col-sm-2 col-form-label">
                            Company Name
                            </label>
                            <div class="col-sm-4 mb-4">
@@ -215,10 +215,14 @@
                               <button type="submit" class="btn btn-primary waves-effect waves-light">
                               Submit
                               </button>
-                              <a href="{{ route('job_allocation.job_received.index') }}"
+                              <a href="{{ route('job_allocation.job_reallocation.index') }}"
                                  class="btn btn-secondary waves-effect m-l-5">
-                              Cancel
+                              Back
                               </a>
+
+                              <a href="{{ route('job_allocation.job_reallocation.cancel_job_giving', ['id' => $id]) }}" class="btn btn-danger waves-effect m-l-5">
+    Cancel
+</a>
                            </div>
                         </div>
                      </form>

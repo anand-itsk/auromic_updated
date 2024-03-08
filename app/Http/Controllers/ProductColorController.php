@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 use App\Models\ProductColor;
-
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductColorController extends Controller
 {
@@ -16,6 +17,15 @@ class ProductColorController extends Controller
         return view('settings.masters.product_color.index',compact('product_color'));
 
      }
+
+     public function indexData()
+    {
+        
+        $product_color = ProductColor::get();
+        
+        return DataTables::of($product_color)->make(true);
+    }
+
 
       public function create()
      {
@@ -71,9 +81,22 @@ class ProductColorController extends Controller
     {
           $product_color = ProductColor::find($id);
 
-         $product_color->delete();
+          $product_color->delete();
 
           return redirect()->route('product-models.product_colors')->with('success', 'Product Color Deleted successfully!');
 
+    }
+
+     public function deleteSelected(Request $request)
+    {
+
+        $ids = $request->ids;
+
+        if (!is_array($ids)) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid input'], 400);
+        }
+
+        ProductColor::destroy($ids);
+        return response()->json(['status' => 'success']);
     }
 }

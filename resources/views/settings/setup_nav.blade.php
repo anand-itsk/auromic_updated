@@ -59,7 +59,7 @@
                 <ul class="collapse list-unstyled {{ request()->is('specified*') ? 'show' : '' }}" id="submenu3"
                     data-parent="#sidebarMenu">
                     <li class="nav-item"><a
-                            class="nav-link {{ request()->is('specified/company_types*') ? 'show' : '' }}"
+                            class="nav-link {{ request()->is('specified/company_type*') ? 'show' : '' }}"
                             href="{{ route('specified.company_types') }}">Company Types</a></li>
                     <li class="nav-item"><a
                             class="nav-link {{ request()->is('specified/resigning_reason*') ? 'show' : '' }}"

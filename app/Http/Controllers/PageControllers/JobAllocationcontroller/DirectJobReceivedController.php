@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\DirectJobGiving;
 use App\Models\Employee;
 use App\Models\ProductColor;
+use App\Models\ProductSize;
 use App\Models\DirectJobReceived;
 use App\Models\ProductModel ;
 use Maatwebsite\Excel\Facades\Excel;
@@ -117,8 +118,10 @@ public function edit($id)
         $query->with('companyType');
     }])->get();
     
+        $product_size = ProductSize::get();
+        
 
-    return view('pages.job_allocation.direct_job_received.edit',compact('direct_job_giving','product_model','employee','id','product_color'));
+    return view('pages.job_allocation.direct_job_received.edit',compact('direct_job_giving','product_model','employee','id','product_color','product_size'));
 }
 
 public function getModelDetails($id)

@@ -30,6 +30,108 @@
                      <form action="{{ route('job_allocation.direct_job_received.store') }}" method="POST">
                         @csrf
                         <input type="hidden" name="direct_job_giving_id" value="{{$id}}">
+<div class="form-group row">
+<label for="employee_id" class="col-sm-2 col-form-label">
+                           Employee Name
+                           </label>
+                           <div class="col-sm-4 mb-4">
+                              <select class="form-control select2" name="employee_id" id="employee_id" disabled>
+    @foreach ($employee as $item)
+        <option value="{{ $item->id }}" 
+            data-company-name="{{ $item->company->company_name }}" 
+            data-company-type="{{ $item->company->companyType->name }}"
+            {{ $item->id == $direct_job_giving->employee_id ? 'selected' : '' }}>
+            {{ $item->employee_code }}/{{ $item->employee_name }}
+        </option>
+    @endforeach
+</select>
+                              @error('employee_id')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+
+
+
+
+
+                           <label for="company_type" class="col-sm-2 col-form-label ">
+                           Company Type
+                           </label>
+                           <div class="col-sm-4 mb-4">
+                              <input type="text" class="form-control" name="company_type" id="company_type" readonly>
+                              @error('company_type')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                           <label for="company_name" class="col-sm-2 col-form-label ">
+                           Company Name
+                           </label>
+                           <div class="col-sm-4 mb-4">
+                              <input type="text" class="form-control" name="company_name" id="company_name" readonly>
+                              @error('company_name')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                       <label class="col-sm-2 col-form-label">Model</label>
+<div class="col-sm-4 mb-4">
+    <select class="form-control" name="product_model_id" id="product_model" disabled>
+        <option value="">Select Product Model</option>
+        @foreach($product_model as $productModels)
+            <option value="{{ $productModels->id }}" {{ $direct_job_giving->product_model_id == $productModels->id ? 'selected' : '' }}>{{ $productModels->model_name }}-{{ $productModels->model_code }}</option>
+        @endforeach
+    </select>
+    @error('product_model')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+                           <label for="order_date" class="col-sm-2 col-form-label ">Product Name</label>
+                           <div class="col-sm-4 mb-4">
+                              <input class="form-control" type="text" name="product" id="product" readonly value="{{$productModels->product->name}}">
+                              @error('product_id')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                          <label for="customer_code" class="col-sm-2 col-form-label">Product Size</label>
+<div class="col-sm-4 mb-4">
+    <select class="form-control select2" name="product_size_id" id="product_size_id" disabled>
+        <option value="">Select Product Size</option>
+        @foreach ($product_size as $item)
+            <option value="{{ $item->id }}" {{ $item->id == $direct_job_giving->product_size_id ? 'selected' : '' }}>{{ $item->name }}</option>
+        @endforeach
+    </select>
+    @error('product_size_id')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+<label for="customer_code" class="col-sm-2 col-form-label">Product Color</label>
+<div class="col-sm-4 mb-4">
+    <select class="form-control select2" name="product_color_id" id="product_color_id" disabled>
+        <option value="">Select Product color</option>
+        @foreach ($product_color as $item)
+            <option value="{{ $item->id }}" {{ $item->id == $direct_job_giving->product_color_id ? 'selected' : '' }}>{{ $item->name }}</option>
+        @endforeach
+    </select>
+    @error('product_color_id')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+<label for="order_date" class="col-sm-2 col-form-label">Quantity</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="quantity" id="quantity" readonly value="{{$direct_job_giving->quantity}}">
+    @error('quantity')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+<label for="order_date" class="col-sm-2 col-form-label">Weight</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="weight" id="weight" readonly value="{{$direct_job_giving->weight}}">
+    @error('weight')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+   
+</div>
+                        <hr>
                         <div class="form-group row">
                            <label for="customer_code" class="col-sm-2 col-form-label mandatory">
                            Employee
@@ -49,7 +151,7 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="company_type" class="col-sm-2 col-form-label mandatory">
+                           <label for="company_type" class="col-sm-2 col-form-label">
                            Company Type
                            </label>
                            <div class="col-sm-4 mb-4">
@@ -58,7 +160,7 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="company_name" class="col-sm-2 col-form-label mandatory">
+                           <label for="company_name" class="col-sm-2 col-form-label ">
                            Company Name
                            </label>
                            <div class="col-sm-4 mb-4">
@@ -214,5 +316,14 @@
               }
           });
 </script>
+
+<script>
+        $(document).ready(function() {
+            var companyName = $('#employee_id').find(':selected').data('company-name');
+            var companyType = $('#employee_id').find(':selected').data('company-type');
+            $('#company_name').val(companyName);
+            $('#company_type').val(companyType);
+        });
+    </script>
 @include('links.js.select2.select2')
 @endsection
