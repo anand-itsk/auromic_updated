@@ -147,7 +147,7 @@
                            Received Date
                            </label>
                            <div class="col-sm-4 mb-4">
-                              <input type="text" class="form-control" name="" id="" readonly value="{{ $received_date }}">
+                              <input type="text" class="form-control" name="" id="" readonly value="{{$jobReceivedData->receving_date}}">
                               @error('employee_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror

@@ -145,7 +145,7 @@
                            Received Date
                            </label>
                            <div class="col-sm-4 mb-4">
-                              <input type="text" class="form-control" name="company_type" id="company_type" readonly value="{{ $received_date }}">
+                              <input type="text" class="form-control" name="company_type" id="company_type" readonly value="{{$jobReceivedData->receving_date}}">
                               @error('employee_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
@@ -168,26 +168,25 @@
                            <label for="customer_code" class="col-sm-2 col-form-label mandatory">
                            Receiving Date
                            </label>
-                           <div class="col-sm-4 mb-4">
-                              <input class="form-control" type="date" name="receiving_date"
-                                 id="receiving_date" required>
-                              @error('receiving_date')
-                              <span class="error" style="color: red;">{{ $message }}</span>
-                              @enderror
-                           </div>
+                          <div class="col-sm-4 mb-4">
+    <input class="form-control" type="date" name="receiving_date" id="receiving_date"  required>
+    @error('receiving_date')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
                            <label for="customer_code" class="col-sm-2 col-form-label">
                            Status
                            </label>
                            <div class="col-sm-4 mb-4">
                               <select class="form-control select2" name="received_status"
                                  id="received_status">
-                                 {{-- @foreach ($job_received_data as $item)
-                                 <option value="{{ $item->id }}">{{ $item->status }}</option>
-                                 @endforeach --}}
-                                 {{-- {{ $job_received_data->status }} --}}
-                                 <option value="Incomplete">Incomplete</option>
-                                 <option value="Complete">Complete</option>
-                                 <option value="Pending">Pending</option>
+                              
+                                 <option value="Incomplete"
+                              @if ($Job_Giving->status == 'Incomplete') selected @endif>Incomplete</option>
+                              <option value="Complete" @if ($Job_Giving->status == 'Complete') selected @endif>
+                              Complete</option>
+                              <option value="Pending" @if ($Job_Giving->status == 'Pending') selected @endif>
+                              Pending</option>
                               </select>
                               @error('employee_id')
                               <span class="error" style="color: red;">{{ $message }}</span>

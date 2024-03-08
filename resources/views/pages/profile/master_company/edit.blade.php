@@ -308,11 +308,14 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                             <br>
-
+  
+ @if (!empty($company->authorisedPerson->photo))
                                             <h6 style="font-weight: bold;">Current Image:</h6>
                                             <img src="{{ asset('storage/' . $company->authorisedPerson->photo) }}"
                                                 alt="Current Image" style="max-width: 100px; max-height: 100px;">
-
+   @else
+    <img src="{{ asset('assets/images/no-profile.png') }}" alt="No Profile Image" style="max-width: 50px; max-height: 50px;">
+@endif
                                             <h6 style="font-weight: bold;">Change Image:</h6>
                                             <div id="imagePreviewContainer"></div>
                                         </div>

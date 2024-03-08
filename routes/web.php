@@ -474,6 +474,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/update/{id}', [DirectJobGivingController::class, 'update'])->name('update');
             Route::post('/delete/selected', [DirectJobGivingController::class, 'deleteSelected']);
              Route::get('/get-model-details/{id}', [DirectJobGivingController ::class, 'getModelDetails'])->name('get-models');
+              Route::post('/import', [DirectJobGivingController::class, 'import'])->name('import');
+            Route::get('/export', [DirectJobGivingController::class, 'export']);
         });
           Route::prefix('/direct_job_received')->name('direct_job_received.')->group(function () {
             Route::get('/', [DirectJobReceivedController::class, 'index'])->name('index');
@@ -507,6 +509,9 @@ Route::middleware(['auth'])->group(function () {
               Route::get('/get-model-details/{id}', [DeliveryChallanController ::class, 'getModelDetails'])->name('get-models');
             Route::get('/get-orders/{customerId}', [DeliveryChallanController ::class, 'getOrders'])->name('get-orders');
            Route::post('/fetch-product-details', [DeliveryChallanController::class, 'fetchProductDetails'])->name('fetchProductDetails');
+           Route::post('/import', [DeliveryChallanController::class, 'import'])->name('import');
+            Route::get('/export', [DeliveryChallanController::class, 'export']);
+           
 
         });
 
@@ -522,6 +527,8 @@ Route::middleware(['auth'])->group(function () {
              Route::get('/delete/{id}', [JobGivingController::class, 'delete'])->name('delete');
             Route::get('/get-order-details/{orderId}', [JobGivingController::class,'getOrderDetails']);
             Route::get('/get-model-details/{id}', [JobGivingController ::class, 'getModelDetails'])->name('get-models');
+            Route::post('/import', [JobGivingController::class, 'import'])->name('import');
+            Route::get('/export', [JobGivingController::class, 'export']);
            
 
 
@@ -538,6 +545,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/data', [JobReallocationController::class, 'indexData'])->name('data');
             Route::post('/store', [JobReallocationController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [JobReallocationController::class, 'edit'])->name('edit');
+            Route::get('/cancel-job-giving/{id}',[JobReallocationController::class,'cancelJobGiving'])->name('cancel_job_giving');
         });
     });
 
