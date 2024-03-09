@@ -452,7 +452,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/nominee/edit/{id}', [EmployeeController::class, 'editNominee'])->name('nominee.edit');
             Route::get('/nominee/family/{id}', [EmployeeController::class, 'employeeFamily'])->name('nominee.family');
             Route::post('/nominee/update/{id}', [EmployeeController::class, 'updateNominee'])->name('nominee.update');
-            Route::delete('/nominee/delete/{id}', [EmployeeController::class, 'deleteNominee'])->name('nominee.delete');
+            Route::get('/nominee/delete/{id}', [EmployeeController::class, 'deleteNominee'])->name('nominee.delete');
 
             Route::post('/update/{id}', [EmployeeController::class, 'update'])->name('update');
             Route::get('/delete/{id}',  [EmployeeController::class, 'destroy'])->name('delete');
@@ -472,6 +472,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/store', [DirectJobGivingController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [DirectJobGivingController::class, 'edit'])->name('edit');
             Route::post('/update/{id}', [DirectJobGivingController::class, 'update'])->name('update');
+             Route::get('/delete/{id}',  [DirectJobGivingController::class, 'destroy'])->name('delete');
             Route::post('/delete/selected', [DirectJobGivingController::class, 'deleteSelected']);
              Route::get('/get-model-details/{id}', [DirectJobGivingController ::class, 'getModelDetails'])->name('get-models');
               Route::post('/import', [DirectJobGivingController::class, 'import'])->name('import');

@@ -40,9 +40,9 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                     <div>
-                                        <button type="button" class="icon-button common-color" data-toggle="modal"
+                                        <!-- <button type="button" class="icon-button common-color" data-toggle="modal"
                                             data-target=".bs-example-modal-center" title=" Delivery challan"><i
-                                                class="fa fa-upload"></i></button>
+                                                class="fa fa-upload"></i></button> -->
 
                                         <a href="{{ route('job_allocation.delivery_challan.create') }}"
                                             class="icon-link common-color" title="Create Delivery challan">

@@ -42,9 +42,9 @@
                                     </div>
                                     
                                     <div>
-                                        <button type="button" class="icon-button common-color bg-secondary rounded"
+                                        <!-- <button type="button" class="icon-button common-color bg-secondary rounded"
                                             data-toggle="modal" data-target=".bs-example-modal-center"
-                                            title="Import Employee"><i class="fa fa-upload text-white"></i></button>
+                                            title="Import Employee"><i class="fa fa-upload text-white"></i></button> -->
                                         <button type="button" class="icon-button common-color  bg-primary rounded "
                                             data-toggle="modal" data-target=".employe-create-modal-center"
                                             title="Create Employee"><i class="fa fa-user-plus text-white"></i></button>
@@ -93,7 +93,7 @@
                                                     .xlsx or .csv)</p>
                                                 <p class="text-muted font-14">To upload sample document, it
                                                     must have concern fields.
-                                                    <a href="{{ asset('assets/sample_excels/customer_import.xlsx') }}"
+                                                    <a href="{{ asset('assets/sample_excels/employee_import.xlsx') }}"
                                                         download>Click
                                                         to download sample document</a>
                                                 </p>

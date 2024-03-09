@@ -39,9 +39,9 @@
                                             title="Delete Selected Record"><i class="fa fa-user-times"></i></button>
                                     </div>
                                     <div>
-                                        <button type="button" class="icon-button common-color" data-toggle="modal"
+                                        <!-- <button type="button" class="icon-button common-color" data-toggle="modal"
                                             data-target=".bs-example-modal-center" title="Job Giving"><i
-                                                class="fa fa-upload"></i></button>
+                                                class="fa fa-upload"></i></button> -->
 
                                         <a href="{{ route('job_allocation.job_giving.create') }}"
                                             class="icon-link common-color" title="Create Job Giving">

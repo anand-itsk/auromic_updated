@@ -164,8 +164,14 @@
                     <li class="list-inline-item dropdown notification-list">
                         <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown"
                             href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                            <img src="{{ asset('assets/images/users/user-1.jpg') }}" alt="user"
-                                class="rounded-circle">
+                            <!-- <img src="{{ asset('assets/images/users/user-1.jpg') }}" alt="user"
+                                class="rounded-circle"> -->
+
+                                 @if (!empty($user->profile_image))
+                                        <img src="{{ asset('/storage/' . $user->profile_image) }}"   class="rounded-circle" alt="Profile Image" style="width: 50px; height: 50px;">
+                                        @else
+                                        <img class="profile-image rounded-circle" src="{{ asset('assets/images/no-profile.png') }}"  class="rounded-circle"  alt="No Profile Image">
+                                        @endif
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown ">
                             <a class="dropdown-item" href="{{ route('my-profile') }}"><i

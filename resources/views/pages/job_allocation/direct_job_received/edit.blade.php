@@ -17,7 +17,7 @@
                      <li class="breadcrumb-item">Edit</li>
                   </ol>
                </div>
-               <h4 class="page-title">Edit Direct Job Giving</h4>
+               <h4 class="page-title">Edit Direct Job received</h4>
             </div>
          </div>
       </div>

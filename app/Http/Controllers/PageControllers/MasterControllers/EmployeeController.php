@@ -12,6 +12,7 @@ use App\Models\Country;
 use App\Models\Customer;
 use App\Models\Employee;
 use App\Exports\EmployeeExport;
+use App\Imports\EmployeeImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\EmployeeFamilyMemberDetail;
 use App\Models\EmployeeNominee;
@@ -517,48 +518,53 @@ class EmployeeController extends Controller
 
     public function updateNominee(Request $request, $id)
     {
+        // dd($request);   
         $request->validate([
-            'name' => 'required',
+            'family_member_id' => 'required',
         ]);
 
-        $familyMember = EmployeeFamilyMemberDetail::find($id);
-        if (!$familyMember) {
-            return response()->json(['error' => 'Family member not found'], 404);
+        $nomineeMember = EmployeeNominee::find($id);
+        if (!$nomineeMember) {
+            return response()->json(['error' => 'Nominee member not found'], 404);
         }
 
-        $familyDetails = $familyMember->update([
-            'name' => $request->name,
-            'relation_with_emp' => $request->relation_with_emp,
-            'dob' => $request->dob,
-            'is_residing' => $request->is_residing,
-            'remark' => $request->remark,
+        $NomineeDetails = $nomineeMember->update([
+            'family_member_id' => $request->family_member_id,
+            // 'employee_id' => $request->employee_id,
+            'gratuity_sharing' => $request->gratuity_sharing,
+            'marital_status' => $request->marital_status,
+            'religion_id' => $request->religion_id,
+            'faorhus_name' => $request->faorhus_name,
+             'guardian_name' => $request->guardian_name,
+              'guardian_address' => $request->guardian_address,
+               'guardian_relation_with_emp' => $request->guardian_relation_with_emp,
         ]);
 
         // Check if the finance detail already has an office address
-        if ($familyMember->addresses()->where('address_type_id', 4)->exists()) {
-            $address = $familyMember->addresses()->where('address_type_id', 4)->first();
-        } else {
-            $address = new Address();
-            $address->address_type_id = 4; // Assuming this is the type ID for office addresses
-        }
+        // if ($familyMember->addresses()->where('address_type_id', 4)->exists()) {
+        //     $address = $familyMember->addresses()->where('address_type_id', 4)->first();
+        // } else {
+        //     $address = new Address();
+        //     $address->address_type_id = 4; 
+        // }
 
         // Update or set office address details for finance detail
-        $address->address = $request->family_address;
-        $address->village_area = $request->family_area;
-        $address->country_id = $request->family_country_id;
-        $address->state_id = $request->family_state_id ?? 1;
-        $address->district_id = $request->family_district_id ?? 1;
-        $address->pincode = $request->family_pincode;
+        // $address->address = $request->family_address;
+        // $address->village_area = $request->family_area;
+        // $address->country_id = $request->family_country_id;
+        // $address->state_id = $request->family_state_id ?? 1;
+        // $address->district_id = $request->family_district_id ?? 1;
+        // $address->pincode = $request->family_pincode;
 
         // Save the address to the finance detail
-        $familyMember->addresses()->save($address);
+        // $familyMember->addresses()->save($address);
 
         // Update family member data
         // $familyMember->update($request->all());
 
         return response()->json([
-            'success' => 'Family member updated successfully',
-            'emp_id' => $familyMember->employee_id
+            'success' => 'Nominee member updated successfully',
+            'emp_id' => $nomineeMember->employee_id
         ]);
     }
 
@@ -583,7 +589,7 @@ class EmployeeController extends Controller
 
 
         return response()->json([
-            'success' => 'Family member deleted successfully.',
+            'success' => 'Nominee member deleted successfully.',
             'emp_id' => $emp_id
         ]);
 
@@ -729,7 +735,7 @@ class EmployeeController extends Controller
             'file' => 'required|file|mimes:xlsx,csv'
         ]);
 
-        Excel::import(new CustomerDataImport, request()->file('file'));
+        Excel::import(new EmployeeImport, request()->file('file'));
 
         return redirect()->route('master.employees.index')->with('success', 'Data imported successfully');
     }

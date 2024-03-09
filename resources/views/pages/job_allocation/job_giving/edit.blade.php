@@ -182,6 +182,8 @@
                               Complete</option>
                               <option value="Pending" @if ($JobGiving->status == 'Pending') selected @endif>
                               Pending</option>
+                                  <option value="cancelled" @if ($JobGiving->status == 'Cancelled') selected @endif>
+                              Cancelled</option>
                               </select>
                               @error('status')
                               <span class="error" style="color: red;">{{ $message }}</span>
