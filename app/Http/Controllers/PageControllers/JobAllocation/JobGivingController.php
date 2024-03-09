@@ -83,6 +83,7 @@ public function getModelDetails($id)
             'employee_id' => 'required',
             'order_id' => 'required',
             'product_model_id'=>'required',
+            'status'=>'required'
     
         ]);
         $input = $request->all();

@@ -32,8 +32,7 @@
                             <div class="card m-b-30">
                                 <div class="d-flex justify-content-between p-2 bd-highlight">
                                     <div>
-                                        <button id="deleteButton" class="icon-button delete-color"
-                                            title="Delete Selected Record"><i class="fa fa-user-times"></i></button>
+                                        
                                     </div>
                                     <div>
                                        

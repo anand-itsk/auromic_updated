@@ -145,7 +145,7 @@
                            Received Date
                            </label>
                            <div class="col-sm-4 mb-4">
-                              <input type="text" class="form-control" name="company_type" id="company_type" readonly value="{{$jobReceivedData->receving_date}}">
+                              <input type="text" class="form-control" name="company_type" id="company_type" readonly value="{{$jobReceivedData->receving_date ?? ''}}">
                               @error('employee_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
@@ -187,6 +187,8 @@
                               Complete</option>
                               <option value="Pending" @if ($Job_Giving->status == 'Pending') selected @endif>
                               Pending</option>
+                               <option value="cancelled" @if ($Job_Giving->status == 'Cancelled') selected @endif>
+                              Cancelled</option>
                               </select>
                               @error('employee_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
