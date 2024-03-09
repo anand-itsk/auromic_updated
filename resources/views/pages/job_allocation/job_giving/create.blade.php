@@ -171,7 +171,7 @@
                                  With DC</label>
                               </div>
                            </div>
-                           <label for="customer_code" class="col-sm-2 col-form-label ">Status</label>
+                           <label for="customer_code" class="col-sm-2 col-form-label mandatory">Status</label>
                            <div class="col-sm-4 mb-4">
                               <select class="form-control select2" name="status" id="status">
                                  <option value="">Select Status</option>

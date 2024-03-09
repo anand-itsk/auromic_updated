@@ -71,10 +71,9 @@
                                                             @if (!empty($employee->photo))
                                                                 <img src="{{ asset('/storage/' . $employee->photo) }}"
                                                                     alt="Profile Image">
-                                                            @else
-                                                                <img src="{{ asset('images/no-profile.png') }}"
-                                                                    alt="No Profile Image">
-                                                            @endif
+                                                           @else
+    <img src="{{ asset('assets/images/no-profile.png') }}" alt="No Profile Image">
+@endif
                                                         </div>
                                                     </div>
 

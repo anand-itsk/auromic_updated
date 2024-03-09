@@ -46,8 +46,8 @@
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Select Family Member</label>
                                             <div class="col-sm-4 mb-4">
-                                                <select class="form-control select2" name="family_memeber_id"
-                                                    id="family_memeber_id">
+                                                <select class="form-control select2" name="family_member_id"
+                                                    id="family_member_id">
                                                     @foreach ($family_members as $item)
                                                         <option value="{{ $item->id }}">
                                                             {{ $item->name }}
@@ -306,7 +306,7 @@
                         xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
                     },
                     url: `/master/employees/nominee/delete/${id}`,
-                    type: 'DELETE',
+                    type: 'get',
                     success: function(result) {
                         alert(result.success);
                         console.log(result.emp_id);

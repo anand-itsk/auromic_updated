@@ -26,7 +26,7 @@
                                 <div class="card-body d-flex justify-content-between align-items-center">
                                     <div>
                                         <h4 class="fs-19 mt-0">New Order</h4>
-                                        <h4 class="cost-text m-0">7</h4>
+                                        <h4 class="cost-text m-0">{{ $order_count}}</h4>
                                     </div>
                                     <div class="card-rigth-icon card-box2-blue">
                                         <i class="dripicons-briefcase"></i>

@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\Employee;
 use App\Models\JobAllocationHistory;
 use App\Models\JobGiving;
+use App\Models\JobReceived;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -56,14 +57,14 @@ class JobReallocationController extends Controller
        
                 $Job_Giving = JobGiving::with('employee', 'order_details','product_model')->find($id);
          
-               $received_date = $Job_Giving->job_received->receving_date ?? '';
+         $jobReceivedData = JobReceived::where('job_giving_id', $id)->latest()->first();
 
                $employee = Employee::with(['company' => function ($query) {
                 $query->with('companyType');
                  }])->get();
 
         // dd($JobGiving);
-        return view('pages.job_allocation.job_reallocation.edit', compact('Job_Giving','received_date','id','employee'));
+        return view('pages.job_allocation.job_reallocation.edit', compact('Job_Giving','jobReceivedData','id','employee'));
     }
 
     public function cancelJobGiving($id)

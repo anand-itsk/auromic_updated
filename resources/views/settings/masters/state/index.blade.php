@@ -163,7 +163,7 @@ $(document).ready(function() {
 function editUser(id) {
     console.log("inside");
     // Redirect to the user edit page or open a modal for editing
-    window.location.href = 'state/edit/' + id;
+    window.location.href = 'state-edit/' + id;
 }
 
 

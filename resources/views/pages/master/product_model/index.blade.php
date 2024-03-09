@@ -44,9 +44,9 @@
                                             Delete Selected Record</button>
                                     </div>
                                     <div>
-                                        <button type="button" class="icon-button common-color bg-secondary rounded"
+                                        <!-- <button type="button" class="icon-button common-color bg-secondary rounded"
                                             data-toggle="modal" data-target=".bs-example-modal-center"
-                                            title="Import file"><i class="fa fa-upload  text-white"></i></button>
+                                            title="Import file"><i class="fa fa-upload  text-white"></i></button> -->
 
                                         <button class="icon-button  bg-primary rounded">
                                             <a href="{{ route('master.product_model.create') }}"

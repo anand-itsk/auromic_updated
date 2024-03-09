@@ -16,7 +16,7 @@
                                 <li class="breadcrumb-item">Edit</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Edit User</h4>
+                        <h4 class="page-title">Edit Customer</h4>
                     </div>
                 </div>
             </div>

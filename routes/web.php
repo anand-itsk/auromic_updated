@@ -452,7 +452,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/nominee/edit/{id}', [EmployeeController::class, 'editNominee'])->name('nominee.edit');
             Route::get('/nominee/family/{id}', [EmployeeController::class, 'employeeFamily'])->name('nominee.family');
             Route::post('/nominee/update/{id}', [EmployeeController::class, 'updateNominee'])->name('nominee.update');
-            Route::delete('/nominee/delete/{id}', [EmployeeController::class, 'deleteNominee'])->name('nominee.delete');
+            Route::get('/nominee/delete/{id}', [EmployeeController::class, 'deleteNominee'])->name('nominee.delete');
 
             Route::post('/update/{id}', [EmployeeController::class, 'update'])->name('update');
             Route::get('/delete/{id}',  [EmployeeController::class, 'destroy'])->name('delete');
@@ -472,8 +472,11 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/store', [DirectJobGivingController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [DirectJobGivingController::class, 'edit'])->name('edit');
             Route::post('/update/{id}', [DirectJobGivingController::class, 'update'])->name('update');
+             Route::get('/delete/{id}',  [DirectJobGivingController::class, 'destroy'])->name('delete');
             Route::post('/delete/selected', [DirectJobGivingController::class, 'deleteSelected']);
              Route::get('/get-model-details/{id}', [DirectJobGivingController ::class, 'getModelDetails'])->name('get-models');
+              Route::post('/import', [DirectJobGivingController::class, 'import'])->name('import');
+            Route::get('/export', [DirectJobGivingController::class, 'export']);
         });
           Route::prefix('/direct_job_received')->name('direct_job_received.')->group(function () {
             Route::get('/', [DirectJobReceivedController::class, 'index'])->name('index');
@@ -507,6 +510,9 @@ Route::middleware(['auth'])->group(function () {
               Route::get('/get-model-details/{id}', [DeliveryChallanController ::class, 'getModelDetails'])->name('get-models');
             Route::get('/get-orders/{customerId}', [DeliveryChallanController ::class, 'getOrders'])->name('get-orders');
            Route::post('/fetch-product-details', [DeliveryChallanController::class, 'fetchProductDetails'])->name('fetchProductDetails');
+           Route::post('/import', [DeliveryChallanController::class, 'import'])->name('import');
+            Route::get('/export', [DeliveryChallanController::class, 'export']);
+           
 
         });
 
@@ -522,6 +528,8 @@ Route::middleware(['auth'])->group(function () {
              Route::get('/delete/{id}', [JobGivingController::class, 'delete'])->name('delete');
             Route::get('/get-order-details/{orderId}', [JobGivingController::class,'getOrderDetails']);
             Route::get('/get-model-details/{id}', [JobGivingController ::class, 'getModelDetails'])->name('get-models');
+            Route::post('/import', [JobGivingController::class, 'import'])->name('import');
+            Route::get('/export', [JobGivingController::class, 'export']);
            
 
 
@@ -538,6 +546,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/data', [JobReallocationController::class, 'indexData'])->name('data');
             Route::post('/store', [JobReallocationController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [JobReallocationController::class, 'edit'])->name('edit');
+            Route::get('/cancel-job-giving/{id}',[JobReallocationController::class,'cancelJobGiving'])->name('cancel_job_giving');
         });
     });
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\OrderDetail;
+use App\Models\Company;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $order_count = OrderDetail::count();
+        // $master_company_count = Company::where('company_type_id', $your_company_type_id)->count();
+        return view('home',compact('order_count'));
     }
 }
