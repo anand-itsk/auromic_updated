@@ -530,7 +530,7 @@ class EmployeeController extends Controller
 
         $NomineeDetails = $nomineeMember->update([
             'family_member_id' => $request->family_member_id,
-            'employee_id' => $request->employee_id,
+            // 'employee_id' => $request->employee_id,
             'gratuity_sharing' => $request->gratuity_sharing,
             'marital_status' => $request->marital_status,
             'religion_id' => $request->religion_id,
