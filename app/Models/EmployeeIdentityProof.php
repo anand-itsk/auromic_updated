@@ -15,5 +15,7 @@ class EmployeeIdentityProof extends Model
         'pan_number',
         'passport_number',
         'identity_mark',
+        'aadhar_number',
+        'aadhar_name'
     ];
 }

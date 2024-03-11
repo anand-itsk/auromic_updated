@@ -26,7 +26,7 @@
                                 <div class="card-body d-flex justify-content-between align-items-center">
                                     <div>
                                         <h4 class="fs-19 mt-0">New Order</h4>
-                                        <h4 class="cost-text m-0">{{ $order_count}}</h4>
+                                        <h4 class="cost-text m-0">{{$order_count}}</h4>
                                     </div>
                                     <div class="card-rigth-icon card-box2-blue">
                                         <i class="dripicons-briefcase"></i>
@@ -39,7 +39,8 @@
                                 <div class="card-body d-flex justify-content-between align-items-center">
                                     <div>
                                         <h4 class="fs-19 mt-0">Master Company</h4>
-                                        <h4 class="cost-text m-0">200</h4>
+                                        <h4 class="cost-text m-0">{{$master_company_count}}</h4>
+                                        
                                     </div>
                                     <div class="card-rigth-icon  card-box2-pink">
                                         <i class="dripicons-briefcase"></i>
@@ -52,7 +53,7 @@
                                 <div class="card-body d-flex justify-content-between align-items-center">
                                     <div>
                                         <h4 class="fs-19 mt-0">Client Company</h4>
-                                        <h4 class="cost-text m-0">100</h4>
+                                        <h4 class="cost-text m-0">{{$client_company_count}}</h4>
                                     </div>
                                     <div class="card-rigth-icon card-box2-green">
                                         <i class="dripicons-briefcase"></i>
@@ -65,7 +66,7 @@
                                 <div class="card-body d-flex justify-content-between align-items-center">
                                     <div>
                                         <h4 class="fs-19 mt-0">Sub-client Company</h4>
-                                        <h4 class="cost-text m-0">100</h4>
+                                        <h4 class="cost-text m-0">{{$subclient_company_count}}</h4>
                                     </div>
                                     <div class="card-rigth-icon card-box2-violet">
                                         <i class="dripicons-briefcase"></i>
@@ -87,44 +88,44 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Employee Counts
-                                    <span class="badge badge-primary badge-pill">14</span>
+                                    <span class="badge badge-primary badge-pill">{{$employee}}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Companies Count
-                                    <span class="badge badge-primary badge-pill">20</span>
+                                    <span class="badge badge-primary badge-pill">{{$company}}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Product Counts
-                                    <span class="badge badge-primary badge-pill">11</span>
+                                    <span class="badge badge-primary badge-pill">{{$product_model}}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Order Counts
-                                    <span class="badge badge-primary badge-pill">100</span>
+                                    <span class="badge badge-primary badge-pill">{{$order_count}}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Job Giving without DC
-                                    <span class="badge badge-primary badge-pill">18</span>
+                                    <span class="badge badge-primary badge-pill">{{$jobGivingCountWithoutDcId}}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Job Giving with DC
-                                    <span class="badge badge-primary badge-pill">18</span>
+                                    <span class="badge badge-primary badge-pill">{{$jobGivingCountWithDcId}}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Job Received
-                                    <span class="badge badge-primary badge-pill">18</span>
+                                    <span class="badge badge-primary badge-pill">{{$job_received}}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Job Reallocation
-                                    <span class="badge badge-primary badge-pill">18</span>
+                                    <span class="badge badge-primary badge-pill">{{$job_reallocation}}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Direct Job Giving
-                                    <span class="badge badge-primary badge-pill">18</span>
+                                    <span class="badge badge-primary badge-pill">{{$direct_job_giving}}</span>
                                 </li>
 
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Direct Job Received
-                                    <span class="badge badge-primary badge-pill">18</span>
+                                    <span class="badge badge-primary badge-pill">{{$direct_job_received}}</span>
                                 </li>
 
                             </ul>
@@ -147,18 +148,19 @@
                                 <tbody>
                                     <tr>
                                         <td>Master Company</td>
-                                        <td>600</td>
-                                        <td>100</td>
+                                        
+                                        <td>{{$master_company_count}}</td>
+                                        <td>{{$employee_count_master}}</td>
                                     </tr>
                                     <tr>
                                         <td>Client Company</td>
-                                        <td>300</td>
-                                        <td>100</td>
+                                        <td>{{$client_company_count}}</td>
+                                         <td>{{$employee_count_client}}</td>
                                     </tr>
                                     <tr>
                                         <td>Sub-client Company</td>
-                                        <td>100</td>
-                                        <td>200</td>
+                                        <td>{{$subclient_company_count}}</td>
+                                        <td>{{$employee_count_subclient}}</td>
                                     </tr>
 
                                 </tbody>
@@ -204,43 +206,24 @@
                                 <p><a href="{{ route('master.employees.index') }}">View more</a></p>
                             </div>
 
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Mobile Number</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Tiger Nixon</td>
-                                        <td>9876543210</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Garrett Winters</td>
-                                        <td>9876543211</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Ashton Cox</td>
-                                        <td>9876543212</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Cedric Kelly</td>
-                                        <td>9876543213</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>Belle Williamson</td>
-                                        <td>9876543214</td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
+                           <table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Mobile Number</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($recentEmployees as $employee)
+        <tr>
+            <td>{{ $employee->id }}</td>
+            <td>{{ $employee->employee_name }}</td>
+            <td>{{ $employee->mobile}}</td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
                         </div>
                     </div>
                 </div> <!-- end col -->

@@ -46,13 +46,10 @@
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Select Family Member</label>
                                             <div class="col-sm-4 mb-4">
-                                                <select class="form-control select2" name="family_member_id"
-                                                    id="family_member_id">
-                                                    @foreach ($family_members as $item)
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->name }}
-                                                        </option>
-                                                    @endforeach
+                                                <select class="form-control select2" name="family_member_id" id="family_member_id">
+                                                @foreach ($family_members as $member)
+                                                 <option value="{{ $member->id }}">{{ $member->name }}</option>
+                                                 @endforeach
                                                 </select>
                                                 @error('family_memeber_id')
                                                     <span class="error" style="color: red;">{{ $message }}</span>

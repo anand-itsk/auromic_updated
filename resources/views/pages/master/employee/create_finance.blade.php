@@ -157,82 +157,78 @@
         <hr />
         {{-- PF Info --}}
         <div class="row m-2">
-            <h5 class="text-primary w-100 mt-0">PF Info</h5>
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">PF Applicable</label>
-                <div class="col-sm-4 mb-4">
-                    <select class="form-control" name="pf_applicable" id="pf_applicable">
-                        <option value=""
-                            {{ $employee->pfInfo && $employee->pfInfo->pf_applicable == null ? 'selected' : '' }}>
-                            Select
-                        </option>
-                        <option value="1"
-                            {{ $employee->pfInfo && $employee->pfInfo->pf_applicable == '1' ? 'selected' : '' }}>Yes
-                        </option>
-                        <option value="0"
-                            {{ $employee->pfInfo && $employee->pfInfo->pf_applicable == '0' ? 'selected' : '' }}>No
-                        </option>
-                    </select>
-                    @error('pf_applicable')
-                        <span class="error" style="color: red;">{{ $message }}</span>
-                    @enderror
-                </div>
+    <h5 class="text-primary w-100 mt-0">PF Info</h5>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">PF Applicable</label>
+        <div class="col-sm-4 mb-4">
+            <select class="form-control" name="pf_applicable" id="pf_applicable">
+                <option value="" {{ $employee->pfInfo && $employee->pfInfo->pf_applicable === null ? 'selected' : '' }}>Select</option>
+                <option value="1" {{ $employee->pfInfo && $employee->pfInfo->pf_applicable === '1' ? 'selected' : '' }}>Yes</option>
+                <option value="0" {{ $employee->pfInfo && $employee->pfInfo->pf_applicable === '0' ? 'selected' : '' }}>No</option>
+            </select>
+            @error('pf_applicable')
+                <span class="error" style="color: red;">{{ $message }}</span>
+            @enderror
+        </div>
 
-                <label for="pf_no" class="col-sm-2 col-form-label">PF No</label>
-                <div class="col-sm-4 mb-4">
-                    <input class="form-control" type="text"
-                        value="{{ $employee->pfInfo ? $employee->pfInfo->pf_no : '' }}" name="pf_no"
-                        id="pf_no">
-                    @error('pf_no')
-                        <span class="error" style="color: red;">{{ $message }}</span>
-                    @enderror
-                </div>
-<label for="pf_joining_date" class="col-sm-2 col-form-label">PF Joining Date</label>
-<div class="col-sm-4 mb-4">
-    <input class="form-control" type="date" value="{{ $employee->pfInfo->pf_joining_date ?? '' }}" name="pf_joining_date" id="pf_joining_date">
-    @error('pf_joining_date')
-        <span class="error" style="color: red;">{{ $message }}</span>
-    @enderror
-</div>
+        <div id="pf_fields" style="{{ $employee->pfInfo && $employee->pfInfo->pf_applicable === '1' ? 'display:block;' : 'display:none;' }}">
+            <label for="pf_no" class="col-sm-2 col-form-label">PF No</label>
+            <div class="col-sm-4 mb-4">
+                <input class="form-control" type="text" value="{{ $employee->pfInfo ? $employee->pfInfo->pf_no : '' }}" name="pf_no" id="pf_no">
+                @error('pf_no')
+                    <span class="error" style="color: red;">{{ $message }}</span>
+                @enderror
+            </div>
 
-<label for="pf_last_date" class="col-sm-2 col-form-label">PF Last Date</label>
-<div class="col-sm-4 mb-4">
-    <input class="form-control" type="date" value="{{ $employee->pfInfo->pf_last_date ?? '' }}" name="pf_last_date" id="pf_last_date">
-    @error('pf_last_date')
-        <span class="error" style="color: red;">{{ $message }}</span>
-    @enderror
-</div>
+            <label for="pf_joining_date" class="col-sm-2 col-form-label">PF Joining Date</label>
+            <div class="col-sm-4 mb-4">
+                <input class="form-control" type="date" value="{{ $employee->pfInfo ? $employee->pfInfo->pf_joining_date : '' }}" name="pf_joining_date" id="pf_joining_date">
+                @error('pf_joining_date')
+                    <span class="error" style="color: red;">{{ $message }}</span>
+                @enderror
+            </div>
 
-                <label class="col-sm-2 col-form-label">Pension Applicable</label>
-                <div class="col-sm-4">
-                    <select class="form-control" name="pension_applicable" id="pension_applicable">
-                        <option value=""
-                            {{ $employee->pfInfo && $employee->pfInfo->pension_applicable == null ? 'selected' : '' }}>
-                            Select</option>
-                        <option value="1"
-                            {{ $employee->pfInfo && $employee->pfInfo->pension_applicable == '1' ? 'selected' : '' }}>
-                            Yes</option>
-                        <option value="0"
-                            {{ $employee->pfInfo && $employee->pfInfo->pension_applicable == '0' ? 'selected' : '' }}>
-                            No
-                        </option>
-                    </select>
-                    @error('pension_applicable')
-                        <span class="error" style="color: red;">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <label for="pension_joining_date" class="col-sm-2 col-form-label">Pension Joining Date</label>
-                <div class="col-sm-4">
-                    <input class="form-control" type="date"
-                        value="{{ $employee->pfInfo->pension_joining_date ?? '' }}" name="pension_joining_date"
-                        id="pension_joining_date">
-                    @error('pension_joining_date')
-                        <span class="error" style="color: red;">{{ $message }}</span>
-                    @enderror
-                </div>
+            <label for="pf_last_date" class="col-sm-2 col-form-label">PF Last Date</label>
+            <div class="col-sm-4 mb-4">
+                <input class="form-control" type="date" value="{{ $employee->pfInfo ? $employee->pfInfo->pf_last_date : '' }}" name="pf_last_date" id="pf_last_date">
+                @error('pf_last_date')
+                    <span class="error" style="color: red;">{{ $message }}</span>
+                @enderror
             </div>
         </div>
+
+        <div id="remark_field" style="{{ $employee->pfInfo && $employee->pfInfo->pf_applicable === '0' ? 'display:block;' : 'display:none;' }}">
+            <label for="remark" class="col-sm-2 col-form-label">Remark</label>
+            <div class="col-sm-4 mb-4">
+                <textarea class="form-control" name="remark" id="remark_field" cols="30" rows="10"></textarea>
+                @error('remark')
+                    <span class="error" style="color: red;">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+
+        <label class="col-sm-2 col-form-label">Pension Applicable</label>
+        <div class="col-sm-4">
+            <select class="form-control" name="pension_applicable" id="pension_applicable">
+                <option value="" {{ $employee->pfInfo && $employee->pfInfo->pension_applicable === null ? 'selected' : '' }}>Select</option>
+                <option value="1" {{ $employee->pfInfo && $employee->pfInfo->pension_applicable === '1' ? 'selected' : '' }}>Yes</option>
+                <option value="0" {{ $employee->pfInfo && $employee->pfInfo->pension_applicable === '0' ? 'selected' : '' }}>No</option>
+            </select>
+            @error('pension_applicable')
+                <span class="error" style="color: red;">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <label for="pension_joining_date" class="col-sm-2 col-form-label">Pension Joining Date</label>
+        <div class="col-sm-4">
+            <input class="form-control" type="date" value="{{ $employee->pfInfo ? $employee->pfInfo->pension_joining_date : '' }}" name="pension_joining_date" id="pension_joining_date">
+            @error('pension_joining_date')
+                <span class="error" style="color: red;">{{ $message }}</span>
+            @enderror
+        </div>
+    </div>
+</div>
+
 
         <hr />
         {{-- ESI Info --}}
@@ -413,6 +409,22 @@
         // Set the minimum selectable date in the last date field to one day after the selected date
         var minSelectableDate = new Date(selectedDate.getTime() + 24 * 60 * 60 * 1000);
         lastDateInput.min = minSelectableDate.toISOString().split('T')[0];
+    });
+</script>
+
+<script>
+    document.getElementById('pf_applicable').addEventListener('change', function() {
+        var pfApplicable = this.value;
+        if (pfApplicable === '1') {
+            document.getElementById('pf_fields').style.display = 'block';
+            document.getElementById('remark_field').style.display = 'none';
+        } else if (pfApplicable === '0') {
+            document.getElementById('pf_fields').style.display = 'none';
+            document.getElementById('remark_field').style.display = 'block';
+        } else {
+            document.getElementById('pf_fields').style.display = 'none';
+            document.getElementById('remark_field').style.display = 'none';
+        }
     });
 </script>
 

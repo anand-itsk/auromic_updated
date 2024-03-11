@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id');
             $table->string('model_size');
             $table->string('duration_period');
+            $table->string('amount');
             $table->timestamps();
              $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
