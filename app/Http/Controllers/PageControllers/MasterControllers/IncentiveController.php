@@ -40,15 +40,17 @@ class IncentiveController extends Controller
     $validatedData = $request->validate([
          'product_id' => 'required',
          'model_size' => 'required',
-         'duration_period' => 'required',  
+         'duration_period' => 'required',
+          'amount' => 'required',   
     ]);
    
      $incentive = new Incentive;
      $incentive->product_id = $request->input('product_id');
      $incentive->model_size = $request->input('model_size');
      $incentive->duration_period= $request->input('duration_period');
+     $incentive->amount= $request->input('amount');
 
-//    dd($incentive); // Uncomment for debugging
+//    dd($incentive); 
 
     $incentive->save();
 
@@ -82,7 +84,7 @@ class IncentiveController extends Controller
      $incentive->product_id = $request->input('product_id');
      $incentive->model_size = $request->input('model_size');
      $incentive->duration_period= $request->input('duration_period');
-
+    $incentive->amount= $request->input('amount');
 //    dd($incentive); // Uncomment for debugging
 
     $incentive->save();

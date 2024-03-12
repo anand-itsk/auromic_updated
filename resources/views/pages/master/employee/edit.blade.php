@@ -452,18 +452,13 @@
                                                                         @enderror
                                                                     </div>
                                                                     
-                                                                <br>
-                                                                    <label for="aadhar_name"
-                                                                        class="col-sm-2 col-form-label">Aadhar Name</label>
-                                                                    <div class="col-sm-4">
-                                                                        <input class="form-control" type="text"
-                                                                            value="{{ $employee->identityProof->aadhar_name ?? '' }}"
-                                                                            name="aadhar_name" id="aadhar_name">
-                                                                        @error('aadhar_name')
-                                                                            <span class="error"
-                                                                                style="color: red;">{{ $message }}</span>
-                                                                        @enderror
-                                                                    </div>
+                                                                    <label for="aadhar_name" class="col-sm-2 mt-4 col-form-label">Aadhar Name</label>
+<div class="col-sm-4 mt-4"> <!-- Added mt-4 class here -->
+    <input class="form-control" type="text" value="{{ $employee->identityProof->aadhar_name ?? '' }}" name="aadhar_name" id="aadhar_name">
+    @error('aadhar_name')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
                                                                 </div>
                                                             </div>
 

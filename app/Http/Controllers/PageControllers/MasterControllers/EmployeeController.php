@@ -224,7 +224,9 @@ class EmployeeController extends Controller
             $request->driving_license_number !== null ||
             $request->pan_number !== null ||
             $request->passport_number !== null ||
-            $request->identity_mark !== null
+            $request->identity_mark !== null ||
+            $request->aadhar_number !== null ||
+            $request->aadhar_name !== null
         ) {
             if ($employee->identityProof) {
                 $employee->identityProof->update([
@@ -234,7 +236,7 @@ class EmployeeController extends Controller
                     'passport_number' => $request->passport_number,
                     'identity_mark' => $request->identity_mark,
                     'aadhar_number' => $request->aadhar_number,
-                    'aadhar_name' => $request->aadhar_name,
+                    'aadhar_name' => $request->aadhar_name
                 ]);
             } else {
 
@@ -246,7 +248,7 @@ class EmployeeController extends Controller
                     'passport_number' => $request->passport_number,
                     'identity_mark' => $request->identity_mark,
                     'aadhar_number' => $request->aadhar_number,
-                    'aadhar_name' => $request->aadhar_name,
+                    'aadhar_name' => $request->aadhar_name
                 ]);
             }
         }
@@ -382,6 +384,8 @@ class EmployeeController extends Controller
                     'pf_last_date' => $request->pf_last_date,
                     'pension_joining_date' => $request->pension_joining_date,
                     'pension_applicable' => $request->pension_applicable ?? '0',
+                    'remark'=>$request->remark,
+                    'uan_number'=>$request->uan_number
                 ]);
             } else {
                 $employee->pfInfo()->create([
@@ -391,6 +395,8 @@ class EmployeeController extends Controller
                     'pf_last_date' => $request->pf_last_date,
                     'pension_joining_date' => $request->pension_joining_date,
                     'pension_applicable' => $request->pension_applicable  ?? '0',
+                    'remark'=>$request->remark,
+                    'uan_number'=>$request->uan_number
                 ]);
             }
         }
