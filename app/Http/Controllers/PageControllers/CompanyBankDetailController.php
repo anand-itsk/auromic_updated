@@ -213,4 +213,25 @@ $company = Company::with('addresses', 'companyRegistrationDetail', 'authorisedPe
     {
         return Excel::download(new CompanyExport($request->all()), 'CustomerDatas_' . date('d-m-Y') . '.xlsx');
     }
+
+    public function getIFSCCode(Request $request)
+    {
+        $bankName = $request->input('bank_name');
+        $branchName = $request->input('branch_name');
+
+        $ifscCode = $this->fetchIFSC($bankName, $branchName);
+
+        return response()->json(['ifsc_code' => $ifscCode]);
+    }
+    private function fetchIFSC($bankName, $branchName)
+{
+    $url = "https://ifsc.razorpay.com/{$bankName}/{$branchName}";
+
+    try {
+        $response = file_get_contents($url);
+        return json_decode($response, true);
+    } catch (Exception $e) {
+        return null;
+    }
+}
 }

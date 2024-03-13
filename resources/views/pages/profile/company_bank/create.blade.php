@@ -131,7 +131,39 @@
             </div>
         </div>
     </div>
-    <script></script>
+    <script>
+        function fetchIFSCFromAPI(bankName, branchName) {
+    const url = '/get-ifsc-code';
+
+    return axios.get(url, {
+        params: {
+            bank_name: bankName,
+            branch_name: branchName
+        }
+    })
+    .then(response => {
+        return response.data.ifsc_code;
+    })
+    .catch(error => {
+        console.error('Error fetching IFSC:', error);
+        return null;
+    });
+}
+
+// Example usage
+const bankName = 'State Bank of India';
+const branchName = 'Main Branch';
+
+fetchIFSCFromAPI(bankName, branchName)
+    .then(ifscCode => {
+        if (ifscCode) {
+            console.log('IFSC Code:', ifscCode);
+        } else {
+            console.log('IFSC code not found.');
+        }
+    });
+    </script>
+
 
     @include('links.js.select2.select2')
 @endsection
