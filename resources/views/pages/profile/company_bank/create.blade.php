@@ -30,7 +30,7 @@
                     <div class="card m-b-30">
                         <div class="card-body">
                             <div class="m-b-30">
-                                <form action="{{ route('profile.bank_details.store') }}" method="POST"
+                                <form  id="ifscForm" action="{{ route('profile.bank_details.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <!-- <h5 class="text-primary">Company Info</h5> -->
@@ -111,6 +111,8 @@
                                             <button type="submit" class="btn btn-primary waves-effect waves-light">
                                                 Submit
                                             </button>
+
+                                             <button type="submit" class="btn btn-primary">Search</button>
                                             <a href="{{ route('profile.bank_details.create') }}"
                                                 class="btn btn-warning waves-effect waves-light">
                                                 Reset
@@ -123,7 +125,7 @@
                                     </div>
 
                                 </form>
-
+<div id="ifscResult"></div>
                             </div>
                         </div>
                     </div>
@@ -131,39 +133,56 @@
             </div>
         </div>
     </div>
-    <script>
-        function fetchIFSCFromAPI(bankName, branchName) {
-    const url = '/get-ifsc-code';
-
-    return axios.get(url, {
-        params: {
-            bank_name: bankName,
-            branch_name: branchName
-        }
-    })
-    .then(response => {
-        return response.data.ifsc_code;
-    })
-    .catch(error => {
-        console.error('Error fetching IFSC:', error);
-        return null;
+   <script>
+   $(document).ready(function() {
+    $('#ifscForm').submit(function(event) {
+        event.preventDefault();
+        
+        var bankName = $('#bank_name').val();
+        var branchName = $('#branch_name').val();
+        
+        // Clear previous errors
+        $('#bankNameError').text('');
+        $('#branchNameError').text('');
+        
+        // AJAX request
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('profile.bank_details.get-ifsc-code') }}', // Assuming your route name is 'get_ifsc'
+            data: {
+                _token: '{{ csrf_token() }}',
+                bank_name: bankName,
+                branch_name: branchName
+            },
+            success: function(response) {
+                // Check if 'ifsc_code' is defined in the response
+                if (response.hasOwnProperty('ifsc_code') && response.ifsc_code !== null) {
+                    // Display IFSC code
+                    $('#ifscResult').html('<p>IFSC Code: ' + response.ifsc_code + '</p>');
+                } else {
+                    // Display error message if 'ifsc_code' is not present or null
+                    $('#ifscResult').html('<p>Error: Unable to retrieve IFSC code.</p>');
+                }
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                // Handle errors
+                if (xhr.status == 422) {
+                    // Validation error
+                    var errors = xhr.responseJSON.errors;
+                    if (errors.hasOwnProperty('bank_name')) {
+                        $('#bankNameError').text(errors.bank_name[0]);
+                    }
+                    if (errors.hasOwnProperty('branch_name')) {
+                        $('#branchNameError').text(errors.branch_name[0]);
+                    }
+                } else {
+                    // Other errors
+                    $('#ifscResult').text('Error: ' + xhr.responseText);
+                }
+            }
+        });
     });
-}
-
-// Example usage
-const bankName = 'State Bank of India';
-const branchName = 'Main Branch';
-
-fetchIFSCFromAPI(bankName, branchName)
-    .then(ifscCode => {
-        if (ifscCode) {
-            console.log('IFSC Code:', ifscCode);
-        } else {
-            console.log('IFSC code not found.');
-        }
-    });
-    </script>
-
-
-    @include('links.js.select2.select2')
+});
+</script>   
+ @include('links.js.select2.select2')
 @endsection
