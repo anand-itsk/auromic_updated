@@ -330,6 +330,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete/selected', [CompanyBankDetailController::class, 'deleteSelected']);
             Route::post('/import', [CompanyBankDetailController::class, 'import'])->name('import');
             Route::get('/export', [CompanyBankDetailController::class, 'export']);
+            Route::post('/get-ifsc-code', [CompanyBankDetailController::class,'getIFSC'])->name('get-ifsc-code');
+
         });
     });
 

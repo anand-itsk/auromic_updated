@@ -224,7 +224,9 @@ class EmployeeController extends Controller
             $request->driving_license_number !== null ||
             $request->pan_number !== null ||
             $request->passport_number !== null ||
-            $request->identity_mark !== null
+            $request->identity_mark !== null ||
+            $request->aadhar_number !== null ||
+            $request->aadhar_name !== null
         ) {
             if ($employee->identityProof) {
                 $employee->identityProof->update([
@@ -233,14 +235,20 @@ class EmployeeController extends Controller
                     'pan_number' => $request->pan_number,
                     'passport_number' => $request->passport_number,
                     'identity_mark' => $request->identity_mark,
+                    'aadhar_number' => $request->aadhar_number,
+                    'aadhar_name' => $request->aadhar_name
                 ]);
             } else {
+
+                
                 $employee->identityProof()->create([
                     'voter_id_number' => $request->voter_id_number,
                     'driving_license_number' => $request->driving_license_number,
                     'pan_number' => $request->pan_number,
                     'passport_number' => $request->passport_number,
                     'identity_mark' => $request->identity_mark,
+                    'aadhar_number' => $request->aadhar_number,
+                    'aadhar_name' => $request->aadhar_name
                 ]);
             }
         }
@@ -376,6 +384,8 @@ class EmployeeController extends Controller
                     'pf_last_date' => $request->pf_last_date,
                     'pension_joining_date' => $request->pension_joining_date,
                     'pension_applicable' => $request->pension_applicable ?? '0',
+                    'remark'=>$request->remark,
+                    'uan_number'=>$request->uan_number
                 ]);
             } else {
                 $employee->pfInfo()->create([
@@ -385,6 +395,8 @@ class EmployeeController extends Controller
                     'pf_last_date' => $request->pf_last_date,
                     'pension_joining_date' => $request->pension_joining_date,
                     'pension_applicable' => $request->pension_applicable  ?? '0',
+                    'remark'=>$request->remark,
+                    'uan_number'=>$request->uan_number
                 ]);
             }
         }
@@ -468,11 +480,11 @@ class EmployeeController extends Controller
     // Store Nominee Data
     public function storeNominee(Request $request, $id)
     {
-
+            // dd($request);
         $employee = Employee::findOrFail($id);
-
+        //   dd($employee);
         $employee->nominee()->create([
-            'family_member_id' => $request->family_memeber_id,
+            'family_member_id' => $request->family_member_id,
             'gratuity_sharing' => $request->gratuity_sharing,
             'marital_status' => $request->marital_status,
             'religion_id' => $request->religion_id,
@@ -487,7 +499,7 @@ class EmployeeController extends Controller
             'success' => true, 'message' => 'Step 3 completed successfully.',
             'emp_id' => $employee->id
         ]);
-    }
+    } 
 
     // Show Nominees Member table
     public function getNominee(Request $request)

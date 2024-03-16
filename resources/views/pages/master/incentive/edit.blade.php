@@ -85,6 +85,15 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
+                                        
+                                         <label for="wages_product" class="col-sm-2 col-form-label">Amount</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="amount"
+                                                id="amount" value="{{ $incentive->amount}}">
+                                            @error('amount')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="d-flex justify-content-evenly">

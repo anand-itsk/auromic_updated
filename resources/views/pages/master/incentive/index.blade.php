@@ -112,6 +112,7 @@
                                                 <th>Product Name</th>
                                                 <th>Model size</th>
                                                 <th>Duration Period</th>
+                                                <th>Amount</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -207,6 +208,11 @@
                         data: 'duration_period',
                         name: 'duration_period'
                     },
+                     {
+                        data: 'amount',
+                        name: 'amount'
+                    },
+
 
                     {
                         data: null,

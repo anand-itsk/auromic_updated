@@ -12,7 +12,8 @@ class Incentive extends Model
       protected $fillable = [
         'product_model_id', 
         'model_size',
-        'duration_period'
+        'duration_period',
+        'amount'
     ];
 
      public function productModel(){

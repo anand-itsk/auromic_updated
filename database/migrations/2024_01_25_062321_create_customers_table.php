@@ -19,10 +19,10 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('mobile')->nullable();
-            $table->string('tin_no')->nullable();
-            $table->string('tin_date')->nullable();
-            $table->string('cst_no')->nullable();
-            $table->string('cst_date')->nullable();
+            $table->string('pan_no')->nullable();
+            $table->string('pan_date')->nullable();
+            $table->string('gst_no')->nullable();
+            $table->string('gst_date')->nullable();
             $table->string('license_no')->nullable();
             $table->string('website')->nullable();
             $table->unsignedBigInteger('created_by');

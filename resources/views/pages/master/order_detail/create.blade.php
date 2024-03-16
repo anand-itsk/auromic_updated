@@ -90,7 +90,8 @@
                                                         data-weight="{{ $productModel->raw_material_weight_item }}"
                                                         data-raw-material-id="{{ $productModel->raw_material_id }}"
                                                         data-raw-material-type="{{ $productModel->rawMaterial->rawMaterialType->name ?? '' }}"
-                                                        data-raw-material-name="{{ $productModel->rawMaterial->name ?? '' }}">
+                                                        data-raw-material-name="{{ $productModel->rawMaterial->name ?? '' }}"
+                                                         data-product-size="{{ $productModel->productSize->name ??'' }}">
                                                         {{ $productModel->model_name }}-{{ $productModel->model_code }}
                                                     </option>
                                                 @endforeach
@@ -133,6 +134,14 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
+                                        <label for="wages_employee" class="col-sm-2 col-form-label ">Product Size</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="product_size"
+                                                id="product_size" readonly>
+                                            @error('product_size')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                         <label for="wages_employee" class="col-sm-2 col-form-label ">Quantity</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="quantity" id="quantity">
@@ -161,7 +170,7 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label class="col-sm-2 col-form-label">Product Size</label>
+                                        <!-- <label class="col-sm-2 col-form-label">Product Size</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_size_id"
                                                 id="product_size_id">
@@ -173,7 +182,7 @@
                                             @error('order_status_id')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
-                                        </div>
+                                        </div> -->
                                         <label class="col-sm-2 col-form-label">Product Color</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_color_id"
@@ -241,6 +250,8 @@
             const wagesEmployeeInput = document.getElementById('wages_employee');
             const rawMaterialTypeInput = document.getElementById('raw_material_type');
             const rawMaterialNameInput = document.getElementById('raw_material_name');
+             const productSizeInput = document.getElementById('product_size');
+            
 
 
             productModelSelect.addEventListener('change', function() {
@@ -249,11 +260,13 @@
                 const wagesEmployee = selectedOption.dataset.wage;
                 const rawMaterialType = selectedOption.dataset.rawMaterialType;
                 const rawMaterialName = selectedOption.dataset.rawMaterialName;
+                const productSize = selectedOption.dataset.productSize;
 
                 rawMaterialWeightItemInput.value = rawMaterialWeight;
                 wagesEmployeeInput.value = wagesEmployee;
                 rawMaterialTypeInput.value = rawMaterialType;
                 rawMaterialNameInput.value = rawMaterialName;
+                productSizeInput.value = productSize;
             });
         });
     </script>

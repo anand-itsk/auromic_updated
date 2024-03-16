@@ -36,7 +36,7 @@ class OrderDetailController extends Controller
          $order_status = OrderStatus::get();
          $product_size = ProductSize::get();
            $product_color = ProductColor::get();
-         $productModels = ProductModel::with(['rawMaterial.rawMaterialType'])->get();
+         $productModels = ProductModel::with(['rawMaterial.rawMaterialType','productSize'])->get();
           
         return view('pages.master.order_detail.create',compact('customer','products','productModels','order_status','product_size','product_color'));
      }
