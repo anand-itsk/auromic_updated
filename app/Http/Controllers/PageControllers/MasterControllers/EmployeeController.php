@@ -33,8 +33,30 @@ class EmployeeController extends Controller
     // Index Page
     public function index()
     {
-        return view('pages.master.employee.index');
+        $randomEmployeeCode = $this->generateEmployeeCode();
+        return view('pages.master.employee.index',['randomEmployeeCode' => $randomEmployeeCode]);
     }
+    private function generateEmployeeCode()
+{
+    // Generate a random number between 1 and 999
+$latestemployee = Employee::latest()->first();
+    if ($latestemployee) {
+        $employeeCode = $latestemployee->employee_code;
+        $employeeCode++;
+    } else {
+        $employeeCode = 1;
+    }
+
+    // Format the order number with leading zeros
+    $formattedEmployeeCode = 'EMP' . str_pad($employeeCode, 3, '0', STR_PAD_LEFT);
+
+
+
+
+    
+
+    return $formattedEmployeeCode;
+}
     // Index DataTable
     public function indexData()
     {

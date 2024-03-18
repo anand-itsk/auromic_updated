@@ -416,7 +416,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/store', [OrderDetailController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [OrderDetailController::class, 'edit'])->name('edit');
             Route::post('/update/{id}', [OrderDetailController::class, 'update'])->name('update');
-            Route::delete('/delete/{id}',  [OrderDetailController::class, 'destroy'])->name('delete');
+            Route::get('/delete/{id}',  [OrderDetailController::class, 'delete'])->name('delete');
             Route::get('/show/{id}', [OrderDetailController::class, 'showDetails']);
             Route::post('/delete/selected', [OrderDetailController::class, 'deleteSelected']);
             Route::post('/import', [OrderDetailController::class, 'import'])->name('import');

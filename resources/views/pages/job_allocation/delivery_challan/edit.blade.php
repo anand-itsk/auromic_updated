@@ -73,7 +73,7 @@
                             <label for="customer_name" class="col-sm-2 col-form-label">DC
                            Number</label>
                            <div class="col-sm-4 mb-4">
-                              <input class="form-control" type="text" name="dc_number" id="dc_number"value="{{$delivery_challans->dc_no}}">
+                              <input class="form-control" type="text" name="dc_number" id="dc_number"value="{{$delivery_challans->dc_no}}"readonly>
                               @error('dc_number')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror

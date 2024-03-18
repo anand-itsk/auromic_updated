@@ -14,7 +14,8 @@ class DeliveryChallan extends Model
         'order_id',
         'product_size_id',
         'product_color_id',
-        'quantity'
+        'quantity',
+        'available_quantity'
     ];
 
     public function company()

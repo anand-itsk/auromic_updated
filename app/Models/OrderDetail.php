@@ -15,6 +15,7 @@ class OrderDetail extends Model
         'product_model_id',
         'product_color_id',
         'quantity',
+        'available_quantity',
         'delivery_date	',
         'order_status_id ',
         'total_raw_material',

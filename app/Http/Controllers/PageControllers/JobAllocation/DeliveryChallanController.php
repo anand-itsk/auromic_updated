@@ -34,6 +34,17 @@ class DeliveryChallanController extends Controller
     // Create Page
     public function create()
     {
+     $latestDeliveryChallan = DeliveryChallan::latest()->first();
+    if ($latestDeliveryChallan) {
+        $dcNumber = (int)substr($latestDeliveryChallan->dc_no, 2); // Extract the numeric part
+        $dcNumber++;
+    } else {
+        $dcNumber = 1;
+    }
+
+    // Format the DC number with leading zeros
+    $formattedDCNumber = 'DC' . str_pad($dcNumber, 3, '0', STR_PAD_LEFT);
+        
         $customer= Customer::all();
         $company = Company::all();
         $company_types = CompanyType::all();
@@ -43,7 +54,7 @@ class DeliveryChallanController extends Controller
         $product_size= ProductSize::all();
         $product_color = ProductColor::all();
         
-        return view('pages.job_allocation.delivery_challan.create', compact('company', 'authorised_people', 'order_details','company_types','customer','productModels','product_size','product_color'));
+        return view('pages.job_allocation.delivery_challan.create', compact('company', 'authorised_people', 'order_details','company_types','customer','productModels','product_size','product_color','formattedDCNumber'));
     }
 
        public function getCompanies($companytypeid)
@@ -87,33 +98,56 @@ public function getModelDetails($id)
 // }
 
     // Store Date
-    public function store(Request $request)
-    {
-        // dd($request);
-        $validatedData = $request->validate([
-            'company_type_id' => 'required',
-            'company_id' => 'required',
-            'customer_id'=>'required',
-            'product_model'=>'required',
-            'dc_number' => 'required',
-            'dc_date' => 'required',
-            'order_id' => 'required'
-        ]);
-        $input = $request->all();
-        $delivery_challan = new DeliveryChallan();
-        $delivery_challan->company_id = $input['company_id'];
-        $delivery_challan->dc_no = $input['dc_number'];
-        $delivery_challan->order_id = $input['order_id'];
-        $delivery_challan->dc_date = $input['dc_date'];
-        $delivery_challan->quantity = $input['quantity'];
-        $delivery_challan->product_size_id = $input['product_size_id'];
-        $delivery_challan->product_color_id = $input['product_color_id'];
-// dd($delivery_challan);
-        $delivery_challan->save();
 
+public function store(Request $request)
+{
+    $validatedData = $request->validate([
+        'company_type_id' => 'required',
+        'company_id' => 'required',
+        'customer_id' => 'required',
+        'product_model' => 'required',
+        'dc_number' => 'required',
+        'dc_date' => 'required',
+        'order_id' => 'required',
+        'quantity' => 'required' // Ensure quantity is present in the request
+    ]);
+
+    $input = $request->all();
+
+    // Retrieve the order detail
+    $orderDetail = OrderDetail::findOrFail($input['order_id']);
+
+    // Calculate total delivered quantity for the order
+    $totalDeliveredQuantity = DeliveryChallan::where('order_id', $input['order_id'])->sum('quantity');
+
+    // Calculate available quantity
+    $availableQuantity = $orderDetail->quantity - $totalDeliveredQuantity;
+
+    // If available quantity is zero, show message and return
+    if ($availableQuantity <= 0) {
         return redirect()->route('job_allocation.delivery_challan.index')
-            ->with('success', 'Delivery challan created successfully');
+            ->with('error', 'No available quantity for this order');
     }
+
+
+    // Create and save the delivery challan
+    $delivery_challan = new DeliveryChallan();
+    $delivery_challan->company_id = $input['company_id'];
+    $delivery_challan->dc_no = $input['dc_number'];
+    $delivery_challan->order_id = $input['order_id'];
+    $delivery_challan->dc_date = $input['dc_date'];
+    $delivery_challan->quantity = $input['quantity'];
+    $delivery_challan->product_size_id = $input['product_size_id'];
+    $delivery_challan->product_color_id = $input['product_color_id'];
+    $delivery_challan->save();
+
+
+    $orderDetail->save();
+
+    return redirect()->route('job_allocation.delivery_challan.index')
+        ->with('success', 'Delivery challan created successfully');
+}
+
 
     // Edit
     public function edit(Request $request, $id)
@@ -162,14 +196,18 @@ public function getProductDetails(Request $request)
         $delivery_challan->order_id = $input['order_id'];
         $delivery_challan->dc_date = $input['dc_date'];
         $delivery_challan->quantity = $input['quantity'];
+      
         $delivery_challan->product_size_id = $input['product_size_id'];
         $delivery_challan->product_color_id = $input['product_color_id'];
 
         $delivery_challan->save();
 
+     
+
+
 
         return redirect()->route('job_allocation.delivery_challan.index')
-            ->with('success', 'Delivery challan Updated successfully');
+            ->with('success',  'updated');
     }
     // Multi Delete
     public function deleteSelected(Request $request)

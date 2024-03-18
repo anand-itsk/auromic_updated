@@ -30,10 +30,22 @@ class ProductModelController extends Controller
 
     public function create()
     {
+
+        $latestModel = ProductModel::latest()->first();
+    if ($latestModel) {
+        $modelNumber = (int)substr($latestModel->model_code, 1); // Extract the numeric part
+        $modelNumber++;
+    } else {
+        $modelNumber = 1;
+    }
+
+    // Format the model code with leading zeros
+    $formattedModelCode = 'M' . str_pad($modelNumber, 3, '0', STR_PAD_LEFT);
+
         $raw_material = RawMaterial::all();
         $product = Product::all();
         $product_size = ProductSize::all();
-        return view('pages.master.product_model.create', compact('raw_material', 'product', 'product_size'));
+        return view('pages.master.product_model.create', compact('raw_material', 'product', 'product_size','formattedModelCode'));
     }
 
     public function store(Request $request)
@@ -103,7 +115,7 @@ class ProductModelController extends Controller
 
         $product_model->delete();
 
-        return redirect()->route('religions')->with('success', 'Product Model Deleted successfully!');
+        return redirect()->route('master.product_model.index')->with('success', 'Product Model Deleted successfully!');
     }
 
     public function deleteSelected(Request $request)
