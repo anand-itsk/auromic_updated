@@ -113,6 +113,22 @@
     @enderror
 </div>
 
+<label for="order_date" class="col-sm-2 col-form-label">Total Quantity</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="total_quantity" id="total_quantity" value="{{ $delivery_challans->order_details->quantity}}" readonly>
+    @error('order_date')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label for="order_date" class="col-sm-2 col-form-label">Available Quantity</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="available_quantity" id="available_quantity" value="{{ $delivery_challans->order_details->available_quantity }}" readonly>
+    @error('order_date')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
 <label for="customer_code" class="col-sm-2 col-form-label ">Model</label>
 <div class="col-sm-4 mb-4">
     <select class="form-control select2" name="product_model" id="product_model">
@@ -332,25 +348,6 @@
         }
     });
 </script>
-<script>
-    $(document).ready(function(){
-        $('#product_model').change(function(){
-            var productModelId = $(this).val();
-            $.ajax({
-                url: '{{ route("job_allocation.delivery_challan.fetchProductDetails") }}',
-                method: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    product_model_id: productModelId
-                },
-                success: function(data){
-                    $('#product').val(data.product_name);
-                    $('#raw_material_name').val(data.raw_material_name);
-                    $('#raw_material_type').val(data.raw_material_type);
-                }
-            });
-        });
-    });
-</script>
+
     @include('links.js.select2.select2')
 @endsection

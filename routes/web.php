@@ -511,9 +511,12 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/get-companies/{companyTypeId}', [DeliveryChallanController::class, 'getCompanies'])->name('get-companies');
               Route::get('/get-model-details/{id}', [DeliveryChallanController ::class, 'getModelDetails'])->name('get-models');
             Route::get('/get-orders/{customerId}', [DeliveryChallanController ::class, 'getOrders'])->name('get-orders');
-           Route::post('/fetch-product-details', [DeliveryChallanController::class, 'fetchProductDetails'])->name('fetchProductDetails');
+            Route::get('/get-order-details/{orderId}', [DeliveryChallanController::class, 'getOrderDetails']);
+
+
            Route::post('/import', [DeliveryChallanController::class, 'import'])->name('import');
             Route::get('/export', [DeliveryChallanController::class, 'export']);
+              Route::get('/get-product-model/{orderId}', [DeliveryChallanController::class,'getProductModel']);
            
 
         });
@@ -532,6 +535,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/get-model-details/{id}', [JobGivingController ::class, 'getModelDetails'])->name('get-models');
             Route::post('/import', [JobGivingController::class, 'import'])->name('import');
             Route::get('/export', [JobGivingController::class, 'export']);
+          
+
            
 
 

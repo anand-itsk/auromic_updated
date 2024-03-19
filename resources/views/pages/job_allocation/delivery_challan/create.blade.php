@@ -91,7 +91,7 @@
 
 <label for="customer_code" class="col-sm-2 col-form-label mandatory">Order ID</label>
 <div class="col-sm-4 mb-4">
-    <select class="form-control select2" name="order_id" id="order_id" disabled>
+    <select class="form-control select2" name="order_id" id="order_id" onchange="getOrderDetails()" disabled>
         <option value="">Select Order</option>
             @foreach ($order_details as $item)
             <option value="{{ $item->id }}">{{ $item->order_no}}</option>
@@ -105,6 +105,22 @@
    <label for="order_date" class="col-sm-2 col-form-label">Order Date</label>
 <div class="col-sm-4 mb-4">
     <input class="form-control" type="text" name="order_date" id="order_date" readonly>
+    @error('order_date')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label for="order_date" class="col-sm-2 col-form-label">Total Quantity</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="total_quantity" id="total_quantity" readonly>
+    @error('order_date')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label for="order_date" class="col-sm-2 col-form-label">Available Quantity</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="available_quantity" id="available_quantity" readonly>
     @error('order_date')
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
@@ -285,23 +301,79 @@
     });
 </script>
 <script>
-    $(document).ready(function() {
-        $('#product_model').change(function() {
-            var modelId = $(this).val();
+    $(document).ready(function () {
+        // Initially disable the product model select dropdown
+        $('#product_model').prop('disabled', true);
+
+        // Add change event listener to the order number select dropdown
+        $('#order_id').change(function () {
+            var orderId = $(this).val(); // Get the selected order ID
+            if (orderId !== '') {
+                // Enable the product model select dropdown
+                $('#product_model').prop('disabled', false);
+                // Send AJAX request to fetch corresponding product model data
+                $.ajax({
+                    url: '/job_allocation/delivery_challan/get-product-model/' + orderId,
+                    type: 'GET',
+                    success: function (data) {
+                        // Update the options of the product model select dropdown
+                        $('#product_model').html(data);
+
+                        // Now, fetch model details for the first product model
+                        var firstModelId = $('#product_model option:first').val();
+                        fetchModelDetails(firstModelId);
+                    }
+                });
+            } else {
+                // If no order is selected, disable and reset the product model select dropdown
+                $('#product_model').prop('disabled', true);
+                $('#product_model').html('<option value="">Select Model</option>');
+            }
+        });
+
+        // Add change event listener to the product model select dropdown
+        $('#product_model').change(function () {
+            var modelId = $(this).val(); // Get the selected product model ID
+            fetchModelDetails(modelId);
+        });
+
+        // Function to fetch model details based on the given model ID
+        function fetchModelDetails(modelId) {
             if (modelId) {
+                // Send AJAX request to fetch model details
                 $.ajax({
                     url: '/job_allocation/delivery_challan/get-model-details/' + modelId,
-                    type: "GET",
-                    dataType: "json",
-                    success: function(data) {
+                    type: 'GET',
+                    success: function (data) {
+                        // Update the details based on the received data
                         $('#product').val(data.product_name);
                         $('#raw_material_name').val(data.raw_material_name);
                         $('#raw_material_type').val(data.raw_material_type);
                     }
                 });
             }
-        });
+        }
     });
 </script>
+
+<script>
+function getOrderDetails() {
+    var orderId = document.getElementById('order_id').value;
+    if (orderId) {
+        fetch('/job_allocation/delivery_challan/get-order-details/' + orderId)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('total_quantity').value = data.total_quantity;
+                document.getElementById('available_quantity').value = data.available_quantity;
+            })
+            .catch(error => console.error('Error:', error));
+    } else {
+        // Clear the fields if no order ID is selected
+        document.getElementById('total_quantity').value = '';
+        document.getElementById('available_quantity').value = '';
+    }
+}
+</script>
+
 @include('links.js.select2.select2')
 @endsection

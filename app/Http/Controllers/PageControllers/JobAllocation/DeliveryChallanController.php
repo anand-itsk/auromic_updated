@@ -56,6 +56,19 @@ class DeliveryChallanController extends Controller
         
         return view('pages.job_allocation.delivery_challan.create', compact('company', 'authorised_people', 'order_details','company_types','customer','productModels','product_size','product_color','formattedDCNumber'));
     }
+  public function getProductModel($orderId)
+    {
+        // Fetch the product model data based on the selected order number
+        $orderDetail = OrderDetail::findOrFail($orderId);
+        $productModel = $orderDetail->productModel;
+
+        // Generate HTML option for the product model
+        
+        $option = '<option value="'. $productModel->id . '">' . $productModel->model_name . '-' . $productModel->model_code . '</option>';
+
+        // Return the HTML option
+        return $option;
+    }
 
        public function getCompanies($companytypeid)
     {
@@ -69,6 +82,17 @@ class DeliveryChallanController extends Controller
                         ->where('customer_id', $customerId)
                         ->get();
     return response()->json($orders);
+}
+
+public function getOrderDetails($orderId)
+{
+    $order = OrderDetail::findOrFail($orderId);
+    $orderDetails = [
+        
+        'total_quantity' => $order->quantity,
+        'available_quantity' => $order->available_quantity,
+    ];
+    return response()->json($orderDetails);
 }
 
 
@@ -123,12 +147,12 @@ public function store(Request $request)
     // Calculate available quantity
     $availableQuantity = $orderDetail->quantity - $totalDeliveredQuantity;
 
-    // If available quantity is zero, show message and return
-    if ($availableQuantity <= 0) {
+    // Check if the input quantity exceeds the available quantity
+    if ($input['quantity'] > $availableQuantity) {
+        // If the input quantity is greater than the available quantity, show an error message
         return redirect()->route('job_allocation.delivery_challan.index')
             ->with('error', 'No available quantity for this order');
     }
-
 
     // Create and save the delivery challan
     $delivery_challan = new DeliveryChallan();
@@ -141,12 +165,15 @@ public function store(Request $request)
     $delivery_challan->product_color_id = $input['product_color_id'];
     $delivery_challan->save();
 
-
+    // Update available quantity in order details
+    $orderDetail->available_quantity = $availableQuantity - $input['quantity'];
     $orderDetail->save();
 
+    // Set success message for display
     return redirect()->route('job_allocation.delivery_challan.index')
         ->with('success', 'Delivery challan created successfully');
 }
+
 
 
     // Edit
@@ -185,30 +212,45 @@ public function getProductDetails(Request $request)
     ]);
 }
     // Update
-    public function update(Request $request, $id)
-    {
-       
-        $input = $request->all();
+  public function update(Request $request, $id)
+{
+    $input = $request->all();
 
-        $delivery_challan = DeliveryChallan::find($id);
-        $delivery_challan->company_id = $input['company_id'];
-        $delivery_challan->dc_no = $input['dc_number'];
-        $delivery_challan->order_id = $input['order_id'];
-        $delivery_challan->dc_date = $input['dc_date'];
-        $delivery_challan->quantity = $input['quantity'];
-      
-        $delivery_challan->product_size_id = $input['product_size_id'];
-        $delivery_challan->product_color_id = $input['product_color_id'];
+    // Retrieve the delivery challan to update
+    $delivery_challan = DeliveryChallan::find($id);
 
-        $delivery_challan->save();
+    // Retrieve the corresponding order detail
+    $orderDetail = OrderDetail::findOrFail($delivery_challan->order_id);
 
-     
+    // Calculate total delivered quantity for the order excluding the current delivery challan being updated
+    $totalDeliveredQuantity = DeliveryChallan::where('order_id', $delivery_challan->order_id)
+                                                ->where('id', '!=', $id)
+                                                ->sum('quantity');
+
+    // Calculate available quantity before the update
+    $availableQuantityBeforeUpdate = $orderDetail->quantity - $totalDeliveredQuantity + $delivery_challan->quantity;
+
+    // Calculate the difference between the old quantity and the new quantity
+    $quantityDifference = $delivery_challan->quantity - $input['quantity'];
+
+    // Update delivery challan details
+    $delivery_challan->company_id = $input['company_id'];
+    $delivery_challan->dc_no = $input['dc_number'];
+    $delivery_challan->dc_date = $input['dc_date'];
+    $delivery_challan->quantity = $input['quantity'];
+    $delivery_challan->product_size_id = $input['product_size_id'];
+    $delivery_challan->product_color_id = $input['product_color_id'];
+    $delivery_challan->save();
+
+    // Update available quantity in order details
+    $orderDetail->available_quantity += $quantityDifference;
+    $orderDetail->save();
+
+    return redirect()->route('job_allocation.delivery_challan.index')
+        ->with('success', 'Delivery challan updated successfully');
+}
 
 
-
-        return redirect()->route('job_allocation.delivery_challan.index')
-            ->with('success',  'updated');
-    }
     // Multi Delete
     public function deleteSelected(Request $request)
     {
