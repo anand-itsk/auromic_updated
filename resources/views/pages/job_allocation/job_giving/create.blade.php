@@ -74,14 +74,14 @@
                            <label for="customer_code" class="col-sm-2 col-form-label mandatory">Order
                            ID</label>
                            <div class="col-sm-4 mb-4">
-                              <select class="form-control select2" name="order_id" id="order_id">
-                                 <option value="">Select Order</option>
-                                 @foreach ($order_details as $item)
-                                 <option value="{{ $item->id }}">
-                                    {{ $item->order_no }}
-                                 </option>
-                                 @endforeach
-                              </select>
+                              <select class="form-control select2" name="order_id" id="order_id" onchange="fetchQuantities()">
+    <option value="">Select Order</option>
+    @foreach ($order_details as $item)
+        <option value="{{ $item->id }}">
+            {{ $item->order_no }}
+        </option>
+    @endforeach
+</select>
                               @error('order_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
@@ -101,6 +101,22 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
+                           <label for="order_date" class="col-sm-2 col-form-label">Total Quantity</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="total_quantity" id="total_quantity" readonly>
+    @error('order_date')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label for="order_date" class="col-sm-2 col-form-label">Available Quantity</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="available_quantity" id="available_quantity" readonly>
+    @error('order_date')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
                            <label for="customer_code" class="col-sm-2 col-form-label mandatory">Model</label>
                            <div class="col-sm-4 mb-4">
                               <select class="form-control select2" name="product_model_id" id="product_model_id">
@@ -234,9 +250,11 @@
                    success: function(data) {
                        if (data) {
                            $('#order_date').val(data.order_date);
+                      
                            $('#customer_name').val(data.customer_name);
                        } else {
                            $('#order_date').val('');
+                            
                            $('#customer_name').val('');
                        }
                    }
@@ -267,4 +285,26 @@
        });
    });
 </script>
+
+<script>
+    function fetchQuantities() {
+        var orderId = document.getElementById('order_id').value;
+        if (orderId !== '') {
+            // Make an AJAX request to fetch quantities
+            fetch(`/job_allocation/job_giving/getQuantities/${orderId}`)
+            .then(response => response.json())
+            .then(data => {
+                // Update input fields with fetched quantities
+                document.getElementById('total_quantity').value = data.total_quantity;
+                document.getElementById('available_quantity').value = data.available_quantity;
+            })
+            .catch(error => console.error('Error:', error));
+        } else {
+            // Reset input fields if no order is selected
+            document.getElementById('total_quantity').value = '';
+            document.getElementById('available_quantity').value = '';
+        }
+    }
+</script>
+
 @endsection

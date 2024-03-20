@@ -48,12 +48,14 @@ public function getOrderDetails($orderId)
         $data = [
             'order_date' => $orderDetail->order_date,
             'customer_name' => $orderDetail->customer->customer_name, // Assuming the customer name is stored in the 'name' field
+       
         ];
         return response()->json($data);
     } else {
         return response()->json(null);
     }
 }
+
 
 
 public function getModelDetails($id)
@@ -73,6 +75,25 @@ public function getModelDetails($id)
         return response()->json($data);
     }
 
+    public function getQuantities($id)
+{
+    $deliveryChallan = DeliveryChallan::where('order_id', $id)->first();
+
+    if ($deliveryChallan) {
+        $quantities = [
+            'total_quantity' => $deliveryChallan->quantity,
+            'available_quantity' => $deliveryChallan->available_quantity,
+        ];
+    } else {
+        $quantities = [
+            'total_quantity' => '',
+            'available_quantity' => '',
+        ];
+    }
+
+    return response()->json($quantities);
+}
+
  
     // Store Date
      public function store(Request $request)
@@ -89,23 +110,19 @@ public function getModelDetails($id)
 
     $input = $request->all();
 
-    // Retrieve the order detail
-    $delivery_challan = DeliveryChallan::findOrFail($input['order_id']);
-
-    // Calculate total delivered quantity for the order
-    $total_job_giving_quantity = JobGiving::where('order_id', $input['order_id'])->sum('quantity');
-
-    // Calculate available quantity
-    $available_quantity = $delivery_challan->quantity - $total_job_giving_quantity;
-
-    // If available quantity is zero or less, show message and return
-    if ($available_quantity <= 0) {
+    // Check if input quantity exceeds available quantity
+    $deliveryChallan = DeliveryChallan::find($input['dc_number']);
+    if ($deliveryChallan) {
+        $totalQuantityGiven = JobGiving::where('dc_id', $input['dc_number'])->sum('quantity');
+        $availableQuantity = $deliveryChallan->quantity - $totalQuantityGiven;
+        if ($input['quantity'] > $availableQuantity) {
+        // If the input quantity is greater than the available quantity, show an error message
         return redirect()->route('job_allocation.job_giving.index')
             ->with('error', 'No available quantity for this order');
     }
-
-
-
+    } 
+    
+ 
     // Create new job giving record
     $job_giving = new JobGiving();
     $job_giving->employee_id = $input['employee_id'];
@@ -117,13 +134,18 @@ public function getModelDetails($id)
     $job_giving->status = $input['status'];
     $job_giving->save();
 
-    // Update available quantity in delivery challan
-    $delivery_challan->available_quantity = $available_quantity - $input['quantity'];
-    $delivery_challan->save();
+   // Update available quantity in delivery challan
+    $deliveryChallan->available_quantity = $availableQuantity - $input['quantity'];
+    $deliveryChallan->save();
+
+
 
     return redirect()->route('job_allocation.job_giving.index')
         ->with('success', 'Job Giving Created Successfully');
 }
+
+
+
     // Edit
     public function edit(Request $request, $id)
     {
@@ -140,34 +162,61 @@ public function getModelDetails($id)
 
      
     // Update
-    public function update(Request $request, $id)
-    {
-        // dd($request);
-    
-        $input = $request->all();
+  public function update(Request $request, $id)
+{
+    $validatedData = $request->validate([
+        'employee_id' => 'required',
+        'order_id' => 'required',
+        'product_model_id' => 'required',
+        'quantity' => 'required',
+        'date' => 'required',
+        'status' => 'required'
+    ]);
 
-        $job_giving = JobGiving::find($id);
-        $job_giving->employee_id = $input['employee_id'];
-        $job_giving->order_id = $input['order_id'];
-        $job_giving->product_model_id = $input['product_model_id'];
-        $job_giving->quantity = $input['quantity'];
-        $job_giving->date = $input['date'];
+    $input = $request->all();
 
-        if (isset($input['dc_number'])) {
-            $job_giving->dc_id = $input['dc_number'];
-        } else {
-            $job_giving->dc_id = null; // Set dc_id to null if dc_number is not provided
+    // Find the job giving record to update
+    $job_giving = JobGiving::find($id);
+
+    // Check if input quantity exceeds available quantity
+    $deliveryChallan = DeliveryChallan::find($job_giving->dc_id);
+    if ($deliveryChallan) {
+        $totalQuantityGiven = JobGiving::where('dc_id', $job_giving->dc_id)->where('id', '!=', $id)->sum('quantity');
+        $availableQuantity = $deliveryChallan->quantity - $totalQuantityGiven + $job_giving->quantity;
+        if ($input['quantity'] > $availableQuantity) {
+            // If the input quantity is greater than the available quantity, show an error message
+            return redirect()->route('job_allocation.job_giving.edit', $id)
+                ->with('error', 'No available quantity for this order');
         }
-
-        $job_giving->status = $input['status'];
-// dd($job_giving);
-        $job_giving->save();
-
-
-        return redirect()->route('job_allocation.job_giving.index')
-            ->with('success', 'Job Giving Updated successfully');
     }
 
+    // Update job giving record
+    $job_giving->employee_id = $input['employee_id'];
+    $job_giving->order_id = $input['order_id'];
+    $job_giving->product_model_id = $input['product_model_id'];
+    $job_giving->quantity = $input['quantity'];
+    $job_giving->date = $input['date'];
+    $job_giving->status = $input['status'];
+
+    if (isset($input['dc_number'])) {
+        $job_giving->dc_id = $input['dc_number'];
+    } else {
+        $job_giving->dc_id = null; // Set dc_id to null if dc_number is not provided
+    }
+
+    $job_giving->save();
+
+    // Update available quantity in delivery challan
+    if ($deliveryChallan) {
+        $totalQuantityGiven = JobGiving::where('dc_id', $job_giving->dc_id)->sum('quantity');
+        $availableQuantity = $deliveryChallan->quantity - $totalQuantityGiven;
+        $deliveryChallan->available_quantity = $availableQuantity;
+        $deliveryChallan->save();
+    }
+
+    return redirect()->route('job_allocation.job_giving.index')
+        ->with('success', 'Job Giving Updated successfully');
+}
     // Multi Delete
     public function deleteSelected(Request $request)
     {

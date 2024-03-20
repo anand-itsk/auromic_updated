@@ -535,6 +535,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/get-model-details/{id}', [JobGivingController ::class, 'getModelDetails'])->name('get-models');
             Route::post('/import', [JobGivingController::class, 'import'])->name('import');
             Route::get('/export', [JobGivingController::class, 'export']);
+           
+         Route::get('/getQuantities/{id}', [JobGivingController::class,'getQuantities']);
+
           
 
            
