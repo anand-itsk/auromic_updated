@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('job_allocation_histories', function (Blueprint $table) {
+        Schema::create('employee_histories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('job_giving_id');
             $table->unsignedBigInteger('employee_id');
-            $table->date('receving_date');
-             $table->string('quantity')->nullable();
+            $table->date('joining_date');
+            $table->date('relieving_date')->nullable();
+            $table->string('relieving_reason')->nullable();
             $table->timestamps();
-            $table->foreign('job_giving_id')->references('id')->on('job_givings')->onDelete('cascade');
             $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('job_allocation_histories');
+        Schema::dropIfExists('employee_histories');
     }
 };

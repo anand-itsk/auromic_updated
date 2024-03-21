@@ -115,14 +115,16 @@
                               @enderror
                            </div>
                            <label for="customer_code" class="col-sm-2 col-form-label">
-                           Quantity
+                          Total Quantity
                            </label>
                            <div class="col-sm-4 mb-4">
-                              <input type="text" class="form-control" name="company_type" id="company_type" readonly value="{{ $Job_Giving->order_details->quantity}}">
+                              <input type="text" class="form-control" name="company_type" id="company_type" readonly value="{{ $Job_Giving->quantity}}">
                               @error('employee_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
+                           
+                             
                            <label for="customer_code" class="col-sm-2 col-form-label">
                            Product Size
                            </label>
@@ -174,6 +176,16 @@
     <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
 </div>
+
+<label for="customer_code" class="col-sm-2 col-form-label">
+                          Complete Quantity
+                           </label>
+                           <div class="col-sm-4 mb-4">
+                              <input type="text" class="form-control" name="complete_quantity" id="complete_quantity">
+                              @error('employee_id')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
                            <label for="customer_code" class="col-sm-2 col-form-label">
                            Status
                            </label>

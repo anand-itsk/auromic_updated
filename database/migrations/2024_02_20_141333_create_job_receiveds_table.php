@@ -17,6 +17,7 @@ return new class extends Migration
             $table->enum('incentive_applicable',['Yes','No'])->default('Yes');
             $table->enum('status',['Pending','Incomplete','Complete'])->default('Pending');
             $table->date('receving_date');
+             $table->string('complete_quantity')->nullable();
             $table->timestamps();
             $table->foreign('job_giving_id')->references('id')->on('job_givings')->onDelete('cascade');
             

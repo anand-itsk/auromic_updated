@@ -24,6 +24,7 @@ use App\Models\Religion;
 use App\Models\ResigningReason;
 use App\Models\State;
 use App\Models\User;
+use App\Models\EmployeeHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
@@ -48,12 +49,8 @@ $latestemployee = Employee::latest()->first();
     }
 
     // Format the order number with leading zeros
-    $formattedEmployeeCode = 'EMP' . str_pad($employeeCode, 3, '0', STR_PAD_LEFT);
+    $formattedEmployeeCode =  str_pad($employeeCode, 3, '0', STR_PAD_LEFT);
 
-
-
-
-    
 
     return $formattedEmployeeCode;
 }
@@ -216,6 +213,8 @@ $latestemployee = Employee::latest()->first();
             $filename = $request->file('employee_profile')->store('employee/profile/image', 'public');
             $employee->photo = $filename;
         }
+
+ 
         // Store data
         $employee->update([
             'company_id' => $request->company_id,
@@ -238,8 +237,20 @@ $latestemployee = Employee::latest()->first();
             'prob_period' => $request->prob_period,
             'confirm_date' => $request->confirm_date,
             'resigning_date' => $request->resigning_date,
-            'resigning_reason_id' => 1, // Assuming this is hardcoded or fetched from some other part of the request
+            'resigning_reason_id' => $request->resigning_reason_id,
         ]);
+
+       if ($request->filled('resigning_date') && $request->filled('resigning_reason_id')) {
+    
+    $employeeHistory = new EmployeeHistory();
+    $employeeHistory->employee_id = $id; 
+    $employeeHistory->joining_date = $employee->joining_date;
+    $employeeHistory->relieving_date = $request->resigning_date;
+    $employeeHistory->relieving_reason = $request->resigning_reason_id;
+    $employeeHistory->save();
+}
+
+    
 
         if (
             $request->voter_id_number !== null ||
@@ -332,6 +343,7 @@ $latestemployee = Employee::latest()->first();
             $employee->addresses()->save($corrs_Address);
         }
 
+        
         // Return success response
         return response()->json(['success' => true, 'message' => 'Step 1 completed successfully.']);
     }
@@ -453,7 +465,7 @@ $latestemployee = Employee::latest()->first();
             }
         }
 
-
+     
         // Return success response
         return response()->json(['success' => true, 'message' => 'Step 2 completed successfully.']);
     }

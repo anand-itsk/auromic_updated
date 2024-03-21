@@ -118,6 +118,7 @@
                                                   <th>Product Size</th>
                                                    <th>Product color</th>
                                                     <th>Quantity</th>
+                                                     <th>Avl.Quantity</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -246,6 +247,13 @@
                      {
                         data: 'quantity',
                         name: 'quantity',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                    },
+                     {
+                        data: 'available_quantity',
+                        name: 'available_quantity',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }

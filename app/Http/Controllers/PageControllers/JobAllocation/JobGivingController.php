@@ -58,23 +58,6 @@ public function getOrderDetails($orderId)
 
 
 
-public function getModelDetails($id)
-    {
-        $productModel = ProductModel::with('product', 'rawMaterial.rawMaterialType')->find($id);
-
-        if (!$productModel) {
-            return response()->json(['error' => 'Model not found'], 404);
-        }
-
-        $data = [
-            'product_name' => $productModel->product->name,
-            'raw_material_name' => $productModel->rawMaterial->name,
-            'raw_material_type' => $productModel->rawMaterial->rawMaterialType->name,
-        ];
-
-        return response()->json($data);
-    }
-
     public function getQuantities($id)
 {
     $deliveryChallan = DeliveryChallan::where('order_id', $id)->first();
@@ -92,6 +75,49 @@ public function getModelDetails($id)
     }
 
     return response()->json($quantities);
+}
+
+public function getProductModel($orderId)
+    {
+        // Fetch the product model data based on the selected order number
+        $orderDetail = OrderDetail::findOrFail($orderId);
+        $productModel = $orderDetail->productModel;
+
+        // Generate HTML option for the product model
+        
+        $option = '<option value="'. $productModel->id . '">' . $productModel->model_name . '-' . $productModel->model_code . '</option>';
+
+        // Return the HTML option
+        return $option;
+    }
+
+    public function getModelDetails($id)
+    {
+        $productModel = ProductModel::with('product', 'rawMaterial.rawMaterialType')->find($id);
+
+        if (!$productModel) {
+            return response()->json(['error' => 'Model not found'], 404);
+        }
+
+        $data = [
+            'product_name' => $productModel->product->name,
+            'raw_material_name' => $productModel->rawMaterial->name,
+            'raw_material_type' => $productModel->rawMaterial->rawMaterialType->name,
+        ];
+
+        return response()->json($data);
+    }
+
+    public function getProductDetails(Request $request)
+{
+    $productModelId = $request->input('product_model_id');
+    $productDetails = ProductModel::with(['product', 'rawMaterial.rawMaterialType'])->find($productModelId);
+
+    return response()->json([
+        'product_name' => $productDetails->product->name,
+        'raw_material_name' => $productDetails->rawMaterial->name,
+        'raw_material_type' => $productDetails->rawMaterial->rawMaterialType->name,
+    ]);
 }
 
  

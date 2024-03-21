@@ -307,4 +307,61 @@
     }
 </script>
 
+
+<script>
+    $(document).ready(function () {
+        // Initially disable the product model select dropdown
+        $('#product_model_id').prop('disabled', true);
+
+        // Add change event listener to the order number select dropdown
+        $('#order_id').change(function () {
+            var orderId = $(this).val(); // Get the selected order ID
+            if (orderId !== '') {
+                // Enable the product model select dropdown
+                $('#product_model_id').prop('disabled', false);
+                // Send AJAX request to fetch corresponding product model data
+                $.ajax({
+                    url: '/job_allocation/job_giving/get-product-model/' + orderId,
+                    type: 'GET',
+                    success: function (data) {
+                        // Update the options of the product model select dropdown
+                        $('#product_model_id').html(data);
+
+                        // Now, fetch model details for the first product model
+                        var firstModelId = $('#product_model_id option:first').val();
+                        fetchModelDetails(firstModelId);
+                    }
+                });
+            } else {
+                // If no order is selected, disable and reset the product model select dropdown
+                $('#product_model_id').prop('disabled', true);
+                $('#product_model_id').html('<option value="">Select Model</option>');
+            }
+        });
+
+        // Add change event listener to the product model select dropdown
+        $('#product_model_id').change(function () {
+            var modelId = $(this).val(); // Get the selected product model ID
+            fetchModelDetails(modelId);
+        });
+
+        // Function to fetch model details based on the given model ID
+        function fetchModelDetails(modelId) {
+            if (modelId) {
+                // Send AJAX request to fetch model details
+                $.ajax({
+                    url: '/job_allocation/job_giving/get-model-details/' + modelId,
+                    type: 'GET',
+                    success: function (data) {
+                        // Update the details based on the received data
+                        $('#product').val(data.product_name);
+                        $('#raw_material_name').val(data.raw_material_name);
+                        $('#raw_material_type').val(data.raw_material_type);
+                    }
+                });
+            }
+        }
+    });
+</script>
+
 @endsection

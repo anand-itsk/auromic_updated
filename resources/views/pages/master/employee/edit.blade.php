@@ -698,7 +698,7 @@
                                                                                 style="color: red;">{{ $message }}</span>
                                                                         @enderror
                                                                     </div>
-
+                                                                   
                                                                     <label for="prob_period"
                                                                         class="col-sm-2 col-form-label">Prob Period in
                                                                         Month</label>
