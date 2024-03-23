@@ -31,7 +31,7 @@
             <div class="card m-b-30">
                <div class="card-body">
                   <div class="m-b-30">
-                     <form action="{{ route('job_allocation.job_giving.store') }}" method="POST"
+                     <form action="{{route('job_allocation.job_giving.store') }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
@@ -74,14 +74,14 @@
                            <label for="customer_code" class="col-sm-2 col-form-label mandatory">Order
                            ID</label>
                            <div class="col-sm-4 mb-4">
-                              <select class="form-control select2" name="order_id" id="order_id">
-                                 <option value="">Select Order</option>
-                                 @foreach ($order_details as $item)
-                                 <option value="{{ $item->id }}">
-                                    {{ $item->order_no }}
-                                 </option>
-                                 @endforeach
-                              </select>
+                              <select class="form-control select2" name="order_id" id="order_id" onchange="fetchQuantities()">
+    <option value="">Select Order</option>
+    @foreach ($order_details as $item)
+        <option value="{{ $item->id }}">
+            {{ $item->order_no }}
+        </option>
+    @endforeach
+</select>
                               @error('order_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
@@ -101,6 +101,22 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
+                           <label for="order_date" class="col-sm-2 col-form-label">Total Quantity</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="total_quantity" id="total_quantity" readonly>
+    @error('order_date')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label for="order_date" class="col-sm-2 col-form-label">Available Quantity</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="available_quantity" id="available_quantity" readonly>
+    @error('order_date')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
                            <label for="customer_code" class="col-sm-2 col-form-label mandatory">Model</label>
                            <div class="col-sm-4 mb-4">
                               <select class="form-control select2" name="product_model_id" id="product_model_id">
@@ -150,27 +166,19 @@
                            </div>
                         </div>
                         <div class="form-group row">
-                           <label for="customer_name" class="col-sm-2 col-form-label">DC
-                           Number</label>
-                           <div class="col-sm-4 mb-4">
-                              <select class="form-control select2" name="dc_number" id="dc_number" disabled>
-                                 <option value="">Select DC</option>
-                                 @foreach ($delivery_challan as $item)
-                                 <option value="{{ $item->id }}">
-                                    {{ $item->dc_no }}
-                                 </option>
-                                 @endforeach
-                              </select>
-                              @error('dc_number')
-                              <span class="error" style="color: red;">{{ $message }}</span>
-                              @enderror
-                              <div class="ml-3 d-flex flex-wrap px-1 py-3">
-                                 <label>
-                                 <input class="form-check-input" name="with_dc" type="checkbox"
-                                    value="1" id="with_dc">
-                                 With DC</label>
-                              </div>
-                           </div>
+                    <label for="customer_name" class="col-sm-2 col-form-label">DC Number</label>
+<div class="col-sm-4 mb-4">
+    <select class="form-control select2" name="dc_number" id="dc_number">
+        <option value="">Select DC</option>
+        @foreach ($delivery_challan as $item)
+            <option value="{{ $item->id}}">{{ $item->dc_no }}</option>
+        @endforeach
+    </select>
+    @error('dc_number')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
                            <label for="customer_code" class="col-sm-2 col-form-label mandatory">Status</label>
                            <div class="col-sm-4 mb-4">
                               <select class="form-control select2" name="status" id="status">
@@ -242,9 +250,11 @@
                    success: function(data) {
                        if (data) {
                            $('#order_date').val(data.order_date);
+                      
                            $('#customer_name').val(data.customer_name);
                        } else {
                            $('#order_date').val('');
+                            
                            $('#customer_name').val('');
                        }
                    }
@@ -275,4 +285,83 @@
        });
    });
 </script>
+
+<script>
+    function fetchQuantities() {
+        var orderId = document.getElementById('order_id').value;
+        if (orderId !== '') {
+            // Make an AJAX request to fetch quantities
+            fetch(`/job_allocation/job_giving/getQuantities/${orderId}`)
+            .then(response => response.json())
+            .then(data => {
+                // Update input fields with fetched quantities
+                document.getElementById('total_quantity').value = data.total_quantity;
+                document.getElementById('available_quantity').value = data.available_quantity;
+            })
+            .catch(error => console.error('Error:', error));
+        } else {
+            // Reset input fields if no order is selected
+            document.getElementById('total_quantity').value = '';
+            document.getElementById('available_quantity').value = '';
+        }
+    }
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        // Initially disable the product model select dropdown
+        $('#product_model_id').prop('disabled', true);
+
+        // Add change event listener to the order number select dropdown
+        $('#order_id').change(function () {
+            var orderId = $(this).val(); // Get the selected order ID
+            if (orderId !== '') {
+                // Enable the product model select dropdown
+                $('#product_model_id').prop('disabled', false);
+                // Send AJAX request to fetch corresponding product model data
+                $.ajax({
+                    url: '/job_allocation/job_giving/get-product-model/' + orderId,
+                    type: 'GET',
+                    success: function (data) {
+                        // Update the options of the product model select dropdown
+                        $('#product_model_id').html(data);
+
+                        // Now, fetch model details for the first product model
+                        var firstModelId = $('#product_model_id option:first').val();
+                        fetchModelDetails(firstModelId);
+                    }
+                });
+            } else {
+                // If no order is selected, disable and reset the product model select dropdown
+                $('#product_model_id').prop('disabled', true);
+                $('#product_model_id').html('<option value="">Select Model</option>');
+            }
+        });
+
+        // Add change event listener to the product model select dropdown
+        $('#product_model_id').change(function () {
+            var modelId = $(this).val(); // Get the selected product model ID
+            fetchModelDetails(modelId);
+        });
+
+        // Function to fetch model details based on the given model ID
+        function fetchModelDetails(modelId) {
+            if (modelId) {
+                // Send AJAX request to fetch model details
+                $.ajax({
+                    url: '/job_allocation/job_giving/get-model-details/' + modelId,
+                    type: 'GET',
+                    success: function (data) {
+                        // Update the details based on the received data
+                        $('#product').val(data.product_name);
+                        $('#raw_material_name').val(data.raw_material_name);
+                        $('#raw_material_type').val(data.raw_material_type);
+                    }
+                });
+            }
+        }
+    });
+</script>
+
 @endsection

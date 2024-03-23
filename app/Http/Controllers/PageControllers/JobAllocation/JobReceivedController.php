@@ -19,7 +19,8 @@ class JobReceivedController extends Controller
     public function indexData()
     {
         $Job_Giving = JobGiving::with('employee', 'order_details', 'delivery_chellan')->get();
-        return DataTables::of($Job_Giving)->make(true);
+        $job_received = JobReceived::get();
+        return DataTables::of($Job_Giving,$job_received)->make(true);
     }
     // store
     public function store(Request $request)
@@ -32,8 +33,9 @@ class JobReceivedController extends Controller
         $jobReceived->incentive_applicable = $input['Incentive_status'];
         $jobReceived->receving_date = $input['receiving_date'];
         $jobReceived->status = $input['received_status'];
+        $jobReceived->complete_quantity = $input['complete_quantity'];
      
-
+// dd($jobReceived);
         // Save the job received data
         $jobReceived->save();
 
@@ -52,7 +54,7 @@ class JobReceivedController extends Controller
    
     public function edit(Request $request, $id)
 {
-    $Job_Giving = JobGiving::with('employee', 'order_details', 'product_model')->find($id);
+    $Job_Giving = JobGiving::with('employee', 'order_details', 'product_model','delivery_chellan')->find($id);
 
     // Fetch the job_received data
   $jobReceivedData = JobReceived::where('job_giving_id', $id)->latest()->first();

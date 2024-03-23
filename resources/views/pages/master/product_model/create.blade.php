@@ -77,7 +77,7 @@
                                         <label for="customer_code" class="col-sm-2 col-form-label mandatory">Model
                                             Code</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="model_code" id="model_code">
+                                           <input class="form-control" type="text" name="model_code" id="model_code" value="{{ $formattedModelCode }}" readonly>
                                             @error('model_code')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror

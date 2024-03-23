@@ -129,10 +129,11 @@
                                                                             Code</label>
                                                                         <div class="col-sm-12 mb-4">
 
-                                                                            <input class="form-control" type="text"
-                                                                                name="employee_code" id="employee_code"
-                                                                                required>
-                                                                            <span class="error-message text-danger"></span>
+                                                                            <input class="form-control" type="text"  name="employee_code" value="{{ $randomEmployeeCode }}" readonly>
+                                                                            @error('employee_code')
+                                                                                <span class="error"
+                                                                                    style="color: red;">{{ $message }}</span>
+                                                                            @enderror
                                                                         </div>
 
 
@@ -416,4 +417,22 @@
             return `${day}-${month}-${year} ${strTime}`;
         }
     </script>
+
+    
+<script>
+    function generateEmployeeCode() {
+        // Generate a random number between 1 and 999
+        const randomNumber = Math.floor(Math.random() * 999) + 1;
+
+        // Format the number with leading zeros
+        const formattedEmployeeCode = 'EMP' + String(randomNumber).padStart(3, '0');
+
+        return formattedEmployeeCode;
+    }
+
+    // Call the function to generate the employee code when the page loads
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('employee_code').value = generateEmployeeCode();
+    });
+</script>
 @endsection

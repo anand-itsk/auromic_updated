@@ -13,7 +13,8 @@ class JobReceived extends Model
         'job_giving_id',
         'incentive_applicable',
         'status',
-        'receving_date'
+        'receving_date',
+        'complete_quantity'
     ];
 
   

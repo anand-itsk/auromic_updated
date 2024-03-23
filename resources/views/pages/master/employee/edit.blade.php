@@ -122,7 +122,7 @@
                                                                         <div class="col-sm-4">
 
                                                                             <input class="form-control" type="text"
-                                                                                value="{{ $employee->employee_code }}"
+                                                                                value="{{ $employee->employee_code }}" readonly
                                                                                 name="employee_code" id="employee_code">
                                                                             <span class="error-message text-danger"></span>
                                                                         </div>
@@ -698,7 +698,7 @@
                                                                                 style="color: red;">{{ $message }}</span>
                                                                         @enderror
                                                                     </div>
-
+                                                                   
                                                                     <label for="prob_period"
                                                                         class="col-sm-2 col-form-label">Prob Period in
                                                                         Month</label>

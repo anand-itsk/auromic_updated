@@ -386,6 +386,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete/selected', [IncentiveController::class, 'deleteSelected']);
             Route::post('/import', [IncentiveController::class, 'import'])->name('import');
             Route::get('/export', [IncentiveController::class, 'export']);
+            Route::get('/getModelsAndSizes', [IncentiveController::class, 'getModelsAndSizes'])->name('getModelsAndSizes');
         });
 
          Route::prefix('/finishing_product')->name('finishing_product.')->group(function () {
@@ -416,7 +417,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/store', [OrderDetailController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [OrderDetailController::class, 'edit'])->name('edit');
             Route::post('/update/{id}', [OrderDetailController::class, 'update'])->name('update');
-            Route::delete('/delete/{id}',  [OrderDetailController::class, 'destroy'])->name('delete');
+            Route::get('/delete/{id}',  [OrderDetailController::class, 'delete'])->name('delete');
             Route::get('/show/{id}', [OrderDetailController::class, 'showDetails']);
             Route::post('/delete/selected', [OrderDetailController::class, 'deleteSelected']);
             Route::post('/import', [OrderDetailController::class, 'import'])->name('import');
@@ -511,9 +512,12 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/get-companies/{companyTypeId}', [DeliveryChallanController::class, 'getCompanies'])->name('get-companies');
               Route::get('/get-model-details/{id}', [DeliveryChallanController ::class, 'getModelDetails'])->name('get-models');
             Route::get('/get-orders/{customerId}', [DeliveryChallanController ::class, 'getOrders'])->name('get-orders');
-           Route::post('/fetch-product-details', [DeliveryChallanController::class, 'fetchProductDetails'])->name('fetchProductDetails');
+            Route::get('/get-order-details/{orderId}', [DeliveryChallanController::class, 'getOrderDetails']);
+
+
            Route::post('/import', [DeliveryChallanController::class, 'import'])->name('import');
             Route::get('/export', [DeliveryChallanController::class, 'export']);
+              Route::get('/get-product-model/{orderId}', [DeliveryChallanController::class,'getProductModel']);
            
 
         });
@@ -529,9 +533,15 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete/selected', [JobGivingController::class, 'deleteSelected']);
              Route::get('/delete/{id}', [JobGivingController::class, 'delete'])->name('delete');
             Route::get('/get-order-details/{orderId}', [JobGivingController::class,'getOrderDetails']);
-            Route::get('/get-model-details/{id}', [JobGivingController ::class, 'getModelDetails'])->name('get-models');
             Route::post('/import', [JobGivingController::class, 'import'])->name('import');
             Route::get('/export', [JobGivingController::class, 'export']);
+           
+         Route::get('/getQuantities/{id}', [JobGivingController::class,'getQuantities']);
+          Route::get('/get-model-details/{id}', [JobGivingController ::class, 'getModelDetails'])->name('get-models');
+          Route::get('/get-product-model/{orderId}', [JobGivingController::class,'getProductModel']);
+
+          
+
            
 
 

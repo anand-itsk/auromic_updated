@@ -24,6 +24,7 @@ use App\Models\Religion;
 use App\Models\ResigningReason;
 use App\Models\State;
 use App\Models\User;
+use App\Models\EmployeeHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
@@ -33,8 +34,26 @@ class EmployeeController extends Controller
     // Index Page
     public function index()
     {
-        return view('pages.master.employee.index');
+        $randomEmployeeCode = $this->generateEmployeeCode();
+        return view('pages.master.employee.index',['randomEmployeeCode' => $randomEmployeeCode]);
     }
+    private function generateEmployeeCode()
+{
+    // Generate a random number between 1 and 999
+$latestemployee = Employee::latest()->first();
+    if ($latestemployee) {
+        $employeeCode = $latestemployee->employee_code;
+        $employeeCode++;
+    } else {
+        $employeeCode = 1;
+    }
+
+    // Format the order number with leading zeros
+    $formattedEmployeeCode =  str_pad($employeeCode, 3, '0', STR_PAD_LEFT);
+
+
+    return $formattedEmployeeCode;
+}
     // Index DataTable
     public function indexData()
     {
@@ -194,6 +213,8 @@ class EmployeeController extends Controller
             $filename = $request->file('employee_profile')->store('employee/profile/image', 'public');
             $employee->photo = $filename;
         }
+
+ 
         // Store data
         $employee->update([
             'company_id' => $request->company_id,
@@ -216,8 +237,20 @@ class EmployeeController extends Controller
             'prob_period' => $request->prob_period,
             'confirm_date' => $request->confirm_date,
             'resigning_date' => $request->resigning_date,
-            'resigning_reason_id' => 1, // Assuming this is hardcoded or fetched from some other part of the request
+            'resigning_reason_id' => $request->resigning_reason_id,
         ]);
+
+       if ($request->filled('resigning_date') && $request->filled('resigning_reason_id')) {
+    
+    $employeeHistory = new EmployeeHistory();
+    $employeeHistory->employee_id = $id; 
+    $employeeHistory->joining_date = $employee->joining_date;
+    $employeeHistory->relieving_date = $request->resigning_date;
+    $employeeHistory->relieving_reason = $request->resigning_reason_id;
+    $employeeHistory->save();
+}
+
+    
 
         if (
             $request->voter_id_number !== null ||
@@ -310,6 +343,7 @@ class EmployeeController extends Controller
             $employee->addresses()->save($corrs_Address);
         }
 
+        
         // Return success response
         return response()->json(['success' => true, 'message' => 'Step 1 completed successfully.']);
     }
@@ -431,7 +465,7 @@ class EmployeeController extends Controller
             }
         }
 
-
+     
         // Return success response
         return response()->json(['success' => true, 'message' => 'Step 2 completed successfully.']);
     }

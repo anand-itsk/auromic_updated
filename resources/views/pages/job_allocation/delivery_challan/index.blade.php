@@ -15,6 +15,15 @@
                     {{ session('success') }}
                 </div>
             @endif
+
+             @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="row">
                 <div class="col-sm-12">
                     <div class="page-title-box">
@@ -109,6 +118,7 @@
                                                   <th>Product Size</th>
                                                    <th>Product color</th>
                                                     <th>Quantity</th>
+                                                     <th>Avl.Quantity</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -237,6 +247,13 @@
                      {
                         data: 'quantity',
                         name: 'quantity',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                    },
+                     {
+                        data: 'available_quantity',
+                        name: 'available_quantity',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }

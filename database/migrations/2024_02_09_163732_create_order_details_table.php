@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('product_model_id')->nullable();
             $table->unsignedBigInteger('product_color_id')->nullable();
             $table->string('quantity')->nullable();
+            $table->string('available_quantity')->nullable();
             $table->date('delivery_date')->nullable();
             $table->unsignedBigInteger('order_status_id')->nullable();
             $table->string('total_raw_material')->nullable();

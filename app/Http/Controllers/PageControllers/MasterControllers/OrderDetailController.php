@@ -31,6 +31,8 @@ class OrderDetailController extends Controller
 
       public function create()
      {
+
+
         $customer = Customer::get();
         $products = Product::get();
          $order_status = OrderStatus::get();
@@ -61,6 +63,7 @@ class OrderDetailController extends Controller
         $orderDetail->product_model_id = $request->input('product_model');
         $orderDetail->order_status_id = $request->input('order_status_id');
         $orderDetail->quantity = $request->input('quantity');
+        $orderDetail->available_quantity = $request->input('available_quantity');
         $orderDetail->delivery_date = $request->input('delivery_date');
         $orderDetail->total_raw_material = $request->input('total_raw_material');
        
@@ -104,6 +107,7 @@ class OrderDetailController extends Controller
         $orderDetail->product_model_id = $request->input('product_model');
         $orderDetail->order_status_id = $request->input('order_status_id');
         $orderDetail->quantity = $request->input('quantity');
+         $orderDetail->available_quantity = $request->input('available_quantity');
         $orderDetail->delivery_date = $request->input('delivery_date');
         $orderDetail->total_raw_material = $request->input('total_raw_material');
        
@@ -139,7 +143,16 @@ class OrderDetailController extends Controller
 
         Excel::import(new ModelDataImport, request()->file('file'));
 
-        return redirect()->route('master.product_model.index')->with('success', 'Data imported successfully');
+        return redirect()->route('master.order_detail.index')->with('success', 'Data imported successfully');
+    }
+
+     public function delete($id)
+    {
+        $order_details = OrderDetail::find($id);
+
+        $order_details->delete();
+
+        return redirect()->route('master.order_detail.index')->with('success', 'Order Detail Deleted successfully!');
     }
 
  
