@@ -386,6 +386,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete/selected', [IncentiveController::class, 'deleteSelected']);
             Route::post('/import', [IncentiveController::class, 'import'])->name('import');
             Route::get('/export', [IncentiveController::class, 'export']);
+            Route::get('/getModelsAndSizes', [IncentiveController::class, 'getModelsAndSizes'])->name('getModelsAndSizes');
         });
 
          Route::prefix('/finishing_product')->name('finishing_product.')->group(function () {
