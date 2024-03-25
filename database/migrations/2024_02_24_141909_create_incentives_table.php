@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('incentives', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_id');
-            $table->string('model_size');
+            $table->unsignedBigInteger('finishing_product_models_id');
             $table->string('duration_period');
             $table->string('amount');
             $table->timestamps();
-             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+             $table->foreign('finishing_product_models_id')->references('id')->on('finishing_product_models')->onDelete('cascade');
         });
     }
 

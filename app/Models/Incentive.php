@@ -10,8 +10,7 @@ class Incentive extends Model
     use HasFactory;
 
       protected $fillable = [
-        'product_model_id', 
-        'model_size',
+        'finishing_product_models_id', 
         'duration_period',
         'amount'
     ];
@@ -23,5 +22,10 @@ class Incentive extends Model
     public function product()
 {
     return $this->belongsTo(Product::class, 'product_id');
+}
+
+public function finishingProduct()
+{
+    return $this->belongsTo(FinishingProductModel::class, 'finishing_product_models_id');
 }
 }

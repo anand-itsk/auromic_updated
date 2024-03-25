@@ -32,50 +32,51 @@
                                 <form action="{{ route('master.incentives.update', $incentive->id) }}" method="POST">
                                     @csrf
                                     <div class="form-group row">
-
-                                        <label class="col-sm-2 col-form-label">Product</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <select class="form-control" name="product_id" id="product">
-                                                <option value="">Select Product</option>
-                                                @foreach ($products as $product)
-                                                    <option value="{{ $product->id }}"
-                                                        @if ($incentive->product->id == $product->id) selected @endif>
-                                                        {{ $product->name }}</option>
-                                                    <!-- <option value="{{ $product->id }}">{{ $product->name }}</option> -->
-                                                @endforeach
-                                            </select>
-
-                                            @error('product_id')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <label class="col-sm-2 col-form-label">Model</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <select class="form-control" name="product_model" id="product_model">
-                                                <!-- <option value="">Select Product Model</option> -->
-                                                @foreach ($productModels as $productModel)
-                                                    <option value="{{ $productModel->id }}"
-                                                        data-product-id="{{ $productModel->product_id }}"
-                                                        @if ($incentive->product_model_id == $productModel->id) selected @endif>
-                                                        {{ $productModel->model_name }}-{{ $productModel->model_code }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-
-                                            @error('product_model')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+<label class="col-sm-2 col-form-label">Finishing Product Model</label>
+<div class="col-sm-4 mb-4">
+    <select class="form-control" name="finishing_product_models_id" id="finishing_product_models_id">
+        <option value="">Select Finishing Model</option>
+        @foreach ($finishingProduct as $finishingProduct)
+            <option value="{{ $finishingProduct->id }}" @if ($finishingProduct->id == $incentive->finishing_product_models_id) selected @endif>{{ $finishingProduct->model_code }}</option>
+        @endforeach
+    </select>
+    @error('finishing_product_models_id')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
 
 
-                                        <label for="customer_code" class="col-sm-2 col-form-label">Model Size</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="model_size"
-                                                id="model_size"value="{{ $incentive->model_size }}">
-                                            @error('model_size')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+<label class="col-sm-2 col-form-label">Model Name</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="model_name" id="model_name" readonly value="{{$finishingProduct->model_name}}">
+    @error('model_name')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label for="product_name" class="col-sm-2 col-form-label">Product Name</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="product_name" id="product_name" readonly value="{{$finishingProduct->product->name}}">
+    @error('product_name')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label for="product_size" class="col-sm-2 col-form-label">Product Size</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="product_size" id="product_size" readonly value="{{$finishingProduct->productSize->name}}">
+    @error('product_size')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label for="wages_one_product" class="col-sm-2 col-form-label">Wages of One Product</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="wages_one_product" id="wages_one_product" readonly value="{{$finishingProduct->wages_one_product}}">
+    @error('wages_one_product')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
 
                                         <label for="wages_product" class="col-sm-2 col-form-label">Duration Period</label>
                                         <div class="col-sm-4 mb-4">

@@ -75,19 +75,20 @@
                            </div>
                        <label class="col-sm-2 col-form-label">Model</label>
 <div class="col-sm-4 mb-4">
-    <select class="form-control" name="product_model_id" id="product_model">
-        <option value="">Select Product Model</option>
-        @foreach($product_model as $productModels)
-            <option value="{{ $productModels->id }}" {{ $direct_job_giving->product_model_id == $productModels->id ? 'selected' : '' }}>{{ $productModels->model_name }}-{{ $productModels->model_code }}</option>
+   <select class="form-control" name="finishing_product_models_id" id="finishing_product_models_id">
+     
+        @foreach ($finishingProduct as $finishingProducts)
+
+             <option value="{{ $finishingProducts->id }}" @if ($finishingProducts->id == $direct_job_giving->finishing_product_models_id) selected @endif>{{ $finishingProducts->model_code }}</option>
         @endforeach
     </select>
-    @error('product_model')
-    <span class="error" style="color: red;">{{ $message }}</span>
+    @error('finishing_product_models_id')
+        <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
 </div>
                            <label for="order_date" class="col-sm-2 col-form-label ">Product Name</label>
                            <div class="col-sm-4 mb-4">
-                              <input class="form-control" type="text" name="product" id="product" readonly value="{{$productModels->product->name}}">
+                              <input class="form-control" type="text" name="product" id="product" readonly value="{{$finishingProducts->product->name}}">
                               @error('product_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror

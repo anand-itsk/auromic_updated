@@ -15,13 +15,15 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('direct_job_giving_id')->nullable();
             $table->unsignedBigInteger('employee_id')->nullable();
-            $table->unsignedBigInteger('product_model_id')->nullable();
+           $table->unsignedBigInteger('finishing_product_models_id')->nullable();
             $table->unsignedBigInteger('product_color_id')->nullable();
             $table->enum('incentive_applicable', ['Yes', 'No'])->default(NULL)->nullable();
             $table->date('receving_date');
+            $table->string('assign_quantity')->nullable();
+             $table->string('amount')->nullable();
             $table->timestamps();
             $table->foreign('direct_job_giving_id')->references('id')->on('direct_job_givings')->onDelete('cascade');
-            $table->foreign('product_model_id')->references('id')->on('product_models')->onDelete('cascade');
+            $table->foreign('finishing_product_models_id')->references('id')->on('finishing_product_models')->onDelete('cascade');
             $table->foreign('product_color_id')->references('id')->on('product_colors')->onDelete('cascade');
              $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
         });

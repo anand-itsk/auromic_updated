@@ -14,13 +14,14 @@ return new class extends Migration
         Schema::create('direct_job_givings', function (Blueprint $table) {
            $table->id();
            $table->unsignedBigInteger('employee_id');
-           $table->unsignedBigInteger('product_model_id');
+          $table->unsignedBigInteger('finishing_product_models_id');
            $table->unsignedBigInteger('product_size_id')->nullable();
             $table->unsignedBigInteger('product_color_id')->nullable();
             $table->string('quantity')->nullable();
+            $table->string('complete_quantity')->nullable();
             $table->string('weight')->nullable();
            $table->timestamps();
-           $table->foreign('product_model_id')->references('id')->on('product_models')->onDelete('cascade');
+           $table->foreign('finishing_product_models_id')->references('id')->on('finishing_product_models')->onDelete('cascade');
            $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
            $table->foreign('product_size_id')->references('id')->on('product_sizes')->onDelete('cascade');
             $table->foreign('product_color_id')->references('id')->on('product_colors')->onDelete('cascade');

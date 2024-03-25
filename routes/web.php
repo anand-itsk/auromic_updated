@@ -386,7 +386,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete/selected', [IncentiveController::class, 'deleteSelected']);
             Route::post('/import', [IncentiveController::class, 'import'])->name('import');
             Route::get('/export', [IncentiveController::class, 'export']);
-            Route::get('/getModelsAndSizes', [IncentiveController::class, 'getModelsAndSizes'])->name('getModelsAndSizes');
+            Route::get('/get-finishing-product-details/{id}',[IncentiveController::class, 'getFinishingProductDetails']);
+
         });
 
          Route::prefix('/finishing_product')->name('finishing_product.')->group(function () {
@@ -480,6 +481,7 @@ Route::middleware(['auth'])->group(function () {
              Route::get('/get-model-details/{id}', [DirectJobGivingController ::class, 'getModelDetails'])->name('get-models');
               Route::post('/import', [DirectJobGivingController::class, 'import'])->name('import');
             Route::get('/export', [DirectJobGivingController::class, 'export']);
+            Route::get('/get-finishing-product-details/{id}',[DirectJobGivingController::class, 'getFinishingProductDetails']);
         });
           Route::prefix('/direct_job_received')->name('direct_job_received.')->group(function () {
             Route::get('/', [DirectJobReceivedController::class, 'index'])->name('index');
@@ -490,6 +492,10 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/update/{id}', [DirectJobReceivedController::class, 'update'])->name('update');
             Route::post('/delete/selected', [DirectJobReceivedController::class, 'deleteSelected']);
              Route::get('/get-model-details/{id}', [DirectJobReceivedController ::class, 'getModelDetails'])->name('get-models');
+             
+Route::get('/get-finishing-product-details/{id}',[DirectJobReceivedController::class, 'getFinishingProductDetails']);
+     
+              
         });
 
         
