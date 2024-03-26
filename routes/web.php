@@ -13,6 +13,7 @@ use App\Http\Controllers\PageControllers\MasterControllers\IncentiveController;
 use App\Http\Controllers\PageControllers\MasterControllers\FinishingProductController;
 use App\Http\Controllers\PageControllers\JobAllocationController\DirectJobGivingController;
 use App\Http\Controllers\PageControllers\JobAllocationController\DirectJobReceivedController;
+use App\Http\Controllers\PageControllers\Report\DailyGivenReportCompanyWiseController;
 use App\Http\Controllers\PageControllers\SubClientCompanyController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -425,7 +426,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/export', [OrderDetailController::class, 'export']);
         });
 
-        Route::prefix('/employees')->name('employees.')->group(function () {
+          Route::prefix('/employees')->name('employees.')->group(function () {
 
             Route::get('/', [EmployeeController::class, 'index'])->name('index');
             Route::get('/data', [EmployeeController::class, 'indexData'])->name('data');
@@ -492,8 +493,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/update/{id}', [DirectJobReceivedController::class, 'update'])->name('update');
             Route::post('/delete/selected', [DirectJobReceivedController::class, 'deleteSelected']);
              Route::get('/get-model-details/{id}', [DirectJobReceivedController ::class, 'getModelDetails'])->name('get-models');
-             
-Route::get('/get-finishing-product-details/{id}',[DirectJobReceivedController::class, 'getFinishingProductDetails']);
+            Route::get('/get-finishing-product-details/{id}',[DirectJobReceivedController::class, 'getFinishingProductDetails']);
      
               
         });
@@ -519,13 +519,10 @@ Route::get('/get-finishing-product-details/{id}',[DirectJobReceivedController::c
               Route::get('/get-model-details/{id}', [DeliveryChallanController ::class, 'getModelDetails'])->name('get-models');
             Route::get('/get-orders/{customerId}', [DeliveryChallanController ::class, 'getOrders'])->name('get-orders');
             Route::get('/get-order-details/{orderId}', [DeliveryChallanController::class, 'getOrderDetails']);
-
-
            Route::post('/import', [DeliveryChallanController::class, 'import'])->name('import');
             Route::get('/export', [DeliveryChallanController::class, 'export']);
               Route::get('/get-product-model/{orderId}', [DeliveryChallanController::class,'getProductModel']);
            
-
         });
 
         Route::prefix('/job_giving')->name('job_giving.')->group(function () {
@@ -535,23 +532,17 @@ Route::get('/get-finishing-product-details/{id}',[DirectJobReceivedController::c
             Route::post('/store', [JobGivingController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [JobGivingController::class, 'edit'])->name('edit');
             Route::post('/update/{id}', [JobGivingController::class, 'update'])->name('update');
-       
             Route::post('/delete/selected', [JobGivingController::class, 'deleteSelected']);
              Route::get('/delete/{id}', [JobGivingController::class, 'delete'])->name('delete');
             Route::get('/get-order-details/{orderId}', [JobGivingController::class,'getOrderDetails']);
             Route::post('/import', [JobGivingController::class, 'import'])->name('import');
             Route::get('/export', [JobGivingController::class, 'export']);
-           
          Route::get('/getQuantities/{id}', [JobGivingController::class,'getQuantities']);
           Route::get('/get-model-details/{id}', [JobGivingController ::class, 'getModelDetails'])->name('get-models');
           Route::get('/get-product-model/{orderId}', [JobGivingController::class,'getProductModel']);
 
-          
-
-           
-
-
         });
+
         Route::prefix('/job_received')->name('job_received.')->group(function () {
             Route::get('/', [JobReceivedController::class, 'index'])->name('index');
             Route::get('/data', [JobReceivedController::class, 'indexData'])->name('data');
@@ -567,6 +558,19 @@ Route::get('/get-finishing-product-details/{id}',[DirectJobReceivedController::c
             Route::get('/cancel-job-giving/{id}',[JobReallocationController::class,'cancelJobGiving'])->name('cancel_job_giving');
         });
     });
+
+    // Report
+    Route::prefix('report')->name('report.')->group(function () {
+        Route::prefix('/daily_given_report_cw')->name('daily_given_report_cw.')->group(function () {
+            Route::get('/', [DailyGivenReportCompanyWiseController::class, 'index'])->name('index');
+            Route::get('/data', [DailyGivenReportCompanyWiseController::class, 'indexData'])->name('data');
+            Route::get('/export', [DailyGivenReportCompanyWiseController::class, 'export']);
+        });
+
+    });
+
+
+
 
     //Data Fetch
     Route::get('/get-states/{countryId}', [AddressController::class, 'getStates'])->name('get-states');
