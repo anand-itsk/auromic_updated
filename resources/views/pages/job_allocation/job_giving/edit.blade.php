@@ -153,7 +153,7 @@
                            Number</label>
                            <div class="col-sm-4 mb-4">
                               <select class="form-control select2" name="dc_number" id="dc_number"
-                              @if ($JobGiving->dc_number)  @endif disabled>
+                              @if ($JobGiving->dc_number)  @endif >
                               @foreach ($delivery_challan as $item)
                               <option value="{{ $item->id }}"
                               @if ($item->id == $JobGiving->dc_number) selected @endif>
@@ -164,14 +164,7 @@
                               @error('dc_number')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
-                              <div class="ml-3 d-flex flex-wrap px-1 py-3">
-                                 <label>
-                                 <input class="form-check-input" name="with_dc" type="checkbox"
-                                 value="1" id="with_dc"
-                                 @if ($JobGiving->dc_number) checked @endif>
-                                 With DC
-                                 </label>
-                              </div>
+                              
                            </div>
                            <label for="customer_code" class="col-sm-2 col-form-label ">Status</label>
                            <div class="col-sm-4 mb-4">

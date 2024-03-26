@@ -17,6 +17,8 @@ class PfInfo extends Model
         'pf_last_date',
         'pension_joining_date',
         'pension_applicable',
+        'uan_number',
+        'remark'
     ];
     
 }

@@ -138,6 +138,17 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
+                                        <label for="wages_employee" class="col-sm-2 col-form-label">Product 
+                                            size
+                                        </label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="product_size"
+                                                id="product_size"
+                                                value="{{ $order_details->productModel->productSize->name ??''}}" readonly>
+                                            @error('product_size')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                         <label for="wages_employee" class="col-sm-2 col-form-label ">Quantity</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="quantity"
@@ -169,7 +180,7 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label class="col-sm-2 col-form-label">Product Size</label>
+                                        <!-- <label class="col-sm-2 col-form-label">Product Size</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_size_id"
                                                 id="product_size_id">
@@ -183,7 +194,7 @@
                                             @error('order_status_id')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
-                                        </div>
+                                        </div> -->
                                         <label class="col-sm-2 col-form-label">Product Color</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_color_id"

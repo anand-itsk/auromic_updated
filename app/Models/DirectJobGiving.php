@@ -11,10 +11,11 @@ class DirectJobGiving extends Model
 
      protected $fillable = [
          'employee_id',
-         'product_model_id',
+         'finishing_product_models_id',
          'product_size_id',
          'product_color_id',
          'quantity',
+         'complete_quantity',
          'weight',
     ];
    public function employee(){
@@ -31,5 +32,10 @@ class DirectJobGiving extends Model
      public function productColor(){
         return $this->belongsTo(ProductColor::class,'product_color_id');
     }
+
+    public function finishingProduct()
+{
+    return $this->belongsTo(FinishingProductModel::class, 'finishing_product_models_id');
+}
 
 }

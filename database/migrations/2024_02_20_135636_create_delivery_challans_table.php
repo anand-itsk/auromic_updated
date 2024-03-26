@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('dc_no');
             $table->date('dc_date');
             $table->string('quantity')->nullable();
+            $table->string('available_quantity')->nullable();
             $table->timestamps();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->foreign('order_id')->references('id')->on('order_details')->onDelete('cascade');

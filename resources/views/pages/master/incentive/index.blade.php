@@ -109,9 +109,9 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Product Name</th>
-                                                <th>Model size</th>
+                                                <th>Finishing Product model</th>
                                                 <th>Duration Period</th>
+                                                <th>Amount</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -196,17 +196,19 @@
                         name: 'id'
                     },
                     {
-                        data: 'product.name',
-                        name: 'product.name'
+                      data: 'finishing_product.model_code',
+                       name: 'finishing_product.model_code'
                     },
-                    {
-                        data: 'model_size',
-                        name: 'model_size'
-                    },
+                    
                     {
                         data: 'duration_period',
                         name: 'duration_period'
                     },
+                     {
+                        data: 'amount',
+                        name: 'amount'
+                    },
+
 
                     {
                         data: null,

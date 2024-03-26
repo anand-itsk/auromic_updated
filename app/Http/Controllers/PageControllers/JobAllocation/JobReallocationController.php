@@ -26,38 +26,42 @@ class JobReallocationController extends Controller
     }
     // store
     public function store(Request $request)
-    {
+{
+    // Create a new JobReceived instance
+    $input = $request->all();
+    $jobReceived = new JobAllocationHistory();
+    $jobReceived->job_giving_id = $input['job_giving_id'];
+    $jobReceived->employee_id = $input['employee_id'];
+    $jobReceived->receving_date = $input['receiving_date'];
+    $jobReceived->quantity = $input['quantity'];
 
-
-        // Create a new JobReceived instance
-        $input = $request->all();
-        $jobReceived = new JobAllocationHistory();
-        $jobReceived->job_giving_id = $input['job_giving_id'];
-        $jobReceived->employee_id = $input['employee_id'];
-        $jobReceived->receving_date = $input['receiving_date'];
-        // Save the job received data
-        $jobReceived->save();
-
-        // Update the status in the JobGiving table
-        $jobGivingId = $input['job_giving_id'];
-        $employee_id = $input['employee_id'];
-
-        // Update the status in the JobGiving table
-        JobGiving::where('id', $jobGivingId)->update(['employee_id' => $employee_id]);
-
-
-        // Redirect back with success message
-        return redirect()->route('job_allocation.job_reallocation.index')
-            ->with('success', 'Job Reallocation Updated Successfully');
+    // Check if the quantity exceeds the available balance quantity
+    $balanceQuantity = $input['available_quantity'];
+    if ($jobReceived->quantity > $balanceQuantity) {
+       return redirect()->route('job_allocation.job_reallocation.index')
+            ->with('error', 'No available quantity for this order');
     }
-   
+
+    // Save the job received data
+    $jobReceived->save();
+
+    // Update the status in the JobGiving table
+    $jobGivingId = $input['job_giving_id'];
+    $employee_id = $input['employee_id'];
+    JobGiving::where('id', $jobGivingId)->update(['employee_id' => $employee_id]);
+
+    // Redirect back with success message
+    return redirect()->route('job_allocation.job_reallocation.index')
+        ->with('success', 'Job Reallocation Updated Successfully');
+}
+
 
         public function edit(Request $request, $id)
     {
        
-                $Job_Giving = JobGiving::with('employee', 'order_details','product_model')->find($id);
+                $Job_Giving = JobGiving::with('employee', 'order_details','product_model','delivery_chellan')->find($id);
          
-         $jobReceivedData = JobReceived::where('job_giving_id', $id)->latest()->first();
+                 $jobReceivedData = JobReceived::where('job_giving_id', $id)->latest()->first();
 
                $employee = Employee::with(['company' => function ($query) {
                 $query->with('companyType');

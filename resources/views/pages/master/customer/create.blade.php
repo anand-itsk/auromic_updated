@@ -185,34 +185,34 @@
                                             @enderror
                                         </div>
 
-                                        <label for="tin_no" class="col-sm-2 col-form-label">TIN No</label>
+                                        <label for="tin_no" class="col-sm-2 col-form-label">Pan No</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="tin_no" id="tin_no">
-                                            @error('tin_no')
+                                            <input class="form-control" type="text" name="pan_no" id="pan_no">
+                                            @error('pan_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
 
                                         <label for="tin_date" class="col-sm-2 col-form-label">Date</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="date" name="tin_date" id="tin_date">
-                                            @error('tin_date')
+                                            <input class="form-control" type="date" name="pan_date" id="pan_date">
+                                            @error('pan_date')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
 
-                                        <label for="cst_no" class="col-sm-2 col-form-label">CST No</label>
+                                        <label for="cst_no" class="col-sm-2 col-form-label">GST No</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="cst_no" id="cst_no">
-                                            @error('cst_no')
+                                            <input class="form-control" type="text" name="gst_no" id="gst_no">
+                                            @error('gst_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
 
                                         <label for="cst_date" class="col-sm-2 col-form-label">Date</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="date" name="cst_date" id="cst_date">
-                                            @error('cst_date')
+                                            <input class="form-control" type="date" name="gst_date" id="gst_date">
+                                            @error('gst_date')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>

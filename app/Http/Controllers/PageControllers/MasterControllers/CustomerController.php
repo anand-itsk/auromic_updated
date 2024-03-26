@@ -22,6 +22,8 @@ class CustomerController extends Controller
     {
         return view('pages.master.customer.index');
     }
+
+ 
     // Index DataTable
     public function indexData()
     {
@@ -32,6 +34,20 @@ class CustomerController extends Controller
     // Create Page
     public function create()
     {
+
+    //     $latestcustomer = Customer::latest()->first();
+    // if ($latestcustomer) {
+    //     $customerCode = $latestcustomer->customer_code;
+    //     $customerCode++;
+    // } else {
+    //     $customerCode = 1;
+    // }
+
+    // // Format the order number with leading zeros
+    // $formattedCustomerCode = 'EMP' . str_pad($customerCode, 3, '0', STR_PAD_LEFT);
+
+
+
         $countries = Country::all();
         $states = State::all();
         $addressTypes = AddressType::all();

@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employee_identity_proofs', function (Blueprint $table) {
+        Schema::create('employee_histories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('employee_id');
-            $table->string('voter_id_number')->nullable();
-            $table->string('driving_license_number')->nullable();
-            $table->string('pan_number')->nullable();
-            $table->string('passport_number')->nullable();
-            $table->string('identity_mark')->nullable();
-            $table->string('aadhar_number')->nullable();
-            $table->string('aadhar_name')->nullable();
+            $table->date('joining_date');
+            $table->date('relieving_date')->nullable();
+            $table->string('relieving_reason')->nullable();
             $table->timestamps();
             $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
         });
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('employee_identity_proofs');
+        Schema::dropIfExists('employee_histories');
     }
 };

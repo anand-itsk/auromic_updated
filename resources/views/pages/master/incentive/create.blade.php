@@ -33,43 +33,50 @@
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group row">
+<label class="col-sm-2 col-form-label">Finishing Product Model</label>
+<div class="col-sm-4 mb-4">
+    <select class="form-control" name="finishing_product_models_id" id="finishing_product_models_id">
+        <option value="">Select Finishing Model</option>
+        @foreach ($finishingProduct as $finishingProducts)
+            <option value="{{ $finishingProducts->id }}">{{ $finishingProducts->model_code }}</option>
+        @endforeach
+    </select>
+    @error('finishing_product_models_id')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
 
-                                        <label class="col-sm-2 col-form-label">Product</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <select class="form-control" name="product_id" id="product">
-                                                <option value="">Select Product</option>
-                                                @foreach ($products as $product)
-                                                    <option value="{{ $product->id }}">{{ $product->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('product_id')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <label class="col-sm-2 col-form-label">Model</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <select class="form-control" name="product_model" id="product_model" disabled>
-                                                <option value="">Select Product Model</option>
-                                                @foreach ($productModels as $productModel)
-                                                    <option value="{{ $productModel->id }}"
-                                                        data-product-id="{{ $productModel->product_id }}">
-                                                        {{ $productModel->model_name }}-{{ $productModel->model_code }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            @error('product_model')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+<label class="col-sm-2 col-form-label">Model Name</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="model_name" id="model_name" readonly>
+    @error('model_name')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
 
+<label for="product_name" class="col-sm-2 col-form-label">Product Name</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="product_name" id="product_name" readonly>
+    @error('product_name')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
 
-                                        <label for="customer_code" class="col-sm-2 col-form-label">Model Size</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="model_size" id="model_size">
-                                            @error('model_size')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+<label for="product_size" class="col-sm-2 col-form-label">Product Size</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="product_size" id="product_size" readonly>
+    @error('product_size')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label for="wages_one_product" class="col-sm-2 col-form-label">Wages of One Product</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="wages_one_product" id="wages_one_product" readonly>
+    @error('wages_one_product')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
 
                                         <label for="wages_product" class="col-sm-2 col-form-label">Duration Period</label>
                                         <div class="col-sm-4 mb-4">
@@ -79,6 +86,16 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
+
+                                         <label for="wages_product" class="col-sm-2 col-form-label">Amount</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="amount"
+                                                id="amount">
+                                            @error('amount')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
 
 
 
@@ -112,26 +129,26 @@
         </div>
     </div>
     <script>
-        document.getElementById('product').addEventListener('change', function() {
-            var productId = this.value;
-            var productModels = document.getElementById('product_model').getElementsByTagName('option');
-
-            for (var i = 0; i < productModels.length; i++) {
-                if (productModels[i].getAttribute('data-product-id') === productId || productId === '') {
-                    productModels[i].style.display = '';
-                } else {
-                    productModels[i].style.display = 'none';
-                }
+    $(document).ready(function() {
+        $('#finishing_product_models_id').change(function() {
+            var modelId = $(this).val();
+            if(modelId) {
+                $.ajax({
+                    url: '/master/incentives/get-finishing-product-details/' + modelId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success:function(data) {
+                        $('#model_name').val(data.model_name);
+                        $('#product_name').val(data.product_name);
+                        $('#product_size').val(data.product_size);
+                        $('#wages_one_product').val(data.wages_one_product);
+                    }
+                });
             }
         });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('#product').change(function() {
-                $('#product_model').prop('disabled', $(this).val() == '');
-            });
-        });
-    </script>
+    });
+</script>
+
 
     @include('links.js.select2.select2')
 @endsection

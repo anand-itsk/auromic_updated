@@ -9,6 +9,7 @@ use App\Models\CompanyBankDetail;
 use App\Models\CompanyBankDetails;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use App\Services\RazorpayIFSCService;
 
 class CompanyBankDetailController extends Controller
 {
@@ -212,5 +213,21 @@ $company = Company::with('addresses', 'companyRegistrationDetail', 'authorisedPe
     public function export(Request $request)
     {
         return Excel::download(new CompanyExport($request->all()), 'CustomerDatas_' . date('d-m-Y') . '.xlsx');
+    }
+
+
+
+        public function getIFSC(Request $request, RazorpayIFSCService $razorpayIFSCService)
+    {
+
+        $bankName = $request->input('bank_name');
+        $branchName = $request->input('branch_name');
+
+         $razorpayIFSCService = new RazorpayIFSCService();
+          $ifscData = $razorpayIFSCService->searchIFSCByBankAndBranch($bankName, $branchName);
+
+        // Process $ifscData as needed
+
+        return response()->json($ifscData);
     }
 }

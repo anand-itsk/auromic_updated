@@ -5,16 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class JobAllocationHistory extends Model
+class EmployeeHistory extends Model
 {
     use HasFactory;
 
-     protected $fillable=[
-        'job_giving_id',
+       protected $fillable=[
         'employee_id ',
-        'receving_date',
-        'quantity'
+        'joining_date',
+        'relieving_date',
+        'relieving_reason'
     ];
-
-
 }

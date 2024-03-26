@@ -43,7 +43,7 @@
                                         <label for="customer_code" class="col-sm-2 col-form-label mandatory">Order
                                             No</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="order_no" id="order_no">
+                                             <input class="form-control" type="text" name="order_no" id="order_no" >
                                             @error('order_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -90,7 +90,8 @@
                                                         data-weight="{{ $productModel->raw_material_weight_item }}"
                                                         data-raw-material-id="{{ $productModel->raw_material_id }}"
                                                         data-raw-material-type="{{ $productModel->rawMaterial->rawMaterialType->name ?? '' }}"
-                                                        data-raw-material-name="{{ $productModel->rawMaterial->name ?? '' }}">
+                                                        data-raw-material-name="{{ $productModel->rawMaterial->name ?? '' }}"
+                                                         data-product-size="{{ $productModel->productSize->name ??'' }}">
                                                         {{ $productModel->model_name }}-{{ $productModel->model_code }}
                                                     </option>
                                                 @endforeach
@@ -115,15 +116,13 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="raw_material_weight_item" class="col-sm-2 col-form-label">R.M
-                                            Weight/Item</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="raw_material_weight_item"
-                                                id="raw_material_weight_item" readonly>
-                                            @error('raw_material_weight_item')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                        <label for="raw_material_weight_item" class="col-sm-2 col-form-label">R.M Weight/Item</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="raw_material_weight_item" id="raw_material_weight_item" readonly>
+    @error('raw_material_weight_item')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
                                         <label for="wages_employee" class="col-sm-2 col-form-label ">Wages of
                                             Employee</label>
                                         <div class="col-sm-4 mb-4">
@@ -133,13 +132,22 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="wages_employee" class="col-sm-2 col-form-label ">Quantity</label>
+                                        <label for="wages_employee" class="col-sm-2 col-form-label ">Product Size</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="quantity" id="quantity">
-                                            @error('quantity')
+                                            <input class="form-control" type="text" name="product_size"
+                                                id="product_size" readonly>
+                                            @error('product_size')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
+                                        <label for="wages_employee" class="col-sm-2 col-form-label">Quantity</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="quantity" id="quantity">
+    @error('quantity')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+                                        
                                         <label class="col-sm-2 col-form-label">Delivery Date</label>
                                         <div class="col-sm-4 mb-4">
                                             <input type="date" class="form-control" name="delivery_date"
@@ -161,7 +169,7 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label class="col-sm-2 col-form-label">Product Size</label>
+                                        <!-- <label class="col-sm-2 col-form-label">Product Size</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_size_id"
                                                 id="product_size_id">
@@ -173,7 +181,7 @@
                                             @error('order_status_id')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
-                                        </div>
+                                        </div> -->
                                         <label class="col-sm-2 col-form-label">Product Color</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_color_id"
@@ -187,14 +195,13 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="customer_code" class="col-sm-2 col-form-label ">Total R.M</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="total_raw_material"
-                                                id="model_code">
-                                            @error('total_raw_material')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                        <label for="customer_code" class="col-sm-2 col-form-label">Total R.M</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="total_raw_material" id="total_raw_material" readonly>
+    @error('total_raw_material')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
                                     </div>
                                     <div class="form-group">
                                         <div class="d-flex justify-content-evenly">
@@ -241,6 +248,8 @@
             const wagesEmployeeInput = document.getElementById('wages_employee');
             const rawMaterialTypeInput = document.getElementById('raw_material_type');
             const rawMaterialNameInput = document.getElementById('raw_material_name');
+             const productSizeInput = document.getElementById('product_size');
+            
 
 
             productModelSelect.addEventListener('change', function() {
@@ -249,11 +258,13 @@
                 const wagesEmployee = selectedOption.dataset.wage;
                 const rawMaterialType = selectedOption.dataset.rawMaterialType;
                 const rawMaterialName = selectedOption.dataset.rawMaterialName;
+                const productSize = selectedOption.dataset.productSize;
 
                 rawMaterialWeightItemInput.value = rawMaterialWeight;
                 wagesEmployeeInput.value = wagesEmployee;
                 rawMaterialTypeInput.value = rawMaterialType;
                 rawMaterialNameInput.value = rawMaterialName;
+                productSizeInput.value = productSize;
             });
         });
     </script>
@@ -264,5 +275,25 @@
             });
         });
     </script>
+
+    <script>
+    // Get the input fields
+    var rawMaterialWeightItemInput = document.getElementById('raw_material_weight_item');
+    var quantityInput = document.getElementById('quantity');
+    var totalRawMaterialInput = document.getElementById('total_raw_material');
+
+    // Add event listener to quantity input field
+    quantityInput.addEventListener('input', function () {
+        // Get the values from input fields
+        var rawMaterialWeightItem = parseFloat(rawMaterialWeightItemInput.value);
+        var quantity = parseFloat(quantityInput.value);
+
+        // Calculate the total raw material
+        var totalRawMaterial = rawMaterialWeightItem * quantity;
+
+        // Update the total raw material input field with the calculated value
+        totalRawMaterialInput.value = isNaN(totalRawMaterial) ? '' : totalRawMaterial.toFixed();
+    });
+</script>
     @include('links.js.select2.select2')
 @endsection

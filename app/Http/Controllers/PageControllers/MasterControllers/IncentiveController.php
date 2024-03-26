@@ -4,7 +4,7 @@ namespace App\Http\Controllers\pageControllers\MasterControllers;
 use App\Models\Product;
 use App\Exports\IncentiveExport;
 use App\Models\Incentive;
-use App\Models\ProductModel;
+use App\Models\FinishingProductModel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -19,36 +19,47 @@ class IncentiveController extends Controller
 
       public function indexData()
     {
-        // Eager load the roles relationship
-        $incentive = Incentive::with(['product'])->get();
-        // dd($product_model[0]->rawMaterial->rawMaterialType);
+        
+        $incentive = Incentive::with('finishingProduct')->get();
+       
         return DataTables::of($incentive)->make(true);
     }
 
       public function create()
     {
       
-         $products = Product::all();
-         
-         $productModels = ProductModel::get();
-        return view('pages.master.incentive.create',compact('products','productModels'));
+         $finishingProduct= FinishingProductModel::all();
+
+        return view('pages.master.incentive.create',compact('finishingProduct'));
     }
+
+    public function getFinishingProductDetails($id)
+{
+    $finishingProduct = FinishingProductModel::findOrFail($id);
+    
+    return response()->json([
+        'model_name' => $finishingProduct->model_name,
+        'product_name' => $finishingProduct->product->name,
+        'product_size' => $finishingProduct->productSize->name,
+        'wages_one_product' => $finishingProduct->wages_one_product
+    ]);
+}
 
     public function store(Request $request)
 {
     // dd($request);
     $validatedData = $request->validate([
-         'product_id' => 'required',
-         'model_size' => 'required',
-         'duration_period' => 'required',  
+         'finishing_product_models_id' => 'required',
+         'duration_period' => 'required',
+          'amount' => 'required',   
     ]);
    
      $incentive = new Incentive;
-     $incentive->product_id = $request->input('product_id');
-     $incentive->model_size = $request->input('model_size');
+     $incentive->finishing_product_models_id  = $request->input('finishing_product_models_id');
      $incentive->duration_period= $request->input('duration_period');
+     $incentive->amount= $request->input('amount');
 
-//    dd($incentive); // Uncomment for debugging
+//    dd($incentive); 
 
     $incentive->save();
 
@@ -61,11 +72,9 @@ class IncentiveController extends Controller
     public function edit($id)
     {
          $incentive = Incentive::find($id);
-      
-         $products = Product::all();
-        $productModels = ProductModel::get();
 
-          return view('pages.master.incentive.edit', compact('productModels','products','incentive'));
+         $finishingProduct= FinishingProductModel::all();
+          return view('pages.master.incentive.edit', compact('incentive','finishingProduct'));
     }
 
 
@@ -73,17 +82,15 @@ class IncentiveController extends Controller
     {
         // dd($request);
       $validatedData = $request->validate([
-         'product_id' => 'required',
-         'model_size' => 'required',
+         'finishing_product_models_id' => 'required',
          'duration_period' => 'required',  
     ]);
        
            $incentive =  Incentive::find($id);
-     $incentive->product_id = $request->input('product_id');
-     $incentive->model_size = $request->input('model_size');
+     $incentive->finishing_product_models_id = $request->input('finishing_product_models_id');
      $incentive->duration_period= $request->input('duration_period');
-
-//    dd($incentive); // Uncomment for debugging
+    $incentive->amount= $request->input('amount');
+//    dd($incentive); 
 
     $incentive->save();
 

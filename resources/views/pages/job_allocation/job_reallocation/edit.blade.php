@@ -117,14 +117,35 @@
                               @enderror
                            </div>
                            <label for="customer_code" class="col-sm-2 col-form-label">
-                           Quantity
-                           </label>
-                           <div class="col-sm-4 mb-4">
-                              <input type="text" class="form-control" name="" id="" readonly value="{{ $Job_Giving->order_details->quantity}}">
-                              @error('employee_id')
-                              <span class="error" style="color: red;">{{ $message }}</span>
-                              @enderror
-                           </div>
+    Total Quantity
+</label>
+<div class="col-sm-4 mb-4">
+    <input type="text" class="form-control" name="total_quantity" id="total_quantity" readonly value="{{ $Job_Giving->quantity }}">
+    @error('employee_id')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label for="customer_code" class="col-sm-2 col-form-label">
+    Complete Quantity
+</label>
+<div class="col-sm-4 mb-4">
+    <input type="text" class="form-control" name="complete_quantity" id="complete_quantity" readonly value="{{ $jobReceivedData->complete_quantity ?? '' }}">
+    @error('employee_id')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label for="customer_code" class="col-sm-2 col-form-label">
+    Balance Quantity
+</label>
+<div class="col-sm-4 mb-4">
+    <input type="text" class="form-control" name="available_quantity" id="available_quantity" readonly value="">
+    @error('employee_id')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
                            <label for="customer_code" class="col-sm-2 col-form-label">
                            Product Size
                            </label>
@@ -208,6 +229,16 @@
                               @enderror
                            </div>
 
+                           <label for="customer_code" class="col-sm-2 col-form-label">
+                           Quantity
+                           </label>
+                           <div class="col-sm-4 mb-4">
+                              <input type="text" class="form-control" name="quantity" id="quantity">
+                              @error('employee_id')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+
 </div>
                         <!-- reallocation Ends -->
                         <div class="form-group">
@@ -254,5 +285,27 @@
            $('#company_type').val(companyType);
        });
    });
+</script>
+
+<script>
+    // Get references to the input elements
+    const totalQuantityInput = document.getElementById('total_quantity');
+    const completeQuantityInput = document.getElementById('complete_quantity');
+    const balanceQuantityInput = document.getElementById('available_quantity');
+
+    // Function to calculate and update balance quantity
+    function updateBalanceQuantity() {
+        const totalQuantity = parseFloat(totalQuantityInput.value) || 0;
+        const completeQuantity = parseFloat(completeQuantityInput.value) || 0;
+        const balanceQuantity = totalQuantity - completeQuantity;
+        balanceQuantityInput.value = balanceQuantity;
+    }
+
+    // Add event listeners to update balance quantity when inputs change
+    totalQuantityInput.addEventListener('input', updateBalanceQuantity);
+    completeQuantityInput.addEventListener('input', updateBalanceQuantity);
+
+    // Initial calculation on page load
+    updateBalanceQuantity();
 </script>
 @endsection

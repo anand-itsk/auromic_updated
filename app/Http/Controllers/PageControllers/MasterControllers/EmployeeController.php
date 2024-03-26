@@ -24,6 +24,7 @@ use App\Models\Religion;
 use App\Models\ResigningReason;
 use App\Models\State;
 use App\Models\User;
+use App\Models\EmployeeHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
@@ -33,8 +34,26 @@ class EmployeeController extends Controller
     // Index Page
     public function index()
     {
-        return view('pages.master.employee.index');
+        $randomEmployeeCode = $this->generateEmployeeCode();
+        return view('pages.master.employee.index',['randomEmployeeCode' => $randomEmployeeCode]);
     }
+    private function generateEmployeeCode()
+{
+    // Generate a random number between 1 and 999
+$latestemployee = Employee::latest()->first();
+    if ($latestemployee) {
+        $employeeCode = $latestemployee->employee_code;
+        $employeeCode++;
+    } else {
+        $employeeCode = 1;
+    }
+
+    // Format the order number with leading zeros
+    $formattedEmployeeCode =  str_pad($employeeCode, 3, '0', STR_PAD_LEFT);
+
+
+    return $formattedEmployeeCode;
+}
     // Index DataTable
     public function indexData()
     {
@@ -194,6 +213,8 @@ class EmployeeController extends Controller
             $filename = $request->file('employee_profile')->store('employee/profile/image', 'public');
             $employee->photo = $filename;
         }
+
+ 
         // Store data
         $employee->update([
             'company_id' => $request->company_id,
@@ -216,15 +237,29 @@ class EmployeeController extends Controller
             'prob_period' => $request->prob_period,
             'confirm_date' => $request->confirm_date,
             'resigning_date' => $request->resigning_date,
-            'resigning_reason_id' => 1, // Assuming this is hardcoded or fetched from some other part of the request
+            'resigning_reason_id' => $request->resigning_reason_id,
         ]);
+
+       if ($request->filled('resigning_date') && $request->filled('resigning_reason_id')) {
+    
+    $employeeHistory = new EmployeeHistory();
+    $employeeHistory->employee_id = $id; 
+    $employeeHistory->joining_date = $employee->joining_date;
+    $employeeHistory->relieving_date = $request->resigning_date;
+    $employeeHistory->relieving_reason = $request->resigning_reason_id;
+    $employeeHistory->save();
+}
+
+    
 
         if (
             $request->voter_id_number !== null ||
             $request->driving_license_number !== null ||
             $request->pan_number !== null ||
             $request->passport_number !== null ||
-            $request->identity_mark !== null
+            $request->identity_mark !== null ||
+            $request->aadhar_number !== null ||
+            $request->aadhar_name !== null
         ) {
             if ($employee->identityProof) {
                 $employee->identityProof->update([
@@ -233,14 +268,20 @@ class EmployeeController extends Controller
                     'pan_number' => $request->pan_number,
                     'passport_number' => $request->passport_number,
                     'identity_mark' => $request->identity_mark,
+                    'aadhar_number' => $request->aadhar_number,
+                    'aadhar_name' => $request->aadhar_name
                 ]);
             } else {
+
+                
                 $employee->identityProof()->create([
                     'voter_id_number' => $request->voter_id_number,
                     'driving_license_number' => $request->driving_license_number,
                     'pan_number' => $request->pan_number,
                     'passport_number' => $request->passport_number,
                     'identity_mark' => $request->identity_mark,
+                    'aadhar_number' => $request->aadhar_number,
+                    'aadhar_name' => $request->aadhar_name
                 ]);
             }
         }
@@ -302,6 +343,7 @@ class EmployeeController extends Controller
             $employee->addresses()->save($corrs_Address);
         }
 
+        
         // Return success response
         return response()->json(['success' => true, 'message' => 'Step 1 completed successfully.']);
     }
@@ -376,6 +418,8 @@ class EmployeeController extends Controller
                     'pf_last_date' => $request->pf_last_date,
                     'pension_joining_date' => $request->pension_joining_date,
                     'pension_applicable' => $request->pension_applicable ?? '0',
+                    'remark'=>$request->remark,
+                    'uan_number'=>$request->uan_number
                 ]);
             } else {
                 $employee->pfInfo()->create([
@@ -385,6 +429,8 @@ class EmployeeController extends Controller
                     'pf_last_date' => $request->pf_last_date,
                     'pension_joining_date' => $request->pension_joining_date,
                     'pension_applicable' => $request->pension_applicable  ?? '0',
+                    'remark'=>$request->remark,
+                    'uan_number'=>$request->uan_number
                 ]);
             }
         }
@@ -419,7 +465,7 @@ class EmployeeController extends Controller
             }
         }
 
-
+     
         // Return success response
         return response()->json(['success' => true, 'message' => 'Step 2 completed successfully.']);
     }
@@ -468,11 +514,11 @@ class EmployeeController extends Controller
     // Store Nominee Data
     public function storeNominee(Request $request, $id)
     {
-
+            // dd($request);
         $employee = Employee::findOrFail($id);
-
+        //   dd($employee);
         $employee->nominee()->create([
-            'family_member_id' => $request->family_memeber_id,
+            'family_member_id' => $request->family_member_id,
             'gratuity_sharing' => $request->gratuity_sharing,
             'marital_status' => $request->marital_status,
             'religion_id' => $request->religion_id,
@@ -487,7 +533,7 @@ class EmployeeController extends Controller
             'success' => true, 'message' => 'Step 3 completed successfully.',
             'emp_id' => $employee->id
         ]);
-    }
+    } 
 
     // Show Nominees Member table
     public function getNominee(Request $request)
