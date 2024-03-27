@@ -14,6 +14,6 @@ class AuthorisedPeopleTableSeeder extends Seeder
      */
     public function run(): void
     {
-        AuthorisedPersonFactory::new()->count(10)->create();
+        AuthorisedPersonFactory::new()->count(5)->create();
     }
 }

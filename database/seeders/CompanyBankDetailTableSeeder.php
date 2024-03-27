@@ -19,7 +19,6 @@ class CompanyBankDetailTableSeeder extends Seeder
             array('company_id' => 1, 'bank_detail_id' => 1),
             array('company_id' => 3, 'bank_detail_id' => 1),
             array('company_id' => 4, 'bank_detail_id' => 1),
-            array('company_id' => 7, 'bank_detail_id' => 1),
         );
 
         DB::table('company_bank_details')->insert($company_bank_details);
