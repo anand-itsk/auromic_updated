@@ -36,25 +36,96 @@
                         </div>
                         <h4 class="page-title">Daliy Given Report (CW)</h4>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card m-b-30">
-                                <div class="d-flex justify-content-between p-2 bd-highlight">
-                                   <div class="form-group row">
-                           <label for="customer_code" class="col-sm-8 col-form-label ">
+                       <div class="card mb-2">
+                           <div class="card-body">
+                <div class="form-group row mb-0">
+                           <label for="customer_code" class="col-sm-2 col-form-label ">
                            Master Company
                            </label>
-                           <div class="col-sm-4 mb-4">
-                              <select class="form-control select2" name="company_type_id" id="company_type_id">
-                                 <option value="">Select</option>
+                           <div class="col-sm-2 mb-2">
+                              <select class="form-control select2" name="master_company" id="master_company">
+                                 <option value="">Select Company</option>
                                  
                               </select>
+                              @error('master_company')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                            <label for="customer_code" class="col-sm-2 col-form-label ">
+                           Client Company
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                              <select class="form-control select2" name="client_company" id="client_company">
+                                 <option value="">Select Company</option>
+                                 
+                              </select>
+                              @error('client_company')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+
+                           <label for="customer_code" class="col-sm-2 col-form-label ">
+                           Sub Client Company
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                              <select class="form-control select2" name="sub_client_company" id="sub_client_company">
+                                 <option value="">Select Company</option>
+                                 
+                              </select>
+                              @error('sub_client_company')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                           <label for="customer_code" class="col-sm-2 col-form-label ">
+                           From Date
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                            <input type="date" class="form-control" name="from_date" id="">
                               @error('company_type_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
+                           <label for="customer_code" class="col-sm-2 col-form-label ">
+                           Last Date
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                            <input type="date" class="form-control" name="last_date" id="">
+                              @error('company_type_id')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                           <label for="customer_code" class="col-sm-2 col-form-label ">
+                           Date
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                            <input type="date" class="form-control" name="date" id="">
+                              @error('company_type_id')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                               <label for="customer_code" class="col-sm-2 col-form-label ">
+                           Status
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                              <select class="form-control select2" name="status" id="">
+                                 <option value="">Select status</option>
+                                 
+                              </select>
+                              @error('status')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                           
+                           
 </div>
+</div>
+</div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card m-b-30">
+                                <div class="d-flex justify-content-between p-2 bd-highlight">
                                    
+                                
                                     
                                 </div>
                                 {{-- Import Modal --}}
@@ -109,15 +180,16 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Company ID</th>
+                                                <th>Employee code</th>
+                                                <th>Employee Name</th>
                                                 <th>Order Number</th>
-                                                <th>DC NO</th>
-                                                 <th>DC Date</th>
+                                                <th>Model Code</th>
+                                                 <th>Model Name</th>
                                                   <th>Product Size</th>
-                                                   <th>Product color</th>
                                                     <th>Quantity</th>
-                                                     <th>Avl.Quantity</th>
-                                                <th>Action</th>
+                                                     <th>Color</th>
+                                                        <th>Weight</th>
+            
                                             </tr>
                                         </thead>
                                         <tbody>
