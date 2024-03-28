@@ -189,6 +189,7 @@
                                                     <th>Quantity</th>
                                                      <th>Color</th>
                                                         <th>Weight</th>
+                                                        <th>Weight</th>
             
                                             </tr>
                                         </thead>
@@ -333,6 +334,15 @@
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
+                    },
+
+                    {
+                        data: 'product_model.raw_material_weight_item',
+                        name: 'product_model.raw_material_weight_item',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
                     },
 
                     

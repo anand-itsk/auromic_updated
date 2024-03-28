@@ -31,7 +31,17 @@ class OrderDetailController extends Controller
 
       public function create()
      {
+ $latestOrderNumber = OrderDetail::latest()->first();
+    if ($latestOrderNumber) {
+        $orNumber = (int)substr($latestOrderNumber->order_no, 2); // Extract the numeric part
+        $orNumber++;
+    } else {
+        $orNumber = 1;
+    }
 
+    // Format the DC number with leading zeros
+    $formattedOrderNumber = 'OR' . str_pad($orNumber, 3, '0', STR_PAD_LEFT);
+        
 
         $customer = Customer::get();
         $products = Product::get();
@@ -40,7 +50,7 @@ class OrderDetailController extends Controller
            $product_color = ProductColor::get();
          $productModels = ProductModel::with(['rawMaterial.rawMaterialType','productSize'])->get();
           
-        return view('pages.master.order_detail.create',compact('customer','products','productModels','order_status','product_size','product_color'));
+        return view('pages.master.order_detail.create',compact('customer','products','productModels','order_status','product_size','product_color','formattedOrderNumber'));
      }
 
      public function store(Request $request)
@@ -63,7 +73,7 @@ class OrderDetailController extends Controller
         $orderDetail->product_model_id = $request->input('product_model');
         $orderDetail->order_status_id = $request->input('order_status_id');
         $orderDetail->quantity = $request->input('quantity');
-        $orderDetail->available_quantity = $request->input('available_quantity');
+        $orderDetail->available_quantity = $request->input('quantity');
         $orderDetail->delivery_date = $request->input('delivery_date');
         $orderDetail->total_raw_material = $request->input('total_raw_material');
        
