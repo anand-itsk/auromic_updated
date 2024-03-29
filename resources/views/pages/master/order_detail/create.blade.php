@@ -43,21 +43,21 @@
                                         <label for="customer_code" class="col-sm-2 col-form-label mandatory">Order
                                             No</label>
                                         <div class="col-sm-4 mb-4">
-                                             <input class="form-control" type="text" name="order_no" id="order_no" >
+                                             <input class="form-control" type="text" name="order_no" id="order_no" value="{{ $formattedOrderNumber }}" required>
                                             @error('order_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <label class="col-sm-2 col-form-label mandatory">Order Date</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input type="date" class="form-control" name="order_date" id="order_date">
+                                            <input type="date" class="form-control" name="order_date" id="order_date"required>
                                             @error('order_date')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <label class="col-sm-2 col-form-label mandatory">Customer</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="customer_id" id="customer_id">
+                                            <select class="form-control select2" name="customer_id" id="customer_id"required>
                                                 <option value="">Select Customer</option>
                                                 @foreach ($customer as $item)
                                                     <option value="{{ $item->id }}">{{ $item->customer_name }}</option>
@@ -295,5 +295,12 @@
         totalRawMaterialInput.value = isNaN(totalRawMaterial) ? '' : totalRawMaterial.toFixed();
     });
 </script>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderNo = urlParams.get('orderNo');
+    document.getElementById('order_no').value = orderNo;
+</script>
+
     @include('links.js.select2.select2')
 @endsection

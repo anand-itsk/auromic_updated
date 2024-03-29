@@ -160,6 +160,7 @@
                            <label for="order_date" class="col-sm-2 col-form-label">Quantity</label>
                            <div class="col-sm-4 mb-4">
                               <input class="form-control" type="text" name="quantity" id="quantity">
+                              <span id="quantity-error" class="error" style="color: red; display: none;"></span>
                               @error('quantity')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
@@ -363,5 +364,24 @@
         }
     });
 </script>
+
+<script>
+    document.getElementById('quantity').addEventListener('input', function() {
+        var quantity = parseInt(document.getElementById('quantity').value);
+        var availableQuantity = parseInt(document.getElementById('available_quantity').value);
+
+        var quantityError = document.getElementById('quantity-error');
+
+        if (quantity > availableQuantity) {
+            quantityError.textContent = 'Quantity cannot exceed available quantity!';
+            quantityError.style.display = 'block';
+            // document.getElementById('quantity').value = availableQuantity;
+        } else {
+            quantityError.style.display = 'none';
+        }
+    });
+</script>
+
+
 
 @endsection

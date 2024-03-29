@@ -189,6 +189,7 @@
                                                     <th>Quantity</th>
                                                      <th>Color</th>
                                                         <th>Weight</th>
+                                                        <th>Weight</th>
             
                                             </tr>
                                         </thead>
@@ -266,11 +267,84 @@
             table = $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '',
+                ajax: '{{ route('report.daily_given_report_cw.data') }}',
                 columns: [{
                         data: 'id',
                         name: 'id'
                     },
+                    {
+                        data: 'employee.employee_code',
+                        name: 'employee.employee_code',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                    {
+                        data: 'employee.employee_name',
+                        name: 'employee.employee_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                     {
+                        data: 'order_details.order_no',
+                        name: 'order_details.order_no',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                    },
+                    {
+                        data: 'product_model.model_code',
+                        name: 'product_model.model_code',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                    {
+                        data: 'product_model.model_name',
+                        name: 'product_model.model_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                    
+                     {
+                        data: 'product_model.productSize.name',
+                        name: 'product_model.productSize.name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                    {
+                        data: 'quantity',
+                        name: 'quantity',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                     {
+                        data: 'order_details.product_color_id',
+                        name: 'order_details.product_color_id',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                    },
+
+                    {
+                        data: 'product_model.raw_material_weight_item',
+                        name: 'product_model.raw_material_weight_item',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+
                     
                     {
                         data: null,

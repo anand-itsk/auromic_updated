@@ -269,6 +269,9 @@
                         <button onclick="edit(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
                         <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
                         <button onclick="showDetails(${row.id})" class="icon-button common-color"><i class="fa fa-eye"></i></button>
+                       <button onclick="redirectToCreatePage(${row.id}, '${row.order_no}')" class="icon-button common-color"><i class="fa fa-plus"></i></button>
+
+
                     `;
                         }
 
@@ -333,6 +336,11 @@
             });
         });
 
+        function redirectToCreatePage(rowId, orderNo) {
+    window.location.href = '/master/order_detail/create?rowId=' + rowId + '&orderNo=' + encodeURIComponent(orderNo);
+}
+
+
         function edit(id) {
             console.log("inside");
             // Redirect to the user edit page or open a modal for editing
@@ -394,4 +402,14 @@
             return `${day}-${month}-${year} ${strTime}`;
         }
     </script>
+
+<script>
+    // Retrieve the value of the orderNo parameter from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderNo = urlParams.get('orderNo');
+
+    // Populate the input field with the retrieved orderNo value
+    document.getElementById('order_no').value = orderNo;
+</script>
+
 @endsection
