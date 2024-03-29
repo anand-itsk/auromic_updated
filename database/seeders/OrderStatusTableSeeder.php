@@ -17,8 +17,9 @@ class OrderStatusTableSeeder extends Seeder
         
         $datas = array(
             array('name' => "Not Specified", 'code' => 'N/S'),
-            array('name' => "Status1", 'code' => 'S1'),
-            array('name' => "Status2", 'code' => 's2'),
+            array('name' => "Open", 'code' => 'OP'),
+            array('name' => "Complete", 'code' => 'CP'),
+            array('name' => "Pending", 'code' => 'PE'),
 
         );
 
