@@ -163,6 +163,7 @@ public function store(Request $request)
     $delivery_challan->quantity = $input['quantity'];
     $delivery_challan->product_size_id = $input['product_size_id'];
     $delivery_challan->product_color_id = $input['product_color_id'];
+        $delivery_challan->available_quantity = $input['quantity'];
     $delivery_challan->save();
 
     // Update available quantity in order details

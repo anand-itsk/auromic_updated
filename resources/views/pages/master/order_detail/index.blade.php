@@ -36,8 +36,8 @@
                                             title="Delete Selected Record"><i class="fa fa-user-times"></i></button>
                                     </div> --}}
                                     @error('file')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
                                     <div>
                                         <button id="deleteButton" style="display: none;"
                                             class="icon-button text-white bg-danger rounded fs-14"
@@ -46,8 +46,8 @@
                                     </div>
                                     <div>
                                         <!-- <button type="button" class="icon-button common-color bg-secondary rounded"
-                                            data-toggle="modal" data-target=".bs-example-modal-center"
-                                            title="Import file"><i class="fa fa-upload text-white"></i></button> -->
+                                                    data-toggle="modal" data-target=".bs-example-modal-center"
+                                                    title="Import file"><i class="fa fa-upload text-white"></i></button> -->
 
                                         <button class="icon-button  bg-primary rounded">
                                             <a href="{{ route('master.order_detail.create') }}"
@@ -114,7 +114,7 @@
                                                 <th>Total Quantity</th>
                                                 <th>Available Quantity</th>
                                                 <th>Total R.M</th>
-                                                
+
 
                                                 <th>Product Color</th>
 
@@ -204,7 +204,7 @@
                         name: 'id'
                     },
                     {
-                        data: 'order_no',
+                        data: 'order_no.last_order_number',
                         name: 'order_no',
                         render: function(data, type, row) {
                             return data ? data : '-';
@@ -238,7 +238,7 @@
                             return data ? data : '-';
                         }
                     },
-                    
+
                     {
                         data: 'product_color.name',
                         name: 'product_color.name',
@@ -269,6 +269,9 @@
                         <button onclick="edit(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
                         <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
                         <button onclick="showDetails(${row.id})" class="icon-button common-color"><i class="fa fa-eye"></i></button>
+                       <button onclick="addOrder(${row.id})" class="icon-button common-color"><i class="fa fa-plus"></i></button>
+
+
                     `;
                         }
 
@@ -333,11 +336,22 @@
             });
         });
 
+        function redirectToCreatePage(rowId, orderNo) {
+            window.location.href = '/master/order_detail/create?rowId=' + rowId + '&orderNo=' + encodeURIComponent(orderNo);
+        }
+
+
         function edit(id) {
             console.log("inside");
             // Redirect to the user edit page or open a modal for editing
             window.location.href = '/master/order_detail/edit/' + id;
         }
+
+        function addOrder(id) {
+            // Redirect to the user edit page or open a modal for editing
+            window.location.href = '/master/order_detail/add_order/' + id;
+        }
+
 
         function deleteCustomer(id) {
             console.log("inside")
@@ -393,5 +407,14 @@
 
             return `${day}-${month}-${year} ${strTime}`;
         }
+    </script>
+
+    <script>
+        // Retrieve the value of the orderNo parameter from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderNo = urlParams.get('orderNo');
+
+        // Populate the input field with the retrieved orderNo value
+        document.getElementById('order_no').value = orderNo;
     </script>
 @endsection

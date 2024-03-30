@@ -28,4 +28,6 @@ class FinishingProductModel extends Model
 {
     return $this->belongsTo(ProductSize::class, 'product_size_id');
 }
+
+ 
 }

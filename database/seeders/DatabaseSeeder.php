@@ -45,7 +45,8 @@ class DatabaseSeeder extends Seeder
             ProductTableSeeder::class,
             ProductSizeTableSeeder::class,
             OrderStatusTableSeeder::class,
-            ProductColorTableSeeder::class
+            ProductColorTableSeeder::class,
+            ProductModelTableSeeder::class
         ]);
     }
 }

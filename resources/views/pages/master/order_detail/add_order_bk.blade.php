@@ -18,7 +18,7 @@
                                 <li class="breadcrumb-item">Create</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Create Order Detail</h4>
+                        <h4 class="page-title">Add Order For {{ $order_details->orderNo->last_order_number }}</h4>
                     </div>
                 </div>
             </div>
@@ -28,21 +28,14 @@
                     <div class="card m-b-30">
                         <div class="card-body">
                             <div class="m-b-30">
-                                <form action="{{ route('master.order_detail.update', $order_details->id) }}" method="POST">
+                                <form
+                                    action="{{ route('master.order_detail.store_New_order', $order_details->order_no_id) }}"
+                                    method="POST">
                                     @csrf
                                     <div class="form-group row">
-                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Oder No</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="order_no" id="order_no"
-                                                value="{{ $order_details->order_no }}">
-                                            @error('order_no')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
                                         <label class="col-sm-2 col-form-label mandatory">Order Date</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input type="date" class="form-control" name="order_date" id="order_date"
-                                                value="{{ $order_details->order_date }}">
+                                            <input type="date" class="form-control" name="order_date" id="order_date">
                                             @error('order_date')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -64,14 +57,14 @@
                                         <label class="col-sm-2 col-form-label">Product</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control" name="product" id="product">
-    <option value="">Select Product</option>
-    @foreach ($products as $product)
-        <option value="{{ $product->id }}"
-            @if ($order_details->productModel && $order_details->productModel->product_id == $product->id) selected @endif>
-            {{ $product->name }}
-        </option>
-    @endforeach
-</select>
+                                                <option value="">Select Product</option>
+                                                @foreach ($products as $product)
+                                                    <option value="{{ $product->id }}"
+                                                        @if ($order_details->productModel && $order_details->productModel->product_id == $product->id) selected @endif>
+                                                        {{ $product->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                             @error('product')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -112,7 +105,8 @@
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="raw_material_name"
                                                 id="raw_material_name"
-                                                value="{{ $order_details->productModel->rawMaterial->name ??'' }}" readonly>
+                                                value="{{ $order_details->productModel->rawMaterial->name ?? '' }}"
+                                                readonly>
                                             @error('raw_material_name')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -122,7 +116,7 @@
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="raw_material_weight_item"
                                                 id="raw_material_weight_item"
-                                                value="{{ $order_details->productModel->raw_material_weight_item ??''}}"
+                                                value="{{ $order_details->productModel->raw_material_weight_item ?? '' }}"
                                                 readonly>
                                             @error('raw_material_weight_item')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
@@ -133,18 +127,19 @@
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="wages_employee"
                                                 id="wages_employee"
-                                                value="{{ $order_details->productModel->wages_product ??''}}" readonly>
+                                                value="{{ $order_details->productModel->wages_product ?? '' }}" readonly>
                                             @error('wages_employee')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="wages_employee" class="col-sm-2 col-form-label">Product 
+                                        <label for="wages_employee" class="col-sm-2 col-form-label">Product
                                             size
                                         </label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="product_size"
                                                 id="product_size"
-                                                value="{{ $order_details->productModel->productSize->name ??''}}" readonly>
+                                                value="{{ $order_details->productModel->productSize->name ?? '' }}"
+                                                readonly>
                                             @error('product_size')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -181,20 +176,20 @@
                                             @enderror
                                         </div>
                                         <!-- <label class="col-sm-2 col-form-label">Product Size</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="product_size_id"
-                                                id="product_size_id">
-                                                <option value="">Select Product Size</option>
-                                                @foreach ($product_size as $item)
-                                                    <option value="{{ $item->id }}"
-                                                        @if ($order_details->product_size_id == $item->id) selected @endif>
-                                                        {{ $item->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('order_status_id')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div> -->
+                                                            <div class="col-sm-4 mb-4">
+                                                                <select class="form-control select2" name="product_size_id"
+                                                                    id="product_size_id">
+                                                                    <option value="">Select Product Size</option>
+                                                                    @foreach ($product_size as $item)
+    <option value="{{ $item->id }}"
+                                                                            @if ($order_details->product_size_id == $item->id) selected @endif>
+                                                                            {{ $item->name }}</option>
+    @endforeach
+                                                                </select>
+                                                                @error('order_status_id')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+                                                            </div> -->
                                         <label class="col-sm-2 col-form-label">Product Color</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_color_id"
@@ -223,8 +218,11 @@
                                                 <button type="submit" class="btn btn-primary waves-effect waves-light">
                                                     Submit
                                                 </button>
-                                                
-                                                <a href="{{ route('master.order_detail.index') }}"
+                                                <a href="{{ route('master.product_model.create') }}"
+                                                    class="btn btn-warning waves-effect waves-light">
+                                                    Reset
+                                                </a>
+                                                <a href="{{ route('master.product_model.index') }}"
                                                     class="btn btn-secondary waves-effect m-l-5">
                                                     Cancel
                                                 </a>

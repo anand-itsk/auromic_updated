@@ -8,6 +8,7 @@ use App\Models\Employee;
 use App\Models\DirectJobGiving;
 use App\Exports\DirectJobGivingExport;
 use App\Models\ProductModel;
+use App\Models\FinishingProductModel;
 use App\Models\ProductSize;
 use App\Models\ProductColor;
 use Maatwebsite\Excel\Facades\Excel;
@@ -23,7 +24,7 @@ class DirectJobGivingController extends Controller
       public function indexData()
     {
         
-        $direct_job_giving = DirectJobGiving::with(['employee','productModel','productSize','productColor'])->get();
+        $direct_job_giving = DirectJobGiving::with(['employee','finishingProduct','productSize','productColor'])->get();
         return DataTables::of($direct_job_giving)->make(true);
     }
 
@@ -33,48 +34,43 @@ class DirectJobGivingController extends Controller
        $employee = Employee::with(['company' => function ($query) {
                 $query->with('companyType');
                  }])->get();
-        $product_model = ProductModel::all();
+        $finishingProduct = FinishingProductModel::all();
         $product_size = ProductSize::get();
         $product_color = ProductColor::get();
-        return view('pages.job_allocation.direct_job_giving.create',compact('employee','product_model','product_size','product_color'));
+        return view('pages.job_allocation.direct_job_giving.create',compact('employee','finishingProduct','product_size','product_color'));
      }
 
 
-     public function getModelDetails($id)
-    {
-        $productModel = ProductModel::with('product', 'rawMaterial.rawMaterialType')->find($id);
+     public function getFinishingProductDetails($id)
+{
+    $finishingProduct = FinishingProductModel::findOrFail($id);
+    
+    return response()->json([
+   
+        'product_name' => $finishingProduct->product->name,
+        
+    ]);
+}
 
-        if (!$productModel) {
-            return response()->json(['error' => 'Model not found'], 404);
-        }
-
-        $data = [
-            'product_name' => $productModel->product->name,
-            'raw_material_name' => $productModel->rawMaterial->name,
-            'raw_material_type' => $productModel->rawMaterial->rawMaterialType->name,
-        ];
-
-        return response()->json($data);
-    }
       public function store(Request $request)
 {
-   //  dd($request);
+    // dd($request);
     $validatedData = $request->validate([
          'employee_id' => 'required',
-         'product_model_id' => 'required',
+         'finishing_product_models_id' => 'required',
          
     ]);
    
      $direct_job_giving = new DirectJobGiving;
      $direct_job_giving->employee_id = $request->input('employee_id');
-     $direct_job_giving->product_model_id = $request->input('product_model_id');
+     $direct_job_giving->finishing_product_models_id = $request->input('finishing_product_models_id');
      $direct_job_giving->product_size_id = $request->input('product_size_id');
      $direct_job_giving->product_color_id = $request->input('product_color_id');
      $direct_job_giving->quantity = $request->input('quantity');
      $direct_job_giving->weight = $request->input('weight');
     
 
-   // dd($direct_job_giving); 
+  //  dd($direct_job_giving); 
 
     $direct_job_giving->save();
 
@@ -91,10 +87,10 @@ class DirectJobGivingController extends Controller
                 $query->with('companyType');
                  }])->get();
                
-        $product_model = ProductModel::all();
+    $finishingProduct = FinishingProductModel::all();
         $product_size = ProductSize::get();
         $product_color = ProductColor::get();
-        return view('pages.job_allocation.direct_job_giving.edit',compact('direct_job_giving','employee','product_model','product_size','product_color'));
+        return view('pages.job_allocation.direct_job_giving.edit',compact('direct_job_giving','employee','finishingProduct','product_size','product_color'));
      }
 
      
@@ -102,22 +98,22 @@ class DirectJobGivingController extends Controller
 
 public function update(Request $request, $id)
     {
-      //   dd($request);
+        // dd($request);
       $validatedData = $request->validate([
          'employee_id' => 'required',
-         'product_model_id' => 'required',
+         'finishing_product_models_id' => 'required',
     ]);
        
 
     $direct_job_giving =  DirectJobGiving::find($id);
      $direct_job_giving->employee_id = $request->input('employee_id');
-     $direct_job_giving->product_model_id = $request->input('product_model_id');
+     $direct_job_giving->finishing_product_models_id = $request->input('finishing_product_models_id');
      $direct_job_giving->product_size_id = $request->input('product_size_id');
      $direct_job_giving->product_color_id = $request->input('product_color_id');
      $direct_job_giving->quantity = $request->input('quantity');
      $direct_job_giving->weight = $request->input('weight');
 
-   // dd($direct_job_giving);
+  //  dd($direct_job_giving);
 
     $direct_job_giving->save();
 

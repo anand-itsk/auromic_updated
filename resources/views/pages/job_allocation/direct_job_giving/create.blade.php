@@ -72,20 +72,20 @@
                            </div>
                         <label for="customer_code" class="col-sm-2 col-form-label mandatory">Model</label>
                            <div class="col-sm-4 mb-4">
-                              <select class="form-control select2" name="product_model_id" id="product_model_id">
-                                 <option value="">Select Model</option>
-                                 @foreach($product_model as $productModel)
-                                 <option value="{{ $productModel->id }}" >{{ $productModel->model_name }}-{{ $productModel->model_code }}</option>
-                                 @endforeach
-                              </select>
-                              @error('product_model_id')
-                              <span class="error" style="color: red;">{{ $message }}</span>
-                              @enderror
+                              <select class="form-control" name="finishing_product_models_id" id="finishing_product_models_id">
+        <option value="">Select Finishing Model</option>
+        @foreach ($finishingProduct as $finishingProducts)
+            <option value="{{ $finishingProducts->id}}">{{ $finishingProducts->model_code }}</option>
+        @endforeach
+    </select>
+    @error('finishing_product_models_id')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
                            </div>
                            <label for="order_date" class="col-sm-2 col-form-label ">Product Name</label>
                            <div class="col-sm-4 mb-4">
-                              <input class="form-control" type="text" name="product" id="product" readonly>
-                              @error('product_id')
+                              <input class="form-control" type="text" name="product_name" id="product_name" readonly>
+                              @error('product_name')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
@@ -185,24 +185,24 @@
        });
    });
 </script>
-<script>
-   $(document).ready(function() {
-       $('#product_model_id').change(function() {
-           var modelId = $(this).val();
-           if (modelId) {
-               $.ajax({
-                   url: '/job_allocation/direct_job_giving/get-model-details/' + modelId,
-                   type: "GET",
-                   dataType: "json",
-                   success: function(data) {
-                       $('#product').val(data.product_name);
-                       $('#raw_material_name').val(data.raw_material_name);
-                       $('#raw_material_type').val(data.raw_material_type);
-                   }
-               });
-           }
-       });
-   });
+  <script>
+    $(document).ready(function() {
+        $('#finishing_product_models_id').change(function() {
+            var modelId = $(this).val();
+            if(modelId) {
+                $.ajax({
+                    url: '/job_allocation/direct_job_giving/get-finishing-product-details/' + modelId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success:function(data) {
+                       
+                        $('#product_name').val(data.product_name);
+                        
+                    }
+                });
+            }
+        });
+    });
 </script>
 @include('links.js.select2.select2')
 @endsection

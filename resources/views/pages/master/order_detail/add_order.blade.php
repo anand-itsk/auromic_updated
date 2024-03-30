@@ -18,7 +18,7 @@
                                 <li class="breadcrumb-item">Create</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Create Order Detail</h4>
+                        <h4 class="page-title">Add Order For {{ $order_details->orderNo->last_order_number }}</h4>
                     </div>
                 </div>
             </div>
@@ -28,33 +28,32 @@
                     <div class="card m-b-30">
                         <div class="card-body">
                             <div class="m-b-30">
-                                <form action="{{ route('master.order_detail.update', $order_details->id) }}" method="POST">
+                                <form action="{{ route('master.order_detail.store_New_order', $order_details->order_no_id) }}" method="POST">
                                     @csrf
+
+                                    <div class="d-flex justify-content-end mb-2">
+                                        <button class="btn btn-secondary cancel_btn">
+                                            <a href="{{ route('master.order_detail.index') }}" class="text-white">
+                                                Cancel
+                                            </a>
+                                        </button>
+                                    </div>
                                     <div class="form-group row">
-                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Oder No</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="order_no" id="order_no"
-                                                value="{{ $order_details->order_no }}">
-                                            @error('order_no')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
                                         <label class="col-sm-2 col-form-label mandatory">Order Date</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input type="date" class="form-control" name="order_date" id="order_date"
-                                                value="{{ $order_details->order_date }}">
+                                            <input type="date" class="form-control" name="order_date"
+                                                id="order_date"required>
                                             @error('order_date')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <label class="col-sm-2 col-form-label mandatory">Customer</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="customer_id" id="customer_id">
+                                            <select class="form-control select2" name="customer_id"
+                                                id="customer_id"required>
                                                 <option value="">Select Customer</option>
                                                 @foreach ($customer as $item)
-                                                    <option value="{{ $item->id }}"
-                                                        @if ($order_details->customer_id == $item->id) selected @endif>
-                                                        {{ $item->customer_name }}</option>
+                                                    <option value="{{ $item->id }}">{{ $item->customer_name }}</option>
                                                 @endforeach
                                             </select>
                                             @error('customer_id')
@@ -64,21 +63,18 @@
                                         <label class="col-sm-2 col-form-label">Product</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control" name="product" id="product">
-    <option value="">Select Product</option>
-    @foreach ($products as $product)
-        <option value="{{ $product->id }}"
-            @if ($order_details->productModel && $order_details->productModel->product_id == $product->id) selected @endif>
-            {{ $product->name }}
-        </option>
-    @endforeach
-</select>
+                                                <option value="">Select Product</option>
+                                                @foreach ($products as $product)
+                                                    <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                                @endforeach
+                                            </select>
                                             @error('product')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <label class="col-sm-2 col-form-label">Model</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control" name="product_model" id="product_model">
+                                            <select class="form-control" name="product_model" id="product_model" disabled>
                                                 <option value="">Select Product Model</option>
                                                 @foreach ($productModels as $productModel)
                                                     <option value="{{ $productModel->id }}"
@@ -87,8 +83,8 @@
                                                         data-weight="{{ $productModel->raw_material_weight_item }}"
                                                         data-raw-material-id="{{ $productModel->raw_material_id }}"
                                                         data-raw-material-type="{{ $productModel->rawMaterial->rawMaterialType->name ?? '' }}"
-                                                        data-raw-material-name="{{ $productModel->rawMaterial->name }}"
-                                                        @if ($order_details->product_model_id == $productModel->id) selected @endif>
+                                                        data-raw-material-name="{{ $productModel->rawMaterial->name ?? '' }}"
+                                                        data-product-size="{{ $productModel->productSize->name ?? '' }}">
                                                         {{ $productModel->model_name }}-{{ $productModel->model_code }}
                                                     </option>
                                                 @endforeach
@@ -97,13 +93,10 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-
                                         <label for="raw_material_type" class="col-sm-2 col-form-label">R.M Type</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="raw_material_type"
-                                                id="raw_material_type"
-                                                value="{{ $order_details->productModel->rawMaterial->rawMaterialType->name ?? '' }}"
-                                                readonly>
+                                                id="raw_material_type" readonly>
                                             @error('raw_material_type')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -111,8 +104,7 @@
                                         <label for="raw_material_name" class="col-sm-2 col-form-label ">R.M Name</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="raw_material_name"
-                                                id="raw_material_name"
-                                                value="{{ $order_details->productModel->rawMaterial->name ??'' }}" readonly>
+                                                id="raw_material_name" readonly>
                                             @error('raw_material_name')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -121,46 +113,40 @@
                                             Weight/Item</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="raw_material_weight_item"
-                                                id="raw_material_weight_item"
-                                                value="{{ $order_details->productModel->raw_material_weight_item ??''}}"
-                                                readonly>
+                                                id="raw_material_weight_item" readonly>
                                             @error('raw_material_weight_item')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="wages_employee" class="col-sm-2 col-form-label">Wages of
+                                        <label for="wages_employee" class="col-sm-2 col-form-label ">Wages of
                                             Employee</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="wages_employee"
-                                                id="wages_employee"
-                                                value="{{ $order_details->productModel->wages_product ??''}}" readonly>
+                                                id="wages_employee" readonly>
                                             @error('wages_employee')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="wages_employee" class="col-sm-2 col-form-label">Product 
-                                            size
-                                        </label>
+                                        <label for="wages_employee" class="col-sm-2 col-form-label ">Product Size</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="product_size"
-                                                id="product_size"
-                                                value="{{ $order_details->productModel->productSize->name ??''}}" readonly>
+                                                id="product_size" readonly>
                                             @error('product_size')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="wages_employee" class="col-sm-2 col-form-label ">Quantity</label>
+                                        <label for="wages_employee" class="col-sm-2 col-form-label">Quantity</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="quantity"
-                                                id="quantity"value="{{ $order_details->quantity }}">
-                                            @error('wages_employee')
+                                            <input class="form-control" type="text" name="quantity" id="quantity">
+                                            @error('quantity')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
+
                                         <label class="col-sm-2 col-form-label">Delivery Date</label>
                                         <div class="col-sm-4 mb-4">
                                             <input type="date" class="form-control" name="delivery_date"
-                                                id=""value="{{ $order_details->delivery_date }}">
+                                                id="">
                                             @error('delivery_date')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -171,9 +157,7 @@
                                                 id="order_status_id">
                                                 <option value="">Select Order Status</option>
                                                 @foreach ($order_status as $item)
-                                                    <option value="{{ $item->id }}"
-                                                        @if ($order_details->order_status_id == $item->id) selected @endif>
-                                                        {{ $item->name }}</option>
+                                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                 @endforeach
                                             </select>
                                             @error('order_status_id')
@@ -181,55 +165,55 @@
                                             @enderror
                                         </div>
                                         <!-- <label class="col-sm-2 col-form-label">Product Size</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="product_size_id"
-                                                id="product_size_id">
-                                                <option value="">Select Product Size</option>
-                                                @foreach ($product_size as $item)
-                                                    <option value="{{ $item->id }}"
-                                                        @if ($order_details->product_size_id == $item->id) selected @endif>
-                                                        {{ $item->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('order_status_id')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div> -->
+                                            <div class="col-sm-4 mb-4">
+                                                <select class="form-control select2" name="product_size_id"
+                                                    id="product_size_id">
+                                                    <option value="">Select Product Size</option>
+                                                    @foreach ($product_size as $item)
+    <option value="{{ $item->id }}">{{ $item->name }}</option>
+    @endforeach
+                                                </select>
+                                                @error('order_status_id')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+                                            </div> -->
                                         <label class="col-sm-2 col-form-label">Product Color</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_color_id"
                                                 id="product_color_id">
                                                 <option value="">Select Product Color</option>
                                                 @foreach ($product_color as $item)
-                                                    <option value="{{ $item->id }}"
-                                                        @if ($order_details->product_color_id == $item->id) selected @endif>
-                                                        {{ $item->name }}</option>
+                                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                 @endforeach
                                             </select>
                                             @error('product_color_id')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="customer_code" class="col-sm-2 col-form-label ">Total R.M</label>
+                                        <label for="customer_code" class="col-sm-2 col-form-label">Total R.M</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="total_raw_material"
-                                                id="model_code" value="{{ $order_details->total_raw_material }}">
+                                                id="total_raw_material" readonly>
                                             @error('total_raw_material')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <div class="form-group">
-                                            <div class="d-flex justify-content-evenly">
-                                                <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                                    Submit
-                                                </button>
-                                                
-                                                <a href="{{ route('master.order_detail.index') }}"
-                                                    class="btn btn-secondary waves-effect m-l-5">
-                                                    Cancel
-                                                </a>
-                                            </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="d-flex justify-content-evenly">
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                                Submit
+                                            </button>
+                                            <a href="{{ route('master.order_detail.create') }}"
+                                                class="btn btn-warning waves-effect waves-light">
+                                                Reset
+                                            </a>
+                                            <a href="{{ route('master.order_detail.index') }}"
+                                                class="btn btn-secondary waves-effect m-l-5">
+                                                Cancel
+                                            </a>
                                         </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -260,6 +244,8 @@
             const wagesEmployeeInput = document.getElementById('wages_employee');
             const rawMaterialTypeInput = document.getElementById('raw_material_type');
             const rawMaterialNameInput = document.getElementById('raw_material_name');
+            const productSizeInput = document.getElementById('product_size');
+
 
 
             productModelSelect.addEventListener('change', function() {
@@ -268,11 +254,13 @@
                 const wagesEmployee = selectedOption.dataset.wage;
                 const rawMaterialType = selectedOption.dataset.rawMaterialType;
                 const rawMaterialName = selectedOption.dataset.rawMaterialName;
+                const productSize = selectedOption.dataset.productSize;
 
                 rawMaterialWeightItemInput.value = rawMaterialWeight;
                 wagesEmployeeInput.value = wagesEmployee;
                 rawMaterialTypeInput.value = rawMaterialType;
                 rawMaterialNameInput.value = rawMaterialName;
+                productSizeInput.value = productSize;
             });
         });
     </script>
@@ -283,40 +271,32 @@
             });
         });
     </script>
+
     <script>
-        $(document).ready(function() {
-            $('#product').on('change', function() {
-                var productId = $(this).val(); // Get the selected product ID
-                // Assuming you have an input field with id 'product_model'
-                // You can update the value of the input field with the selected product ID
-                $('#product_model').val(productId);
-            });
+        // Get the input fields
+        var rawMaterialWeightItemInput = document.getElementById('raw_material_weight_item');
+        var quantityInput = document.getElementById('quantity');
+        var totalRawMaterialInput = document.getElementById('total_raw_material');
+
+        // Add event listener to quantity input field
+        quantityInput.addEventListener('input', function() {
+            // Get the values from input fields
+            var rawMaterialWeightItem = parseFloat(rawMaterialWeightItemInput.value);
+            var quantity = parseFloat(quantityInput.value);
+
+            // Calculate the total raw material
+            var totalRawMaterial = rawMaterialWeightItem * quantity;
+
+            // Update the total raw material input field with the calculated value
+            totalRawMaterialInput.value = isNaN(totalRawMaterial) ? '' : totalRawMaterial.toFixed();
         });
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get references to the select elements
-            var productSelect = document.getElementById('product');
-            var productModelSelect = document.getElementById('product_model');
-
-            // Listen for change event on product model select
-            productModelSelect.addEventListener('change', function() {
-                // Get the selected option
-                var selectedModelOption = productModelSelect.options[productModelSelect.selectedIndex];
-
-                // Get the product id associated with the selected model
-                var productId = selectedModelOption.getAttribute('data-product-id');
-
-                // Find the corresponding product option and select it
-                for (var i = 0; i < productSelect.options.length; i++) {
-                    if (productSelect.options[i].value === productId) {
-                        productSelect.selectedIndex = i;
-                        break;
-                    }
-                }
-            });
-        });
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderNo = urlParams.get('orderNo');
+        document.getElementById('order_no').value = orderNo;
     </script>
+
     @include('links.js.select2.select2')
 @endsection

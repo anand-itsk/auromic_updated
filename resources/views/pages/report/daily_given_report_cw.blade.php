@@ -1,6 +1,7 @@
 @extends('layouts.app')
 <!-- DataTables CSS -->
 
+
 @section('content')
     @include('links.css.datatable.datatable-css')
     @include('links.css.table.custom-css')
@@ -14,48 +15,118 @@
                     {{ session('success') }}
                 </div>
             @endif
+
+             @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="row">
                 <div class="col-sm-12">
                     <div class="page-title-box">
                         <div class="btn-group float-right">
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="#">Auromics</a></li>
-                                <li class="breadcrumb-item"><a href="#">Master</a></li>
-                                <li class="breadcrumb-item active">Incentive</li>
+                                <li class="breadcrumb-item"><a href="#">Report</a></li>
+                                <li class="breadcrumb-item active">Daily Given Report (CW)</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Incentive</h4>
+                        <h4 class="page-title">Daliy Given Report (CW)</h4>
                     </div>
+                       <div class="card mb-2">
+                           <div class="card-body">
+                <div class="form-group row mb-0">
+                           <label for="customer_code" class="col-sm-2 col-form-label ">
+                           Master Company
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                              <select class="form-control select2" name="master_company" id="master_company">
+                                 <option value="">Select Company</option>
+                                 
+                              </select>
+                              @error('master_company')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                            <label for="customer_code" class="col-sm-2 col-form-label ">
+                           Client Company
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                              <select class="form-control select2" name="client_company" id="client_company">
+                                 <option value="">Select Company</option>
+                                 
+                              </select>
+                              @error('client_company')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+
+                           <label for="customer_code" class="col-sm-2 col-form-label ">
+                           Sub Client Company
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                              <select class="form-control select2" name="sub_client_company" id="sub_client_company">
+                                 <option value="">Select Company</option>
+                                 
+                              </select>
+                              @error('sub_client_company')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                           <label for="customer_code" class="col-sm-2 col-form-label ">
+                           From Date
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                            <input type="date" class="form-control" name="from_date" id="">
+                              @error('company_type_id')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                           <label for="customer_code" class="col-sm-2 col-form-label ">
+                           Last Date
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                            <input type="date" class="form-control" name="last_date" id="">
+                              @error('company_type_id')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                           <label for="customer_code" class="col-sm-2 col-form-label ">
+                           Date
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                            <input type="date" class="form-control" name="date" id="">
+                              @error('company_type_id')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                               <label for="customer_code" class="col-sm-2 col-form-label ">
+                           Status
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                              <select class="form-control select2" name="status" id="">
+                                 <option value="">Select status</option>
+                                 
+                              </select>
+                              @error('status')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                           
+                           
+</div>
+</div>
+</div>
                     <div class="row">
                         <div class="col-12">
                             <div class="card m-b-30">
                                 <div class="d-flex justify-content-between p-2 bd-highlight">
-                                    {{-- <div>
-                                    <button id="deleteButton" class="icon-button delete-color"
-                                        title="Delete Selected Record"><i class="fa fa-user-times"></i></button>
-                                </div> --}}
-
-                                @error('file')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                    <div>
-                                        <button id="deleteButton" style="display: none;"
-                                            class="icon-button text-white bg-danger rounded fs-14"
-                                            title="Delete Selected Record">
-                                            Delete Selected Record</button>
-                                    </div>
-                                    <div>
-                                        <!-- <button type="button" class="icon-button common-color bg-secondary rounded"
-                                            data-toggle="modal" data-target=".bs-example-modal-center"
-                                            title="Import file"><i class="fa fa-upload text-white"></i></button> -->
-
-                                        <button class="icon-button  bg-primary rounded">
-                                            <a href="{{ route('master.incentives.create') }}" class="icon-link common-color"
-                                                title="Create Incentive">
-                                                <i class="fa fa-user-plus text-white"></i>
-                                            </a>
-                                        </button>
-                                    </div>
+                                   
+                                
+                                    
                                 </div>
                                 {{-- Import Modal --}}
                                 <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog"
@@ -74,7 +145,7 @@
                                                     <div class="col-12">
                                                         <div class="card m-b-30">
                                                             <div class="card-body">
-                                                                <form action="{{ route('master.incentives.import') }}"
+                                                                <form action=""
                                                                     method="POST" enctype="multipart/form-data">
                                                                     @csrf
                                                                     <input type="file" name="file" required>
@@ -94,7 +165,7 @@
                                                     .xlsx or .csv)</p>
                                                 <p class="text-muted font-14">To upload sample document, it
                                                     must have concern fields.
-                                                    <a href="{{ asset('assets/sample_excels/incentive_import.xlsx') }}"
+                                                    <a href=""
                                                         download>Click
                                                         to download sample document</a>
                                                 </p>
@@ -109,10 +180,17 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Finishing Product model</th>
-                                                <th>Duration Period</th>
-                                                <th>Amount</th>
-                                                <th>Action</th>
+                                                <th>Employee code</th>
+                                                <th>Employee Name</th>
+                                                <th>Order Number</th>
+                                                <th>Model Code</th>
+                                                 <th>Model Name</th>
+                                                  <th>Product Size</th>
+                                                    <th>Quantity</th>
+                                                     <th>Color</th>
+                                                        <th>Weight</th>
+                                                        <th>Weight</th>
+            
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -189,27 +267,85 @@
             table = $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('master.incentives.data') }}',
+                ajax: '{{ route('report.daily_given_report_cw.data') }}',
                 columns: [{
-
                         data: 'id',
                         name: 'id'
                     },
                     {
-                      data: 'finishing_product.model_code',
-                       name: 'finishing_product.model_code'
+                        data: 'employee.employee_code',
+                        name: 'employee.employee_code',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
                     },
-                    
                     {
-                        data: 'duration_period',
-                        name: 'duration_period'
+                        data: 'employee.employee_name',
+                        name: 'employee.employee_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
                     },
                      {
-                        data: 'amount',
-                        name: 'amount'
+                        data: 'order_details.order_no',
+                        name: 'order_details.order_no',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                    },
+                    {
+                        data: 'product_model.model_code',
+                        name: 'product_model.model_code',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                    {
+                        data: 'product_model.model_name',
+                        name: 'product_model.model_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                    
+                     {
+                        data: 'product_model.productSize.name',
+                        name: 'product_model.productSize.name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                    {
+                        data: 'quantity',
+                        name: 'quantity',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                     {
+                        data: 'order_details.product_color_id',
+                        name: 'order_details.product_color_id',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
 
+                    {
+                        data: 'product_model.raw_material_weight_item',
+                        name: 'product_model.raw_material_weight_item',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
 
+                    
                     {
                         data: null,
                         orderable: false,
@@ -218,6 +354,7 @@
                             return `
                         <button onclick="edit(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
                         <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
+                        
                     `;
                         }
 
@@ -233,7 +370,7 @@
                     {
                         text: 'Export All',
                         action: function(e, dt, node, config) {
-                            window.location.href = '/master/incentives/export?' + $.param(dt.ajax
+                            window.location.href = '/job_allocation/delivery_challan/export?' + $.param(dt.ajax
                                 .params());
                         }
                     }
@@ -242,18 +379,7 @@
             });
 
 
-            // Listen for row selection event
-            $('#users-table').on('select.dt deselect.dt', function() {
-                var selectedRows = table.rows({
-                    selected: true
-                }).count();
 
-                if (selectedRows > 0) {
-                    $('#deleteButton').show(); // Show delete button if rows are selected
-                } else {
-                    $('#deleteButton').hide(); // Hide delete button if no rows are selected
-                }
-            });
             $('#deleteButton').click(function() {
                 var ids = $.map(table.rows('.selected').data(), function(item) {
                     return item.id;
@@ -267,7 +393,7 @@
                 if (confirm("Are you sure you want to delete these rows?")) {
                     // Send AJAX request to delete the selected rows
                     $.ajax({
-                        url: '/master/incentives/delete/selected',
+                        url: '/job_allocation/delivery_challan/delete/selected',
                         type: 'POST',
                         data: {
                             ids: ids,
@@ -285,15 +411,15 @@
         function edit(id) {
             console.log("inside");
             // Redirect to the user edit page or open a modal for editing
-            window.location.href = '/master/incentives/edit/' + id;
+            window.location.href = '/job_allocation/delivery_challan/edit/' + id;
         }
 
         function deleteCustomer(id) {
             console.log("inside")
             // Send an AJAX request to delete the user
-            if (confirm('Are you sure you want to delete this Incentive?')) {
+            if (confirm('Are you sure you want to delete this Delivery challan?')) {
                 $.ajax({
-                    url: '/master/incentives/delete/' + id,
+                    url: '/job_allocation/delivery_challan/delete/' + id,
                     type: 'get',
                     data: {
                         _token: '{{ csrf_token() }}',
@@ -308,7 +434,7 @@
         function showDetails(userId) {
             // Fetch user details using AJAX
             $.ajax({
-                url: '/master/incentives/show/' + userId,
+                url: '/master/customers/show/' + userId,
                 type: 'GET',
                 success: function(response) {
 

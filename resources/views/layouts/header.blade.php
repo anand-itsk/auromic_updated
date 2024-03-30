@@ -301,6 +301,16 @@
 
                         </ul>
                     </li>
+                    {{--Report--}}
+                     <li class="has-submenu">
+                        <a href="#"><i class="dripicons-briefcase"></i>Report</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="{{ route('report.employee_report.index') }}">Employee Report</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
                 </ul>
                 <!-- End navigation menu -->
             </div> <!-- end #navigation -->

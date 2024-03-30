@@ -1,6 +1,7 @@
 @extends('layouts.app')
 <!-- DataTables CSS -->
 
+
 @section('content')
     @include('links.css.datatable.datatable-css')
     @include('links.css.table.custom-css')
@@ -14,48 +15,95 @@
                     {{ session('success') }}
                 </div>
             @endif
+
+             @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="row">
                 <div class="col-sm-12">
                     <div class="page-title-box">
                         <div class="btn-group float-right">
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="#">Auromics</a></li>
-                                <li class="breadcrumb-item"><a href="#">Master</a></li>
-                                <li class="breadcrumb-item active">Incentive</li>
+                                <li class="breadcrumb-item"><a href="#">Report</a></li>
+                                <li class="breadcrumb-item active">Employee Report</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Incentive</h4>
+                        <h4 class="page-title">Employee Report</h4>
                     </div>
+                       <div class="card mb-2">
+                           <div class="card-body">
+                <div class="form-group row mb-0">
+                           <label for="customer_code" class="col-sm-2 col-form-label ">
+                            Company Type
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                              <select class="form-control select2" name="company_type" id="company_type">
+                                 <option value="">Select Type</option>
+                                  @foreach($companyType as $type)
+            <option value="{{ $type->id }}">{{ $type->name }}</option>
+        @endforeach
+                                 
+                              </select>
+                              @error('company_type')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                            <label for="customer_code" class="col-sm-2 col-form-label ">
+                           Companies
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                             <select class="form-control select2" name="companies" id="companies" disabled>
+        <option value="">Select Company</option>
+        @foreach($company as $c)
+            <option value="{{ $c->id }}" data-type-id="{{ $c->company_type_id }}">{{ $c->company_name }}</option>
+        @endforeach
+    </select>
+                              @error('Companies')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+
+                           
+                           <label for="customer_code" class="col-sm-2 col-form-label ">
+                           Joining Date
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                            <input type="date" class="form-control" name="joining_date" id="joining_date">
+                              @error('joining_date')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+
+                            <!-- <label for="customer_code" class="col-sm-2 col-form-label ">
+                           Gender
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                              <select class="form-control select2" name="gender" id="gender">
+                                 <option value="">Select Gender</option>
+                                 
+                              </select>
+                              @error('gender')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div> -->
+                           
+                           
+</div>
+</div>
+</div>
                     <div class="row">
                         <div class="col-12">
                             <div class="card m-b-30">
                                 <div class="d-flex justify-content-between p-2 bd-highlight">
-                                    {{-- <div>
-                                    <button id="deleteButton" class="icon-button delete-color"
-                                        title="Delete Selected Record"><i class="fa fa-user-times"></i></button>
-                                </div> --}}
-
-                                @error('file')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                    <div>
-                                        <button id="deleteButton" style="display: none;"
-                                            class="icon-button text-white bg-danger rounded fs-14"
-                                            title="Delete Selected Record">
-                                            Delete Selected Record</button>
-                                    </div>
-                                    <div>
-                                        <!-- <button type="button" class="icon-button common-color bg-secondary rounded"
-                                            data-toggle="modal" data-target=".bs-example-modal-center"
-                                            title="Import file"><i class="fa fa-upload text-white"></i></button> -->
-
-                                        <button class="icon-button  bg-primary rounded">
-                                            <a href="{{ route('master.incentives.create') }}" class="icon-link common-color"
-                                                title="Create Incentive">
-                                                <i class="fa fa-user-plus text-white"></i>
-                                            </a>
-                                        </button>
-                                    </div>
+                                   
+                                
+                                    
                                 </div>
                                 {{-- Import Modal --}}
                                 <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog"
@@ -74,7 +122,7 @@
                                                     <div class="col-12">
                                                         <div class="card m-b-30">
                                                             <div class="card-body">
-                                                                <form action="{{ route('master.incentives.import') }}"
+                                                                <form action=""
                                                                     method="POST" enctype="multipart/form-data">
                                                                     @csrf
                                                                     <input type="file" name="file" required>
@@ -94,7 +142,7 @@
                                                     .xlsx or .csv)</p>
                                                 <p class="text-muted font-14">To upload sample document, it
                                                     must have concern fields.
-                                                    <a href="{{ asset('assets/sample_excels/incentive_import.xlsx') }}"
+                                                    <a href=""
                                                         download>Click
                                                         to download sample document</a>
                                                 </p>
@@ -109,10 +157,12 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Finishing Product model</th>
-                                                <th>Duration Period</th>
-                                                <th>Amount</th>
-                                                <th>Action</th>
+                                                <th>Employee code</th>
+                                                <th>Employee Name</th>
+                                                <th>DOB</th>
+                                                <th>Joning Date</th>
+                                                
+            
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -184,116 +234,82 @@
 
 
     <script>
-        var table;
-        $(document).ready(function() {
-            table = $('#users-table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '{{ route('master.incentives.data') }}',
-                columns: [{
+       var table;
 
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
-                      data: 'finishing_product.model_code',
-                       name: 'finishing_product.model_code'
-                    },
-                    
-                    {
-                        data: 'duration_period',
-                        name: 'duration_period'
-                    },
-                     {
-                        data: 'amount',
-                        name: 'amount'
-                    },
+$(document).ready(function() {
+    var table;
 
-
-                    {
-                        data: null,
-                        orderable: false,
-                        searchable: false,
-                        render: function(data, type, row) {
-                            return `
-                        <button onclick="edit(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
-                        <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
-                    `;
-                        }
-
-                    },
-                ],
-                order: [
-                    [0, 'desc']
-                ],
-                select: true,
-                dom: 'lBfrtip',
-                buttons: [
-                    'excel', 'print',
-                    {
-                        text: 'Export All',
-                        action: function(e, dt, node, config) {
-                            window.location.href = '/master/incentives/export?' + $.param(dt.ajax
-                                .params());
-                        }
-                    }
-                ]
-
-            });
-
-
-            // Listen for row selection event
-            $('#users-table').on('select.dt deselect.dt', function() {
-                var selectedRows = table.rows({
-                    selected: true
-                }).count();
-
-                if (selectedRows > 0) {
-                    $('#deleteButton').show(); // Show delete button if rows are selected
-                } else {
-                    $('#deleteButton').hide(); // Hide delete button if no rows are selected
+    // Initialize DataTable
+    $('#companies').prop('disabled', true);
+    table = $('#users-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '{{ route('report.employee_report.data') }}',
+            data: function(d) {
+                // Add additional parameters here if needed
+                d.company_type = $('#company_type').val();
+                d.joining_date = $('#joining_date').val();
+                 d.companies = $('#companies').val();
+            }
+        },
+        columns: [
+            { data: 'id', name: 'id' },
+            { data: 'employee_code', name: 'employee_code', render: function(data, type, row) { return data ? data : '-'; } },
+            { data: 'employee_name', name: 'employee_name', render: function(data, type, row) { return data ? data : '-'; } },
+            { data: 'dob', name: 'dob', render: function(data, type, row) { return data ? data : '-'; } },
+            { data: 'joining_date', name: 'joining_date', render: function(data, type, row) { return data ? data : '-'; } }
+        ],
+        order: [[0, 'desc']],
+        select: true,
+        dom: 'lBfrtip',
+        buttons: [
+            'excel', 'print',
+            {
+                text: 'Export All',
+                action: function(e, dt, node, config) {
+                    window.location.href = '/job_allocation/delivery_challan/export?' + $.param(dt.ajax.params());
                 }
-            });
-            $('#deleteButton').click(function() {
-                var ids = $.map(table.rows('.selected').data(), function(item) {
-                    return item.id;
-                });
+            }
+        ]
+    });
 
-                if (ids.length === 0) {
-                    alert('No rows selected!');
-                    return;
-                }
+    // Event listener for company type dropdown
+    $('#company_type').on('change', function() {
+        var selectedCompanyType = $(this).val();
+        if (selectedCompanyType) {
+            $('#companies').prop('disabled', false);
+        } else {
+            $('#companies').prop('disabled', true).val('');
+        }
+        // Reload DataTable with updated parameters
+        table.ajax.reload();
+    });
 
-                if (confirm("Are you sure you want to delete these rows?")) {
-                    // Send AJAX request to delete the selected rows
-                    $.ajax({
-                        url: '/master/incentives/delete/selected',
-                        type: 'POST',
-                        data: {
-                            ids: ids,
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function(response) {
-                            // Handle response here
-                            table.ajax.reload(); // Reload the DataTable
-                        }
-                    });
-                }
-            });
-        });
+    // Event listener for joining date dropdown
+    $('#joining_date').on('change', function() {
+        // Reload DataTable with updated parameters
+        table.ajax.reload();
+    });
 
+    // Event listener for companies dropdown
+    $('#companies').on('change', function() {
+        // Reload DataTable with updated parameters
+        table.ajax.reload();
+    });
+});
         function edit(id) {
             console.log("inside");
             // Redirect to the user edit page or open a modal for editing
-            window.location.href = '/master/incentives/edit/' + id;
+            window.location.href = '/job_allocation/delivery_challan/edit/' + id;
         }
 
         function deleteCustomer(id) {
             console.log("inside")
             // Send an AJAX request to delete the user
-            if (confirm('Are you sure you want to delete this Incentive?')) {
+            if (confirm('Are you sure you want to delete this Delivery challan?')) {
                 $.ajax({
-                    url: '/master/incentives/delete/' + id,
+                    url: '/job_allocation/delivery_challan/delete/' + id,
                     type: 'get',
                     data: {
                         _token: '{{ csrf_token() }}',
@@ -308,7 +324,7 @@
         function showDetails(userId) {
             // Fetch user details using AJAX
             $.ajax({
-                url: '/master/incentives/show/' + userId,
+                url: '/master/customers/show/' + userId,
                 type: 'GET',
                 success: function(response) {
 
@@ -343,4 +359,28 @@
             return `${day}-${month}-${year} ${strTime}`;
         }
     </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var companyTypeSelect = document.getElementById('company_type');
+        var companiesSelect = document.getElementById('companies');
+
+        companyTypeSelect.addEventListener('change', function () {
+            var selectedTypeId = this.value;
+
+            // Reset options
+            companiesSelect.innerHTML = '<option value="">Select Company</option>';
+
+            // Filter and populate options based on selected type
+            var companies = @json($company);
+            companies.forEach(function (company) {
+                if (company.company_type_id == selectedTypeId) {
+                    var option = document.createElement('option');
+                    option.value = company.id;
+                    option.textContent = company.company_name;
+                    companiesSelect.appendChild(option);
+                }
+            });
+        });
+    });
+</script>
 @endsection

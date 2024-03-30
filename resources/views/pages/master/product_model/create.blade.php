@@ -13,7 +13,7 @@
                         <div class="btn-group float-right">
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Auromics</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('master.customers.index') }}">Customer</a>
+                                <li class="breadcrumb-item"><a href="{{ route('master.product_model.index') }}">Product Model</a>
                                 </li>
                                 <li class="breadcrumb-item">Create</li>
                             </ol>

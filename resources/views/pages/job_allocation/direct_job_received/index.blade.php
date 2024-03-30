@@ -91,7 +91,7 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Employee</th>
-                                            <th>Product Model</th>
+                                            <th>finishing Product Model</th>
                                             <th>Product Size</th>
                                             <th>Product Color</th>
                                              <th>quantity</th>
@@ -284,9 +284,12 @@ $(document).ready(function() {
                 data: 'employee.employee_name',
                 name: 'employee.employee_name'
             },
-            {
-                data: 'product_model.model_name',
-                name: 'product_model.model_name'
+              {
+                data: 'finishing_product.model_code',
+                name: 'finishing_product.model_code',
+                 render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
             },
             {
                 data: 'product_size.name',
