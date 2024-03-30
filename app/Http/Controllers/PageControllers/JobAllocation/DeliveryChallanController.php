@@ -13,6 +13,7 @@ use App\Models\ProductSize;
 use App\Models\ProductColor;
 use App\Models\DeliveryChallan;
 use App\Models\OrderDetail;
+use App\Models\OrderNo;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
@@ -26,11 +27,11 @@ class DeliveryChallanController extends Controller
         return view('pages.job_allocation.delivery_challan.index');
     }
     // Index DataTable
-    public function indexData()
-    {
-        $delivery_challans = DeliveryChallan::with('company', 'order_details','productSize','productColor')->get();
-        return DataTables::of($delivery_challans)->make(true);
-    }
+        public function indexData()
+        {
+            $delivery_challans = DeliveryChallan::with('company', 'order_details','productSize','productColor')->get();
+            return DataTables::of($delivery_challans)->make(true);
+        }
     // Create Page
     public function create()
     {
@@ -50,11 +51,14 @@ class DeliveryChallanController extends Controller
         $company_types = CompanyType::all();
         $authorised_people = AuthorisedPerson::all();
         $order_details = OrderDetail::all();
+        $order_nos = OrderNo::all();
         $productModels = ProductModel::with(['rawMaterial.rawMaterialType'])->get();
         $product_size= ProductSize::all();
         $product_color = ProductColor::all();
+
         
-        return view('pages.job_allocation.delivery_challan.create', compact('company', 'authorised_people', 'order_details','company_types','customer','productModels','product_size','product_color','formattedDCNumber'));
+        
+        return view('pages.job_allocation.delivery_challan.create', compact('company', 'authorised_people', 'order_details','company_types','customer','productModels','product_size','product_color','formattedDCNumber','order_nos'));
     }
   public function getProductModel($orderId)
     {
@@ -91,6 +95,7 @@ public function getOrderDetails($orderId)
         
         'total_quantity' => $order->quantity,
         'available_quantity' => $order->available_quantity,
+        'order_date' => $order->order_date,
     ];
     return response()->json($orderDetails);
 }
@@ -128,7 +133,6 @@ public function store(Request $request)
     $validatedData = $request->validate([
         'company_type_id' => 'required',
         'company_id' => 'required',
-        'customer_id' => 'required',
         'product_model' => 'required',
         'dc_number' => 'required',
         'dc_date' => 'required',
