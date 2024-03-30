@@ -77,11 +77,12 @@
                            <div class="col-sm-4 mb-4">
                               <select class="form-control select2" name="order_id" id="order_id" onchange="fetchQuantities()">
     <option value="">Select Order</option>
-    <!-- @foreach ($order_nos as $item)
+    @foreach ($order_nos as $item)
         <option value="{{ $item->id }}">
-            {{ $item->last_order_number }}
+            <!-- {{ $item->last_order_number }} -->
+            test
         </option>
-    @endforeach -->
+    @endforeach
 </select>
                               @error('order_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
@@ -366,22 +367,7 @@
     });
 </script>
 
-<script>
-    document.getElementById('quantity').addEventListener('input', function() {
-        var quantity = parseInt(document.getElementById('quantity').value);
-        var availableQuantity = parseInt(document.getElementById('available_quantity').value);
 
-        var quantityError = document.getElementById('quantity-error');
-
-        if (quantity > availableQuantity) {
-            quantityError.textContent = 'Quantity cannot exceed available quantity!';
-            quantityError.style.display = 'block';
-            // document.getElementById('quantity').value = availableQuantity;
-        } else {
-            quantityError.style.display = 'none';
-        }
-    });
-</script>
 
 <script>
     // Function to fetch company name based on selected employee ID
@@ -404,9 +390,18 @@
                 $('#order_id').empty();
                 $('#order_id').append('<option value="">Select Order</option>');
                 console.log(response);
-                $.each(response.order_ids, function(index, value) {
-                    $('#order_id').append('<option value="' + value.id + '">' + value.last_order_number + '</option>');
-                });
+                // $.each(response.order_ids, function(index, value) {
+
+                //     $('#order_id').append('<option value="' + value.id + '">' + value + '</option>');
+                // });
+
+                 $.each(response.order_data, function(index, order) {
+                   $.each(response.order_ids, function(index, orderId) {
+                         if (order.id == orderId) {
+                              $('#order_id').append('<option value="' + order.id + '">' + order.last_order_number + '</option>');
+                    }
+                    });
+                 });
             },
             error: function(xhr) {
                 console.log('Error:', xhr);
@@ -421,5 +416,98 @@
         });
     });
 </script>
+
+
+
+
+<script>
+    $(document).ready(function () {
+        // Initially disable the product_model dropdown
+        $('#product_model').prop('disabled', true);
+
+        $('#order_id').change(function () {
+            var orderId = $(this).val();
+            if (orderId) {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('job_allocation.delivery_challan.getModelsByOrderId') }}",
+                    data: {order_id: orderId},
+                    success: function (response) {
+                        var options = '<option value="">Select Model</option>';
+                        $.each(response, function (key, value) {
+                            options += '<option value="' + value.id + '">' + value.model_name + '-' + value.model_code + '</option>';
+                        });
+                        $('#product_model').html(options);
+                        // Enable the product_model dropdown
+                        $('#product_model').prop('disabled', false);
+                    }
+                });
+            } else {
+                $('#product_model').html('<option value="">Select Model</option>');
+                // Disable the product_model dropdown if no order_id is selected
+                $('#product_model').prop('disabled', true);
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#product_model').change(function() {
+            var productModelId = $(this).val();
+            if (productModelId) {
+                $.ajax({
+                    url: '/job_allocation/delivery_challan/get-product-details', // Update the URL to your route
+                    type: 'GET',
+                    data: { product_model: productModelId },
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#product').val(response.product);
+                        $('#raw_material_name').val(response.raw_material_name);
+                        $('#raw_material_type').val(response.raw_material_type);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            } else {
+                $('#product').val('');
+                $('#raw_material_name').val('');
+                $('#raw_material_type').val('');
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+    $('#product_model').change(function() {
+        var productModelId = $(this).val();
+        if (productModelId) {
+            $.ajax({
+                url: '/job_allocation/delivery_challan/get-order-details', // Update the URL to your route
+                type: 'GET',
+                data: { product_model: productModelId },
+                dataType: 'json',
+                success: function(response) {
+                    $('#order_date').val(response.order_date);
+                    $('#total_quantity').val(response.total_quantity);
+                    $('#available_quantity').val(response.available_quantity);
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        } else {
+            $('#order_date').val('');
+            $('#total_quantity').val('');
+            $('#available_quantity').val('');
+        }
+    });
+});
+
+</script>
+
+
+
+
 
 @endsection
