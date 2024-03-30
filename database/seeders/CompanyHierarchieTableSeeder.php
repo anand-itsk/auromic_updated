@@ -16,10 +16,7 @@ class CompanyHierarchieTableSeeder extends Seeder
         DB::table('company_hierarchies')->delete();
 
         $company_hierarchies = array(
-            array('company_id' => 5, 'parent_company_id' => 2),
-            array('company_id' => 6, 'parent_company_id' => 3),
-            array('company_id' => 8, 'parent_company_id' => 2),
-            array('company_id' => 9, 'parent_company_id' => 6),
+            array('company_id' => 4, 'parent_company_id' => 3),
         );
 
         DB::table('company_hierarchies')->insert($company_hierarchies);

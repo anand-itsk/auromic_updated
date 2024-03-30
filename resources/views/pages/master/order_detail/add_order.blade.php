@@ -18,7 +18,7 @@
                                 <li class="breadcrumb-item">Create</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Create New Order Detail</h4>
+                        <h4 class="page-title">Add Order For {{ $order_details->orderNo->last_order_number }}</h4>
                     </div>
                 </div>
             </div>
@@ -28,11 +28,10 @@
                     <div class="card m-b-30">
                         <div class="card-body">
                             <div class="m-b-30">
-                                <form action="{{ route('master.order_detail.store') }}" method="POST">
+                                <form action="{{ route('master.order_detail.store_New_order', $order_details->order_no_id) }}" method="POST">
                                     @csrf
 
                                     <div class="d-flex justify-content-end mb-2">
-                                        {{-- <h5 class="text-primary">Company Info</h5> --}}
                                         <button class="btn btn-secondary cancel_btn">
                                             <a href="{{ route('master.order_detail.index') }}" class="text-white">
                                                 Cancel
