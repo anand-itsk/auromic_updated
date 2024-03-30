@@ -418,6 +418,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/edit/{id}', [OrderDetailController::class, 'edit'])->name('edit');
             Route::get('/add_order/{id}', [OrderDetailController::class, 'addOrder'])->name('add_order');
             Route::post('/update/{id}', [OrderDetailController::class, 'update'])->name('update');
+            Route::post('/store_New_order/{id}', [OrderDetailController::class, 'storeNewOrder'])->name('store_New_order');
             Route::get('/delete/{id}',  [OrderDetailController::class, 'delete'])->name('delete');
             Route::get('/show/{id}', [OrderDetailController::class, 'showDetails']);
             Route::post('/delete/selected', [OrderDetailController::class, 'deleteSelected']);
