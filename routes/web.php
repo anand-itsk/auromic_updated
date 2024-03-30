@@ -534,6 +534,13 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/getQuantities/{id}', [JobGivingController::class, 'getQuantities']);
             Route::get('/get-model-details/{id}', [JobGivingController::class, 'getModelDetails'])->name('get-models');
             Route::get('/get-product-model/{orderId}', [JobGivingController::class, 'getProductModel']);
+            Route::get('/get-company-name/{orderId}', [JobGivingController::class, 'getCompanyName']);
+            Route::get('/fetch-order-ids', [JobGivingController::class,'fetchOrderIds'])->name('fetch-order-ids');
+
+
+
+
+
         });
 
         Route::prefix('/job_received')->name('job_received.')->group(function () {

@@ -9,6 +9,7 @@ use App\Models\Company;
 use App\Models\ProductModel;
 use App\Models\JobGiving;
 use App\Models\OrderDetail;
+use App\Models\OrderNo;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Exports\JobgivingExport;
@@ -29,17 +30,36 @@ class JobGivingController extends Controller
         return DataTables::of($Job_Giving)->make(true);
     }
     // Create Page
-   public function create()
+   public function create(Request $request)
 {
     $delivery_challan = DeliveryChallan::all();
     $order_details = OrderDetail::all();
+    $order_nos = OrderNo::all();
       $productModels = ProductModel::with(['rawMaterial.rawMaterialType','product'])->get();
     $employee = Employee::with(['company' => function ($query) {
         $query->with('companyType');
     }])->get();
+    $orderId = $request->input('company_name');
 
-    return view('pages.job_allocation.job_giving.create', compact('delivery_challan', 'order_details', 'employee','productModels'));
+
+
+    return view('pages.job_allocation.job_giving.create', compact('delivery_challan', 'order_details', 'employee','productModels','order_nos'));
 }
+
+public function fetchOrderIds(Request $request)
+    {
+        dd($request);
+        $companyId = $request->input('company_id');
+
+        // Fetch order IDs associated with the given company ID
+        $orderIds = DeliveryChallan::whereHas('company', function ($query) use ($companyId) {
+            $query->where('company_id', $companyId);
+        })->pluck('order_id')->unique();
+
+        // You may want to load the actual order details here instead of just IDs
+        // For now, I'll return the IDs only
+        return response()->json(['order_ids' => $orderIds]);
+    }
 
 public function getOrderDetails($orderId)
 {

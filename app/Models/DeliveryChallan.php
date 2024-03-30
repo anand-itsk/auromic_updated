@@ -24,7 +24,7 @@ class DeliveryChallan extends Model
     }
     public function order_details()
     {
-        return $this->belongsTo(OrderDetail::class, 'order_id');
+        return $this->belongsTo(OrderNo::class, 'order_id');
     }
       public function productSize(){
         return $this->belongsTo(ProductSize::class,'product_size_id');

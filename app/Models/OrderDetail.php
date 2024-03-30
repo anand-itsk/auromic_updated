@@ -9,7 +9,7 @@ class OrderDetail extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'order_no',
+        'order_no_id',
         'order_date',
         'customer_id',
         'product_size_id',

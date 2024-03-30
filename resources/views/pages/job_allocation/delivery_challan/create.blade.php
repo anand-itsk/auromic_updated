@@ -76,25 +76,13 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-<label for="customer_code" class="col-sm-2 col-form-label mandatory">Customer</label>
-<div class="col-sm-4 mb-4">
-    <select class="form-control select2" name="customer_id" id="customer_id">
-        <option value="">Select Customer</option>
-        @foreach ($customer as $item)
-            <option value="{{ $item->id }}">{{ $item->customer_name}}/{{ $item->customer_code}}</option>
-        @endforeach
-    </select>
-    @error('customer_id')
-        <span class="error" style="color: red;">{{ $message }}</span>
-    @enderror
-</div>
 
 <label for="customer_code" class="col-sm-2 col-form-label mandatory">Order ID</label>
 <div class="col-sm-4 mb-4">
-    <select class="form-control select2" name="order_id" id="order_id" onchange="getOrderDetails()" disabled>
+    <select class="form-control select2" name="order_id" id="order_id" onchange="getOrderDetails()">
         <option value="">Select Order</option>
-            @foreach ($order_details as $item)
-            <option value="{{ $item->id }}">{{ $item->order_no}}</option>
+            @foreach ($order_nos as $item)
+            <option value="{{ $item->id }}">{{ $item->last_order_number}}</option>
         @endforeach
     </select>
     @error('order_id')
@@ -253,54 +241,7 @@
         });
     });
 </script>
-<script>
-    $(document).ready(function() {
-        $('#customer_id').on('change', function() {
-            var customerId = $(this).val();
-            $.ajax({
-                url: '/job_allocation/delivery_challan/get-orders/' + customerId,
-                type: 'GET',
-                success: function(orders) {
-                    $('#order_id').empty().append('<option value="">Select Order</option>');
-                    $.each(orders, function(index, order) {
-                        $('#order_id').append('<option value="' + order.id + '" data-order-date="' + order.order_date + '">' + order.order_no + '</option>');
-                    });
-                    $('#order_id').prop('disabled', false); // Enable the order dropdown
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                    // Handle error
-                }
-            });
-        });
 
-        $('#order_id').on('change', function() {
-            var orderDate = $(this).find(':selected').data('order-date');
-            $('#order_date').val(orderDate);
-        });
-
-        // Trigger the change event initially if an order is already selected
-        var selectedOrderId = $('#order_id').val();
-        if (selectedOrderId) {
-            $('#order_id').trigger('change');
-        }
-    });
-</script>
-
-
-
-<script>
-    $(document).ready(function() {
-        $('#customer_id').on('change', function() {
-            var customerId = $(this).val();
-            if (customerId !== '') {
-                $('#order_id').prop('disabled', false);
-            } else {
-                $('#order_id').prop('disabled', true);
-            }
-        });
-    });
-</script>
 <script>
     $(document).ready(function () {
         // Initially disable the product model select dropdown
@@ -366,12 +307,14 @@ function getOrderDetails() {
             .then(data => {
                 document.getElementById('total_quantity').value = data.total_quantity;
                 document.getElementById('available_quantity').value = data.available_quantity;
+                 document.getElementById('order_date').value = data.order_date;
             })
             .catch(error => console.error('Error:', error));
     } else {
         // Clear the fields if no order ID is selected
         document.getElementById('total_quantity').value = '';
         document.getElementById('available_quantity').value = '';
+        document.getElementById('order_date').value = ''; 
     }
 }
 </script>

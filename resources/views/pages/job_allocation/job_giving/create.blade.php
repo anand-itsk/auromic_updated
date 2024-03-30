@@ -44,7 +44,8 @@
                                  @foreach ($employee as $item)
                                  <option value="{{ $item->id }}" 
                                     data-company-name="{{ $item->company->company_name }}" 
-                                    data-company-type="{{ $item->company->companyType->name }}">
+                                    data-company-type="{{ $item->company->companyType->name }}"
+                                    data-company-id="{{ $item->company->id }}">
                                     {{ $item->employee_code }}/{{ $item->employee_name }}
                                  </option>
                                  @endforeach
@@ -76,11 +77,11 @@
                            <div class="col-sm-4 mb-4">
                               <select class="form-control select2" name="order_id" id="order_id" onchange="fetchQuantities()">
     <option value="">Select Order</option>
-    @foreach ($order_details as $item)
+    <!-- @foreach ($order_nos as $item)
         <option value="{{ $item->id }}">
-            {{ $item->order_no }}
+            {{ $item->last_order_number }}
         </option>
-    @endforeach
+    @endforeach -->
 </select>
                               @error('order_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
@@ -382,6 +383,43 @@
     });
 </script>
 
+<script>
+    // Function to fetch company name based on selected employee ID
+    function fetchCompanyName() {
+        var employeeId = $('#employee_id').val();
+        var companyId = $('#employee_id option:selected').data('company-id');
 
+        // Set the company ID and name
+        $('#company_name').val($('#employee_id option:selected').data('company-name'));
+
+        // Fetch order IDs associated with the selected company
+        $.ajax({
+            url: '{{ route("job_allocation.job_giving.fetch-order-ids") }}',
+            type: 'GET',
+            data: {
+                company_id: companyId
+            },
+            success: function(response) {
+                // Populate order ID select element
+                $('#order_id').empty();
+                $('#order_id').append('<option value="">Select Order</option>');
+                console.log(response);
+                $.each(response.order_ids, function(index, value) {
+                    $('#order_id').append('<option value="' + value.id + '">' + value.last_order_number + '</option>');
+                });
+            },
+            error: function(xhr) {
+                console.log('Error:', xhr);
+            }
+        });
+    }
+
+    // Event listener for employee ID select change
+    $(document).ready(function() {
+        $('#employee_id').change(function() {
+            fetchCompanyName();
+        });
+    });
+</script>
 
 @endsection
