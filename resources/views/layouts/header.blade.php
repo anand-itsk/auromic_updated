@@ -306,7 +306,7 @@
                         <a href="#"><i class="dripicons-briefcase"></i>Report</a>
                         <ul class="submenu">
                             <li>
-                                <a href="{{ route('report.daily_given_report_cw.index') }}">Daily given Report (CW)</a>
+                                <a href="{{ route('report.employee_report.index') }}">Employee Report</a>
                             </li>
                         
                         </ul>
