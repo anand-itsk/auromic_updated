@@ -9,6 +9,7 @@ use App\Models\Company;
 use App\Models\ProductModel;
 use App\Models\JobGiving;
 use App\Models\OrderDetail;
+use App\Models\OrderNo;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Exports\JobgivingExport;
@@ -29,98 +30,76 @@ class JobGivingController extends Controller
         return DataTables::of($Job_Giving)->make(true);
     }
     // Create Page
-   public function create()
+   public function create(Request $request)
 {
     $delivery_challan = DeliveryChallan::all();
     $order_details = OrderDetail::all();
+    $order_nos = OrderNo::all();
       $productModels = ProductModel::with(['rawMaterial.rawMaterialType','product'])->get();
     $employee = Employee::with(['company' => function ($query) {
         $query->with('companyType');
     }])->get();
+    $orderId = $request->input('company_name');
 
-    return view('pages.job_allocation.job_giving.create', compact('delivery_challan', 'order_details', 'employee','productModels'));
+
+
+    return view('pages.job_allocation.job_giving.create', compact('delivery_challan', 'order_details', 'employee','productModels','order_nos'));
 }
 
-public function getOrderDetails($orderId)
-{
-    $orderDetail = OrderDetail::with('customer')->find($orderId);
-    if ($orderDetail) {
-        $data = [
-            'order_date' => $orderDetail->order_date,
-            'customer_name' => $orderDetail->customer->customer_name, // Assuming the customer name is stored in the 'name' field
-       
-        ];
-        return response()->json($data);
-    } else {
-        return response()->json(null);
-    }
-}
-
-
-
-    public function getQuantities($id)
-{
-    $deliveryChallan = DeliveryChallan::where('order_id', $id)->first();
-
-    if ($deliveryChallan) {
-        $quantities = [
-            'total_quantity' => $deliveryChallan->quantity,
-            'available_quantity' => $deliveryChallan->available_quantity,
-        ];
-    } else {
-        $quantities = [
-            'total_quantity' => '',
-            'available_quantity' => '',
-        ];
-    }
-
-    return response()->json($quantities);
-}
-
-public function getProductModel($orderId)
+public function fetchOrderIds(Request $request)
     {
-        // Fetch the product model data based on the selected order number
-        $orderDetail = OrderDetail::findOrFail($orderId);
-        $productModel = $orderDetail->productModel;
+        // dd($request);
+        $companyId = $request->input('company_id');
 
-        // Generate HTML option for the product model
-        
-        $option = '<option value="'. $productModel->id . '">' . $productModel->model_name . '-' . $productModel->model_code . '</option>';
+        // Fetch order IDs associated with the given company ID
+        $orderIds = DeliveryChallan::whereHas('company', function ($query) use ($companyId) {
+            $query->where('company_id', $companyId);
+        })->pluck('order_id')->unique();
 
-        // Return the HTML option
-        return $option;
+        // You may want to load the actual order details here instead of just IDs
+        // For now, I'll return the IDs only
+        $order_data = OrderNO::all();
+        return response()->json(['order_ids' => $orderIds,'order_data'=>$order_data]);
     }
 
-    public function getModelDetails($id)
+
+   public function getModelsByOrderId(Request $request)
     {
-        $productModel = ProductModel::with('product', 'rawMaterial.rawMaterialType')->find($id);
+        $orderId = $request->order_id;
 
-        if (!$productModel) {
-            return response()->json(['error' => 'Model not found'], 404);
-        }
+        // Retrieve models based on the selected order_id
+        $models = OrderDetail::where('order_no_id', $orderId)->distinct('product_model_id')->pluck('product_model_id');
 
-        $data = [
-            'product_name' => $productModel->product->name,
-            'raw_material_name' => $productModel->rawMaterial->name,
-            'raw_material_type' => $productModel->rawMaterial->rawMaterialType->name,
-        ];
+        // Assuming your models have a relationship to a ProductModel model
+        $productModels = ProductModel::whereIn('id', $models)->get();
 
-        return response()->json($data);
+        return response()->json($productModels);
     }
+
 
     public function getProductDetails(Request $request)
 {
-    $productModelId = $request->input('product_model_id');
+    $productModelId = $request->input('product_model');
     $productDetails = ProductModel::with(['product', 'rawMaterial.rawMaterialType'])->find($productModelId);
 
     return response()->json([
-        'product_name' => $productDetails->product->name,
+        'product' => $productDetails->product->name,
         'raw_material_name' => $productDetails->rawMaterial->name,
         'raw_material_type' => $productDetails->rawMaterial->rawMaterialType->name,
     ]);
 }
+public function getOrderDetails(Request $request)
+{
+    $productModelId = $request->input('product_model');
+    $orderDetail = OrderDetail::where('product_model_id', $productModelId)->first();
 
- 
+    return response()->json([
+        'order_date' => $orderDetail->order_date,
+        'total_quantity' => $orderDetail->quantity,
+        'available_quantity' => $orderDetail->available_quantity,
+    ]);
+}
+
     // Store Date
      public function store(Request $request)
 {

@@ -153,7 +153,7 @@ class OrderDetailController extends Controller
         $orderDetail->product_model_id = $request->input('product_model');
         $orderDetail->order_status_id = $request->input('order_status_id');
         $orderDetail->quantity = $request->input('quantity');
-        $orderDetail->available_quantity = $request->input('available_quantity');
+        $orderDetail->available_quantity = $request->input('quantity');
         $orderDetail->delivery_date = $request->input('delivery_date');
         $orderDetail->total_raw_material = $request->input('total_raw_material');
 
@@ -182,7 +182,7 @@ class OrderDetailController extends Controller
         $orderDetail->product_model_id = $request->input('product_model');
         $orderDetail->order_status_id = $request->input('order_status_id');
         $orderDetail->quantity = $request->input('quantity');
-        $orderDetail->available_quantity = $request->input('available_quantity');
+        $orderDetail->available_quantity = $request->input('quantity');
         $orderDetail->delivery_date = $request->input('delivery_date');
         $orderDetail->total_raw_material = $request->input('total_raw_material');
 

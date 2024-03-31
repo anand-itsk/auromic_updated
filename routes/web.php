@@ -29,6 +29,7 @@ use App\Http\Controllers\ResigningReasonsController;
 use App\Http\Controllers\LocalOfficeController;
 use App\Http\Controllers\EsiDispensaryController;
 use App\Http\Controllers\MyProfileController;
+use App\Http\Controllers\OrderReportController;
 use App\Http\Controllers\RawMaterialTypeController;
 use App\Http\Controllers\RawMaterialController;
 use App\Http\Controllers\ProductController;
@@ -517,6 +518,10 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/import', [DeliveryChallanController::class, 'import'])->name('import');
             Route::get('/export', [DeliveryChallanController::class, 'export']);
             Route::get('/get-product-model/{orderId}', [DeliveryChallanController::class, 'getProductModel']);
+            Route::get('get-models-by-order-id', [DeliveryChallanController::class, 'getModelsByOrderId'])->name('getModelsByOrderId');
+           Route::get('/get-product-details', [DeliveryChallanController::class, 'getProductDetails']);
+           Route::get('/get-order-details', [DeliveryChallanController::class,'getOrderDetails']);
+
         });
 
         Route::prefix('/job_giving')->name('job_giving.')->group(function () {
@@ -534,6 +539,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/getQuantities/{id}', [JobGivingController::class, 'getQuantities']);
             Route::get('/get-model-details/{id}', [JobGivingController::class, 'getModelDetails'])->name('get-models');
             Route::get('/get-product-model/{orderId}', [JobGivingController::class, 'getProductModel']);
+            Route::get('/get-company-name/{orderId}', [JobGivingController::class, 'getCompanyName']);
+            Route::get('/fetch-order-ids', [JobGivingController::class, 'fetchOrderIds'])->name('fetch-order-ids');
         });
 
         Route::prefix('/job_received')->name('job_received.')->group(function () {
@@ -558,6 +565,12 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [EmployeeReportController::class, 'index'])->name('index');
             Route::get('/data', [EmployeeReportController::class, 'indexData'])->name('data');
             Route::get('/export', [EmployeeReportController::class, 'export']);
+        });
+
+        Route::prefix('/order_report')->name('order_report.')->group(function () {
+            Route::get('/', [OrderReportController::class, 'index'])->name('index');
+            Route::get('/data', [OrderReportController::class, 'indexData'])->name('data');
+            Route::get('/export', [OrderReportController::class, 'export']);
         });
     });
 
