@@ -518,6 +518,10 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/import', [DeliveryChallanController::class, 'import'])->name('import');
             Route::get('/export', [DeliveryChallanController::class, 'export']);
             Route::get('/get-product-model/{orderId}', [DeliveryChallanController::class, 'getProductModel']);
+            Route::get('get-models-by-order-id', [DeliveryChallanController::class, 'getModelsByOrderId'])->name('getModelsByOrderId');
+           Route::get('/get-product-details', [DeliveryChallanController::class, 'getProductDetails']);
+           Route::get('/get-order-details', [DeliveryChallanController::class,'getOrderDetails']);
+
         });
 
         Route::prefix('/job_giving')->name('job_giving.')->group(function () {

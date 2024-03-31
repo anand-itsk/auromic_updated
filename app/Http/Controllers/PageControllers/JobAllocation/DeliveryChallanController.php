@@ -60,19 +60,6 @@ class DeliveryChallanController extends Controller
         
         return view('pages.job_allocation.delivery_challan.create', compact('company', 'authorised_people', 'order_details','company_types','customer','productModels','product_size','product_color','formattedDCNumber','order_nos'));
     }
-  public function getProductModel($orderId)
-    {
-        // Fetch the product model data based on the selected order number
-        $orderDetail = OrderDetail::findOrFail($orderId);
-        $productModel = $orderDetail->productModel;
-
-        // Generate HTML option for the product model
-        
-        $option = '<option value="'. $productModel->id . '">' . $productModel->model_name . '-' . $productModel->model_code . '</option>';
-
-        // Return the HTML option
-        return $option;
-    }
 
        public function getCompanies($companytypeid)
     {
@@ -80,53 +67,42 @@ class DeliveryChallanController extends Controller
         return response()->json($companies);
     }
 
-     public function getOrders($customerId)
-{
-    $orders = OrderDetail::select('id', 'order_no', 'order_date','customer_id', 'product_model_id') // Select the desired columns
-                        ->where('customer_id', $customerId)
-                        ->get();
-    return response()->json($orders);
-}
-
-public function getOrderDetails($orderId)
-{
-    $order = OrderDetail::findOrFail($orderId);
-    $orderDetails = [
-        
-        'total_quantity' => $order->quantity,
-        'available_quantity' => $order->available_quantity,
-        'order_date' => $order->order_date,
-    ];
-    return response()->json($orderDetails);
-}
-
-
-public function getModelDetails($id)
+    public function getModelsByOrderId(Request $request)
     {
-        $productModel = ProductModel::with('product', 'rawMaterial.rawMaterialType')->find($id);
+        $orderId = $request->order_id;
 
-        if (!$productModel) {
-            return response()->json(['error' => 'Model not found'], 404);
-        }
+        // Retrieve models based on the selected order_id
+        $models = OrderDetail::where('order_no_id', $orderId)->distinct('product_model_id')->pluck('product_model_id');
 
-        $data = [
-            'product_name' => $productModel->product->name,
-            'raw_material_name' => $productModel->rawMaterial->name,
-            'raw_material_type' => $productModel->rawMaterial->rawMaterialType->name,
-        ];
+        // Assuming your models have a relationship to a ProductModel model
+        $productModels = ProductModel::whereIn('id', $models)->get();
 
-        return response()->json($data);
+        return response()->json($productModels);
     }
-    
-//     public function getOrders($customerId)
-// {
-//     $orders = OrderDetail::select('id', 'order_no', 'order_date', 'customer_id', 'product_model_id') // Include customer_id and product_model_id
-//                     ->where('customer_id', $customerId)
-//                     ->get();
-//     return response()->json($orders);
-// }
 
-    // Store Date
+
+    public function getProductDetails(Request $request)
+{
+    $productModelId = $request->input('product_model');
+    $productDetails = ProductModel::with(['product', 'rawMaterial.rawMaterialType'])->find($productModelId);
+
+    return response()->json([
+        'product' => $productDetails->product->name,
+        'raw_material_name' => $productDetails->rawMaterial->name,
+        'raw_material_type' => $productDetails->rawMaterial->rawMaterialType->name,
+    ]);
+}
+public function getOrderDetails(Request $request)
+{
+    $productModelId = $request->input('product_model');
+    $orderDetail = OrderDetail::where('product_model_id', $productModelId)->first();
+
+    return response()->json([
+        'order_date' => $orderDetail->order_date,
+        'total_quantity' => $orderDetail->quantity,
+        'available_quantity' => $orderDetail->available_quantity,
+    ]);
+}
 
 public function store(Request $request)
 {
@@ -190,6 +166,7 @@ public function store(Request $request)
         $company_types = CompanyType::all();
         $authorised_people = AuthorisedPerson::all();
         $order_details = OrderDetail::all();
+        $order_nos = OrderNo::all();
         $productModels = ProductModel::with(['rawMaterial.rawMaterialType','product'])->get();
 
         // dd($productModels);
@@ -202,20 +179,10 @@ public function store(Request $request)
         ->get();
 
         
-        return view('pages.job_allocation.delivery_challan.edit', compact('company', 'authorised_people', 'order_details', 'delivery_challans','company_types','productModels','product_size','product_color','customer','order_detail'));
+        return view('pages.job_allocation.delivery_challan.edit', compact('company', 'authorised_people', 'order_details', 'delivery_challans','company_types','productModels','product_size','product_color','customer','order_detail','order_nos'));
     }
 
-public function getProductDetails(Request $request)
-{
-    $productModelId = $request->input('product_model_id');
-    $productDetails = ProductModel::with(['product', 'rawMaterial.rawMaterialType'])->find($productModelId);
 
-    return response()->json([
-        'product_name' => $productDetails->product->name,
-        'raw_material_name' => $productDetails->rawMaterial->name,
-        'raw_material_type' => $productDetails->rawMaterial->rawMaterialType->name,
-    ]);
-}
     // Update
   public function update(Request $request, $id)
 {

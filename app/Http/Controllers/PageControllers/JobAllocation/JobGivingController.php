@@ -48,7 +48,7 @@ class JobGivingController extends Controller
 
 public function fetchOrderIds(Request $request)
     {
-        dd($request);
+        // dd($request);
         $companyId = $request->input('company_id');
 
         // Fetch order IDs associated with the given company ID
@@ -58,89 +58,48 @@ public function fetchOrderIds(Request $request)
 
         // You may want to load the actual order details here instead of just IDs
         // For now, I'll return the IDs only
-        return response()->json(['order_ids' => $orderIds]);
+        $order_data = OrderNO::all();
+        return response()->json(['order_ids' => $orderIds,'order_data'=>$order_data]);
     }
 
-public function getOrderDetails($orderId)
-{
-    $orderDetail = OrderDetail::with('customer')->find($orderId);
-    if ($orderDetail) {
-        $data = [
-            'order_date' => $orderDetail->order_date,
-            'customer_name' => $orderDetail->customer->customer_name, // Assuming the customer name is stored in the 'name' field
-       
-        ];
-        return response()->json($data);
-    } else {
-        return response()->json(null);
-    }
-}
 
-
-
-    public function getQuantities($id)
-{
-    $deliveryChallan = DeliveryChallan::where('order_id', $id)->first();
-
-    if ($deliveryChallan) {
-        $quantities = [
-            'total_quantity' => $deliveryChallan->quantity,
-            'available_quantity' => $deliveryChallan->available_quantity,
-        ];
-    } else {
-        $quantities = [
-            'total_quantity' => '',
-            'available_quantity' => '',
-        ];
-    }
-
-    return response()->json($quantities);
-}
-
-public function getProductModel($orderId)
+   public function getModelsByOrderId(Request $request)
     {
-        // Fetch the product model data based on the selected order number
-        $orderDetail = OrderDetail::findOrFail($orderId);
-        $productModel = $orderDetail->productModel;
+        $orderId = $request->order_id;
 
-        // Generate HTML option for the product model
-        
-        $option = '<option value="'. $productModel->id . '">' . $productModel->model_name . '-' . $productModel->model_code . '</option>';
+        // Retrieve models based on the selected order_id
+        $models = OrderDetail::where('order_no_id', $orderId)->distinct('product_model_id')->pluck('product_model_id');
 
-        // Return the HTML option
-        return $option;
+        // Assuming your models have a relationship to a ProductModel model
+        $productModels = ProductModel::whereIn('id', $models)->get();
+
+        return response()->json($productModels);
     }
 
-    public function getModelDetails($id)
-    {
-        $productModel = ProductModel::with('product', 'rawMaterial.rawMaterialType')->find($id);
-
-        if (!$productModel) {
-            return response()->json(['error' => 'Model not found'], 404);
-        }
-
-        $data = [
-            'product_name' => $productModel->product->name,
-            'raw_material_name' => $productModel->rawMaterial->name,
-            'raw_material_type' => $productModel->rawMaterial->rawMaterialType->name,
-        ];
-
-        return response()->json($data);
-    }
 
     public function getProductDetails(Request $request)
 {
-    $productModelId = $request->input('product_model_id');
+    $productModelId = $request->input('product_model');
     $productDetails = ProductModel::with(['product', 'rawMaterial.rawMaterialType'])->find($productModelId);
 
     return response()->json([
-        'product_name' => $productDetails->product->name,
+        'product' => $productDetails->product->name,
         'raw_material_name' => $productDetails->rawMaterial->name,
         'raw_material_type' => $productDetails->rawMaterial->rawMaterialType->name,
     ]);
 }
+public function getOrderDetails(Request $request)
+{
+    $productModelId = $request->input('product_model');
+    $orderDetail = OrderDetail::where('product_model_id', $productModelId)->first();
 
- 
+    return response()->json([
+        'order_date' => $orderDetail->order_date,
+        'total_quantity' => $orderDetail->quantity,
+        'available_quantity' => $orderDetail->available_quantity,
+    ]);
+}
+
     // Store Date
      public function store(Request $request)
 {

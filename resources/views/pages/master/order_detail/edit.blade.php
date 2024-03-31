@@ -31,14 +31,14 @@
                                 <form action="{{ route('master.order_detail.update', $order_details->id) }}" method="POST">
                                     @csrf
                                     <div class="form-group row">
-                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Oder No</label>
+                                        <!-- <label for="customer_code" class="col-sm-2 col-form-label mandatory">Oder No</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="order_no" id="order_no"
                                                 value="{{ $order_details->order_no }}">
                                             @error('order_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
-                                        </div>
+                                        </div> -->
                                         <label class="col-sm-2 col-form-label mandatory">Order Date</label>
                                         <div class="col-sm-4 mb-4">
                                             <input type="date" class="form-control" name="order_date" id="order_date"
