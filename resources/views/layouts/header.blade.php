@@ -308,9 +308,14 @@
                             <li>
                                 <a href="{{ route('report.employee_report.index') }}">Employee Report</a>
                             </li>
+
+                            <li>
+                                <a href="{{ route('report.order_report.index') }}">Order Report</a>
+                            </li>
                         
                         </ul>
                     </li>
+                    
                 </ul>
                 <!-- End navigation menu -->
             </div> <!-- end #navigation -->
