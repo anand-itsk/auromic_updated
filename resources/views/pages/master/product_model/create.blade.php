@@ -33,7 +33,10 @@
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Raw Material</label>
+                                        <label class="col-sm-2 col-form-label">Raw Material
+                                             <a class="shortcut_master"
+                                                href="{{ route('product-models.raw_materials.create') }}" target="_blank">+</a>
+                                        </label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="raw_material_id"
                                                 id="raw_material_id">
@@ -47,7 +50,10 @@
                                             @enderror
                                         </div>
 
-                                        <label class="col-sm-2 col-form-label mandatory">Product</label>
+                                        <label class="col-sm-2 col-form-label mandatory">Product
+                                            <a class="shortcut_master"
+                                                href="{{ route('product-models.products.create') }}" target="_blank">+</a>
+                                        </label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_id" id="product_id ">
                                                 <option value="">Select Product</option>
@@ -60,7 +66,10 @@
                                             @enderror
                                         </div>
 
-                                        <label class="col-sm-2 col-form-label">Product Size</label>
+                                        <label class="col-sm-2 col-form-label">Product Size
+                                            <a class="shortcut_master"
+                                                href="{{ route('product-models.product_sizes.create') }}" target="_blank">+</a>
+                                        </label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_size_id"
                                                 id="product_size_id">

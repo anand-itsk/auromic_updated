@@ -637,7 +637,10 @@
                                                                         @enderror
                                                                     </div>
 
-                                                                    <label class="col-sm-2 col-form-label">Religion</label>
+                                                                    <label class="col-sm-2 col-form-label">Religion
+                                                                        <a class="shortcut_master"
+                                                href="{{ route('common.religions.create') }}" target="_blank">+</a>
+                                                                    </label>
                                                                     <div class="col-sm-4 mb-4">
                                                                         <select class="form-control select2"
                                                                             name="religion_id" id="religion_id">
@@ -653,7 +656,10 @@
                                                                         @enderror
                                                                     </div>
 
-                                                                    <label class="col-sm-2 col-form-label">Caste</label>
+                                                                    <label class="col-sm-2 col-form-label">Caste
+                                                                             <a class="shortcut_master"
+                                                href="{{ route('common.castes.create') }}" target="_blank">+</a>
+                                                                    </label>
                                                                     <div class="col-sm-4 mb-4">
                                                                         <select class="form-control select2"
                                                                             name="caste_id" id="caste_id">
@@ -670,7 +676,10 @@
                                                                     </div>
 
                                                                     <label
-                                                                        class="col-sm-2 col-form-label">Nationality</label>
+                                                                        class="col-sm-2 col-form-label">Nationality
+                                                                        <a class="shortcut_master"
+                                                href="{{ route('common.nationalities.create') }}" target="_blank">+</a>
+                                                                    </label>
                                                                     <div class="col-sm-4 mb-4">
                                                                         <select class="form-control select2"
                                                                             name="nationality_id" id="nationality_id">
@@ -739,7 +748,9 @@
                                                                     </div>
 
                                                                     <label class="col-sm-2 col-form-label">Select with
-                                                                        reason</label>
+                                                                        reason<a class="shortcut_master"
+                                                href="{{ route('specified.resigning_reasons.create') }}" target="_blank">+</a>
+                                                                    </label>
                                                                     <div class="col-sm-4">
                                                                         <select class="form-control select2"
                                                                             name="resigning_reason_id"

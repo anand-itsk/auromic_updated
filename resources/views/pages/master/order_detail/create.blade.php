@@ -156,7 +156,10 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label class="col-sm-2 col-form-label">Order Status</label>
+                                        <label class="col-sm-2 col-form-label">Order Status
+                                            <a class="shortcut_master"
+                                                href="{{ route('product-models.order_statuses.create') }}" target="_blank">+</a>
+                                        </label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="order_status_id"
                                                 id="order_status_id">
@@ -182,7 +185,10 @@
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
                                                         </div> -->
-                                        <label class="col-sm-2 col-form-label">Product Color</label>
+                                        <label class="col-sm-2 col-form-label">Product Color
+                                            <a class="shortcut_master"
+                                                href="{{ route('product-models.product_colors.create') }}" target="_blank">+</a>
+                                        </label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_color_id"
                                                 id="product_color_id">

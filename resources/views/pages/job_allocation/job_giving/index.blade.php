@@ -198,8 +198,8 @@
                         name: 'id'
                     },
                     {
-                        data: 'employee.employee_name',
-                        name: 'employee.employee_name',
+                        data: 'employee_name',
+                        name: 'employee_name',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
@@ -207,23 +207,23 @@
                     },
 
                     {
-                        data: 'order_details.order_no',
-                        name: 'order_details.order_no',
+                        data: 'last_order_number',
+                        name: 'last_order_number',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
                     },
                     {
-                        data: 'delivery_chellan.dc_no',
-                        name: 'delivery_chellan.dc_no',
+                        data: 'dc_no',
+                        name: 'dc_no',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
                         
                     },
                     {
-                        data: 'product_model.model_name',
-                        name: 'product_model.model_name',
+                        data: 'model_name',
+                        name: 'model_name',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }

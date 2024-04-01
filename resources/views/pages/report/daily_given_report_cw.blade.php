@@ -39,48 +39,42 @@
                        <div class="card mb-2">
                            <div class="card-body">
                 <div class="form-group row mb-0">
-                           <label for="customer_code" class="col-sm-2 col-form-label ">
-                           Master Company
+                <label for="customer_code" class="col-sm-2 col-form-label ">
+                            Company Type
                            </label>
                            <div class="col-sm-2 mb-2">
-                              <select class="form-control select2" name="master_company" id="master_company">
-                                 <option value="">Select Company</option>
+                              <select class="form-control select2" name="company_type" id="company_type">
+                                 <option value="">Select Type</option>
+                                  @foreach($companyType as $type)
+            <option value="{{ $type->id }}">{{ $type->name }}</option>
+        @endforeach
                                  
                               </select>
-                              @error('master_company')
+                              @error('company_type')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
                             <label for="customer_code" class="col-sm-2 col-form-label ">
-                           Client Company
+                           Companies
                            </label>
                            <div class="col-sm-2 mb-2">
-                              <select class="form-control select2" name="client_company" id="client_company">
-                                 <option value="">Select Company</option>
-                                 
-                              </select>
-                              @error('client_company')
+                             <select class="form-control select2" name="companies" id="companies" disabled>
+        <option value="">Select Company</option>
+        @foreach($company as $c)
+            <option value="{{ $c->id }}" data-type-id="{{ $c->company_type_id }}">{{ $c->company_name }}</option>
+        @endforeach
+    </select>
+                              @error('Companies')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
 
-                           <label for="customer_code" class="col-sm-2 col-form-label ">
-                           Sub Client Company
-                           </label>
-                           <div class="col-sm-2 mb-2">
-                              <select class="form-control select2" name="sub_client_company" id="sub_client_company">
-                                 <option value="">Select Company</option>
-                                 
-                              </select>
-                              @error('sub_client_company')
-                              <span class="error" style="color: red;">{{ $message }}</span>
-                              @enderror
-                           </div>
+
                            <label for="customer_code" class="col-sm-2 col-form-label ">
                            From Date
                            </label>
                            <div class="col-sm-2 mb-2">
-                            <input type="date" class="form-control" name="from_date" id="">
+                            <input type="date" class="form-control" name="from_date" id="from_date">
                               @error('company_type_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
@@ -89,12 +83,12 @@
                            Last Date
                            </label>
                            <div class="col-sm-2 mb-2">
-                            <input type="date" class="form-control" name="last_date" id="">
+                            <input type="date" class="form-control" name="last_date" id="last_date">
                               @error('company_type_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="customer_code" class="col-sm-2 col-form-label ">
+                           <!-- <label for="customer_code" class="col-sm-2 col-form-label ">
                            Date
                            </label>
                            <div class="col-sm-2 mb-2">
@@ -102,15 +96,18 @@
                               @error('company_type_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
-                           </div>
+                           </div> -->
                                <label for="customer_code" class="col-sm-2 col-form-label ">
                            Status
                            </label>
                            <div class="col-sm-2 mb-2">
-                              <select class="form-control select2" name="status" id="">
-                                 <option value="">Select status</option>
-                                 
-                              </select>
+                                 <select class="form-control select2" name="status" id="statuses">
+                                                <option value="">Select Status</option>
+                                                <option value="Incomplete">Incomplete</option>
+                                                <option value="Complete">Complete</option>
+                                                <option value="Pending">Pending</option>
+                                                <option value="cancelled">Cancelled</option>
+                                            </select>
                               @error('status')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
@@ -189,8 +186,7 @@
                                                     <th>Quantity</th>
                                                      <th>Color</th>
                                                         <th>Weight</th>
-                                                        <th>Weight</th>
-            
+                                                        
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -262,50 +258,63 @@
 
 
     <script>
-        var table;
+           
         $(document).ready(function() {
+            var table;
+            $('#companies').prop('disabled', true);
             table = $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('report.daily_given_report_cw.data') }}',
+                    ajax: {
+            url: '{{ route('report.daily_given_report_cw.data') }}',
+            data: function(d) {
+                // Add additional parameters here if needed
+                d.company_type = $('#company_type').val();
+                 d.companies = $('#companies').val();
+                  d.status = $('#statuses').val();
+                 d.from_date = $('#from_date').val();
+                 d.last_date = $('#last_date').val();
+        
+            }
+        },
                 columns: [{
                         data: 'id',
                         name: 'id'
                     },
                     {
-                        data: 'employee.employee_code',
-                        name: 'employee.employee_code',
+                        data: 'employee_code',
+                        name: 'employee_code',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
                         
                     },
                     {
-                        data: 'employee.employee_name',
-                        name: 'employee.employee_name',
+                        data: 'employee_name',
+                        name: 'employee_name',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
                         
                     },
                      {
-                        data: 'order_details.order_no',
-                        name: 'order_details.order_no',
+                        data: 'last_order_number',
+                        name: 'last_order_number',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
                     },
                     {
-                        data: 'product_model.model_code',
-                        name: 'product_model.model_code',
+                        data: 'model_code',
+                        name: 'model_code',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
                         
                     },
                     {
-                        data: 'product_model.model_name',
-                        name: 'product_model.model_name',
+                        data: 'model_name',
+                        name: 'model_name',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
@@ -313,8 +322,8 @@
                     },
                     
                      {
-                        data: 'product_model.productSize.name',
-                        name: 'product_model.productSize.name',
+                        data: 'size',
+                        name: 'size',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
@@ -329,16 +338,16 @@
                         
                     },
                      {
-                        data: 'order_details.product_color_id',
-                        name: 'order_details.product_color_id',
+                        data: 'color',
+                        name: 'color',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
                     },
 
                     {
-                        data: 'product_model.raw_material_weight_item',
-                        name: 'product_model.raw_material_weight_item',
+                        data: 'weight',
+                        name: 'weight',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
@@ -346,19 +355,7 @@
                     },
 
                     
-                    {
-                        data: null,
-                        orderable: false,
-                        searchable: false,
-                        render: function(data, type, row) {
-                            return `
-                        <button onclick="edit(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
-                        <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
-                        
-                    `;
-                        }
 
-                    },
                 ],
                 order: [
                     [0, 'desc']
@@ -377,6 +374,37 @@
                 ]
 
             });
+
+            // Event listener for company type dropdown
+    $('#company_type').on('change', function() {
+        var selectedCompanyType = $(this).val();
+        if (selectedCompanyType) {
+            $('#companies').prop('disabled', false);
+        } else {
+            $('#companies').prop('disabled', true).val('');
+        }
+        // Reload DataTable with updated parameters
+        table.ajax.reload();
+    });
+ $('#companies').on('change', function() {
+        // Reload DataTable with updated parameters
+        table.ajax.reload();
+    });
+
+   $('#statuses').on('change', function() {
+        // Reload DataTable with updated parameters
+        table.ajax.reload();
+    });
+
+     $('#from_date').on('change', function() {
+        // Reload DataTable with updated parameters
+        table.ajax.reload();
+    });
+    $('#last_date').on('change', function() {
+        // Reload DataTable with updated parameters
+        table.ajax.reload();
+    });
+            
 
 
 
@@ -407,6 +435,7 @@
                 }
             });
         });
+        
 
         function edit(id) {
             console.log("inside");
@@ -468,5 +497,31 @@
 
             return `${day}-${month}-${year} ${strTime}`;
         }
+    </script>
+    <script>
+        
+    document.addEventListener("DOMContentLoaded", function () {
+        var companyTypeSelect = document.getElementById('company_type');
+        var companiesSelect = document.getElementById('companies');
+
+        companyTypeSelect.addEventListener('change', function () {
+            var selectedTypeId = this.value;
+
+            // Reset options
+            companiesSelect.innerHTML = '<option value="">Select Company</option>';
+
+            // Filter and populate options based on selected type
+            var companies = @json($company);
+            companies.forEach(function (company) {
+                if (company.company_type_id == selectedTypeId) {
+                    var option = document.createElement('option');
+                    option.value = company.id;
+                    option.textContent = company.company_name;
+                    companiesSelect.appendChild(option);
+                }
+            });
+        });
+    });
+
     </script>
 @endsection

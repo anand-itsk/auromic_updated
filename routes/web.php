@@ -14,6 +14,7 @@ use App\Http\Controllers\PageControllers\MasterControllers\FinishingProductContr
 use App\Http\Controllers\PageControllers\JobAllocationController\DirectJobGivingController;
 use App\Http\Controllers\PageControllers\JobAllocationController\DirectJobReceivedController;
 use App\Http\Controllers\PageControllers\Report\EmployeeReportController;
+use App\Http\Controllers\PageControllers\Report\DailyGivenReportCompanyWiseController;
 use App\Http\Controllers\PageControllers\SubClientCompanyController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -566,6 +567,11 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [EmployeeReportController::class, 'index'])->name('index');
             Route::get('/data', [EmployeeReportController::class, 'indexData'])->name('data');
             Route::get('/export', [EmployeeReportController::class, 'export']);
+        });
+        Route::prefix('/daily_given_report_cw')->name('daily_given_report_cw.')->group(function () {
+            Route::get('/', [DailyGivenReportCompanyWiseController::class, 'index'])->name('index');
+            Route::get('/data', [DailyGivenReportCompanyWiseController::class, 'indexData'])->name('data');
+            Route::get('/export', [DailyGivenReportCompanyWiseController::class, 'export']);
         });
 
         Route::prefix('/order_report')->name('order_report.')->group(function () {

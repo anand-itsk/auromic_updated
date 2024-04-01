@@ -89,7 +89,10 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="customer_code" class="col-sm-2 col-form-label">Product Size</label>
+                           <label for="customer_code" class="col-sm-2 col-form-label">Product Size
+                            <a class="shortcut_master"
+                                                href="{{ route('product-models.product_sizes.create') }}" target="_blank">+</a>
+                           </label>
 <div class="col-sm-4 mb-4">
     <select class="form-control select2" name="product_size_id" id="product_size_id">
         <option value="">Select Product Size</option>
@@ -101,7 +104,10 @@
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
 </div>
-<label for="customer_code" class="col-sm-2 col-form-label">Product Color</label>
+<label for="customer_code" class="col-sm-2 col-form-label">Product Color
+    <a class="shortcut_master"
+                                                href="{{ route('product-models.product_colors.create') }}" target="_blank">+</a>
+</label>
 <div class="col-sm-4 mb-4">
     <select class="form-control select2" name="product_color_id" id="product_color_id">
         <option value="">Select Product color</option>

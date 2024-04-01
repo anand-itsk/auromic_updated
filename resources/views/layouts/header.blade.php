@@ -310,6 +310,10 @@
                             </li>
 
                             <li>
+                                <a href="{{ route('report.daily_given_report_cw.index') }}">Daily Report -(CW)</a>
+                            </li>
+
+                            <li>
                                 <a href="{{ route('report.order_report.index') }}">Order Report</a>
                             </li>
                         
