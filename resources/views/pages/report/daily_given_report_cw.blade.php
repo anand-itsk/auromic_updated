@@ -40,42 +40,35 @@
                            <div class="card-body">
                 <div class="form-group row mb-0">
                            <label for="customer_code" class="col-sm-2 col-form-label ">
-                           Master Company
+                            Company Type
                            </label>
                            <div class="col-sm-2 mb-2">
-                              <select class="form-control select2" name="master_company" id="master_company">
-                                 <option value="">Select Company</option>
+                              <select class="form-control select2" name="company_type" id="company_type">
+                                 <option value="">Select Type</option>
+                                  @foreach($companyType as $type)
+            <option value="{{ $type->id }}">{{ $type->name }}</option>
+        @endforeach
                                  
                               </select>
-                              @error('master_company')
+                              @error('company_type')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
                             <label for="customer_code" class="col-sm-2 col-form-label ">
-                           Client Company
+                           Companies
                            </label>
                            <div class="col-sm-2 mb-2">
-                              <select class="form-control select2" name="client_company" id="client_company">
-                                 <option value="">Select Company</option>
-                                 
-                              </select>
-                              @error('client_company')
+                             <select class="form-control select2" name="companies" id="companies" disabled>
+        <option value="">Select Company</option>
+        @foreach($company as $c)
+            <option value="{{ $c->id }}" data-type-id="{{ $c->company_type_id }}">{{ $c->company_name }}</option>
+        @endforeach
+    </select>
+                              @error('Companies')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
 
-                           <label for="customer_code" class="col-sm-2 col-form-label ">
-                           Sub Client Company
-                           </label>
-                           <div class="col-sm-2 mb-2">
-                              <select class="form-control select2" name="sub_client_company" id="sub_client_company">
-                                 <option value="">Select Company</option>
-                                 
-                              </select>
-                              @error('sub_client_company')
-                              <span class="error" style="color: red;">{{ $message }}</span>
-                              @enderror
-                           </div>
                            <label for="customer_code" class="col-sm-2 col-form-label ">
                            From Date
                            </label>
@@ -189,8 +182,7 @@
                                                     <th>Quantity</th>
                                                      <th>Color</th>
                                                         <th>Weight</th>
-                                                        <th>Weight</th>
-            
+                                                        
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -289,8 +281,8 @@
                         
                     },
                      {
-                        data: 'order_details.order_no',
-                        name: 'order_details.order_no',
+                        data: 'order_details.order_no_id',
+                        name: 'order_details.order_no_id',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
@@ -313,8 +305,8 @@
                     },
                     
                      {
-                        data: 'product_model.productSize.name',
-                        name: 'product_model.productSize.name',
+                        data: 'product_model.product_size_id',
+                        name: 'product_model.productSize.id',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
@@ -346,19 +338,7 @@
                     },
 
                     
-                    {
-                        data: null,
-                        orderable: false,
-                        searchable: false,
-                        render: function(data, type, row) {
-                            return `
-                        <button onclick="edit(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
-                        <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
-                        
-                    `;
-                        }
 
-                    },
                 ],
                 order: [
                     [0, 'desc']
@@ -377,6 +357,7 @@
                 ]
 
             });
+            
 
 
 
@@ -407,6 +388,7 @@
                 }
             });
         });
+        
 
         function edit(id) {
             console.log("inside");
