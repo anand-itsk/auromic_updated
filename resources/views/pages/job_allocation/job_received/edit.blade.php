@@ -119,19 +119,29 @@
                                             Wages of 1 Product
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <input type="text" class="form-control" name="company_type"
-                                                id="company_type" readonly
-                                                value="{{ $Job_Giving->product_model->wages_product }}">
+                                            <input type="text" class="form-control" name="wages" id="wages"
+                                                readonly value="{{ $Job_Giving->product_model->wages_product }}">
+                                            @error('wages')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <label for="total_quantity" class="col-sm-2 col-form-label">
+                                            Total Quantity
+                                        </label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input type="text" class="form-control" name="total_quantity"
+                                                id="total_quantity" readonly value="{{ $Job_Giving->quantity }}">
                                             @error('employee_id')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="customer_code" class="col-sm-2 col-form-label">
-                                            Total Quantity
+
+                                        <label for="total_weight" class="col-sm-2 col-form-label">
+                                            Total Weight
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <input type="text" class="form-control" name="company_type"
-                                                id="company_type" readonly value="{{ $Job_Giving->quantity }}">
+                                            <input type="text" class="form-control" name="total_weight"
+                                                id="total_weight" readonly value="{{ $Job_Giving->weight }}">
                                             @error('employee_id')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -188,9 +198,20 @@
                                             Current Weight
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <input type="text" class="form-control" name="complete_quantity"
-                                                id="complete_quantity">
+                                            <input type="text" class="form-control" name="current_weight"
+                                                id="current_weight">
                                             @error('employee_id')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="customer_code" class="col-sm-2 col-form-label">
+                                            Balance Weight
+                                        </label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input type="text" class="form-control" name="balance_weight"
+                                                id="balance_weight" readonly>
+                                            @error('balance_weight')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -199,8 +220,8 @@
                                             Received Quantity
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <input type="text" class="form-control" name="complete_quantity"
-                                                id="complete_quantity">
+                                            <input type="text" class="form-control" name="received_quantity"
+                                                id="received_quantity">
                                             @error('employee_id')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -310,26 +331,26 @@
                                         </div>
 
                                         <label for="total_amount" class="col-sm-2 col-form-label">
-                                          Total
-                                      </label>
-                                      <div class="col-sm-4 mb-4">
-                                          <input type="text" class="form-control" name="total_amount"
-                                              id="total_amount" readonly>
-                                          @error('total_amount')
-                                              <span class="error" style="color: red;">{{ $message }}</span>
-                                          @enderror
-                                      </div>
+                                            Total
+                                        </label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input type="text" class="form-control" name="total_amount"
+                                                id="total_amount" value="0" readonly>
+                                            @error('total_amount')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
 
-                                      <label for="net_amount" class="col-sm-2 col-form-label">
-                                       Net Amount
-                                   </label>
-                                   <div class="col-sm-4 mb-4">
-                                       <input type="text" class="form-control" name="net_amount"
-                                           id="net_amount" readonly>
-                                       @error('net_amount')
-                                           <span class="error" style="color: red;">{{ $message }}</span>
-                                       @enderror
-                                   </div>
+                                        <label for="net_amount" class="col-sm-2 col-form-label">
+                                            Net Amount
+                                        </label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input type="text" class="form-control" name="net_amount" id="net_amount"
+                                                readonly>
+                                            @error('net_amount')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="d-flex justify-content-evenly">
@@ -353,6 +374,7 @@
     @include('links.js.select2.select2')
     <script>
         $(document).ready(function() {
+
             $('#with_dc').change(function() {
                 if (this.checked) {
                     $('#dc_number').prop('disabled', false);
@@ -360,6 +382,80 @@
                     $('#dc_number').prop('disabled', true);
                 }
             });
+
+
+            $('#received_quantity').on('input', function() {
+
+                var receivedQuantity = $(this).val();
+                var totalQuantity = $('#total_quantity').val();
+
+                var pendingQuantity = totalQuantity - receivedQuantity;
+
+                $('#pending_quantity').val(pendingQuantity);
+
+                var wages = $('#wages').val();
+
+                var totalAmount = receivedQuantity * wages;
+
+                $('#total_amount').val(totalAmount);
+
+
+
+            });
+
+
+            $('#current_weight').on('input', function() {
+
+                var receivedWeight = $(this).val();
+                var totalWeight = $('#total_weight').val();
+
+                var pendingWeight = totalWeight - receivedWeight;
+
+                $('#balance_weight').val(pendingWeight);
+            });
+
+            $('#current_weight').on('input', function() {
+
+                var receivedWeight = $(this).val();
+                var totalWeight = $('#total_weight').val();
+
+                var pendingWeight = totalWeight - receivedWeight;
+
+                $('#balance_weight').val(pendingWeight);
+            });
+
+            $('#conveyance').on('input', function() {
+                var conveyance = parseInt($(this).val());
+                var totalAmount = parseInt($('#total_amount').val());
+
+                var currentTotal = parseInt(totalAmount + conveyance);
+
+                console.log(currentTotal);
+                $('#total_amount').val(currentTotal);
+            });
+
+            $('#deduction').on('input', function() {
+                var deduction = parseInt($(this).val());
+                var totalAmount = parseInt($('#total_amount').val());
+
+                var currentTotal = totalAmount - deduction;
+
+
+                $('#total_amount').val(currentTotal);
+            });
+            $('#incentive').on('input', function() {
+                var incentive = parseInt($(this).val());
+                var totalAmount = parseInt($('#total_amount').val());
+
+                var currentTotal = totalAmount + incentive;
+
+
+                $('#total_amount').val(currentTotal);
+            });
+
+
+
+
         });
     </script>
 @endsection
