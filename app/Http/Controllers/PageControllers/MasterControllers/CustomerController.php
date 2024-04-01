@@ -73,7 +73,7 @@ class CustomerController extends Controller
         $customer->mobile = $input['mobile'];
         $customer->tin_no = $input['tin_no'];
         $customer->tin_date = $input['tin_date'];
-        $customer->cst_no = $input['cst_no'];
+        $customer->gst_no = $input['gst_no'];
         $customer->cst_date = $input['cst_date'];
         $input['created_by'] = $auth_id;
         $input['updated_by'] = $auth_id;
@@ -140,7 +140,7 @@ class CustomerController extends Controller
         $customer->mobile = $input['mobile'];
         $customer->tin_no = $input['tin_no'];
         $customer->tin_date = $input['tin_date'];
-        $customer->cst_no = $input['cst_no'];
+        $customer->gst_no = $input['gst_no'];
         $customer->cst_date = $input['cst_date'];
 
         $customer->save();

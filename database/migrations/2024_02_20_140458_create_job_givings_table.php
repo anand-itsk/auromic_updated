@@ -17,15 +17,18 @@ return new class extends Migration
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('product_model_id');
             $table->unsignedBigInteger('dc_id')->nullable();
-            $table->enum('status',['Pending','Incomplete','Complete','Cancelled'])->default('Pending');
+            $table->enum('status', ['Pending', 'Incomplete', 'Complete', 'Cancelled'])->default('Pending');
             $table->string('quantity')->nullable();
+            $table->string('weight')->nullable();
+            $table->string('excess')->nullable();
+            $table->string('shortage')->nullable();
+            $table->string('days')->nullable();
             $table->date('date')->nullable();
             $table->timestamps();
             $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
             $table->foreign('order_id')->references('id')->on('order_details')->onDelete('cascade');
-             $table->foreign('product_model_id')->references('id')->on('product_models')->onDelete('cascade');
+            $table->foreign('product_model_id')->references('id')->on('product_models')->onDelete('cascade');
             $table->foreign('dc_id')->references('id')->on('delivery_challans')->onDelete('cascade');
-            
         });
     }
 

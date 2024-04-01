@@ -24,6 +24,8 @@ return new class extends Migration
             $table->date('delivery_date')->nullable();
             $table->unsignedBigInteger('order_status_id')->nullable();
             $table->string('total_raw_material')->nullable();
+            $table->string('weight_per_item')->nullable();
+            $table->string('available_weight')->nullable();
             $table->timestamps();
             $table->foreign('order_no_id')->references('id')->on('order_nos')->onDelete('cascade');
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');

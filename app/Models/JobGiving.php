@@ -15,6 +15,10 @@ class JobGiving extends Model
         'status',
         'product_model_id',
         'quantity',
+        'weight',
+        'excess',
+        'shortage',
+        'days',
         'date'
     ];
     public function employee()

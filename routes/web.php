@@ -534,6 +534,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete/selected', [JobGivingController::class, 'deleteSelected']);
             Route::get('/delete/{id}', [JobGivingController::class, 'delete'])->name('delete');
             Route::get('/get-order-details/{orderId}', [JobGivingController::class, 'getOrderDetails']);
+            Route::get('/get-dc-details/{orderId}', [JobGivingController::class, 'getDcDetails']);
             Route::post('/import', [JobGivingController::class, 'import'])->name('import');
             Route::get('/export', [JobGivingController::class, 'export']);
             Route::get('/getQuantities/{id}', [JobGivingController::class, 'getQuantities']);

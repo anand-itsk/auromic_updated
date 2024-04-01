@@ -46,8 +46,8 @@
                                     </div>
                                     <div>
                                         <!-- <button type="button" class="icon-button common-color bg-secondary rounded"
-                                                    data-toggle="modal" data-target=".bs-example-modal-center"
-                                                    title="Import file"><i class="fa fa-upload text-white"></i></button> -->
+                                                        data-toggle="modal" data-target=".bs-example-modal-center"
+                                                        title="Import file"><i class="fa fa-upload text-white"></i></button> -->
 
                                         <button class="icon-button  bg-primary rounded">
                                             <a href="{{ route('master.order_detail.create') }}"
@@ -113,7 +113,7 @@
                                                 <th>customer</th>
                                                 <th>Total Quantity</th>
                                                 <th>Available Quantity</th>
-                                                <th>Total R.M</th>
+                                                <th>Total R.M Weight</th>
 
 
                                                 <th>Product Color</th>

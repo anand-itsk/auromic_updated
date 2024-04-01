@@ -14,13 +14,20 @@ return new class extends Migration
         Schema::create('job_receiveds', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('job_giving_id');
-            $table->enum('incentive_applicable',['Yes','No'])->default('Yes');
-            $table->enum('status',['Pending','Incomplete','Complete'])->default('Pending');
+            $table->enum('incentive_applicable', ['Yes', 'No'])->default('Yes');
+            $table->string('before_days')->nullable();
+            $table->string('after_days')->nullable();
+            $table->string('current_weight')->nullable();
+            $table->string('conveyance_fee')->nullable();
+            $table->string('deducation_fee')->nullable();
+            $table->string('incentive_fee')->nullable();
+            $table->string('total_amount')->nullable();
+            $table->string('net_amount')->nullable();
+            $table->enum('status', ['Pending', 'Incomplete', 'Complete'])->default('Pending');
             $table->date('receving_date');
-             $table->string('complete_quantity')->nullable();
+            $table->string('complete_quantity')->nullable();
             $table->timestamps();
             $table->foreign('job_giving_id')->references('id')->on('job_givings')->onDelete('cascade');
-            
         });
     }
 

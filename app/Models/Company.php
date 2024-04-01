@@ -53,7 +53,12 @@ class Company extends Model
         return $this->belongsToMany(BankDetail::class, 'company_bank_details');
     }
     public function companyType()
-{
-    return $this->belongsTo(CompanyType::class, 'company_type_id');
-}
+    {
+        return $this->belongsTo(CompanyType::class, 'company_type_id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(DeliveryChallan::class, 'company_id');
+    }
 }

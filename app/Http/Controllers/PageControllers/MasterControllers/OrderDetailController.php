@@ -81,7 +81,8 @@ class OrderDetailController extends Controller
         $order_no->created_by = $user->id;
 
         $order_no->save();
-
+        $product_model = ProductModel::where('id', $request->input('product_model'))->first();
+        $weight_per_item = $product_model->raw_material_weight_item;
         $orderDetail = new OrderDetail();
 
 
@@ -96,6 +97,8 @@ class OrderDetailController extends Controller
         $orderDetail->available_quantity = $request->input('quantity');
         $orderDetail->delivery_date = $request->input('delivery_date');
         $orderDetail->total_raw_material = $request->input('total_raw_material');
+        $orderDetail->available_weight = $request->input('total_raw_material');
+        $orderDetail->weight_per_item = $weight_per_item;
 
         $orderDetail->save();
 

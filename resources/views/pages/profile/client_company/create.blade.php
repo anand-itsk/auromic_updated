@@ -199,7 +199,10 @@
                                             @enderror
                                         </div>
 
-                                        <label for="esi_code" class="col-sm-2 col-form-label">ESI Code</label>
+                                        <label for="esi_code" class="col-sm-2 col-form-label">ESI Code
+                                            <a class="shortcut_master"
+                                                href="{{ route('specified.esi_dispensaries.create') }}" target="_blank">+</a>
+                                        </label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="esi_code" id="esi_code">
                                             @error('esi_code')
@@ -232,10 +235,10 @@
                                             @enderror
                                         </div>
 
-                                        <label for="cst_no" class="col-sm-2 col-form-label">CST No</label>
+                                        <label for="gst_no" class="col-sm-2 col-form-label">GST No</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="cst_no" id="cst_no">
-                                            @error('cst_no')
+                                            <input class="form-control" type="text" name="gst_no" id="gst_no">
+                                            @error('gst_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>

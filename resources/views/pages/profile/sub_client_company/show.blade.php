@@ -186,10 +186,10 @@
     <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
-                <span class="font-weight-bold">CST No</span>
+                <span class="font-weight-bold">GST No</span>
             </div>
             <div class="col-md-8 ">
-                <span>{{ $company->companyRegistrationDetail->cst_no ?? '-' }}</span>
+                <span>{{ $company->companyRegistrationDetail->gst_no ?? '-' }}</span>
             </div>
         </div>
     </div>

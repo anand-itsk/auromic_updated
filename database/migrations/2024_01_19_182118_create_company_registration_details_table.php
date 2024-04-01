@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('esi_date')->nullable();
             $table->string('factory_act_no')->nullable();
             $table->string('tin_no')->nullable();
-            $table->string('cst_no')->nullable();
+            $table->string('gst_no')->nullable();
             $table->string('ssi_no')->nullable();
             $table->string('pan_no')->nullable();
             $table->string('tan_no')->nullable();
