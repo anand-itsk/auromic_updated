@@ -116,7 +116,8 @@ class DeliveryChallanController extends Controller
             'dc_number' => 'required',
             'dc_date' => 'required',
             'order_id' => 'required',
-            'quantity' => 'required' // Ensure quantity is present in the request
+            'quantity' => 'required', // Ensure quantity is present in the request
+            'quantity' => 'weight',
         ]);
 
         $input = $request->all();
@@ -147,7 +148,7 @@ class DeliveryChallanController extends Controller
         $delivery_challan->product_size_id = $input['product_size_id'];
         $delivery_challan->product_color_id = $input['product_color_id'];
         $delivery_challan->available_quantity = $input['quantity'];
-        $delivery_challan->excess = $input['weight'];
+        $delivery_challan->weight = $input['weight'];
         $delivery_challan->excess = $input['excess_weight'];
         $delivery_challan->shortage = $input['shortage_weight'];
         $delivery_challan->save();

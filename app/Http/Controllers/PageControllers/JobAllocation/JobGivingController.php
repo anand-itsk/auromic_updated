@@ -94,13 +94,27 @@ class JobGivingController extends Controller
     }
     public function getOrderDetails(Request $request)
     {
-        dd($request->input('product_model'));
         $productModelId = $request->input('product_model');
         $orderDetail = OrderDetail::where('product_model_id', $productModelId)->first();
         return response()->json([
             'order_date' => $orderDetail->order_date,
             'total_quantity' => $orderDetail->quantity,
             'available_quantity' => $orderDetail->available_quantity,
+        ]);
+    }
+
+    public function getDcDetails(Request $request,  $id)
+    {
+        $productModelId = $id;
+        // $orderDetail = OrderDetail::where('product_model_id', $productModelId)->first();
+        $dcDetail = DeliveryChallan::where('id', $productModelId)->with('orderDetails', 'orderDetails.orderNo', 'orderDetails.productModel', 'orderDetails.customer', 'orderDetails.productModel.product', 'orderDetails.productModel.rawMaterial.rawMaterialType')->first();
+        // dd($dcDetail->orderDetails);
+
+        return response()->json([
+            'dcDetail' => $dcDetail,
+            // 'order_date' => $orderDetail->order_date,
+            // 'total_quantity' => $orderDetail->quantity,
+            // 'available_quantity' => $orderDetail->available_quantity,
         ]);
     }
 
