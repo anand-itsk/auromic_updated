@@ -18,7 +18,7 @@ class CompanyRegistrationDetails extends Model
         'esi_date',
         'factory_act_no',
         'tin_no',
-        'cst_no',
+        'gst_no',
         'ssi_no',
         'pan_no',
         'tan_no',

@@ -15,9 +15,17 @@ class DeliveryChallan extends Model
         'product_size_id',
         'product_color_id',
         'quantity',
-        'available_quantity'
+        'weight',
+        'available_quantity',
+        'excess',
+        'shortage'
     ];
 
+
+    public function orderDetails()
+    {
+        return $this->belongsTo(OrderDetail::class, 'order_id');
+    }
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id');
@@ -26,11 +34,13 @@ class DeliveryChallan extends Model
     {
         return $this->belongsTo(OrderNo::class, 'order_id');
     }
-      public function productSize(){
-        return $this->belongsTo(ProductSize::class,'product_size_id');
+    public function productSize()
+    {
+        return $this->belongsTo(ProductSize::class, 'product_size_id');
     }
 
-     public function productColor(){
-        return $this->belongsTo(ProductColor::class,'product_color_id');
+    public function productColor()
+    {
+        return $this->belongsTo(ProductColor::class, 'product_color_id');
     }
 }

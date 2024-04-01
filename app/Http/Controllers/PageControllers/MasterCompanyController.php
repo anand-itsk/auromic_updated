@@ -155,7 +155,7 @@ class MasterCompanyController extends Controller
         $company_registration_details->esi_date = $input['esi_date'];
         $company_registration_details->factory_act_no = $input['factory_act_no'];
         $company_registration_details->tin_no = $input['tin_no'];
-        $company_registration_details->cst_no = $input['cst_no'];
+        $company_registration_details->gst_no = $input['gst_no'];
         $company_registration_details->ssi_no = $input['ssi_no'];
         $company_registration_details->pan_no = $input['pan_no'];
         $company_registration_details->tan_no = $input['tan_no'];

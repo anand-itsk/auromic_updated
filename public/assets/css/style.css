@@ -3302,3 +3302,10 @@ button.default-btn {
    color: #111 !important;
    border:none !important;
 }
+
+a.shortcut_master {
+  padding: 0px 8px 0px 8px;
+  background: #508aeb;
+  color: #fff;
+  border-radius: 4px;
+}

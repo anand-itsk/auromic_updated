@@ -225,11 +225,11 @@
                                             @enderror
                                         </div>
 
-                                        <label for="cst_no" class="col-sm-2 col-form-label">CST No</label>
+                                        <label for="gst_no" class="col-sm-2 col-form-label">GST No</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="cst_no" id="cst_no"
-                                                value="{{ $company->companyRegistrationDetail->cst_no ?? '' }}">
-                                            @error('cst_no')
+                                            <input class="form-control" type="text" name="gst_no" id="gst_no"
+                                                value="{{ $company->companyRegistrationDetail->gst_no ?? '' }}">
+                                            @error('gst_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
