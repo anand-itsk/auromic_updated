@@ -414,24 +414,24 @@
                 $('#balance_weight').val(pendingWeight);
             });
 
-            $('#current_weight').on('input', function() {
+            $('#conveyance').on('input', function(e) {
+                if (e.originalEvent.inputType === 'deleteContentBackward') {
+                    // Backspace was pressed
+                    var conveyance = parseInt($(this).val());
+                    var totalAmount = parseInt($('#total_amount').val());
 
-                var receivedWeight = $(this).val();
-                var totalWeight = $('#total_weight').val();
+                    var currentTotal = totalAmount - conveyance;
 
-                var pendingWeight = totalWeight - receivedWeight;
+                    $('#total_amount').val(currentTotal);
+                } else {
+                    // Inputting new value
+                    var conveyance = parseInt($(this).val());
+                    var totalAmount = parseInt($('#total_amount').val());
 
-                $('#balance_weight').val(pendingWeight);
-            });
+                    var currentTotal = totalAmount + conveyance;
 
-            $('#conveyance').on('input', function() {
-                var conveyance = parseInt($(this).val());
-                var totalAmount = parseInt($('#total_amount').val());
-
-                var currentTotal = parseInt(totalAmount + conveyance);
-
-                console.log(currentTotal);
-                $('#total_amount').val(currentTotal);
+                    $('#total_amount').val(currentTotal);
+                }
             });
 
             $('#deduction').on('input', function() {
