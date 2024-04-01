@@ -20,7 +20,17 @@ class JobReceivedController extends Controller
     {
         $Job_Giving = JobGiving::with('employee', 'order_details', 'delivery_chellan')->get();
         $job_received = JobReceived::get();
-        return DataTables::of($Job_Giving, $job_received)->make(true);
+         $data = $Job_Giving->map(function ($job_giving) {
+        return [
+            'id' => $job_giving->id,
+            'employee_name' => $job_giving->employee->employee_name ?? null,
+            'last_order_number' => $job_giving->order_details->orderNo->last_order_number ?? null,
+            'dc_no' => $job_giving->delivery_chellan->dc_no ?? null,
+            'status' => $job_giving->status ?? null,
+        ];
+    });
+
+        return DataTables::of($data, $job_received)->make(true);
     }
     // store
     public function store(Request $request)
