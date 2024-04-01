@@ -94,7 +94,6 @@ class JobGivingController extends Controller
     }
     public function getOrderDetails(Request $request)
     {
-        dd($request->input('product_model'));
         $productModelId = $request->input('product_model');
         $orderDetail = OrderDetail::where('product_model_id', $productModelId)->first();
         return response()->json([
@@ -104,23 +103,44 @@ class JobGivingController extends Controller
         ]);
     }
 
+    public function getDcDetails(Request $request,  $id)
+    {
+        $productModelId = $id;
+        // $orderDetail = OrderDetail::where('product_model_id', $productModelId)->first();
+        $dcDetail = DeliveryChallan::where('id', $productModelId)->with('orderDetails', 'orderDetails.orderNo', 'orderDetails.productModel', 'orderDetails.customer', 'orderDetails.productModel.product', 'orderDetails.productModel.rawMaterial.rawMaterialType')->first();
+        // dd($dcDetail->orderDetails);
+
+        return response()->json([
+            'dcDetail' => $dcDetail,
+            // 'order_date' => $orderDetail->order_date,
+            // 'total_quantity' => $orderDetail->quantity,
+            // 'available_quantity' => $orderDetail->available_quantity,
+        ]);
+    }
+
     // Store Date
     public function store(Request $request)
     {
+
+
+
         $validatedData = $request->validate([
             'employee_id' => 'required',
-            'order_id' => 'required',
-            'product_model_id' => 'required',
             'quantity' => 'required',
-            'date' => 'required',
             'dc_number' => 'required',
-            'status' => 'required'
         ]);
 
         $input = $request->all();
 
         // Check if input quantity exceeds available quantity
         $deliveryChallan = DeliveryChallan::find($input['dc_number']);
+
+        $orderDetail = OrderDetail::where('id', $deliveryChallan->order_id)->first();
+
+        $product_model_id = $orderDetail->product_model_id;
+
+        $order_id = $deliveryChallan->order_id;
+
         if ($deliveryChallan) {
             $totalQuantityGiven = JobGiving::where('dc_id', $input['dc_number'])->sum('quantity');
             $availableQuantity = $deliveryChallan->quantity - $totalQuantityGiven;
@@ -135,12 +155,11 @@ class JobGivingController extends Controller
         // Create new job giving record
         $job_giving = new JobGiving();
         $job_giving->employee_id = $input['employee_id'];
-        $job_giving->order_id = $input['order_id'];
-        $job_giving->product_model_id = $input['product_model_id'];
+        $job_giving->order_id = $order_id;
+        $job_giving->product_model_id = $product_model_id;
         $job_giving->quantity = $input['quantity'];
-        $job_giving->date = $input['date'];
         $job_giving->dc_id = $input['dc_number'];
-        $job_giving->status = $input['status'];
+        $job_giving->weight = $input['weight'];
         $job_giving->save();
 
         // Update available quantity in delivery challan

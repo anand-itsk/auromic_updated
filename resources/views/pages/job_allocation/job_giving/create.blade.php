@@ -72,34 +72,35 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Order
-                                            ID</label>
+                                        {{-- DC Number --}}
+                                        <label for="customer_name" class="col-sm-2 col-form-label mandatory">DC
+                                            Number</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="order_id" id="order_id"
-                                                onchange="fetchQuantities()">
-                                                <option value="">Select Order</option>
-                                                @foreach ($order_nos as $item)
-                                                    <option value="{{ $item->id }}">
-                                                        {{ $item->last_order_number }}
-                                                    </option>
+                                            <select class="form-control select2" name="dc_number" id="dc_number">
+                                                <option value="">Select DC</option>
+                                                @foreach ($delivery_challan as $item)
+                                                    <option value="{{ $item->id }}">{{ $item->dc_no }}</option>
                                                 @endforeach
                                             </select>
-                                            @error('order_id')
+                                            @error('dc_number')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
 
-                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Model</label>
+                                        <label for="order_no" class="col-sm-2 col-form-label ">Order No</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="product_model" id="product_model">
-                                                <option value="">Select Model</option>
-                                                @foreach ($productModels as $productModel)
-                                                    <option value="{{ $productModel->id }}">
-                                                        {{ $productModel->model_name }}-{{ $productModel->model_code }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            @error('product_model')
+                                            <input type="text" class="form-control" name="order_no" id="order_no"
+                                                readonly>
+                                            @error('order_no')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="model_name" class="col-sm-2 col-form-label ">Model Name</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input type="text" class="form-control" name="model_name" id="model_name"
+                                                readonly>
+                                            @error('model_name')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -122,21 +123,11 @@
                                             @enderror
                                         </div>
 
-                                        <label for="order_date" class="col-sm-2 col-form-label">Available Quantity</label>
+                                        <label for="product_name" class="col-sm-2 col-form-label ">Product Name</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="available_quantity"
-                                                id="available_quantity" readonly>
-                                            @error('order_date')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-
-
-                                        <label for="order_date" class="col-sm-2 col-form-label ">Product Name</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="product" id="product"
-                                                readonly>
-                                            @error('product_id')
+                                            <input class="form-control" type="text" name="product_name"
+                                                id="product_name" readonly>
+                                            @error('product_name')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -156,37 +147,13 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="order_date" class="col-sm-2 col-form-label">date</label>
+                                        {{-- <label for="order_date" class="col-sm-2 col-form-label">Duration date</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="date" name="date" id="date">
                                             @error('date')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
-                                        </div>
-                                        <label for="order_date" class="col-sm-2 col-form-label">Quantity</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="quantity" id="quantity">
-                                            <span id="quantity-error" class="error"
-                                                style="color: red; display: none;"></span>
-                                            @error('quantity')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="customer_name" class="col-sm-2 col-form-label">DC Number</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="dc_number" id="dc_number">
-                                                <option value="">Select DC</option>
-                                                @foreach ($delivery_challan as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->dc_no }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('dc_number')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-
+                                        </div> --}}
                                         <label for="customer_code"
                                             class="col-sm-2 col-form-label mandatory">Status</label>
                                         <div class="col-sm-4 mb-4">
@@ -198,6 +165,58 @@
                                                 <option value="cancelled">Cancelled</option>
                                             </select>
                                             @error('status')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="order_date" class="col-sm-2 col-form-label">Quantity</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="quantity" id="quantity">
+                                            <span id="quantity-error" class="error"
+                                                style="color: red; display: none;"></span>
+                                            @error('quantity')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="order_date" class="col-sm-2 col-form-label">Available Quantity</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="available_quantity"
+                                                id="available_quantity" readonly>
+                                            @error('order_date')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="order_date" class="col-sm-2 col-form-label">Weight</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="weight" id="weight">
+                                            <input class="form-control" type="hidden" name="weightPerItem"
+                                                id="weightPerItem">
+                                            <input class="form-control" type="hidden" name="avaWeight" id="avaWeight">
+                                            <span id="weight_error" class="error" style="color: red;"></span>
+                                            @error('weight')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="order_date" class="col-sm-1 col-form-label">Excess</label>
+                                        <div class="col-sm-2 mb-4">
+                                            <input class="form-control" type="text" name="excess_weight"
+                                                id="excess_weight" readonly>
+                                            @error('order_date')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="order_date" class="col-sm-1 col-form-label">Shortage</label>
+                                        <div class="col-sm-2 mb-4">
+                                            <input class="form-control" type="text" name="shortage_weight"
+                                                id="shortage_weight" readonly>
+                                            @error('order_date')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -303,6 +322,79 @@
                     $('#order_date').val('');
                     $('#customer_name').val('');
                 }
+            });
+
+            $('#dc_number').on('change', function() {
+                var orderId = $(this).val();
+                console.log(orderId);
+                if (orderId) {
+                    $.ajax({
+                        url: '/job_allocation/job_giving/get-dc-details/' + orderId,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            console.log(data.dcDetail.order_details);
+
+                            if (data) {
+                                $('#order_no').val(data.dcDetail.order_details.order_no
+                                    .last_order_number);
+                                $('#model_name').val(data.dcDetail.order_details.product_model
+                                    .model_name);
+                                $('#order_date').val(data.dcDetail.order_details.order_date);
+
+                                $('#customer_name').val(data.dcDetail.order_details.customer
+                                    .customer_name);
+                                $('#product_name').val(data.dcDetail.order_details.product_model
+                                    .product.name);
+
+                                $('#total_quantity').val(data.dcDetail.quantity);
+
+                                $('#total_weight').val(data.dcDetail.weight);
+                                $('#available_quantity').val(data.dcDetail.available_quantity);
+
+                                $('#raw_material_name').val(data.dcDetail.order_details
+                                    .product_model.raw_material.name);
+
+                                $('#raw_material_type').val(data.dcDetail.order_details
+                                    .product_model.raw_material.raw_material_type.name);
+                            } else {
+                                $('#order_date').val('');
+
+                                $('#customer_name').val('');
+                            }
+                        }
+                    });
+                } else {
+                    $('#order_date').val('');
+                    $('#customer_name').val('');
+                }
+            });
+
+            $('#weight').on('input', function() {
+                var weight = parseFloat($(this).val());
+                var weightPerQuantity = parseFloat($('#weightPerItem').val());
+                var totalQuantity = parseFloat($('#total_quantity').val());
+                var totalWeight = parseFloat($('#total_weight').val());
+                var givenQuantity = parseFloat($('#quantity').val());
+                var avaWeight = parseFloat($('#avaWeight').val());
+
+                var givenWeight = givenQuantity * weightPerQuantity;
+
+                // Calculate excess and shortage
+                var excess = weight - givenWeight;
+                var shortage = 0;
+
+                if (excess < 0) {
+                    shortage = Math.abs(excess);
+                    excess = 0;
+                }
+                $('#excess_weight').val(excess.toFixed(1));
+                $('#shortage_weight').val(shortage.toFixed(1));
+
+                // Output the results
+                console.log('Excess:', excess.toFixed(1));
+                console.log('Shortage:', shortage.toFixed(1));
+                // Perform any actions you want here
             });
         });
     </script>
