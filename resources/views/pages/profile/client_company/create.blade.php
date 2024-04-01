@@ -199,7 +199,10 @@
                                             @enderror
                                         </div>
 
-                                        <label for="esi_code" class="col-sm-2 col-form-label">ESI Code</label>
+                                        <label for="esi_code" class="col-sm-2 col-form-label">ESI Code
+                                            <a class="shortcut_master"
+                                                href="{{ route('specified.esi_dispensaries.create') }}" target="_blank">+</a>
+                                        </label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="esi_code" id="esi_code">
                                             @error('esi_code')

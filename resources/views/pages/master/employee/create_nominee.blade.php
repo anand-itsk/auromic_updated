@@ -84,7 +84,10 @@
                                                 @enderror
                                             </div>
 
-                                            <label class="col-sm-2 col-form-label">Religion</label>
+                                            <label class="col-sm-2 col-form-label">Religion
+                                                <a class="shortcut_master"
+                                                href="{{ route('common.religions.create') }}" target="_blank">+</a>
+                                            </label>
                                             <div class="col-sm-4 mb-4">
                                                 <select class="form-control select2" name="religion_id"
                                                     id="religion_id">

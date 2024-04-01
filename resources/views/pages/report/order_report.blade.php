@@ -31,10 +31,10 @@
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="#">Auromics</a></li>
                                 <li class="breadcrumb-item"><a href="#">Report</a></li>
-                                <li class="breadcrumb-item active">Employee Report</li>
+                                <li class="breadcrumb-item active">Order Report</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Employee Report</h4>
+                        <h4 class="page-title">Order Report</h4>
                     </div>
                        <div class="card mb-2">
                            <div class="card-body">
@@ -157,10 +157,18 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Employee code</th>
-                                                <th>Employee Name</th>
-                                                <th>DOB</th>
-                                                <th>Joning Date</th>
+                                                <th>Order No</th>
+                                                <th>Date</th>
+                                                <th>Customer Name</th>
+                                                <th>Product</th>
+                                                <th>Model Name</th>
+                                                <th>Size</th>
+                                                <th>Color</th>
+                                                <th>Qty</th>
+                                                <th>Bal.Qty</th>
+                                                <th>Given Qty</th>
+                                                <th>Received Qty</th>
+                                                <th>Status</th>
                                                 
             
                                             </tr>
@@ -245,7 +253,7 @@ $(document).ready(function() {
         processing: true,
         serverSide: true,
         ajax: {
-            url: '{{ route('report.employee_report.data') }}',
+            url: '{{ route('report.order_report.data') }}',
             data: function(d) {
                 // Add additional parameters here if needed
                 d.company_type = $('#company_type').val();
@@ -255,10 +263,20 @@ $(document).ready(function() {
         },
         columns: [
             { data: 'id', name: 'id' },
-            { data: 'employee_code', name: 'employee_code', render: function(data, type, row) { return data ? data : '-'; } },
-            { data: 'employee_name', name: 'employee_name', render: function(data, type, row) { return data ? data : '-'; } },
-            { data: 'dob', name: 'dob', render: function(data, type, row) { return data ? data : '-'; } },
-            { data: 'joining_date', name: 'joining_date', render: function(data, type, row) { return data ? data : '-'; } }
+            { data: 'id', name: 'id' },
+            { data: 'id', name: 'id' },
+            { data: 'id', name: 'id' },
+            { data: 'id', name: 'id' },
+            { data: 'id', name: 'id' },
+            { data: 'id', name: 'id' },
+            { data: 'id', name: 'id' },
+            { data: 'id', name: 'id' },
+            { data: 'id', name: 'id' },
+            { data: 'id', name: 'id' },
+            { data: 'id', name: 'id' },
+            { data: 'id', name: 'id' },
+            { data: 'id', name: 'id' },
+            
         ],
         order: [[0, 'desc']],
         select: true,
