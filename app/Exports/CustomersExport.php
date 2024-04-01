@@ -35,7 +35,7 @@ class CustomersExport implements FromCollection, WithHeadings
                 'Email' => $customer->email ?? '',
                 'TIN No' => $customer->tin_no ?? '',
                 'TIN Date' => $customer->tin_date ?? '',
-                'CST No' => $customer->cst_no ?? '',
+                'GST No' => $customer->gst_no ?? '',
                 'CST Date' => $customer->cst_date ?? '',
             ];
         });
@@ -61,7 +61,7 @@ class CustomersExport implements FromCollection, WithHeadings
             'Email',
             'TIN No',
             'TIN Date',
-            'CST No',
+            'GST No',
             'CST Date',
             'created_at',
             'updated_at'

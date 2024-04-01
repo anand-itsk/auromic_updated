@@ -61,7 +61,9 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label class="col-sm-2 col-form-label">Product</label>
+                                        <label class="col-sm-2 col-form-label">Product <a class="shortcut_master"
+                                                href="{{ route('product-models.products.create') }}" target="_blank">+</a>
+                                        </label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control" name="product" id="product">
                                                 <option value="">Select Product</option>
@@ -73,7 +75,9 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label class="col-sm-2 col-form-label">Model</label>
+                                        <label class="col-sm-2 col-form-label">Model <a class="shortcut_master"
+                                                href="{{ route('master.product_model.create') }}"
+                                                target="_blank">+</a></label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control" name="product_model" id="product_model" disabled>
                                                 <option value="">Select Product Model</option>
@@ -166,18 +170,18 @@
                                             @enderror
                                         </div>
                                         <!-- <label class="col-sm-2 col-form-label">Product Size</label>
-                                            <div class="col-sm-4 mb-4">
-                                                <select class="form-control select2" name="product_size_id"
-                                                    id="product_size_id">
-                                                    <option value="">Select Product Size</option>
-                                                    @foreach ($product_size as $item)
+                                                        <div class="col-sm-4 mb-4">
+                                                            <select class="form-control select2" name="product_size_id"
+                                                                id="product_size_id">
+                                                                <option value="">Select Product Size</option>
+                                                                @foreach ($product_size as $item)
     <option value="{{ $item->id }}">{{ $item->name }}</option>
     @endforeach
-                                                </select>
-                                                @error('order_status_id')
+                                                            </select>
+                                                            @error('order_status_id')
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
-                                            </div> -->
+                                                        </div> -->
                                         <label class="col-sm-2 col-form-label">Product Color</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_color_id"
@@ -191,7 +195,7 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="customer_code" class="col-sm-2 col-form-label">Total R.M</label>
+                                        <label for="customer_code" class="col-sm-2 col-form-label">Total R.M Weight</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="total_raw_material"
                                                 id="total_raw_material" readonly>

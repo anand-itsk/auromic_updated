@@ -210,7 +210,7 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="customer_code" class="col-sm-2 col-form-label ">Total R.M</label>
+                                        <label for="customer_code" class="col-sm-2 col-form-label ">Total R.M Weight</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="total_raw_material"
                                                 id="model_code" value="{{ $order_details->total_raw_material }}">

@@ -19,6 +19,8 @@ class OrderDetail extends Model
         'available_quantity',
         'delivery_date	',
         'order_status_id ',
+        'weight_per_item',
+        'available_weight',
         'total_raw_material',
     ];
 
