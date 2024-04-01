@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('dc_id')->nullable();
             $table->enum('status', ['Pending', 'Incomplete', 'Complete', 'Cancelled'])->default('Pending');
             $table->string('quantity')->nullable();
+            $table->string('weight')->nullable();
             $table->string('excess')->nullable();
             $table->string('shortage')->nullable();
             $table->string('days')->nullable();

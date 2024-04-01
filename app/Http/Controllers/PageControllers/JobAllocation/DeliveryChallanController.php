@@ -117,7 +117,7 @@ class DeliveryChallanController extends Controller
             'dc_date' => 'required',
             'order_id' => 'required',
             'quantity' => 'required', // Ensure quantity is present in the request
-            'quantity' => 'weight',
+            'weight' => 'required',
         ]);
 
         $input = $request->all();

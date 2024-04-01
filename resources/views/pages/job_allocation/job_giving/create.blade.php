@@ -369,6 +369,33 @@
                     $('#customer_name').val('');
                 }
             });
+
+            $('#weight').on('input', function() {
+                var weight = parseFloat($(this).val());
+                var weightPerQuantity = parseFloat($('#weightPerItem').val());
+                var totalQuantity = parseFloat($('#total_quantity').val());
+                var totalWeight = parseFloat($('#total_weight').val());
+                var givenQuantity = parseFloat($('#quantity').val());
+                var avaWeight = parseFloat($('#avaWeight').val());
+
+                var givenWeight = givenQuantity * weightPerQuantity;
+
+                // Calculate excess and shortage
+                var excess = weight - givenWeight;
+                var shortage = 0;
+
+                if (excess < 0) {
+                    shortage = Math.abs(excess);
+                    excess = 0;
+                }
+                $('#excess_weight').val(excess.toFixed(1));
+                $('#shortage_weight').val(shortage.toFixed(1));
+
+                // Output the results
+                console.log('Excess:', excess.toFixed(1));
+                console.log('Shortage:', shortage.toFixed(1));
+                // Perform any actions you want here
+            });
         });
     </script>
     <script>
