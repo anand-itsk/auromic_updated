@@ -17,6 +17,11 @@ class JobReceived extends Model
         'complete_quantity'
     ];
 
+   public function jobGiving()
+    {
+        return $this->belongsTo(JobGiving::class, 'job_giving_id');
+    }
+
   
 }
     
