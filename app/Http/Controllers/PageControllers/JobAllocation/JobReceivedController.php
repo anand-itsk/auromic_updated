@@ -20,15 +20,15 @@ class JobReceivedController extends Controller
     {
         $Job_Giving = JobGiving::with('employee', 'order_details', 'delivery_chellan')->get();
         $job_received = JobReceived::get();
-         $data = $Job_Giving->map(function ($job_giving) {
-        return [
-            'id' => $job_giving->id,
-            'employee_name' => $job_giving->employee->employee_name ?? null,
-            'last_order_number' => $job_giving->order_details->orderNo->last_order_number ?? null,
-            'dc_no' => $job_giving->delivery_chellan->dc_no ?? null,
-            'status' => $job_giving->status ?? null,
-        ];
-    });
+        $data = $Job_Giving->map(function ($job_giving) {
+            return [
+                'id' => $job_giving->id,
+                'employee_name' => $job_giving->employee->employee_name ?? null,
+                'last_order_number' => $job_giving->order_details->orderNo->last_order_number ?? null,
+                'dc_no' => $job_giving->delivery_chellan->dc_no ?? null,
+                'status' => $job_giving->status ?? null,
+            ];
+        });
 
         return DataTables::of($data, $job_received)->make(true);
     }
@@ -38,6 +38,12 @@ class JobReceivedController extends Controller
         // Create a new JobReceived instance
         $input = $request->all();
         $jobReceived = new JobReceived();
+
+        $input['conveyance'] = isset($input['conveyance']) ? $input['conveyance'] : 0;
+        $input['deduction'] = isset($input['deduction']) ? $input['deduction'] : 0;
+        $input['incentive'] = isset($input['incentive']) ? $input['incentive'] : 0;
+
+
 
         $jobReceived->job_giving_id = $input['job_giving_id'];
         $jobReceived->incentive_applicable = $input['Incentive_status'];

@@ -442,14 +442,19 @@
                 var cValue = parseFloat($("#deduction").val()) || 0;
                 var dValue = parseFloat($("#conveyance").val()) || 0;
                 var wages = $('#wages').val();
+                var totalQuantity = $('#total_quantity').val();
+
                 var total = (aValue * wages) + dValue + bValue - cValue;
                 var net = (aValue * wages);
+                var pendingQuantity = totalQuantity - aValue;
+                $("#pending_quantity").val(pendingQuantity); // You can adjust the precision as needed
                 $("#total_amount").val(total.toFixed(2)); // You can adjust the precision as needed
                 $("#net_amount").val(net.toFixed(2)); // You can adjust the precision as needed
             }
 
 
-            $("#received_quantity, #incentive, #deduction, #conveyance").on("input", updateTotal);
+            $("#received_quantity, #incentive, #deduction, #conveyance, #pending_quantity").on("input",
+                updateTotal);
 
             // Initial update
             updateTotal();
