@@ -384,24 +384,24 @@
             });
 
 
-            $('#received_quantity').on('input', function() {
+            // $('#received_quantity').on('input', function() {
 
-                var receivedQuantity = $(this).val();
-                var totalQuantity = $('#total_quantity').val();
+            //     var receivedQuantity = $(this).val();
+            //     var totalQuantity = $('#total_quantity').val();
 
-                var pendingQuantity = totalQuantity - receivedQuantity;
+            //     var pendingQuantity = totalQuantity - receivedQuantity;
 
-                $('#pending_quantity').val(pendingQuantity);
+            //     $('#pending_quantity').val(pendingQuantity);
 
-                var wages = $('#wages').val();
+            //     var wages = $('#wages').val();
 
-                var totalAmount = receivedQuantity * wages;
+            //     var totalAmount = receivedQuantity * wages;
 
-                $('#total_amount').val(totalAmount);
+            //     $('#total_amount').val(totalAmount);
 
 
 
-            });
+            // });
 
 
             $('#current_weight').on('input', function() {
@@ -414,47 +414,50 @@
                 $('#balance_weight').val(pendingWeight);
             });
 
-            $('#conveyance').on('input', function(e) {
-                if (e.originalEvent.inputType === 'deleteContentBackward') {
-                    // Backspace was pressed
-                    var conveyance = parseInt($(this).val());
-                    var totalAmount = parseInt($('#total_amount').val());
+            // $('#conveyance').on('input', function(e) {
+            //     if (e.originalEvent.inputType === 'deleteContentBackward') {
+            //         // Backspace was pressed
+            //         var conveyance = parseInt($(this).val());
+            //         var totalAmount = parseInt($('#total_amount').val());
 
-                    var currentTotal = totalAmount - conveyance;
+            //         var currentTotal = totalAmount - conveyance;
 
-                    $('#total_amount').val(currentTotal);
-                } else {
-                    // Inputting new value
-                    var conveyance = parseInt($(this).val());
-                    var totalAmount = parseInt($('#total_amount').val());
+            //         $('#total_amount').val(currentTotal);
+            //     } else {
+            //         // Inputting new value
+            //         var conveyance = parseInt($(this).val());
+            //         var totalAmount = parseInt($('#total_amount').val());
 
-                    var currentTotal = totalAmount + conveyance;
+            //         var currentTotal = totalAmount + conveyance;
 
-                    $('#total_amount').val(currentTotal);
-                }
-            });
-
-            $('#deduction').on('input', function() {
-                var deduction = parseInt($(this).val());
-                var totalAmount = parseInt($('#total_amount').val());
-
-                var currentTotal = totalAmount - deduction;
-
-
-                $('#total_amount').val(currentTotal);
-            });
-            $('#incentive').on('input', function() {
-                var incentive = parseInt($(this).val());
-                var totalAmount = parseInt($('#total_amount').val());
-
-                var currentTotal = totalAmount + incentive;
-
-
-                $('#total_amount').val(currentTotal);
-            });
+            //         $('#total_amount').val(currentTotal);
+            //     }
+            // });
 
 
 
+            function updateTotal() {
+                var aValue = parseFloat($("#received_quantity").val()) || 0;
+                var bValue = parseFloat($("#incentive").val()) || 0;
+                var cValue = parseFloat($("#deduction").val()) || 0;
+                var dValue = parseFloat($("#conveyance").val()) || 0;
+                var wages = $('#wages').val();
+                var totalQuantity = $('#total_quantity').val();
+
+                var total = (aValue * wages) + dValue + bValue - cValue;
+                var net = (aValue * wages);
+                var pendingQuantity = totalQuantity - aValue;
+                $("#pending_quantity").val(pendingQuantity); // You can adjust the precision as needed
+                $("#total_amount").val(total.toFixed(2)); // You can adjust the precision as needed
+                $("#net_amount").val(net.toFixed(2)); // You can adjust the precision as needed
+            }
+
+
+            $("#received_quantity, #incentive, #deduction, #conveyance, #pending_quantity").on("input",
+                updateTotal);
+
+            // Initial update
+            updateTotal();
 
         });
     </script>

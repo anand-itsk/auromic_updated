@@ -28,18 +28,18 @@ class JobGivingController extends Controller
     {
         $Job_Giving = JobGiving::with('employee', 'order_details.orderNo', 'delivery_chellan', 'product_model')->get();
         $data = $Job_Giving->map(function ($job_giving) {
-        return [
-            'id' => $job_giving->id,
-            'employee_name' => $job_giving->employee->employee_name ?? null,
-            'last_order_number' => $job_giving->order_details->orderNo->last_order_number ?? null,
-            'dc_no' => $job_giving->delivery_chellan->dc_no ?? null,
-            'model_name' => $job_giving->product_model->model_name ?? null,
-            'quantity' => $job_giving->quantity ?? null,
-            'status' => $job_giving->status ?? null,
-        ];
-    });
+            return [
+                'id' => $job_giving->id,
+                'employee_name' => $job_giving->employee->employee_name ?? null,
+                'last_order_number' => $job_giving->order_details->orderNo->last_order_number ?? null,
+                'dc_no' => $job_giving->delivery_chellan->dc_no ?? null,
+                'model_name' => $job_giving->product_model->model_name ?? null,
+                'quantity' => $job_giving->quantity ?? null,
+                'status' => $job_giving->status ?? null,
+            ];
+        });
 
-        
+
         return DataTables::of($data)->make(true);
     }
     // Create Page
@@ -173,6 +173,7 @@ class JobGivingController extends Controller
         $job_giving->quantity = $input['quantity'];
         $job_giving->dc_id = $input['dc_number'];
         $job_giving->weight = $input['weight'];
+        $job_giving->days = $input['deadline_days'];
         $job_giving->save();
 
         // Update available quantity in delivery challan
@@ -275,8 +276,20 @@ class JobGivingController extends Controller
     public function delete($id)
     {
         $job_giving = JobGiving::find($id);
+        if ($job_giving->status == "Pending") {
+            $current_quantity = $job_giving->quantity;
 
-        $job_giving->delete();
+            $dc = DeliveryChallan::where('id', $job_giving->dc_id)->first();
+            if ($dc) {
+                $availableQuantity = $dc->available_quantity;
+                $newAvailableQuantity = $availableQuantity + $current_quantity;
+                $dc->available_quantity = $newAvailableQuantity;
+                $dc->save();
+                $job_giving->delete();
+            }
+        }
+
+
 
         return redirect()->route('job_allocation.job_giving.index')->with('success', 'Job Giving Deleted successfully!');
     }
