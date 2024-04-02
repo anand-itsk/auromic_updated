@@ -147,29 +147,6 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        {{-- <label for="order_date" class="col-sm-2 col-form-label">Duration date</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="date" name="date" id="date">
-                                            @error('date')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div> --}}
-                                        <label for="customer_code"
-                                            class="col-sm-2 col-form-label mandatory">Status</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="status" id="status">
-                                                <option value="">Select Status</option>
-                                                <option value="Incomplete">Incomplete</option>
-                                                <option value="Complete">Complete</option>
-                                                <option value="Pending">Pending</option>
-                                                <option value="cancelled">Cancelled</option>
-                                            </select>
-                                            @error('status')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-
-
                                     </div>
                                     <div class="form-group row">
                                         <label for="order_date" class="col-sm-2 col-form-label">Quantity</label>
@@ -220,6 +197,15 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
+
+                                        <label for="deadline_days" class="col-sm-2 col-form-label">Deadline (Days)</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="deadline_days" id="deadline_days">
+                                            <span id="weight_error" class="error" style="color: red;"></span>
+                                            @error('deadline_days')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="d-flex justify-content-evenly">
@@ -264,6 +250,15 @@
                                             <input class="form-control" type="text" name="total_weight"
                                                 id="total_weight" readonly>
                                             @error('total_weight')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="order_date" class="col-form-label">Order Delivery Date</label>
+                                        <div class="mb-4">
+                                            <input class="form-control" type="text" name="deliveryDate"
+                                                id="deliveryDate" readonly>
+                                            @error('deliveryDate')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -357,6 +352,12 @@
 
                                 $('#raw_material_type').val(data.dcDetail.order_details
                                     .product_model.raw_material.raw_material_type.name);
+
+                                $('#weightPerItem').val(data.dcDetail.order_details
+                                    .weight_per_item);
+
+                                $('#deliveryDate').val(data.dcDetail.order_details
+                                    .delivery_date);
                             } else {
                                 $('#order_date').val('');
 
@@ -377,7 +378,7 @@
                 var totalWeight = parseFloat($('#total_weight').val());
                 var givenQuantity = parseFloat($('#quantity').val());
                 var avaWeight = parseFloat($('#avaWeight').val());
-
+                console.log(weightPerQuantity);
                 var givenWeight = givenQuantity * weightPerQuantity;
 
                 // Calculate excess and shortage

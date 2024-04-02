@@ -19,7 +19,7 @@ class OrderStatusTableSeeder extends Seeder
             array('name' => "Not Specified", 'code' => 'N/S'),
             array('name' => "Open", 'code' => 'OP'),
             array('name' => "Complete", 'code' => 'CP'),
-            array('name' => "Pending", 'code' => 'PE'),
+            array('name' => "Cancel", 'code' => 'CL'),
 
         );
 

@@ -92,7 +92,7 @@ class OrderDetailController extends Controller
         $orderDetail->product_size_id = $request->input('product_size_id');
         $orderDetail->product_color_id = $request->input('product_color_id');
         $orderDetail->product_model_id = $request->input('product_model');
-        $orderDetail->order_status_id = $request->input('order_status_id');
+        $orderDetail->order_status_id = 2;
         $orderDetail->quantity = $request->input('quantity');
         $orderDetail->available_quantity = $request->input('quantity');
         $orderDetail->delivery_date = $request->input('delivery_date');
