@@ -9,12 +9,20 @@ class JobReceived extends Model
 {
     use HasFactory;
 
-    protected $fillable=[
+    protected $fillable = [
         'job_giving_id',
         'incentive_applicable',
         'status',
         'receving_date',
-        'complete_quantity'
+        'complete_quantity',
+        'before_days',
+        'after_days',
+        'current_weight',
+        'conveyance_fee',
+        'deducation_fee',
+        'incentive_fee',
+        'total_amount',
+        'net_amount',
     ];
 
    public function jobGiving()
@@ -22,6 +30,4 @@ class JobReceived extends Model
         return $this->belongsTo(JobGiving::class, 'job_giving_id');
     }
 
-  
 }
-    

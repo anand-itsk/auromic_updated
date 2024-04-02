@@ -20,6 +20,7 @@ class JobReceivedController extends Controller
     {
         $Job_Giving = JobGiving::with('employee', 'order_details', 'deliveryChellan')->get();
         $job_received = JobReceived::get();
+
          $data = $Job_Giving->map(function ($job_giving) {
         return [
             'id' => $job_giving->id,
@@ -30,6 +31,7 @@ class JobReceivedController extends Controller
         ];
     });
 
+
         return DataTables::of($data, $job_received)->make(true);
     }
     // store
@@ -38,6 +40,12 @@ class JobReceivedController extends Controller
         // Create a new JobReceived instance
         $input = $request->all();
         $jobReceived = new JobReceived();
+
+        $input['conveyance'] = isset($input['conveyance']) ? $input['conveyance'] : 0;
+        $input['deduction'] = isset($input['deduction']) ? $input['deduction'] : 0;
+        $input['incentive'] = isset($input['incentive']) ? $input['incentive'] : 0;
+
+
 
         $jobReceived->job_giving_id = $input['job_giving_id'];
         $jobReceived->incentive_applicable = $input['Incentive_status'];
