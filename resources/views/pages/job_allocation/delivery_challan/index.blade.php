@@ -231,8 +231,8 @@
                         }
                     },
                     {
-                        data: 'product_size.name',
-                        name: 'product_size.name',
+                        data: 'product_size.code',
+                        name: 'product_size.code',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }

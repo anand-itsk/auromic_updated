@@ -292,8 +292,8 @@ $(document).ready(function() {
                         }
             },
             {
-                data: 'product_size.name',
-                name: 'product_size.name'
+                data: 'product_size.code',
+                name: 'product_size.code'
             },
             {
                 data: 'product_color.name',

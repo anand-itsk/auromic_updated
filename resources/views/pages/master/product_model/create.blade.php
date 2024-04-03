@@ -83,14 +83,14 @@
                                             @enderror
                                         </div>
 
-                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Model
-                                            Code</label>
-                                        <div class="col-sm-4 mb-4">
-                                           <input class="form-control" type="text" name="model_code" id="model_code" value="{{ $formattedModelCode }}" readonly>
-                                            @error('model_code')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                        <label for="model_code" class="col-sm-2 col-form-label mandatory">Model Code</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="model_code" id="model_code">
+    <div id="model_codeError" style="color: red;"></div>
+    @error('model_code')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
 
                                         <label for="customer_code" class="col-sm-2 col-form-label mandatory">Model
                                             Name</label>
@@ -144,6 +144,34 @@
             </div>
         </div>
     </div>
+
+<script>
+   document.addEventListener('DOMContentLoaded', function () {
+      let modelField = document.getElementById('model_code');
+      let modelError = document.getElementById('model_codeError');
+
+      modelField.addEventListener('input', function () {
+         let modelCode = this.value.trim();
+         modelError.textContent = ''; // Reset error message on each input change
+
+         // Perform an AJAX request to check if the model code exists
+         $.ajax({
+            method: 'POST',
+            url: '{{ route("master.product_model.checkName") }}',
+            data: { model_code: modelCode, _token: '{{ csrf_token() }}' },
+            success: function (response) {
+               if (response.exists) {
+                  modelError.textContent = 'Model code already exists in the database!';
+               }
+            },
+            error: function (error) {
+               console.error(error);
+               modelError.textContent = 'Error occurred while checking the model code.';
+            }
+         });
+      });
+   });
+</script>
 
 
     @include('links.js.select2.select2')

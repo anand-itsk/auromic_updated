@@ -56,6 +56,16 @@ class OrderDetailController extends Controller
         return view('pages.master.order_detail.create', compact('customer', 'products', 'productModels', 'order_status', 'product_size', 'product_color', 'formattedOrderNumber'));
     }
 
+    public function checkName(Request $request)
+    {
+
+        $customer_order_no = $request->input('customer_order_no'); 
+
+        $exists = OrderNo::where('customer_order_no', $customer_order_no)->exists();
+
+        return response()->json(['exists' => $exists]);
+    }
+
     public function store(Request $request)
     {
 

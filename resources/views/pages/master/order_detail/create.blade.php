@@ -53,6 +53,7 @@
                                         <div class="col-sm-4 mb-4">
                                             <input type="text" class="form-control" name="customer_order_no"
                                                 id="customer_order_no"required>
+                                                 <div id="customer_order_noError" style="color: red;"></div>
                                             @error('customer_order_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -75,7 +76,7 @@
                                                 href="{{ route('product-models.products.create') }}" target="_blank">+</a>
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control" name="product" id="product">
+                                            <select class="form-control select2" name="product" id="product">
                                                 <option value="">Select Product</option>
                                                 @foreach ($products as $product)
                                                     <option value="{{ $product->id }}">{{ $product->name }}</option>
@@ -89,7 +90,7 @@
                                                 href="{{ route('master.product_model.create') }}"
                                                 target="_blank">+</a></label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control" name="product_model" id="product_model" disabled>
+                                            <select class="form-control select2" name="product_model" id="product_model" disabled>
                                                 <option value="">Select Product Model</option>
                                                 @foreach ($productModels as $productModel)
                                                     <option value="{{ $productModel->id }}"
@@ -293,6 +294,36 @@
         const orderNo = urlParams.get('orderNo');
         document.getElementById('order_no').value = orderNo;
     </script>
+
+   <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let customerOrderField = document.getElementById('customer_order_no');
+        let customerOrderError = document.getElementById('customer_order_noError');
+
+        customerOrderField.addEventListener('input', function () {
+            let customerOrderNo = this.value.trim();
+            customerOrderError.textContent = ''; // Reset error message on each input change
+
+            // Perform an AJAX request to check if the customer order number exists
+            $.ajax({
+                method: 'POST',
+                url: '{{ route("master.order_detail.checkName") }}',
+                data: { customer_order_no: customerOrderNo, _token: '{{ csrf_token() }}' },
+                success: function (response) {
+                    if (response.exists) {
+                        customerOrderError.textContent = 'Customer order number already exists in the database!';
+                    }
+                },
+                error: function (error) {
+                    console.error(error);
+                    customerOrderError.textContent = 'Error occurred while checking the customer order number.';
+                }
+            });
+        });
+    });
+</script>
+
+
 
     @include('links.js.select2.select2')
 @endsection
