@@ -90,7 +90,8 @@ class DeliveryChallanController extends Controller
             'product' => $productDetails->product->name,
             'raw_material_name' => $productDetails->rawMaterial->name,
             'raw_material_type' => $productDetails->rawMaterial->rawMaterialType->name,
-            'product_size_name' => $productDetails->productSize->name,
+            'product_size_code' => $productDetails->productSize->code,
+            'product_size_id' => $productDetails->productSize->id,
         ]);
     }
     public function getOrderDetails(Request $request)

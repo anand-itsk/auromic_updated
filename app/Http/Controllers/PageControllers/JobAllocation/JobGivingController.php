@@ -45,7 +45,7 @@ class JobGivingController extends Controller
     // Create Page
     public function create(Request $request)
     {
-        $delivery_challan = DeliveryChallan::all();
+        $delivery_challan = DeliveryChallan::with('orderDetails.orderNo', 'orderDetails.productModel')->get();
         $order_details = OrderDetail::all();
         $order_nos = OrderNo::all();
         $productModels = ProductModel::with(['rawMaterial.rawMaterialType', 'product'])->get();
@@ -74,15 +74,15 @@ class JobGivingController extends Controller
     //     $order_data = OrderNO::all();
     //     return response()->json(['order_ids' => $orderIds, 'order_data' => $order_data]);
     // }
-     public function fetchOrderIds(Request $request)
+    public function fetchOrderIds(Request $request)
     {
-       $companyId = $request->input('company_name');
-    $deliveryChallans = DeliveryChallan::where('company_id', $companyId)->get();
-    $dcNumbers = [];
-    foreach ($deliveryChallans as $deliveryChallan) {
-        $dcNumbers[$deliveryChallan->id] = $deliveryChallan->dc_no;
-    }
-    return response()->json(['dc_numbers' => $dcNumbers]);
+        $companyId = $request->input('company_name');
+        $deliveryChallans = DeliveryChallan::where('company_id', $companyId)->get();
+        $dcNumbers = [];
+        foreach ($deliveryChallans as $deliveryChallan) {
+            $dcNumbers[$deliveryChallan->id] = $deliveryChallan->dc_no;
+        }
+        return response()->json(['dc_numbers' => $dcNumbers]);
     }
 
     public function getQuantities($id)
@@ -125,9 +125,9 @@ class JobGivingController extends Controller
             'order_date' => $orderDetail->order_date,
             'total_quantity' => $orderDetail->quantity,
             'available_quantity' => $orderDetail->available_quantity,
-             'total_r_w_weight' => $orderDetail->total_raw_material,
-             
-            
+            'total_r_w_weight' => $orderDetail->total_raw_material,
+
+
 
         ]);
     }
@@ -156,7 +156,7 @@ class JobGivingController extends Controller
         $validatedData = $request->validate([
             'employee_id' => 'required',
             'quantity' => 'required',
-            
+
         ]);
 
         $input = $request->all();
