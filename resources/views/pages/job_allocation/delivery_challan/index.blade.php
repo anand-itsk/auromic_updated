@@ -115,8 +115,6 @@
                                                 <th>Order Number</th>
                                                 <th>DC NO</th>
                                                  <th>DC Date</th>
-                                                  <th>Product Size</th>
-                                                   <th>Product color</th>
                                                     <th>Quantity</th>
                                                      <th>Avl.Quantity</th>
                                                 <th>Action</th>
@@ -230,20 +228,8 @@
                             return data ? data : '-';
                         }
                     },
-                    {
-                        data: 'product_size.code',
-                        name: 'product_size.code',
-                        render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-                    },
-                     {
-                        data: 'product_color.name',
-                        name: 'product_color.name',
-                        render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-                    },
+                    
+                     
                      {
                         data: 'quantity',
                         name: 'quantity',

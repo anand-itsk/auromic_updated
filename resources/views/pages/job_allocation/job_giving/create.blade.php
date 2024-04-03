@@ -72,8 +72,9 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
+                                        
                                         {{-- DC Number --}}
-                                        <label for="customer_name" class="col-sm-2 col-form-label mandatory">DC
+                                        <!-- <label for="customer_name" class="col-sm-2 col-form-label mandatory">DC
                                             Number</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="dc_number" id="dc_number">
@@ -85,22 +86,28 @@
                                             @error('dc_number')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
-                                        </div>
-
-                                        <label for="order_no" class="col-sm-2 col-form-label ">Order No</label>
+                                        </div> -->
+                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Order
+                                            No</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input type="text" class="form-control" name="order_no" id="order_no"
-                                                readonly>
-                                            @error('order_no')
+                                            <select class="form-control select2" name="order_id" id="order_id">
+                                                <option value="">Select Order</option>
+                                                @foreach ($order_nos as $item)
+                                                    <option value="{{ $item->id }}">{{ $item->last_order_number }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('order_id')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-
-                                        <label for="model_name" class="col-sm-2 col-form-label ">Model Name</label>
+                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Model</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input type="text" class="form-control" name="model_name" id="model_name"
-                                                readonly>
-                                            @error('model_name')
+                                            <select class="form-control select2" name="product_model" id="product_model">
+                                                <option value="">Select Model</option>
+
+                                            </select>
+                                            @error('product_model')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -119,6 +126,14 @@
                                             <input type="text" class="form-control" name="customer_name"
                                                 id="customer_name" readonly>
                                             @error('customer_name')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <label for="customer_code" class="col-sm-2 col-form-label ">Dc Number</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input type="text" class="form-control" name="dc_number"
+                                                id="dc_number"  readonly>
+                                            @error('dc_number')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -598,18 +613,20 @@
                         },
                         dataType: 'json',
                         success: function(response) {
-                            $('#product').val(response.product);
+                            $('#product_name').val(response.product);
                             $('#raw_material_name').val(response.raw_material_name);
                             $('#raw_material_type').val(response.raw_material_type);
+                             $('#dc_number').val(response.dc_no);
                         },
                         error: function(xhr, status, error) {
                             console.error(error);
                         }
                     });
                 } else {
-                    $('#product').val('');
+                    $('#product_name').val('');
                     $('#raw_material_name').val('');
                     $('#raw_material_type').val('');
+                     $('#dc_number').val('');
                 }
             });
         });
@@ -630,6 +647,7 @@
                             $('#order_date').val(response.order_date);
                             $('#total_quantity').val(response.total_quantity);
                             $('#available_quantity').val(response.available_quantity);
+                             $('#total_weight').val(response.total_r_w_weight);
                         },
                         error: function(xhr, status, error) {
                             console.error(error);

@@ -90,6 +90,7 @@ class DeliveryChallanController extends Controller
             'product' => $productDetails->product->name,
             'raw_material_name' => $productDetails->rawMaterial->name,
             'raw_material_type' => $productDetails->rawMaterial->rawMaterialType->name,
+            'product_size_name' => $productDetails->productSize->name,
         ]);
     }
     public function getOrderDetails(Request $request)
@@ -104,6 +105,7 @@ class DeliveryChallanController extends Controller
             'total_r_w_weight' => $orderDetail->total_raw_material,
             'weight_per_item' => $orderDetail->weight_per_item,
             'available_weight' => $orderDetail->available_weight,
+            'product_color_id' => $orderDetail->productColor->name,
         ]);
     }
 
@@ -145,8 +147,6 @@ class DeliveryChallanController extends Controller
         $delivery_challan->order_id = $input['order_id'];
         $delivery_challan->dc_date = $input['dc_date'];
         $delivery_challan->quantity = $input['quantity'];
-        $delivery_challan->product_size_id = $input['product_size_id'];
-        $delivery_challan->product_color_id = $input['product_color_id'];
         $delivery_challan->available_quantity = $input['quantity'];
         $delivery_challan->weight = $input['weight'];
         $delivery_challan->excess = $input['excess_weight'];

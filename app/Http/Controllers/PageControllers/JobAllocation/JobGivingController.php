@@ -97,12 +97,15 @@ class JobGivingController extends Controller
     public function getProductDetails(Request $request)
     {
         $productModelId = $request->input('product_model');
-        $productDetails = ProductModel::with(['product', 'rawMaterial.rawMaterialType'])->find($productModelId);
+        $productDetails = ProductModel::with(['product', 'rawMaterial.rawMaterialType','jobGiving.deliveryChellan'])->find($productModelId);
+
+
 
         return response()->json([
             'product' => $productDetails->product->name,
             'raw_material_name' => $productDetails->rawMaterial->name,
             'raw_material_type' => $productDetails->rawMaterial->rawMaterialType->name,
+            'dc_no' => $productDetails->jobGiving->deliveryChellan->dc_no,
         ]);
     }
     public function getOrderDetails(Request $request)
@@ -113,6 +116,10 @@ class JobGivingController extends Controller
             'order_date' => $orderDetail->order_date,
             'total_quantity' => $orderDetail->quantity,
             'available_quantity' => $orderDetail->available_quantity,
+             'total_r_w_weight' => $orderDetail->total_raw_material,
+             
+            
+
         ]);
     }
 
@@ -140,7 +147,7 @@ class JobGivingController extends Controller
         $validatedData = $request->validate([
             'employee_id' => 'required',
             'quantity' => 'required',
-            'dc_number' => 'required',
+            
         ]);
 
         $input = $request->all();
@@ -148,9 +155,9 @@ class JobGivingController extends Controller
         // Check if input quantity exceeds available quantity
         $deliveryChallan = DeliveryChallan::find($input['dc_number']);
 
-        $orderDetail = OrderDetail::where('id', $deliveryChallan->order_id)->first();
+        // $orderDetail = OrderDetail::where('id', $deliveryChallan->order_id)->first();
 
-        $product_model_id = $orderDetail->product_model_id;
+        // $product_model_id = $orderDetail->product_model_id;
 
         $order_id = $deliveryChallan->order_id;
 

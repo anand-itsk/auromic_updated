@@ -145,8 +145,8 @@
                                         </div>
                                         <label for="wages_employee" class="col-sm-2 col-form-label ">Product Size</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="product_size"
-                                                id="product_size" readonly>
+                                            <input class="form-control" type="text" name="product_size_id"
+                                                id="product_size_id" readonly>
                                             @error('product_size')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -234,33 +234,7 @@
             }
         });
     </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const productModelSelect = document.getElementById('product_model');
-            const rawMaterialWeightItemInput = document.getElementById('raw_material_weight_item');
-            const wagesEmployeeInput = document.getElementById('wages_employee');
-            const rawMaterialTypeInput = document.getElementById('raw_material_type');
-            const rawMaterialNameInput = document.getElementById('raw_material_name');
-            const productSizeInput = document.getElementById('product_size');
-
-
-
-            productModelSelect.addEventListener('change', function() {
-                const selectedOption = productModelSelect.options[productModelSelect.selectedIndex];
-                const rawMaterialWeight = selectedOption.dataset.weight;
-                const wagesEmployee = selectedOption.dataset.wage;
-                const rawMaterialType = selectedOption.dataset.rawMaterialType;
-                const rawMaterialName = selectedOption.dataset.rawMaterialName;
-                const productSize = selectedOption.dataset.productSize;
-
-                rawMaterialWeightItemInput.value = rawMaterialWeight;
-                wagesEmployeeInput.value = wagesEmployee;
-                rawMaterialTypeInput.value = rawMaterialType;
-                rawMaterialNameInput.value = rawMaterialName;
-                productSizeInput.value = productSize;
-            });
-        });
-    </script>
+    
     <script>
         $(document).ready(function() {
             $('#product').change(function() {
@@ -323,7 +297,41 @@
     });
 </script>
 
-
+    <script>
+        $(document).ready(function() {
+            $('#product_model').change(function() {
+                var productModelId = $(this).val();
+                if (productModelId) {
+                    $.ajax({
+                        url: '/master/order_detail/get-product-details', // Update the URL to your route
+                        type: 'GET',
+                        data: {
+                            product_model: productModelId
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            $('#product').val(response.product);
+                            $('#raw_material_name').val(response.raw_material_name);
+                            $('#raw_material_type').val(response.raw_material_type);
+                             $('#product_size_id').val(response.product_size_name);
+                             $('#wages_employee').val(response.wages_product);
+                             $('#raw_material_weight_item').val(response.raw_material_weight_item);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
+                } else {
+                    $('#product').val('');
+                    $('#raw_material_name').val('');
+                    $('#raw_material_type').val('');
+                    $('#product_size_id').val('');
+                      $('#wages_employee').val('');
+                        $('#raw_material_weight_item').val('');
+                }
+            });
+        });
+    </script>
 
     @include('links.js.select2.select2')
 @endsection
