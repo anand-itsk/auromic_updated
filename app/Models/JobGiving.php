@@ -29,16 +29,23 @@ class JobGiving extends Model
     {
         return $this->belongsTo(OrderDetail::class, 'order_id');
     }
-    public function delivery_chellan()
-    {
-        return $this->belongsTo(DeliveryChallan::class, 'dc_id');
-    }
+   
     public function product_model()
     {
         return $this->belongsTo(ProductModel::class, 'product_model_id');
     }
- public function job_received()
-{
-    return $this->hasOne(JobReceived::class, 'job_giving_id');
-}
+
+
+
+
+
+    public function deliveryChellan()
+    {
+        return $this->belongsTo(DeliveryChallan::class, 'dc_id');
+    }
+
+    public function jobReceived()
+    {
+        return $this->hasOne(JobReceived::class, 'job_giving_id');
+    }
 }
