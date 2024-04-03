@@ -12,6 +12,7 @@ class OrderNo extends Model
 
     protected $fillable = [
         'last_order_number',
+        'customer_order_no',
         'created_by'
     ];
 }

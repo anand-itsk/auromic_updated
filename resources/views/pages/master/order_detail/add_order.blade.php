@@ -18,7 +18,7 @@
                                 <li class="breadcrumb-item">Create</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Add Order For {{ $order_details->orderNo->last_order_number }}</h4>
+                        <h4 class="page-title">Add Order For {{ $order_details->orderNo->customer_order_no }}</h4>
                     </div>
                 </div>
             </div>
@@ -28,7 +28,9 @@
                     <div class="card m-b-30">
                         <div class="card-body">
                             <div class="m-b-30">
-                                <form action="{{ route('master.order_detail.store_New_order', $order_details->order_no_id) }}" method="POST">
+                                <form
+                                    action="{{ route('master.order_detail.store_New_order', $order_details->order_no_id) }}"
+                                    method="POST">
                                     @csrf
 
                                     <div class="d-flex justify-content-end mb-2">
@@ -165,18 +167,18 @@
                                             @enderror
                                         </div>
                                         <!-- <label class="col-sm-2 col-form-label">Product Size</label>
-                                            <div class="col-sm-4 mb-4">
-                                                <select class="form-control select2" name="product_size_id"
-                                                    id="product_size_id">
-                                                    <option value="">Select Product Size</option>
-                                                    @foreach ($product_size as $item)
+                                                <div class="col-sm-4 mb-4">
+                                                    <select class="form-control select2" name="product_size_id"
+                                                        id="product_size_id">
+                                                        <option value="">Select Product Size</option>
+                                                        @foreach ($product_size as $item)
     <option value="{{ $item->id }}">{{ $item->name }}</option>
     @endforeach
-                                                </select>
-                                                @error('order_status_id')
+                                                    </select>
+                                                    @error('order_status_id')
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
-                                            </div> -->
+                                                </div> -->
                                         <label class="col-sm-2 col-form-label">Product Color</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_color_id"
@@ -190,7 +192,8 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="customer_code" class="col-sm-2 col-form-label">Total R.M Weight</label>
+                                        <label for="customer_code" class="col-sm-2 col-form-label">Total R.M
+                                            Weight</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="total_raw_material"
                                                 id="total_raw_material" readonly>

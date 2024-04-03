@@ -48,6 +48,16 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
+
+                                        <label class="col-sm-2 col-form-label mandatory">Customer Order No</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input type="text" class="form-control" name="customer_order_no"
+                                                id="customer_order_no"required>
+                                            @error('customer_order_no')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
                                         <label class="col-sm-2 col-form-label mandatory">Customer</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="customer_id"

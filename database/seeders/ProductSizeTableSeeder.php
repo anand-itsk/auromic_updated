@@ -22,6 +22,7 @@ class ProductSizeTableSeeder extends Seeder
             array('name' => "Large", 'code' => 'L'),
             array('name' => "Extra Large", 'code' => 'XL'),
             array('name' => "Other", 'code' => 'O'),
+            array('name' => "Extra Extra Large", 'code' => 'XXL'),
 
         );
 
