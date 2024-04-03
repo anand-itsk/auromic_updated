@@ -277,7 +277,7 @@
                         <a href="#"><i class="dripicons-briefcase"></i>Job Allocation</a>
                         <ul class="submenu">
                             <li>
-                                <a href="{{ route('job_allocation.delivery_challan.index') }}">Delivery Challan</a>
+                                <a href="{{ route('job_allocation.delivery_challan.index') }}">Order Allocation</a>
                             </li>
                             <li>
                                 <a href="{{ route('job_allocation.job_giving.index') }}">Job Giving</a>

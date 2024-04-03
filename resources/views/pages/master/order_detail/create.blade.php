@@ -53,7 +53,7 @@
                                         <div class="col-sm-4 mb-4">
                                             <input type="text" class="form-control" name="customer_order_no"
                                                 id="customer_order_no"required>
-                                                 <div id="customer_order_noError" style="color: red;"></div>
+                                            <div id="customer_order_noError" style="color: red;"></div>
                                             @error('customer_order_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -90,7 +90,8 @@
                                                 href="{{ route('master.product_model.create') }}"
                                                 target="_blank">+</a></label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="product_model" id="product_model" disabled>
+                                            <select class="form-control select2" name="product_model" id="product_model"
+                                                disabled>
                                                 <option value="">Select Product Model</option>
                                                 @foreach ($productModels as $productModel)
                                                     <option value="{{ $productModel->id }}"
@@ -145,7 +146,9 @@
                                         </div>
                                         <label for="wages_employee" class="col-sm-2 col-form-label ">Product Size</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="product_size_id"
+                                            <input class="form-control" type="text" name="product_size_code"
+                                                id="product_size_code" readonly>
+                                            <input class="form-control" type="hidden" name="product_size_id"
                                                 id="product_size_id" readonly>
                                             @error('product_size')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
@@ -234,7 +237,7 @@
             }
         });
     </script>
-    
+
     <script>
         $(document).ready(function() {
             $('#product').change(function() {
@@ -269,33 +272,38 @@
         document.getElementById('order_no').value = orderNo;
     </script>
 
-   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        let customerOrderField = document.getElementById('customer_order_no');
-        let customerOrderError = document.getElementById('customer_order_noError');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let customerOrderField = document.getElementById('customer_order_no');
+            let customerOrderError = document.getElementById('customer_order_noError');
 
-        customerOrderField.addEventListener('input', function () {
-            let customerOrderNo = this.value.trim();
-            customerOrderError.textContent = ''; // Reset error message on each input change
+            customerOrderField.addEventListener('input', function() {
+                let customerOrderNo = this.value.trim();
+                customerOrderError.textContent = ''; // Reset error message on each input change
 
-            // Perform an AJAX request to check if the customer order number exists
-            $.ajax({
-                method: 'POST',
-                url: '{{ route("master.order_detail.checkName") }}',
-                data: { customer_order_no: customerOrderNo, _token: '{{ csrf_token() }}' },
-                success: function (response) {
-                    if (response.exists) {
-                        customerOrderError.textContent = 'Customer order number already exists in the database!';
+                // Perform an AJAX request to check if the customer order number exists
+                $.ajax({
+                    method: 'POST',
+                    url: '{{ route('master.order_detail.checkName') }}',
+                    data: {
+                        customer_order_no: customerOrderNo,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.exists) {
+                            customerOrderError.textContent =
+                                'Customer order number already exists in the database!';
+                        }
+                    },
+                    error: function(error) {
+                        console.error(error);
+                        customerOrderError.textContent =
+                            'Error occurred while checking the customer order number.';
                     }
-                },
-                error: function (error) {
-                    console.error(error);
-                    customerOrderError.textContent = 'Error occurred while checking the customer order number.';
-                }
+                });
             });
         });
-    });
-</script>
+    </script>
 
     <script>
         $(document).ready(function() {
@@ -313,9 +321,11 @@
                             $('#product').val(response.product);
                             $('#raw_material_name').val(response.raw_material_name);
                             $('#raw_material_type').val(response.raw_material_type);
-                             $('#product_size_id').val(response.product_size_name);
-                             $('#wages_employee').val(response.wages_product);
-                             $('#raw_material_weight_item').val(response.raw_material_weight_item);
+                            $('#product_size_code').val(response.product_size_code);
+                            $('#product_size_id').val(response.product_size_id);
+                            $('#wages_employee').val(response.wages_product);
+                            $('#raw_material_weight_item').val(response
+                                .raw_material_weight_item);
                         },
                         error: function(xhr, status, error) {
                             console.error(error);
@@ -325,9 +335,10 @@
                     $('#product').val('');
                     $('#raw_material_name').val('');
                     $('#raw_material_type').val('');
+                    $('#product_size_code').val('');
                     $('#product_size_id').val('');
-                      $('#wages_employee').val('');
-                        $('#raw_material_weight_item').val('');
+                    $('#wages_employee').val('');
+                    $('#raw_material_weight_item').val('');
                 }
             });
         });

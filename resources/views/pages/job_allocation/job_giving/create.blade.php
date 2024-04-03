@@ -72,14 +72,18 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        
-                                     
-                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Dc Number</label>
+
+
+                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Dc
+                                            Number</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="dc_number" id="dc_number">
                                                 <option value="">Select DC</option>
                                                 @foreach ($delivery_challan as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->dc_no }}
+                                                    <option value="{{ $item->id }}">{{ $item->dc_no }} /
+                                                        {{ $item->orderDetails->orderNo->customer_order_no }} /
+                                                        {{ $item->orderDetails->productModel->model_name }} /
+                                                        {{ $item->orderDetails->productModel->model_code }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -113,12 +117,12 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        
+
 
                                         <label for="product_name" class="col-sm-2 col-form-label ">Product Name</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="product_name"
-                                                id="product_name" readonly>
+                                            <input class="form-control" type="text" name="product_name" id="product_name"
+                                                readonly>
                                             @error('product_name')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -192,7 +196,8 @@
 
                                         <label for="deadline_days" class="col-sm-2 col-form-label">Deadline (Days)</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="deadline_days" id="deadline_days">
+                                            <input class="form-control" type="text" name="deadline_days"
+                                                id="deadline_days">
                                             <span id="weight_error" class="error" style="color: red;"></span>
                                             @error('deadline_days')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
@@ -541,7 +546,7 @@
         });
     </script> -->
 
-       <script>
+    <script>
         // Function to fetch company name based on selected employee ID
         function fetchCompanyName() {
             var employeeId = $('#employee_id').val();
@@ -557,21 +562,21 @@
                 data: {
                     company_id: companyId
                 },
-                 success: function(response) {
-                        $('#dc_number').empty();
-                        $('#dc_number').append('<option value="">Select DC</option>');
-                        $.each(response.dc_numbers, function(key, value) {
-                            $('#dc_number').append('<option value="' + key + '">' + value + '</option>');
-                        });
-                    }
-                });
-            },
-                else {
-                $('#dc_number').empty();
-                $('#dc_number').append('<option value="">Select DC</option>');
-            }
-           
-       
+                success: function(response) {
+                    $('#dc_number').empty();
+                    $('#dc_number').append('<option value="">Select DC</option>');
+                    $.each(response.dc_numbers, function(key, value) {
+                        $('#dc_number').append('<option value="' + key + '">' + value + '</option>');
+                    });
+                }
+            });
+        },
+        else {
+            $('#dc_number').empty();
+            $('#dc_number').append('<option value="">Select DC</option>');
+        }
+
+
 
         // Event listener for employee ID select change
         $(document).ready(function() {
@@ -633,7 +638,7 @@
                             $('#product_name').val(response.product);
                             $('#raw_material_name').val(response.raw_material_name);
                             $('#raw_material_type').val(response.raw_material_type);
-                             $('#dc_number').val(response.dc_no);
+                            $('#dc_number').val(response.dc_no);
                         },
                         error: function(xhr, status, error) {
                             console.error(error);
@@ -643,7 +648,7 @@
                     $('#product_name').val('');
                     $('#raw_material_name').val('');
                     $('#raw_material_type').val('');
-                     $('#dc_number').val('');
+                    $('#dc_number').val('');
                 }
             });
         });
@@ -664,7 +669,7 @@
                             $('#order_date').val(response.order_date);
                             $('#total_quantity').val(response.total_quantity);
                             $('#available_quantity').val(response.available_quantity);
-                             $('#total_weight').val(response.total_r_w_weight);
+                            $('#total_weight').val(response.total_r_w_weight);
                         },
                         error: function(xhr, status, error) {
                             console.error(error);

@@ -143,8 +143,8 @@
 
                                         <label for="customer_code" class="col-sm-2 col-form-label">Product Size</label>
                                         <div class="col-sm-4 mb-4">
-                                             <input class="form-control" type="text" name="product_size_id"
-                                                id="product_size_id" readonly>
+                                             <input class="form-control" type="text" name="product_size_code"
+                                                id="product_size_code" readonly>
                                             @error('product_size_id')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -374,7 +374,8 @@
                             $('#product').val(response.product);
                             $('#raw_material_name').val(response.raw_material_name);
                             $('#raw_material_type').val(response.raw_material_type);
-                             $('#product_size_id').val(response.product_size_name);
+                             $('#product_size_code').val(response.product_size_code);
+                             $('#product_size_id').val(response.product_size_id);
                         },
                         error: function(xhr, status, error) {
                             console.error(error);
@@ -384,6 +385,7 @@
                     $('#product').val('');
                     $('#raw_material_name').val('');
                     $('#raw_material_type').val('');
+                    $('#product_size_code').val('');
                     $('#product_size_id').val('');
                 }
             });

@@ -16,7 +16,7 @@
                 </div>
             @endif
 
-             @if (session('error'))
+            @if (session('error'))
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -31,27 +31,27 @@
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="#">Auromics</a></li>
                                 <li class="breadcrumb-item"><a href="#">Job Allocation</a></li>
-                                <li class="breadcrumb-item active">Delivery Challan</li>
+                                <li class="breadcrumb-item active">Order Allocation</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Delivery Challan</h4>
+                        <h4 class="page-title">Order Allocation</h4>
                     </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="card m-b-30">
                                 <div class="d-flex justify-content-between p-2 bd-highlight">
-                                   
+
                                     <div>
                                         <button id="deleteButton" class="icon-button delete-color"
                                             title="Delete Selected Record"><i class="fa fa-user-times"></i></button>
                                     </div>
-                                     @error('file')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
+                                    @error('file')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
                                     <div>
                                         <!-- <button type="button" class="icon-button common-color" data-toggle="modal"
-                                            data-target=".bs-example-modal-center" title=" Delivery challan"><i
-                                                class="fa fa-upload"></i></button> -->
+                                                data-target=".bs-example-modal-center" title=" Delivery challan"><i
+                                                    class="fa fa-upload"></i></button> -->
 
                                         <a href="{{ route('job_allocation.delivery_challan.create') }}"
                                             class="icon-link common-color" title="Create Delivery challan">
@@ -76,7 +76,8 @@
                                                     <div class="col-12">
                                                         <div class="card m-b-30">
                                                             <div class="card-body">
-                                                                <form action="{{ route('job_allocation.delivery_challan.import') }}"
+                                                                <form
+                                                                    action="{{ route('job_allocation.delivery_challan.import') }}"
                                                                     method="POST" enctype="multipart/form-data">
                                                                     @csrf
                                                                     <input type="file" name="file" required>
@@ -114,9 +115,9 @@
                                                 <th>Company ID</th>
                                                 <th>Order Number</th>
                                                 <th>DC NO</th>
-                                                 <th>DC Date</th>
-                                                    <th>Quantity</th>
-                                                     <th>Avl.Quantity</th>
+                                                <th>DC Date</th>
+                                                <th>Quantity</th>
+                                                <th>Avl.Quantity</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -228,16 +229,16 @@
                             return data ? data : '-';
                         }
                     },
-                    
-                     
-                     {
+
+
+                    {
                         data: 'quantity',
                         name: 'quantity',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
                     },
-                     {
+                    {
                         data: 'available_quantity',
                         name: 'available_quantity',
                         render: function(data, type, row) {
@@ -269,8 +270,9 @@
                     {
                         text: 'Export All',
                         action: function(e, dt, node, config) {
-                            window.location.href = '/job_allocation/delivery_challan/export?' + $.param(dt.ajax
-                                .params());
+                            window.location.href = '/job_allocation/delivery_challan/export?' + $
+                                .param(dt.ajax
+                                    .params());
                         }
                     }
                 ]
