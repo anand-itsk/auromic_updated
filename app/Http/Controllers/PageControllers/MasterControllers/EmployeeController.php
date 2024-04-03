@@ -11,6 +11,9 @@ use App\Models\CompanyType;
 use App\Models\Country;
 use App\Models\Customer;
 use App\Models\Employee;
+use App\Exports\EmployeeExport;
+use App\Imports\EmployeeImport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\EmployeeFamilyMemberDetail;
 use App\Models\EmployeeNominee;
 use App\Models\EsiDispensary;
@@ -21,6 +24,7 @@ use App\Models\Religion;
 use App\Models\ResigningReason;
 use App\Models\State;
 use App\Models\User;
+use App\Models\EmployeeHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
@@ -30,8 +34,26 @@ class EmployeeController extends Controller
     // Index Page
     public function index()
     {
-        return view('pages.master.employee.index');
+        $randomEmployeeCode = $this->generateEmployeeCode();
+        return view('pages.master.employee.index',['randomEmployeeCode' => $randomEmployeeCode]);
     }
+    private function generateEmployeeCode()
+{
+    // Generate a random number between 1 and 999
+$latestemployee = Employee::latest()->first();
+    if ($latestemployee) {
+        $employeeCode = $latestemployee->employee_code;
+        $employeeCode++;
+    } else {
+        $employeeCode = 1;
+    }
+
+    // Format the order number with leading zeros
+    $formattedEmployeeCode =  str_pad($employeeCode, 3, '0', STR_PAD_LEFT);
+
+
+    return $formattedEmployeeCode;
+}
     // Index DataTable
     public function indexData()
     {
@@ -191,6 +213,8 @@ class EmployeeController extends Controller
             $filename = $request->file('employee_profile')->store('employee/profile/image', 'public');
             $employee->photo = $filename;
         }
+
+ 
         // Store data
         $employee->update([
             'company_id' => $request->company_id,
@@ -213,15 +237,29 @@ class EmployeeController extends Controller
             'prob_period' => $request->prob_period,
             'confirm_date' => $request->confirm_date,
             'resigning_date' => $request->resigning_date,
-            'resigning_reason_id' => 1, // Assuming this is hardcoded or fetched from some other part of the request
+            'resigning_reason_id' => $request->resigning_reason_id,
         ]);
+
+       if ($request->filled('resigning_date') && $request->filled('resigning_reason_id')) {
+    
+    $employeeHistory = new EmployeeHistory();
+    $employeeHistory->employee_id = $id; 
+    $employeeHistory->joining_date = $employee->joining_date;
+    $employeeHistory->relieving_date = $request->resigning_date;
+    $employeeHistory->relieving_reason = $request->resigning_reason_id;
+    $employeeHistory->save();
+}
+
+    
 
         if (
             $request->voter_id_number !== null ||
             $request->driving_license_number !== null ||
             $request->pan_number !== null ||
             $request->passport_number !== null ||
-            $request->identity_mark !== null
+            $request->identity_mark !== null ||
+            $request->aadhar_number !== null ||
+            $request->aadhar_name !== null
         ) {
             if ($employee->identityProof) {
                 $employee->identityProof->update([
@@ -230,14 +268,20 @@ class EmployeeController extends Controller
                     'pan_number' => $request->pan_number,
                     'passport_number' => $request->passport_number,
                     'identity_mark' => $request->identity_mark,
+                    'aadhar_number' => $request->aadhar_number,
+                    'aadhar_name' => $request->aadhar_name
                 ]);
             } else {
+
+                
                 $employee->identityProof()->create([
                     'voter_id_number' => $request->voter_id_number,
                     'driving_license_number' => $request->driving_license_number,
                     'pan_number' => $request->pan_number,
                     'passport_number' => $request->passport_number,
                     'identity_mark' => $request->identity_mark,
+                    'aadhar_number' => $request->aadhar_number,
+                    'aadhar_name' => $request->aadhar_name
                 ]);
             }
         }
@@ -299,6 +343,7 @@ class EmployeeController extends Controller
             $employee->addresses()->save($corrs_Address);
         }
 
+        
         // Return success response
         return response()->json(['success' => true, 'message' => 'Step 1 completed successfully.']);
     }
@@ -373,6 +418,8 @@ class EmployeeController extends Controller
                     'pf_last_date' => $request->pf_last_date,
                     'pension_joining_date' => $request->pension_joining_date,
                     'pension_applicable' => $request->pension_applicable ?? '0',
+                    'remark'=>$request->remark,
+                    'uan_number'=>$request->uan_number
                 ]);
             } else {
                 $employee->pfInfo()->create([
@@ -382,6 +429,8 @@ class EmployeeController extends Controller
                     'pf_last_date' => $request->pf_last_date,
                     'pension_joining_date' => $request->pension_joining_date,
                     'pension_applicable' => $request->pension_applicable  ?? '0',
+                    'remark'=>$request->remark,
+                    'uan_number'=>$request->uan_number
                 ]);
             }
         }
@@ -416,7 +465,7 @@ class EmployeeController extends Controller
             }
         }
 
-
+     
         // Return success response
         return response()->json(['success' => true, 'message' => 'Step 2 completed successfully.']);
     }
@@ -465,11 +514,11 @@ class EmployeeController extends Controller
     // Store Nominee Data
     public function storeNominee(Request $request, $id)
     {
-
+            // dd($request);
         $employee = Employee::findOrFail($id);
-
+        //   dd($employee);
         $employee->nominee()->create([
-            'family_member_id' => $request->family_memeber_id,
+            'family_member_id' => $request->family_member_id,
             'gratuity_sharing' => $request->gratuity_sharing,
             'marital_status' => $request->marital_status,
             'religion_id' => $request->religion_id,
@@ -484,7 +533,7 @@ class EmployeeController extends Controller
             'success' => true, 'message' => 'Step 3 completed successfully.',
             'emp_id' => $employee->id
         ]);
-    }
+    } 
 
     // Show Nominees Member table
     public function getNominee(Request $request)
@@ -515,48 +564,53 @@ class EmployeeController extends Controller
 
     public function updateNominee(Request $request, $id)
     {
+        // dd($request);   
         $request->validate([
-            'name' => 'required',
+            'family_member_id' => 'required',
         ]);
 
-        $familyMember = EmployeeFamilyMemberDetail::find($id);
-        if (!$familyMember) {
-            return response()->json(['error' => 'Family member not found'], 404);
+        $nomineeMember = EmployeeNominee::find($id);
+        if (!$nomineeMember) {
+            return response()->json(['error' => 'Nominee member not found'], 404);
         }
 
-        $familyDetails = $familyMember->update([
-            'name' => $request->name,
-            'relation_with_emp' => $request->relation_with_emp,
-            'dob' => $request->dob,
-            'is_residing' => $request->is_residing,
-            'remark' => $request->remark,
+        $NomineeDetails = $nomineeMember->update([
+            'family_member_id' => $request->family_member_id,
+            // 'employee_id' => $request->employee_id,
+            'gratuity_sharing' => $request->gratuity_sharing,
+            'marital_status' => $request->marital_status,
+            'religion_id' => $request->religion_id,
+            'faorhus_name' => $request->faorhus_name,
+             'guardian_name' => $request->guardian_name,
+              'guardian_address' => $request->guardian_address,
+               'guardian_relation_with_emp' => $request->guardian_relation_with_emp,
         ]);
 
         // Check if the finance detail already has an office address
-        if ($familyMember->addresses()->where('address_type_id', 4)->exists()) {
-            $address = $familyMember->addresses()->where('address_type_id', 4)->first();
-        } else {
-            $address = new Address();
-            $address->address_type_id = 4; // Assuming this is the type ID for office addresses
-        }
+        // if ($familyMember->addresses()->where('address_type_id', 4)->exists()) {
+        //     $address = $familyMember->addresses()->where('address_type_id', 4)->first();
+        // } else {
+        //     $address = new Address();
+        //     $address->address_type_id = 4; 
+        // }
 
         // Update or set office address details for finance detail
-        $address->address = $request->family_address;
-        $address->village_area = $request->family_area;
-        $address->country_id = $request->family_country_id;
-        $address->state_id = $request->family_state_id ?? 1;
-        $address->district_id = $request->family_district_id ?? 1;
-        $address->pincode = $request->family_pincode;
+        // $address->address = $request->family_address;
+        // $address->village_area = $request->family_area;
+        // $address->country_id = $request->family_country_id;
+        // $address->state_id = $request->family_state_id ?? 1;
+        // $address->district_id = $request->family_district_id ?? 1;
+        // $address->pincode = $request->family_pincode;
 
         // Save the address to the finance detail
-        $familyMember->addresses()->save($address);
+        // $familyMember->addresses()->save($address);
 
         // Update family member data
         // $familyMember->update($request->all());
 
         return response()->json([
-            'success' => 'Family member updated successfully',
-            'emp_id' => $familyMember->employee_id
+            'success' => 'Nominee member updated successfully',
+            'emp_id' => $nomineeMember->employee_id
         ]);
     }
 
@@ -581,7 +635,7 @@ class EmployeeController extends Controller
 
 
         return response()->json([
-            'success' => 'Family member deleted successfully.',
+            'success' => 'Nominee member deleted successfully.',
             'emp_id' => $emp_id
         ]);
 
@@ -668,7 +722,7 @@ class EmployeeController extends Controller
         $customer->mobile = $input['mobile'];
         $customer->tin_no = $input['tin_no'];
         $customer->tin_date = $input['tin_date'];
-        $customer->cst_no = $input['cst_no'];
+        $customer->gst_no = $input['gst_no'];
         $customer->cst_date = $input['cst_date'];
 
         $customer->save();
@@ -702,10 +756,10 @@ class EmployeeController extends Controller
     // Delete
     public function destroy($id)
     {
-        $user = Customer::findOrFail($id);
-        $user->delete();
+        $employee = Employee::findOrFail($id);
+        $employee->delete();
 
-        return response()->json(['success' => 'Customer deleted successfully']);
+        return response()->json(['success' => 'Employee deleted successfully']);
     }
     // Multi Delete
     public function deleteSelected(Request $request)
@@ -717,7 +771,7 @@ class EmployeeController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Invalid input'], 400);
         }
 
-        Customer::destroy($ids);
+        Employee::destroy($ids);
         return response()->json(['status' => 'success']);
     }
     // Import Users
@@ -727,14 +781,14 @@ class EmployeeController extends Controller
             'file' => 'required|file|mimes:xlsx,csv'
         ]);
 
-        Excel::import(new CustomerDataImport, request()->file('file'));
+        Excel::import(new EmployeeImport, request()->file('file'));
 
-        return redirect()->route('master.customers.index')->with('success', 'Data imported successfully');
+        return redirect()->route('master.employees.index')->with('success', 'Data imported successfully');
     }
     // Import Users
     public function export(Request $request)
     {
-        return Excel::download(new CustomersExport($request->all()), 'CustomerDatas_' . date('d-m-Y') . '.xlsx');
+        return Excel::download(new EmployeeExport($request->all()), 'EmployeeDatas_' . date('d-m-Y') . '.xlsx');
     }
 
     public function getCompanies($companytypeid)

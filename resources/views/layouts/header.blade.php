@@ -152,11 +152,26 @@
 
                     </li> --}}
                     <!-- User-->
+                    <li class="list-inline-item text-white">
+                        <div>
+                            @guest
+                                <p class="text-capitalize">Welcome, Guest</p>
+                            @else
+                                <p class="text-capitalize">Welcome, {{ Auth::user()->name }}</p>
+                            @endguest
+                        </div>
+                    </li>
                     <li class="list-inline-item dropdown notification-list">
                         <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown"
                             href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                            <img src="{{ asset('assets/images/users/user-1.jpg') }}" alt="user"
-                                class="rounded-circle">
+                            <!-- <img src="{{ asset('assets/images/users/user-1.jpg') }}" alt="user"
+                                class="rounded-circle"> -->
+
+                                 @if (!empty($user->profile_image))
+                                        <img src="{{ asset('/storage/' . $user->profile_image) }}"   class="rounded-circle" alt="Profile Image" style="width: 50px; height: 50px;">
+                                        @else
+                                        <img class="profile-image rounded-circle" src="{{ asset('assets/images/no-profile.png') }}"  class="rounded-circle"  alt="No Profile Image">
+                                        @endif
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown ">
                             <a class="dropdown-item" href="{{ route('my-profile') }}"><i
@@ -231,28 +246,83 @@
                     </li>
 
                     {{-- Master --}}
-                       <li class="has-submenu">
+                    <li class="has-submenu">
                         <a href="#"><i class="dripicons-briefcase"></i>Master</a>
                         <ul class="submenu">
                             <li>
                                 <a href="{{ route('master.customers.index') }}">Customers</a>
                             </li>
-                             <li>
+                            <li>
                                 <a href="{{ route('master.employees.index') }}">Employees</a>
                             </li>
-                             <li>
+                            <li>
                                 <a href="{{ route('master.product_model.index') }}">Product Model</a>
                             </li>
                             <li>
                                 <a href="{{ route('master.order_detail.index') }}">Order Details</a>
                             </li>
-                           <li>
-                            <a href="{{ route('master.incentives.index') }}">Incentive</a>
-                        </li>
+                            <li>
+                                <a href="{{ route('master.incentives.index') }}">Incentive</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('master.finishing_product.index') }}">Finishing Product</a>
+                            </li>
 
 
                         </ul>
                     </li>
+
+                    {{-- Job Allocation --}}
+                    <li class="has-submenu">
+                        <a href="#"><i class="dripicons-briefcase"></i>Job Allocation</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="{{ route('job_allocation.delivery_challan.index') }}">Delivery Challan</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('job_allocation.job_giving.index') }}">Job Giving</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('job_allocation.job_received.index') }}">Job Received</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('job_allocation.job_reallocation.index') }}">Job Reallocation</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('job_allocation.direct_job_giving.index') }}">Direct Job Giving</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('job_allocation.direct_job_received.index') }}">Direct Job
+                                    Received</a>
+                            </li>
+
+
+
+                        </ul>
+                    </li>
+                    {{--Report--}}
+                     <li class="has-submenu">
+                        <a href="#"><i class="dripicons-briefcase"></i>Report</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="{{ route('report.employee_report.index') }}">Employee Report</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('report.daily_given_report_cw.index') }}">Daily Report -(CW)</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('report.job_received_report.index') }}">Job Received Report</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('report.order_report.index') }}">Order Report</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                    
                 </ul>
                 <!-- End navigation menu -->
             </div> <!-- end #navigation -->

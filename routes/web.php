@@ -10,6 +10,12 @@ use App\Http\Controllers\PageControllers\MasterControllers\EmployeeController;
 use App\Http\Controllers\PageControllers\MasterControllers\ProductModelController;
 use App\Http\Controllers\PageControllers\MasterControllers\OrderDetailController;
 use App\Http\Controllers\PageControllers\MasterControllers\IncentiveController;
+use App\Http\Controllers\PageControllers\MasterControllers\FinishingProductController;
+use App\Http\Controllers\PageControllers\JobAllocationController\DirectJobGivingController;
+use App\Http\Controllers\PageControllers\JobAllocationController\DirectJobReceivedController;
+use App\Http\Controllers\PageControllers\Report\EmployeeReportController;
+use App\Http\Controllers\PageControllers\Report\DailyGivenReportCompanyWiseController;
+use App\Http\Controllers\PageControllers\Report\JobReceivedReportController;
 use App\Http\Controllers\PageControllers\SubClientCompanyController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -25,12 +31,17 @@ use App\Http\Controllers\ResigningReasonsController;
 use App\Http\Controllers\LocalOfficeController;
 use App\Http\Controllers\EsiDispensaryController;
 use App\Http\Controllers\MyProfileController;
+use App\Http\Controllers\OrderReportController;
 use App\Http\Controllers\RawMaterialTypeController;
 use App\Http\Controllers\RawMaterialController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductSizeController;
 use App\Http\Controllers\ProductColorController;
 use App\Http\Controllers\OrderStatusController;
+use App\Http\Controllers\PageControllers\JobAllocation\DeliveryChallanController;
+use App\Http\Controllers\PageControllers\JobAllocation\JobGivingController;
+use App\Http\Controllers\PageControllers\JobAllocation\JobReallocationController;
+use App\Http\Controllers\PageControllers\JobAllocation\JobReceivedController;
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -93,133 +104,171 @@ Route::middleware(['auth'])->group(function () {
 
         // Country
         Route::get('/country', [CountryController::class, 'index'])->name('countries');
+        Route::get('country/data', [CountryController::class, 'indexData'])->name('country.data');
         Route::get('/country/create', [CountryController::class, 'create'])->name('country.create');
         Route::post('/country/store', [CountryController::class, 'store'])->name('country.store');
         Route::get('/country/edit/{id}', [CountryController::class, 'edit'])->name('country.edit');
         Route::post('/country/update/{id}', [CountryController::class, 'update'])->name('country.update');
         Route::get('/country/delete/{id}', [CountryController::class, 'delete'])->name('country.delete');
+        Route::post('/country/select-country-delete', [CountryController::class, 'deleteSelected']);
 
         // state
         Route::get('/state', [StateController::class, 'index'])->name('states');
+        Route::get('state/data', [StateController::class, 'indexData'])->name('states.data');
         Route::get('/state-create', [StateController::class, 'create'])->name('states.create');
         Route::post('/state-store', [StateController::class, 'store'])->name('states.store');
         Route::get('/state-edit/{id}', [StateController::class, 'edit'])->name('states.edit');
         Route::post('/state-update/{id}', [StateController::class, 'update'])->name('states.update');
         Route::get('/state-delete/{id}', [StateController::class, 'delete'])->name('states.delete');
+        Route::post('state/select-state-delete', [StateController::class, 'deleteSelected']);
 
         // Districts
         Route::get('/district', [DistrictController::class, 'index'])->name('districts');
+        Route::get('district/data', [DistrictController::class, 'indexData'])->name('districts.data');
         Route::get('/district-create', [DistrictController::class, 'create'])->name('districts.create');
         Route::post('/district-store', [DistrictController::class, 'store'])->name('districts.store');
         Route::get('/district-edit/{id}', [DistrictController::class, 'edit'])->name('districts.edit');
         Route::post('/district-update/{id}', [DistrictController::class, 'update'])->name('districts.update');
         Route::get('/district-delete/{id}', [DistrictController::class, 'delete'])->name('districts.delete');
+        Route::post('district/select-district-delete', [DistrictController::class, 'deleteSelected']);
 
         // Caste
         Route::get('/caste', [CasteController::class, 'index'])->name('castes');
+        Route::get('caste/data', [CasteController::class, 'indexData'])->name('castes.data');
         Route::get('/caste-create', [CasteController::class, 'create'])->name('castes.create');
         Route::post('/caste-store', [CasteController::class, 'store'])->name('castes.store');
         Route::get('/caste-edit/{id}', [CasteController::class, 'edit'])->name('castes.edit');
         Route::post('/caste-update/{id}', [CasteController::class, 'update'])->name('castes.update');
         Route::get('/caste-delete/{id}', [CasteController::class, 'delete'])->name('castes.delete');
+        Route::post('caste/select-caste-delete', [CasteController::class, 'deleteSelected']);
 
         //Religion
         Route::get('/religion', [ReligionController::class, 'index'])->name('religions');
+        Route::get('religion/data', [ReligionController::class, 'indexData'])->name('religions.data');
         Route::get('/religion-create', [ReligionController::class, 'create'])->name('religions.create');
         Route::post('/religion-store', [ReligionController::class, 'store'])->name('religions.store');
         Route::get('/religion-edit/{id}', [ReligionController::class, 'edit'])->name('religions.edit');
         Route::post('/religion-update/{id}', [ReligionController::class, 'update'])->name('religions.update');
         Route::get('/religion-delete/{id}', [ReligionController::class, 'delete'])->name('religions.delete');
+        Route::post('religion/select-religion-delete', [ReligionController::class, 'deleteSelected']);
 
         //Nationality
         Route::get('/nationality', [NationalityController::class, 'index'])->name('nationalities');
+        Route::get('nationality/data', [NationalityController::class, 'indexData'])->name('nationalities.data');
         Route::get('/nationality-create', [NationalityController::class, 'create'])->name('nationalities.create');
         Route::post('/nationality-store', [NationalityController::class, 'store'])->name('nationalities.store');
         Route::get('/nationality-edit/{id}', [NationalityController::class, 'edit'])->name('nationalities.edit');
         Route::post('/nationality-update/{id}', [NationalityController::class, 'update'])->name('nationalities.update');
         Route::get('/nationality-delete/{id}', [NationalityController::class, 'delete'])->name('nationalities.delete');
+        Route::post('nationality/select-nationality-delete', [NationalityController::class, 'deleteSelected']);
     });
 
     Route::prefix('specified')->name('specified.')->group(function () {
 
         //Company Type
-        Route::get('/company_types', [CompanytypeController::class, 'index'])->name('company_types');
+        Route::get('/company_type', [CompanytypeController::class, 'index'])->name('company_types');
+        Route::get('company_type/data', [CompanytypeController::class, 'indexData'])->name('company_types.data');
         Route::get('/company_type/create', [CompanytypeController::class, 'create'])->name('company_types.create');
         Route::post('/company_type/store', [CompanytypeController::class, 'store'])->name('company_types.store');
         Route::get('/company_type/edit/{id}', [CompanytypeController::class, 'edit'])->name('company_types.edit');
         Route::post('/company_type/update/{id}', [CompanytypeController::class, 'update'])->name('company_types.update');
         Route::get('/company_type/delete/{id}', [CompanytypeController::class, 'delete'])->name('company_types.delete');
+        Route::post('company_type/select-company_type-delete', [CompanytypeController::class, 'deleteSelected']);
         //Resigning Reason
         Route::get('/resigning_reason', [ResigningReasonsController::class, 'index'])->name('resigning_reasons');
+        Route::get('resigning_reason/data', [ResigningReasonsController::class, 'indexData'])->name('resigning_reasons.data');
         Route::get('/resigning_reason-create', [ResigningReasonsController::class, 'create'])->name('resigning_reasons.create');
         Route::post('/resigning_reason-store', [ResigningReasonsController::class, 'store'])->name('resigning_reasons.store');
         Route::get('/resigning_reason-edit/{id}', [ResigningReasonsController::class, 'edit'])->name('resigning_reasons.edit');
         Route::post('/resigning_reason-update/{id}', [ResigningReasonsController::class, 'update'])->name('resigning_reasons.update');
         Route::get('/resigning_reason-delete/{id}', [ResigningReasonsController::class, 'delete'])->name('resigning_reasons.delete');
+        Route::post('resigning_reason/select-resigning_reason-delete', [ResigningReasonsController::class, 'deleteSelected']);
 
         //Local Offices
         Route::get('/local_office', [LocalOfficeController::class, 'index'])->name('local_offices');
+        Route::get('local_office/data', [LocalOfficeController::class, 'indexData'])->name('local_offices.data');
         Route::get('/local_office-create', [LocalOfficeController::class, 'create'])->name('local_offices.create');
         Route::post('/local_office-store', [LocalOfficeController::class, 'store'])->name('local_offices.store');
         Route::get('/local_office-edit/{id}', [LocalOfficeController::class, 'edit'])->name('local_offices.edit');
         Route::post('/local_office-update/{id}', [LocalOfficeController::class, 'update'])->name('local_offices.update');
         Route::get('/local_office-delete/{id}', [LocalOfficeController::class, 'delete'])->name('local_offices.delete');
+        Route::post('local_office/select-local_office-delete', [LocalOfficeController::class, 'deleteSelected']);
+
 
         //ESI Dispensary
         Route::get('/esi_dispensary', [EsiDispensaryController::class, 'index'])->name('esi_dispensaries');
+        Route::get('esi_dispensary/data', [EsiDispensaryController::class, 'indexData'])->name('esi_dispensaries.data');
         Route::get('/esi_dispensary-create', [EsiDispensaryController::class, 'create'])->name('esi_dispensaries.create');
         Route::post('/esi_dispensary-store', [EsiDispensaryController::class, 'store'])->name('esi_dispensaries.store');
         Route::get('/esi_dispensary-edit/{id}', [EsiDispensaryController::class, 'edit'])->name('esi_dispensaries.edit');
         Route::post('/esi_dispensary-update/{id}', [EsiDispensaryController::class, 'update'])->name('esi_dispensaries.update');
         Route::get('/esi_dispensary-delete/{id}', [EsiDispensaryController::class, 'delete'])->name('esi_dispensaries.delete');
+        Route::post('esi_dispensary/select-esi_dispensary-delete', [EsiDispensaryController::class, 'deleteSelected']);
     });
 
-    //Raw Material Type
-    Route::get('/raw_material_type', [RawMaterialTypeController::class, 'index'])->name('raw_material_types');
-    Route::get('/raw_material_type-create', [RawMaterialTypeController::class, 'create'])->name('raw_material_types.create');
-    Route::post('/raw_material_type-store', [RawMaterialTypeController::class, 'store'])->name('raw_material_types.store');
-    Route::get('/raw_material_type-edit/{id}', [RawMaterialTypeController::class, 'edit'])->name('raw_material_types.edit');
-    Route::post('/raw_material_type-update/{id}', [RawMaterialTypeController::class, 'update'])->name('raw_material_types.update');
-    Route::get('/raw_material_type-delete/{id}', [RawMaterialTypeController::class, 'delete'])->name('raw_material_types.delete');
 
-    //Raw Material
-    Route::get('/raw_material', [RawMaterialController::class, 'index'])->name('raw_materials');
-    Route::get('/raw_material-create', [RawMaterialController::class, 'create'])->name('raw_materials.create');
-    Route::post('/raw_material-store', [RawMaterialController::class, 'store'])->name('raw_materials.store');
-    Route::get('/raw_material-edit/{id}', [RawMaterialController::class, 'edit'])->name('raw_materials.edit');
-    Route::post('/raw_material-update/{id}', [RawMaterialController::class, 'update'])->name('raw_materials.update');
-    Route::get('/raw_material-delete/{id}', [RawMaterialController::class, 'delete'])->name('raw_materials.delete');
+    Route::prefix('product-models')->name('product-models.')->group(function () {
 
-    //Product
-    Route::get('/product', [ProductController::class, 'index'])->name('products');
-    Route::get('/product-create', [ProductController::class, 'create'])->name('products.create');
-    Route::post('/product-store', [ProductController::class, 'store'])->name('products.store');
-    Route::get('/product-edit/{id}', [ProductController::class, 'edit'])->name('products.edit');
-    Route::post('/product-update/{id}', [ProductController::class, 'update'])->name('products.update');
-    Route::get('/product-delete/{id}', [ProductController::class, 'delete'])->name('products.delete');
-    //Product Size
-    Route::get('/product_size', [ProductSizeController::class, 'index'])->name('product_sizes');
-    Route::get('/product_size-create', [ProductSizeController::class, 'create'])->name('product_sizes.create');
-    Route::post('/product_size-store', [ProductSizeController::class, 'store'])->name('product_sizes.store');
-    Route::get('/product_size-edit/{id}', [ProductSizeController::class, 'edit'])->name('product_sizes.edit');
-    Route::post('/product_size-update/{id}', [ProductSizeController::class, 'update'])->name('product_sizes.update');
-    Route::get('/product_size-delete/{id}', [ProductSizeController::class, 'delete'])->name('product_sizes.delete');
+        //Raw Material Type
 
-    //Product Color
-    Route::get('/product_color', [ProductColorController::class, 'index'])->name('product_colors');
-    Route::get('/product_color-create', [ProductColorController::class, 'create'])->name('product_colors.create');
-    Route::post('/product_color-store', [ProductColorController::class, 'store'])->name('product_colors.store');
-    Route::get('/product_color-edit/{id}', [ProductColorController::class, 'edit'])->name('product_colors.edit');
-    Route::post('/product_color-update/{id}', [ProductColorController::class, 'update'])->name('product_colors.update');
-    Route::get('/product_color-delete/{id}', [ProductColorController::class, 'delete'])->name('product_colors.delete');
+        Route::get('/raw_material_type', [RawMaterialTypeController::class, 'index'])->name('raw_material_types');
+        Route::get('raw_material_type/data', [RawMaterialTypeController::class, 'indexData'])->name('raw_material_types.data');
+        Route::get('/raw_material_type/create', [RawMaterialTypeController::class, 'create'])->name('raw_material_types.create');
+        Route::post('/raw_material_type/store', [RawMaterialTypeController::class, 'store'])->name('raw_material_types.store');
+        Route::get('/raw_material_type/edit/{id}', [RawMaterialTypeController::class, 'edit'])->name('raw_material_types.edit');
+        Route::post('/raw_material_type/update/{id}', [RawMaterialTypeController::class, 'update'])->name('raw_material_types.update');
+        Route::get('/raw_material_type/delete/{id}', [RawMaterialTypeController::class, 'delete'])->name('raw_material_types.delete');
+        Route::post('raw_material_type/select-raw_material_type-delete', [RawMaterialTypeController::class, 'deleteSelected']);
 
-    //Order Status
-    Route::get('/order_status', [OrderStatusController::class, 'index'])->name('order_statuses');
-    Route::get('/order_status-create', [OrderStatusController::class, 'create'])->name('order_statuses.create');
-    Route::post('/order_status-store', [OrderStatusController::class, 'store'])->name('order_statuses.store');
-    Route::get('/order_status-edit/{id}', [OrderStatusController::class, 'edit'])->name('order_statuses.edit');
-    Route::post('/order_status-update/{id}', [OrderStatusController::class, 'update'])->name('order_statuses.update');
-    Route::get('/order_status-delete/{id}', [OrderStatusController::class, 'delete'])->name('order_statuses.delete');
+        //Raw Material
+        Route::get('/raw_materials', [RawMaterialController::class, 'index'])->name('raw_materials');
+        Route::get('raw_materials/data', [RawMaterialController::class, 'indexData'])->name('raw_materials.data');
+        Route::get('/raw_materials/create', [RawMaterialController::class, 'create'])->name('raw_materials.create');
+        Route::post('/raw_materials/store', [RawMaterialController::class, 'store'])->name('raw_materials.store');
+        Route::get('/raw_materials/edit/{id}', [RawMaterialController::class, 'edit'])->name('raw_materials.edit');
+        Route::post('/raw_materials/update/{id}', [RawMaterialController::class, 'update'])->name('raw_materials.update');
+        Route::get('/raw_materials/delete/{id}', [RawMaterialController::class, 'delete'])->name('raw_materials.delete');
+        Route::post('raw_materials/select-raw_materials-delete', [RawMaterialController::class, 'deleteSelected']);
+
+        //Product
+        Route::get('/products', [ProductController::class, 'index'])->name('products');
+        Route::get('product/data', [ProductController::class, 'indexData'])->name('products.data');
+        Route::get('/product-create', [ProductController::class, 'create'])->name('products.create');
+        Route::post('/product-store', [ProductController::class, 'store'])->name('products.store');
+        Route::get('/product-edit/{id}', [ProductController::class, 'edit'])->name('products.edit');
+        Route::post('/product-update/{id}', [ProductController::class, 'update'])->name('products.update');
+        Route::get('/product-delete/{id}', [ProductController::class, 'delete'])->name('products.delete');
+        Route::post('product/select-product-delete', [ProductController::class, 'deleteSelected']);
+        //Product Size
+        Route::get('/product_sizes', [ProductSizeController::class, 'index'])->name('product_sizes');
+        Route::get('product_sizes/data', [ProductSizeController::class, 'indexData'])->name('product_sizes.data');
+        Route::get('/product_size/create', [ProductSizeController::class, 'create'])->name('product_sizes.create');
+        Route::post('/product_size-store', [ProductSizeController::class, 'store'])->name('product_sizes.store');
+        Route::get('/product_sizes/edit/{id}', [ProductSizeController::class, 'edit'])->name('product_sizes.edit');
+        Route::post('/product_sizes/update/{id}', [ProductSizeController::class, 'update'])->name('product_sizes.update');
+        Route::get('/product_sizes/delete/{id}', [ProductSizeController::class, 'delete'])->name('product_sizes.delete');
+        Route::post('product_sizes/select-product_sizes-delete', [ProductSizeController::class, 'deleteSelected']);
+
+        //Product Color
+        Route::get('/product_color', [ProductColorController::class, 'index'])->name('product_colors');
+        Route::get('product_color/data', [ProductColorController::class, 'indexData'])->name('product_colors.data');
+        Route::get('/product_color/create', [ProductColorController::class, 'create'])->name('product_colors.create');
+        Route::post('/product_color/store', [ProductColorController::class, 'store'])->name('product_colors.store');
+        Route::get('/product_color/edit/{id}', [ProductColorController::class, 'edit'])->name('product_colors.edit');
+        Route::post('/product_color/update/{id}', [ProductColorController::class, 'update'])->name('product_colors.update');
+        Route::get('/product_color/delete/{id}', [ProductColorController::class, 'delete'])->name('product_colors.delete');
+        Route::post('product_color/select-product_color-delete', [ProductColorController::class, 'deleteSelected']);
+
+        //Order Status
+        Route::get('/order_status', [OrderStatusController::class, 'index'])->name('order_statuses');
+        Route::get('order_status/data', [OrderStatusController::class, 'indexData'])->name('order_statuses.data');
+        Route::get('/order_status-create', [OrderStatusController::class, 'create'])->name('order_statuses.create');
+        Route::post('/order_status-store', [OrderStatusController::class, 'store'])->name('order_statuses.store');
+        Route::get('/order_status-edit/{id}', [OrderStatusController::class, 'edit'])->name('order_statuses.edit');
+        Route::post('/order_status-update/{id}', [OrderStatusController::class, 'update'])->name('order_statuses.update');
+        Route::get('/order_status-delete/{id}', [OrderStatusController::class, 'delete'])->name('order_statuses.delete');
+        Route::post('order_status/select-order_status-delete', [OrderStatusController::class, 'deleteSelected']);
+    });
 
     //Pages
     Route::get('/master-companies', [MasterCompanyController::class, 'index'])->name('master-companies');
@@ -285,6 +334,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete/selected', [CompanyBankDetailController::class, 'deleteSelected']);
             Route::post('/import', [CompanyBankDetailController::class, 'import'])->name('import');
             Route::get('/export', [CompanyBankDetailController::class, 'export']);
+            Route::post('/get-ifsc-code', [CompanyBankDetailController::class, 'getIFSC'])->name('get-ifsc-code');
         });
     });
 
@@ -321,24 +371,45 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete/selected', [ProductModelController::class, 'deleteSelected']);
             Route::post('/import', [ProductModelController::class, 'import'])->name('import');
             Route::get('/export', [ProductModelController::class, 'export']);
+            Route::post('/check-name', [ProductModelController::class, 'checkName'])->name('checkName');
+           
         });
 
-          Route::prefix('/incentives')->name('incentives.')->group(function () {
+        Route::prefix('/incentives')->name('incentives.')->group(function () {
 
             Route::get('/', [IncentiveController::class, 'index'])->name('index');
             Route::get('/data', [IncentiveController::class, 'indexData'])->name('data');
 
             Route::get('/create', [IncentiveController::class, 'create'])->name('create');
-Route::get('/get-models/{product_id}', [IncentiveController::class, 'getModels'])->name('get.models');
+            Route::get('/get-models/{product_id}', [IncentiveController::class, 'getModels'])->name('get.models');
 
             Route::post('/store', [IncentiveController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [IncentiveController::class, 'edit'])->name('edit');
             Route::post('/update/{id}', [IncentiveController::class, 'update'])->name('update');
-            Route::delete('/delete/{id}',  [IncentiveController::class, 'destroy'])->name('delete');
+            Route::get('/delete/{id}',  [IncentiveController::class, 'destroy'])->name('delete');
             Route::get('/show/{id}', [IncentiveController::class, 'showDetails']);
             Route::post('/delete/selected', [IncentiveController::class, 'deleteSelected']);
             Route::post('/import', [IncentiveController::class, 'import'])->name('import');
             Route::get('/export', [IncentiveController::class, 'export']);
+            Route::get('/get-finishing-product-details/{id}', [IncentiveController::class, 'getFinishingProductDetails']);
+        });
+
+        Route::prefix('/finishing_product')->name('finishing_product.')->group(function () {
+
+            Route::get('/', [FinishingProductController::class, 'index'])->name('index');
+            Route::get('/data', [FinishingProductController::class, 'indexData'])->name('data');
+
+            Route::get('/create', [FinishingProductController::class, 'create'])->name('create');
+            Route::get('/get-models/{product_id}', [FinishingProductController::class, 'getModels'])->name('get.models');
+
+            Route::post('/store', [FinishingProductController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [FinishingProductController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [FinishingProductController::class, 'update'])->name('update');
+            Route::get('/delete/{id}',  [FinishingProductController::class, 'delete'])->name('delete');
+            Route::get('/show/{id}', [FinishingProductController::class, 'showDetails']);
+            Route::post('/delete/selected', [FinishingProductController::class, 'deleteSelected']);
+            Route::post('/import', [FinishingProductController::class, 'import'])->name('import');
+            Route::get('/export', [FinishingProductController::class, 'export']);
         });
 
         Route::prefix('/order_detail')->name('order_detail.')->group(function () {
@@ -350,12 +421,15 @@ Route::get('/get-models/{product_id}', [IncentiveController::class, 'getModels']
 
             Route::post('/store', [OrderDetailController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [OrderDetailController::class, 'edit'])->name('edit');
+            Route::get('/add_order/{id}', [OrderDetailController::class, 'addOrder'])->name('add_order');
             Route::post('/update/{id}', [OrderDetailController::class, 'update'])->name('update');
-            Route::delete('/delete/{id}',  [OrderDetailController::class, 'destroy'])->name('delete');
+            Route::post('/store_New_order/{id}', [OrderDetailController::class, 'storeNewOrder'])->name('store_New_order');
+            Route::get('/delete/{id}',  [OrderDetailController::class, 'delete'])->name('delete');
             Route::get('/show/{id}', [OrderDetailController::class, 'showDetails']);
             Route::post('/delete/selected', [OrderDetailController::class, 'deleteSelected']);
             Route::post('/import', [OrderDetailController::class, 'import'])->name('import');
             Route::get('/export', [OrderDetailController::class, 'export']);
+             Route::post('/check-name', [OrderDetailController::class, 'checkName'])->name('checkName');
         });
 
         Route::prefix('/employees')->name('employees.')->group(function () {
@@ -389,16 +463,136 @@ Route::get('/get-models/{product_id}', [IncentiveController::class, 'getModels']
             Route::get('/nominee/edit/{id}', [EmployeeController::class, 'editNominee'])->name('nominee.edit');
             Route::get('/nominee/family/{id}', [EmployeeController::class, 'employeeFamily'])->name('nominee.family');
             Route::post('/nominee/update/{id}', [EmployeeController::class, 'updateNominee'])->name('nominee.update');
-            Route::delete('/nominee/delete/{id}', [EmployeeController::class, 'deleteNominee'])->name('nominee.delete');
+            Route::get('/nominee/delete/{id}', [EmployeeController::class, 'deleteNominee'])->name('nominee.delete');
 
             Route::post('/update/{id}', [EmployeeController::class, 'update'])->name('update');
-            Route::delete('/delete/{id}',  [EmployeeController::class, 'destroy'])->name('delete');
+            Route::get('/delete/{id}',  [EmployeeController::class, 'destroy'])->name('delete');
             // Route::get('/show/{id}', [EmployeeController::class, 'showDetails']);
             Route::post('/delete/selected', [EmployeeController::class, 'deleteSelected']);
             Route::post('/import', [EmployeeController::class, 'import'])->name('import');
             Route::get('/export', [EmployeeController::class, 'export']);
         });
     });
+    // Job Allocation
+    // Master > Customer
+    Route::prefix('job_allocation')->name('job_allocation.')->group(function () {
+        Route::prefix('/direct_job_giving')->name('direct_job_giving.')->group(function () {
+            Route::get('/', [DirectJobGivingController::class, 'index'])->name('index');
+            Route::get('/data', [DirectJobGivingController::class, 'indexData'])->name('data');
+            Route::get('/create', [DirectJobGivingController::class, 'create'])->name('create');
+            Route::post('/store', [DirectJobGivingController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [DirectJobGivingController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [DirectJobGivingController::class, 'update'])->name('update');
+            Route::get('/delete/{id}',  [DirectJobGivingController::class, 'destroy'])->name('delete');
+            Route::post('/delete/selected', [DirectJobGivingController::class, 'deleteSelected']);
+            Route::get('/get-model-details/{id}', [DirectJobGivingController::class, 'getModelDetails'])->name('get-models');
+            Route::post('/import', [DirectJobGivingController::class, 'import'])->name('import');
+            Route::get('/export', [DirectJobGivingController::class, 'export']);
+            Route::get('/get-finishing-product-details/{id}', [DirectJobGivingController::class, 'getFinishingProductDetails']);
+        });
+        Route::prefix('/direct_job_received')->name('direct_job_received.')->group(function () {
+            Route::get('/', [DirectJobReceivedController::class, 'index'])->name('index');
+            Route::get('/data', [DirectJobReceivedController::class, 'indexData'])->name('data');
+            Route::get('/create', [DirectJobReceivedController::class, 'create'])->name('create');
+            Route::post('/store', [DirectJobReceivedController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [DirectJobReceivedController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [DirectJobReceivedController::class, 'update'])->name('update');
+            Route::post('/delete/selected', [DirectJobReceivedController::class, 'deleteSelected']);
+            Route::get('/get-model-details/{id}', [DirectJobReceivedController::class, 'getModelDetails'])->name('get-models');
+            Route::get('/get-finishing-product-details/{id}', [DirectJobReceivedController::class, 'getFinishingProductDetails']);
+        });
+    });
+
+
+    // Job Allocation
+    // Master > Customer
+    Route::prefix('job_allocation')->name('job_allocation.')->group(function () {
+        Route::prefix('/delivery_challan')->name('delivery_challan.')->group(function () {
+            Route::get('/', [DeliveryChallanController::class, 'index'])->name('index');
+            Route::get('/data', [DeliveryChallanController::class, 'indexData'])->name('data');
+            Route::get('/create', [DeliveryChallanController::class, 'create'])->name('create');
+            Route::post('/store', [DeliveryChallanController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [DeliveryChallanController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [DeliveryChallanController::class, 'update'])->name('update');
+            Route::post('/delete/selected', [DeliveryChallanController::class, 'deleteSelected']);
+            Route::get('/delete/{id}', [DeliveryChallanController::class, 'delete'])->name('delete');
+            Route::get('/get-companies/{companyTypeId}', [DeliveryChallanController::class, 'getCompanies'])->name('get-companies');
+            Route::get('/get-model-details/{id}', [DeliveryChallanController::class, 'getModelDetails'])->name('get-models');
+            Route::get('/get-orders/{customerId}', [DeliveryChallanController::class, 'getOrders'])->name('get-orders');
+            Route::get('/get-order-details/{orderId}', [DeliveryChallanController::class, 'getOrderDetails']);
+            Route::post('/import', [DeliveryChallanController::class, 'import'])->name('import');
+            Route::get('/export', [DeliveryChallanController::class, 'export']);
+            Route::get('/get-product-model/{orderId}', [DeliveryChallanController::class, 'getProductModel']);
+            Route::get('get-models-by-order-id', [DeliveryChallanController::class, 'getModelsByOrderId'])->name('getModelsByOrderId');
+           Route::get('/get-product-details', [DeliveryChallanController::class, 'getProductDetails']);
+           Route::get('/get-order-details', [DeliveryChallanController::class,'getOrderDetails']);
+
+        });
+
+        Route::prefix('/job_giving')->name('job_giving.')->group(function () {
+            Route::get('/', [JobGivingController::class, 'index'])->name('index');
+            Route::get('/data', [JobGivingController::class, 'indexData'])->name('data');
+            Route::get('/create', [JobGivingController::class, 'create'])->name('create');
+            Route::post('/store', [JobGivingController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [JobGivingController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [JobGivingController::class, 'update'])->name('update');
+            Route::post('/delete/selected', [JobGivingController::class, 'deleteSelected']);
+            Route::get('/delete/{id}', [JobGivingController::class, 'delete'])->name('delete');
+            Route::get('/get-order-details/{orderId}', [JobGivingController::class, 'getOrderDetails']);
+            Route::get('/get-dc-details/{orderId}', [JobGivingController::class, 'getDcDetails']);
+            Route::post('/import', [JobGivingController::class, 'import'])->name('import');
+            Route::get('/export', [JobGivingController::class, 'export']);
+            Route::get('/getQuantities/{id}', [JobGivingController::class, 'getQuantities']);
+            Route::get('/get-model-details/{id}', [JobGivingController::class, 'getModelDetails'])->name('get-models');
+            Route::get('/get-product-model/{orderId}', [JobGivingController::class, 'getProductModel']);
+            Route::get('/get-company-name/{orderId}', [JobGivingController::class, 'getCompanyName']);
+            Route::get('/fetch-order-ids', [JobGivingController::class, 'fetchOrderIds'])->name('fetch-order-ids');
+        });
+
+        Route::prefix('/job_received')->name('job_received.')->group(function () {
+            Route::get('/', [JobReceivedController::class, 'index'])->name('index');
+            Route::get('/data', [JobReceivedController::class, 'indexData'])->name('data');
+            Route::post('/store', [JobReceivedController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [JobReceivedController::class, 'edit'])->name('edit');
+            Route::get('/show/{id}', [JobReceivedController::class, 'showDetails']);
+        });
+        Route::prefix('/job_reallocation')->name('job_reallocation.')->group(function () {
+            Route::get('/', [JobReallocationController::class, 'index'])->name('index');
+            Route::get('/data', [JobReallocationController::class, 'indexData'])->name('data');
+            Route::post('/store', [JobReallocationController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [JobReallocationController::class, 'edit'])->name('edit');
+            Route::get('/cancel-job-giving/{id}', [JobReallocationController::class, 'cancelJobGiving'])->name('cancel_job_giving');
+        });
+    });
+
+    // Report
+    Route::prefix('report')->name('report.')->group(function () {
+        Route::prefix('/employee_report')->name('employee_report.')->group(function () {
+            Route::get('/', [EmployeeReportController::class, 'index'])->name('index');
+            Route::get('/data', [EmployeeReportController::class, 'indexData'])->name('data');
+            Route::get('/export', [EmployeeReportController::class, 'export']);
+        });
+        Route::prefix('/daily_given_report_cw')->name('daily_given_report_cw.')->group(function () {
+            Route::get('/', [DailyGivenReportCompanyWiseController::class, 'index'])->name('index');
+            Route::get('/data', [DailyGivenReportCompanyWiseController::class, 'indexData'])->name('data');
+            Route::get('/export', [DailyGivenReportCompanyWiseController::class, 'export']);
+        });
+
+         Route::prefix('/job_received_report')->name('job_received_report.')->group(function () {
+            Route::get('/', [JobReceivedReportController::class, 'index'])->name('index');
+            Route::get('/data', [JobReceivedReportController::class, 'indexData'])->name('data');
+            Route::get('/export', [JobReceivedReportController::class, 'export']);
+        });
+
+        Route::prefix('/order_report')->name('order_report.')->group(function () {
+            Route::get('/', [OrderReportController::class, 'index'])->name('index');
+            Route::get('/data', [OrderReportController::class, 'indexData'])->name('data');
+            Route::get('/export', [OrderReportController::class, 'export']);
+        });
+    });
+
+
+
 
     //Data Fetch
     Route::get('/get-states/{countryId}', [AddressController::class, 'getStates'])->name('get-states');

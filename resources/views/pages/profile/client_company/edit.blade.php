@@ -225,11 +225,11 @@
                                         @enderror
                                     </div>
 
-                                    <label for="cst_no" class="col-sm-2 col-form-label">CST No</label>
+                                    <label for="gst_no" class="col-sm-2 col-form-label">GST No</label>
                                     <div class="col-sm-4 mb-4">
-                                        <input class="form-control" type="text" name="cst_no" id="cst_no"
-                                            value="{{ $company->companyRegistrationDetail->cst_no ?? ''}}">
-                                        @error('cst_no')
+                                        <input class="form-control" type="text" name="gst_no" id="gst_no"
+                                            value="{{ $company->companyRegistrationDetail->gst_no ?? ''}}">
+                                        @error('gst_no')
                                         <span class="error" style="color: red;">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -303,9 +303,15 @@
     @enderror
     <br>
     
-    <h6 style="font-weight: bold;">Current Image:</h6>
-    <img src="{{ asset('storage/' . $company->authorisedPerson->photo) }}" alt="Current Image"
-         style="max-width: 100px; max-height: 100px;">
+    @if (!empty($company->authorisedPerson->photo))
+                                            <h6 style="font-weight: bold;">Current Image:</h6>
+                                            <img src="{{ asset('storage/' . $company->authorisedPerson->photo) }}"
+                                                alt="Current Image" style="max-width: 100px; max-height: 100px;">
+   @else
+    <img src="{{ asset('assets/images/no-profile.png') }}" alt="No Profile Image" style="max-width: 50px; max-height: 50px;">
+@endif
+
+
     
     <h6 style="font-weight: bold;">Change Image:</h6>
     <div id="imagePreviewContainer"></div>

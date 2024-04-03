@@ -13,12 +13,15 @@ class RawMaterialTypeTableSeeder extends Seeder
      */
     public function run(): void
     {
-         DB::table('raw_material_types')->delete();
-        
+        DB::table('raw_material_types')->delete();
+
         $datas = array(
             array('name' => "Not Specified", 'code' => 'N/S'),
-            array('name' => "Cotton", 'code' => 'C1'),
-
+            array('name' => "Cotton", 'code' => 'RMT1'),
+            array('name' => "Jute", 'code' => 'RMT2'),
+            array('name' => "Lurex", 'code' => 'RMT3'),
+            array('name' => "Organic Cotton", 'code' => 'RMT4'),
+            array('name' => "Wool/Silk", 'code' => 'RMT5'),
         );
 
         DB::table('raw_material_types')->insert($datas);

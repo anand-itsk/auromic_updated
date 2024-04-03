@@ -30,23 +30,30 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card m-b-30">
+                                 @error('file')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
                                 <div class="d-flex justify-content-between p-2 bd-highlight">
                                     <div>
-                                        <button id="deleteButton" class="icon-button delete-color"
-                                            title="Delete Selected Record"><i class="fa fa-user-times"></i></button>
+                                        <button id="deleteButton" style="display: none;"
+                                            class="icon-button text-white bg-danger rounded fs-14"
+                                            title="Delete Selected Record">
+                                            Delete Selected Record</button>
                                     </div>
+                                    
                                     <div>
-                                        <button type="button" class="icon-button common-color" data-toggle="modal"
-                                            data-target=".bs-example-modal-center" title="Import Employee"><i
-                                                class="fa fa-upload"></i></button>
-                                        <button type="button" class="icon-button common-color" data-toggle="modal"
-                                            data-target=".employe-create-modal-center" title="Create Employee"><i
-                                                class="fa fa-user-plus"></i></button>
+                                        <!-- <button type="button" class="icon-button common-color bg-secondary rounded"
+                                            data-toggle="modal" data-target=".bs-example-modal-center"
+                                            title="Import Employee"><i class="fa fa-upload text-white"></i></button> -->
+                                        <button type="button" class="icon-button common-color  bg-primary rounded "
+                                            data-toggle="modal" data-target=".employe-create-modal-center"
+                                            title="Create Employee"><i class="fa fa-user-plus text-white"></i></button>
 
                                         {{-- <a href="{{ route('master.employees.create') }}" class="icon-link common-color"
                                             title="Create New User">
                                             <i class="fa fa-user-plus"></i>
                                         </a> --}}
+
                                     </div>
                                 </div>
                                 {{-- Import Modal --}}
@@ -86,7 +93,7 @@
                                                     .xlsx or .csv)</p>
                                                 <p class="text-muted font-14">To upload sample document, it
                                                     must have concern fields.
-                                                    <a href="{{ asset('assets/sample_excels/customer_import.xlsx') }}"
+                                                    <a href="{{ asset('assets/sample_excels/employee_import.xlsx') }}"
                                                         download>Click
                                                         to download sample document</a>
                                                 </p>
@@ -108,11 +115,11 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <div class="modal-body">
+                                            <div class="modal-body pb-0">
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="card m-b-30">
-                                                            <div class="card-body">
+                                                            <div class="card-body py-0">
                                                                 <form action="{{ route('master.employees.store') }}"
                                                                     method="POST" enctype="multipart/form-data">
                                                                     @csrf
@@ -122,10 +129,11 @@
                                                                             Code</label>
                                                                         <div class="col-sm-12 mb-4">
 
-                                                                            <input class="form-control" type="text"
-                                                                                name="employee_code" id="employee_code"
-                                                                                required>
-                                                                            <span class="error-message text-danger"></span>
+                                                                            <input class="form-control" type="text"  name="employee_code" value="{{ $randomEmployeeCode }}" readonly>
+                                                                            @error('employee_code')
+                                                                                <span class="error"
+                                                                                    style="color: red;">{{ $message }}</span>
+                                                                            @enderror
                                                                         </div>
 
 
@@ -168,8 +176,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="modal-footer">
-                                            </div>
+                                            {{-- <div class="modal-footer">
+                                            </div> --}}
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
                                 </div>
@@ -296,7 +304,7 @@
                     {
                         text: 'Export All',
                         action: function(e, dt, node, config) {
-                            window.location.href = '/master/Employees/export?' + $.param(dt.ajax
+                            window.location.href = '/master/employees/export?' + $.param(dt.ajax
                                 .params());
                         }
                     }
@@ -304,7 +312,19 @@
 
             });
 
+            // Listen for row selection event
+            $('#users-table').on('select.dt deselect.dt', function() {
+                console.log("yes id done");
+                var selectedRows = table.rows({
+                    selected: true
+                }).count();
 
+                if (selectedRows > 0) {
+                    $('#deleteButton').show(); // Show delete button if rows are selected
+                } else {
+                    $('#deleteButton').hide(); // Hide delete button if no rows are selected
+                }
+            });
 
             $('#deleteButton').click(function() {
                 var ids = $.map(table.rows('.selected').data(), function(item) {
@@ -319,7 +339,7 @@
                 if (confirm("Are you sure you want to delete these rows?")) {
                     // Send AJAX request to delete the selected rows
                     $.ajax({
-                        url: '/master/Employees/delete/selected',
+                        url: '/master/employees/delete/selected',
                         type: 'POST',
                         data: {
                             ids: ids,
@@ -343,10 +363,10 @@
         function deleteCustomer(id) {
             console.log("inside")
             // Send an AJAX request to delete the user
-            if (confirm('Are you sure you want to delete this user?')) {
+            if (confirm('Are you sure you want to delete this Employee?')) {
                 $.ajax({
-                    url: '/master/Employees/delete/' + id,
-                    type: 'DELETE',
+                    url: '/master/employees/delete/' + id,
+                    type: 'get',
                     data: {
                         _token: '{{ csrf_token() }}',
                     },
@@ -397,4 +417,22 @@
             return `${day}-${month}-${year} ${strTime}`;
         }
     </script>
+
+    
+<script>
+    function generateEmployeeCode() {
+        // Generate a random number between 1 and 999
+        const randomNumber = Math.floor(Math.random() * 999) + 1;
+
+        // Format the number with leading zeros
+        const formattedEmployeeCode = 'EMP' + String(randomNumber).padStart(3, '0');
+
+        return formattedEmployeeCode;
+    }
+
+    // Call the function to generate the employee code when the page loads
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('employee_code').value = generateEmployeeCode();
+    });
+</script>
 @endsection

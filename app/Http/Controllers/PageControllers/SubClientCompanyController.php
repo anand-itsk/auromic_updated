@@ -50,9 +50,8 @@ class SubClientCompanyController extends Controller
             'company_code' => 'required|max:255',
             'company_name' => 'required|max:255',
             'name' => 'required',
-            'company_email' => 'nullable|email|unique:companies,email',
-             'person_email' => 'nullable|email|unique:authorised_people,email',
-              'photo' => 'nullable|image|max:200000',
+           'photo' => 'nullable|image|max:200000',
+           'person_email' => 'required|email|unique:authorised_people',
         ]);
         $input = $request->all();
         if ($request->hasFile('photo')) {
@@ -100,7 +99,7 @@ class SubClientCompanyController extends Controller
         }
 
         return redirect()->route('profile.sub_clients.index')
-            ->with('success', 'Customer created successfully');
+            ->with('success', 'SubClient Company created successfully');
     }
     // Edit
     public function edit(Address $address, $id)
@@ -122,6 +121,7 @@ class SubClientCompanyController extends Controller
             'company_name' => 'required|max:255',
             'name' => 'required',
              'photo' => 'nullable|image|max:200000',
+            //  'person_email' => 'required|email|unique:authorised_people',
         ]);
 
         $input = $request->all();
@@ -148,7 +148,7 @@ class SubClientCompanyController extends Controller
         $company_registration_details->esi_date = $input['esi_date'];
         $company_registration_details->factory_act_no = $input['factory_act_no'];
         $company_registration_details->tin_no = $input['tin_no'];
-        $company_registration_details->cst_no = $input['cst_no'];
+        $company_registration_details->gst_no = $input['gst_no'];
         $company_registration_details->ssi_no = $input['ssi_no'];
         $company_registration_details->pan_no = $input['pan_no'];
         $company_registration_details->tan_no = $input['tan_no'];
@@ -200,7 +200,7 @@ class SubClientCompanyController extends Controller
             $company->addresses()->save($homeAddress);
         }
         return redirect()->route('profile.sub_clients.index')
-            ->with('success', 'Customer Updated successfully');
+            ->with('success', 'SubClient Company Updated successfully');
     }
     // Show
     public function showDetails($id)

@@ -1,0 +1,134 @@
+/* style Starts for card */
+
+.fs-19 {
+    font-size: 19px;
+}
+.card-rigth-icon {
+    /* background-color: rgb(0, 64, 255); */
+    background-color: rgb(21 96 221);
+    padding: 6px 17px;
+    border-radius: 5px;
+}
+.card-rigth-icon i {
+    font-size: 22px;
+    color: #fff;
+}
+.card-box2-blue {
+    background: #1f4037;
+    background: -webkit-linear-gradient(to right, #3a9acb, #101a9a);
+    background: linear-gradient(to right, #3a9acb, #101a9a);
+}
+.card-box2-pink {
+    background: #1f4037;
+    background: -webkit-linear-gradient(to right, #cb3a67, #ab8515);
+    background: linear-gradient(to right, #cb3a67, #ab8515);
+    background: linear-gradient(to right, #d8336b, #eabe3a);
+}
+.card-box2-green {
+    background: #1f4037;
+    background: -webkit-linear-gradient(to right, #269f2b, #06b1a1);
+    background: linear-gradient(to right, #269f2b, #06b1a1);
+}
+.card-box2-violet {
+    background-color: #1f4037;
+    background: -webkit-linear-gradient(to right, #5d0dc4, #15ccbd);
+    background: linear-gradient(to right, #5d0dc4, #15ccbd);
+}
+
+/* style Ends for card */
+/* style for the scrolling div starts */
+
+.content-overflow {
+    height: 260px;
+    overflow: auto;
+}
+.cost-text.m-0 {
+    color: #8f8f8f;
+}
+/* list Style */
+.list-group.list-group-flush {
+    font-size: 16px;
+    font-weight: 600;
+    color: #7e7e7e;
+}
+.badge.badge-primary.badge-pill {
+    font-size: 14px;
+}
+
+/* STYLE 4 */
+#style-4::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #f5f5f5;
+}
+#style-4::-webkit-scrollbar {
+    width: 10px;
+    background-color: #f5f5f5;
+}
+
+#style-4::-webkit-scrollbar-thumb {
+    background-color: #000000;
+    border: 2px solid #555555;
+    background-color: #508aeb;
+    border: 2px solid #508aeb;
+}
+/* style for the scrolling div Ends */
+
+/* index page styles starts */
+button.dt-button,
+div.dt-button,
+a.dt-button,
+input.dt-button {
+    background: #508aeb !important;
+    color: #fff !important;
+    padding: 5px 13px !important;
+    border: 1px solid #fff !important;
+    border-radius: 5px !important;
+}
+button.dt-button:hover,
+div.dt-button,
+a.dt-button,
+input.dt-button:hover {
+    background-color: #5089ebdf !important;
+    transition: 0.5s;
+}
+/* index page styles Ends */
+
+/* datatable style starts */
+.dataTables_wrapper .dataTables_length select {
+    padding: 0px 10px !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    margin: 6px 0px !important;
+    padding: 0px 6px !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    /* color: #ffffff !important; */
+    background: #508aeb !important;
+    /* background: transparent !important; */
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    /* color: #ffffff !important; */
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    color: red !important;
+}
+.dataTables_wrapper .dataTables_filter input {
+    padding: 0px !important;
+}
+.cancel_btn {
+    padding: 0px 20px;
+    height: 34px !important;
+}
+div#data-table_paginate {
+    font-size: 17px;
+}
+/* datatable style Ends */
+.fs-14 {
+    font-size: 14px !important;
+}
+
+.wizard > div.wizard-inner {
+    margin-bottom: 35px !important;
+}

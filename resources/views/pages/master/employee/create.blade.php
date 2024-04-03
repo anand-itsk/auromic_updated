@@ -366,6 +366,7 @@
                                                                                 style="color: red;">{{ $message }}</span>
                                                                         @enderror
                                                                     </div>
+                                                                     
                                                                 </div>
                                                             </div>
 
@@ -691,7 +692,7 @@
         });
 
 
-        // Fetch Datas's 
+        // Fetch Datas's
         var selectedCompanyId = "";
         var selectedStateId = "{{ $address->state_id ?? '' }}";
         let selectedCompanyTypeId = $('#company_type_id').val();

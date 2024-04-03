@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('incentives', function (Blueprint $table) {
+        Schema::create('order_nos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_id');
-            $table->string('model_size');
-            $table->string('duration_period');
+            $table->string('last_order_number')->default('ORD0');
+            $table->string('customer_order_no')->nullable();
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
-             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('incentives');
+        Schema::dropIfExists('order_nos');
     }
 };

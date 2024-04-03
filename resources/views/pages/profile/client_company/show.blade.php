@@ -1,24 +1,23 @@
 <div class="row text-center">
-    <div class="col-md-6 ">
+    <div class="col-md-6">
         <h6>Company Code</h6>
-        <p>{{ $company->company_code }}</p>
+        <p class="mb-0">{{ $company->company_code }}</p>
         <!-- More fields... -->
     </div>
     <div class="col-md-6">
         <h6>Company Name</h6>
-        <p>{{ $company->company_name }}</p>
+        <p class="mb-0">{{ $company->company_name }}</p>
         <!-- More fields... -->
     </div>
     <!-- Repeat for all fields as per the modal layout -->
 </div>
-<hr>
+<hr class="my-1" />
 
 
-<h6 class="font-weight-lighter">Company Info</h6>
+<h6 class="font-weight-lighter text-primary">Company Info</h6>
 
 <div class="row">
-
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">Address</span>
@@ -28,7 +27,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">Country</span>
@@ -38,7 +37,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">State</span>
@@ -48,7 +47,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">Pincode</span>
@@ -58,7 +57,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">Phone no</span>
@@ -68,7 +67,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">Starting Date</span>
@@ -78,7 +77,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">Business Nature</span>
@@ -88,7 +87,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">Email Id</span>
@@ -98,9 +97,7 @@
             </div>
         </div>
     </div>
-
-
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">Website</span>
@@ -111,11 +108,7 @@
         </div>
     </div>
 
-
-    <!-- new adding -->
-
-
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">PF Code</span>
@@ -126,7 +119,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">PF Date</span>
@@ -137,7 +130,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">ESI Code</span>
@@ -148,7 +141,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">ESI Date</span>
@@ -159,7 +152,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">Factory Act No</span>
@@ -170,9 +163,7 @@
         </div>
     </div>
 
-
-
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">TIN No</span>
@@ -183,18 +174,18 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
-                <span class="font-weight-bold">CST No</span>
+                <span class="font-weight-bold">GST No</span>
             </div>
             <div class="col-md-8 ">
-                <span>{{ $company->companyRegistrationDetail->cst_no ?? '-' }}</span>
+                <span>{{ $company->companyRegistrationDetail->gst_no ?? '-' }}</span>
             </div>
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">SSI No</span>
@@ -205,7 +196,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">PAN No</span>
@@ -216,7 +207,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">License No</span>
@@ -229,13 +220,12 @@
 
 </div>
 
-<hr />
+<hr class="my-1" />
 <!-- Addition Info -->
-<h6 class="font-weight-lighter"> Authorised Person Info</h6>
+<h6 class="font-weight-lighter text-primary"> Authorised Person Info</h6>
 
 <div class="row">
-
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">Name</span>
@@ -245,7 +235,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">Father's/Husband Name</span>
@@ -255,7 +245,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">Gender</span>
@@ -265,7 +255,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">Address</span>
@@ -273,14 +263,14 @@
             <div class="col-md-8 ">
                 <span>
                     @php
-                    $address = $company->addresses->where('address_type_id', 3)->first();
+                        $address = $company->addresses->where('address_type_id', 3)->first();
                     @endphp
                     {{ $address ? $address->address : '-' }}
                 </span>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">Country</span>
@@ -288,27 +278,27 @@
             <div class="col-md-8 ">
                 <span>
                     @php
-                    $address = $company->addresses->where('address_type_id', 3)->first();
+                        $address = $company->addresses->where('address_type_id', 3)->first();
                     @endphp
                     {{ $address ? $address->country->name : '-' }}
                 </span>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">State</span>
             </div>
             <span>
                 @php
-                $address = $company->addresses->where('address_type_id', 3)->first();
+                    $address = $company->addresses->where('address_type_id', 3)->first();
                 @endphp
                 {{ $address ? $address->state->name : '-' }}
             </span>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">Pincode</span>
@@ -316,16 +306,14 @@
             <div class="col-md-8 ">
                 <span>
                     @php
-                    $address = $company->addresses->where('address_type_id', 3)->first();
+                        $address = $company->addresses->where('address_type_id', 3)->first();
                     @endphp
                     {{ $address ? $address->pincode : '-' }}
                 </span>
             </div>
         </div>
     </div>
-
-
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">Phone No</span>
@@ -335,12 +323,7 @@
             </div>
         </div>
     </div>
-
-
-    <!-- new adding -->
-
-
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">Blood Group</span>
@@ -351,7 +334,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">Date of Birth</span>
@@ -362,7 +345,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">Email Id</span>
@@ -373,7 +356,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">Mobile</span>
@@ -384,7 +367,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
                 <span class="font-weight-bold">PAN No</span>

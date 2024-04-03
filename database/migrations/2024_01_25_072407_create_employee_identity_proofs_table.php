@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('pan_number')->nullable();
             $table->string('passport_number')->nullable();
             $table->string('identity_mark')->nullable();
+            $table->string('aadhar_number')->nullable();
+            $table->string('aadhar_name')->nullable();
             $table->timestamps();
             $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
         });

@@ -35,8 +35,8 @@ class CompanyExport implements FromCollection, WithHeadings
                 'Email' => $company->email ?? '',
                 'TIN No' => $company->tin_no ?? '',
                 'TIN Date' => $company->tin_date ?? '',
-                'CST No' => $company->cst_no ?? '',
-                'CST Date' => $company->cst_date ?? '',
+                'GST No' => $company->gst_no ?? '',
+                'GST Date' => $company->cst_date ?? '',
             ];
         });
     }
@@ -61,8 +61,10 @@ class CompanyExport implements FromCollection, WithHeadings
             'Email',
             'TIN No',
             'TIN Date',
-            'CST No',
-            'CST Date'
+            'GST No',
+            'CST Date',
+            'created_at',
+            'updated_at'
         ];
     }
 }

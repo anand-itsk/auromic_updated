@@ -39,6 +39,5 @@ public function productSize()
     {
         return $this->hasMany(Product::class, 'product_id');
     }
-
- 
+    
 }

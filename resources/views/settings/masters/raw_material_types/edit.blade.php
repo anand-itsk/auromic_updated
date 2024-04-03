@@ -28,13 +28,13 @@
                                 </div>
                                 <div class="card-body">
                             <div class="m-b-30">
-                                <form action="{{ route('raw_material_types.update', $raw_material_type->id) }}" method="POST">
+                                <form action="{{ route('product-models.raw_material_types.update', $raw_material_type->id) }}" method="POST">
                                     @csrf
                                   <div class="form-group row justify-content-center">
                                                 <div class="col-md-6">
                                                     <div class="col-md-12">
                                                         <div class="mb-3">
-                                          <label for="firstNameinput" class="form-label">Name</label>
+                                          <label for="name" class="form-label mandatory">Name</label>
                                             <input class="form-control" type="text" name="name" id="name" value="{{ $raw_material_type->name }}">
                                             @error('name')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
@@ -60,7 +60,7 @@
                                                 Update
                                             </button>
                                 
-                                            <a href="{{ route('raw_material_types') }}"
+                                            <a href="{{ route('product-models.raw_material_types') }}"
                                                 class="btn btn-secondary waves-effect m-l-5">
                                                 Cancel
                                             </a>

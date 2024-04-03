@@ -1,7 +1,9 @@
 <div class="tab-pane" role="tabpanel" id="step4">
     <h4 class="text-center pb-4">Nominee</h4>
-    <button type="button" class="default-btn icon-button btn-primary" data-toggle="modal"
-        data-target=".employee-nominee-add" title="Add Famil Member"><i class="fa fa-user-plus"></i></button>
+    <div class="d-flex justify-content-end mb-2">
+        <button type="button" class="btn icon-button btn-primary" data-toggle="modal" data-target=".employee-nominee-add"
+            title="Add Nominee Member"><i class="fa fa-user-plus"></i></button>
+    </div>
     <table class="table table-striped table-bordered dt-responsive nowrap"
         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
         <thead>
@@ -23,7 +25,7 @@
     {{-- Add Nominee Member --}}
     <div class="modal fade employee-nominee-add" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title mt-0">Add Nominee</h5>
@@ -31,25 +33,23 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body pb-0">
                     <div class="row">
                         <div class="col-12">
                             <div class="card m-b-30">
-                                <div class="card-body">
+                                <div class="card-body py-0">
                                     <form role="form"
                                         action="{{ route('master.employees.store.nominee', $employee->id) }}"
                                         method="post" class="login-box">
+                                        @csrf
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Select Family Member</label>
                                             <div class="col-sm-4 mb-4">
-                                                <select class="form-control select2" name="family_memeber_id"
-                                                    id="family_memeber_id">
-                                                    @foreach ($family_members as $item)
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->name }}
-                                                        </option>
-                                                    @endforeach
+                                                <select class="form-control select2" name="family_member_id" id="family_member_id">
+                                                @foreach ($family_members as $member)
+                                                 <option value="{{ $member->id }}">{{ $member->name }}</option>
+                                                 @endforeach
                                                 </select>
                                                 @error('family_memeber_id')
                                                     <span class="error" style="color: red;">{{ $message }}</span>
@@ -84,7 +84,10 @@
                                                 @enderror
                                             </div>
 
-                                            <label class="col-sm-2 col-form-label">Religion</label>
+                                            <label class="col-sm-2 col-form-label">Religion
+                                                <a class="shortcut_master"
+                                                href="{{ route('common.religions.create') }}" target="_blank">+</a>
+                                            </label>
                                             <div class="col-sm-4 mb-4">
                                                 <select class="form-control select2" name="religion_id"
                                                     id="religion_id">
@@ -140,8 +143,10 @@
                                         </div>
 
                                         <ul class="list-inline pull-right">
-                                            <li><button type="button" class="default-btn next-step4"
-                                                    data-url="{{ route('master.employees.store.nominee', $employee->id) }}">Add</button>
+
+                                            <li><button type="button"
+                                                    class="default-btn next-step4 m-0 bg-primary rounded text-white"
+                                                    data-url="{{ route('master.employees.store.nominee', $employee->id)}}">Add</button>
                                             </li>
                                         </ul>
                                     </form>
@@ -163,7 +168,7 @@
         $(".next-step4").click(function(e) {
             console.log("click")
             e.preventDefault();
-
+ console.log($('meta[name="csrf-token"]').attr('content'));
             var activeTab = $('.wizard .nav-tabs li.active');
             var form = $(this).closest('form');
             var formData = new FormData(form[0]);
@@ -301,7 +306,7 @@
                         xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
                     },
                     url: `/master/employees/nominee/delete/${id}`,
-                    type: 'DELETE',
+                    type: 'get',
                     success: function(result) {
                         alert(result.success);
                         console.log(result.emp_id);

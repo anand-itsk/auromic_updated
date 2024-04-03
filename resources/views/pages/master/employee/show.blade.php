@@ -10,7 +10,7 @@
             <!-- Page-Title -->
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="page-title-box">
+                    <div class="page-title-box pb-1">
                         <div class="btn-group float-right">
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Auromics</a></li>
@@ -24,15 +24,14 @@
                 </div>
             </div>
             <!-- end page title end breadcrumb -->
-            <section class="pt-5">
+            <section class="">
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-12">
                         <div class="wizard">
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="d-flex justify-content-end align-items-center">
-                                        <a class="mr-2"
-                                            href="{{ route('master.employees.edit', $employee->id) }}"><button
+                                    <div class="d-flex justify-content-end align-items-center pb-2">
+                                        <a class="mr-2" href="{{ route('master.employees.edit', $employee->id) }}"><button
                                                 class="btn btn-primary">
                                                 Edit</button></a>
                                         <a class="mr-2" href="{{ route('master.employees.index') }}"><button
@@ -49,19 +48,19 @@
                                                         <div class="row">
                                                             <div class="col-md-3">
                                                                 <h6>Employee Code</h6>
-                                                                <p>{{ $employee->employee_code }}</p>
+                                                                <p class="mb-1">{{ $employee->employee_code }}</p>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <h6>Employee Name</h6>
-                                                                <p>{{ $employee->employee_name }}</p>
+                                                                <p class="mb-1">{{ $employee->employee_name }}</p>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <h6>Company Name</h6>
-                                                                <p>{{ $employee->company->company_name }}</p>
+                                                                <p class="mb-1">{{ $employee->company->company_name }}</p>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <h6>Company Code</h6>
-                                                                <p>{{ $employee->company->company_code }}</p>
+                                                                <p class="mb-1">{{ $employee->company->company_code }}</p>
                                                             </div>
                                                         </div>
 
@@ -72,10 +71,9 @@
                                                             @if (!empty($employee->photo))
                                                                 <img src="{{ asset('/storage/' . $employee->photo) }}"
                                                                     alt="Profile Image">
-                                                            @else
-                                                                <img src="{{ asset('images/no-profile.png') }}"
-                                                                    alt="No Profile Image">
-                                                            @endif
+                                                           @else
+    <img src="{{ asset('assets/images/no-profile.png') }}" alt="No Profile Image">
+@endif
                                                         </div>
                                                     </div>
 
@@ -83,11 +81,14 @@
 
                                                 </div>
 
-                                                <hr>
-                                                <h5 class="font-weight-lighter mt-4 text-center">Personal Details</h5>
+                                                <hr class="my-1">
+                                                <h5 class="font-weight-lighter text-center text-primary">Personal Details
+                                                </h5>
                                                 <div class="row">
                                                     @php
-                                                        $officeAddress = $employee->addresses->where('address_type_id', 3)->first();
+                                                        $officeAddress = $employee->addresses
+                                                            ->where('address_type_id', 3)
+                                                            ->first();
                                                     @endphp
                                                     <div class="col-md-4">
                                                         <h6 class="font-weight-lighter text-primary">Permanent Address</h6>
@@ -135,7 +136,9 @@
                                                     </div>
                                                     <div class="col-md-4">
                                                         @php
-                                                            $address = $employee->addresses->where('address_type_id', 4)->first();
+                                                            $address = $employee->addresses
+                                                                ->where('address_type_id', 4)
+                                                                ->first();
                                                         @endphp
                                                         <h6 class="font-weight-lighter text-primary">Correspondence Address
                                                         </h6>
@@ -231,6 +234,8 @@
                                                     </div>
                                                     <!-- Repeat for all fields as per the modal layout -->
                                                 </div>
+
+                                                <hr class="my-1" />
                                                 <h6 class="font-weight-lighter mt-4 text-primary">Other Details</h6>
                                                 <div class="row">
 
@@ -413,8 +418,11 @@
 
 
                                                 </div>
+
+                                                <hr class="my-1" />
                                                 {{-- Finance Details --}}
-                                                <h5 class="font-weight-lighter mt-4 text-center">Finance Details</h5>
+                                                <h5 class="font-weight-lighter text-center text-primary">Finance
+                                                    Details</h5>
                                                 <div class="row">
                                                     {{-- Banking Info --}}
                                                     <div class="col-md-3">
@@ -651,8 +659,10 @@
 
                                                 </div>
 
+                                                <hr class="my-1" />
                                                 {{-- Family Members --}}
-                                                <h5 class="font-weight-lighter mt-4 text-center">Family Member Details</h5>
+                                                <h5 class="font-weight-lighter mt-4 text-center text-primary">Family Member
+                                                    Details</h5>
                                                 <table class="table table-striped table-bordered dt-responsive nowrap"
                                                     style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                                     <thead>
@@ -677,8 +687,10 @@
                                                     </tbody>
                                                 </table>
 
+                                                <hr class="my-1" />
                                                 {{-- Nominess Members --}}
-                                                <h5 class="font-weight-lighter mt-4 text-center">Nominee Details</h5>
+                                                <h5 class="font-weight-lighter mt-4 text-center text-primary">Nominee
+                                                    Details</h5>
                                                 <table class="table table-striped table-bordered dt-responsive nowrap"
                                                     style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                                     <thead>

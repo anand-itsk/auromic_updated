@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\EsiDispensary;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EsiDispensaryController extends Controller
 {
@@ -14,6 +16,13 @@ class EsiDispensaryController extends Controller
         return view('settings.masters.esi_dispensary.index',compact('esi_dispensary'));
 
      }
+        public function indexData()
+    {
+        
+        $esi_dispensary = EsiDispensary::get();
+        
+        return DataTables::of($esi_dispensary)->make(true);
+    }
 
       public function create()
      {
@@ -75,5 +84,18 @@ class EsiDispensaryController extends Controller
 
           return redirect()->route('specified.esi_dispensaries')->with('success', 'ESI Dispensary Deleted successfully!');
 
+    }
+
+    public function deleteSelected(Request $request)
+    {
+
+        $ids = $request->ids;
+
+        if (!is_array($ids)) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid input'], 400);
+        }
+
+        EsiDispensary::destroy($ids);
+        return response()->json(['status' => 'success']);
     }
 }

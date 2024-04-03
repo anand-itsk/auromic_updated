@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('raw_material_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('code');
+            $table->string('code')->nullable();
             $table->timestamps();
         });
     }

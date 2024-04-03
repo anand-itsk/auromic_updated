@@ -1,80 +1,93 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
-    public function index()
-     {
-   
-        $product = Product::paginate(10);
+   public function index()
+   {
+
+      $product = Product::paginate(10);
 
 
-        return view('settings.masters.product.index',compact('product'));
+      return view('settings.masters.product.index', compact('product'));
+   }
 
-     }
-
-      public function create()
-     {
-        
-        return view('settings.masters.product.create');
-
-     }
-
-       public function store(Request $request)
-     {
-        
-        //   dd($request);
-        $request->validate([
-            'name' => 'required',
-            'code' => 'required',
-            
-        ]);
-        
-        $product = new Product;
-        $product->name = $request->input('name');
-        $product->code = $request->input('code');
-       
-   
-        $product->save();
-
-        return redirect()->route('products')->with('success', 'Product added successfully!');
-
-
-     }
-
-      public function edit($id)
-     {
-        $product= Product::find($id);
-      
-        return view('settings.masters.product.edit', compact('product'));
-       
-     }
-
-     public function update(Request $request, $id)
+    public function indexData()
     {
-          $request->validate([
-            'name' => 'required',
-            'code' => 'required',
-            
-        ]);
-    
-        $product = Product::find($id);
-        $product->name = $request->input('name');
-        $product->code = $request->input('code');
-        $product->save();
-    
-         return redirect()->route('products')->with('success', 'Product Updated successfully!');
+        
+        $product = Product::get();
+        
+        return DataTables::of($product)->make(true);
     }
-        public function delete($id)
+
+   public function create()
+   {
+
+      return view('settings.masters.product.create');
+   }
+
+   public function store(Request $request)
+   {
+      $request->validate([
+         'name' => 'required',
+      ]);
+
+      $product = new Product;
+      $product->name = $request->input('name');
+      $product->code = $request->input('code');
+
+
+      $product->save();
+
+      return redirect()->route('product-models.products')->with('success', 'Product added successfully!');
+   }
+
+   public function edit($id)
+   {
+      $product = Product::find($id);
+
+      return view('settings.masters.product.edit', compact('product'));
+   }
+
+   public function update(Request $request, $id)
+   {
+      $request->validate([
+         'name' => 'required',
+
+      ]);
+
+      $product = Product::find($id);
+      $product->name = $request->input('name');
+      $product->code = $request->input('code');
+      $product->save();
+
+      return redirect()->route('product-models.products')->with('success', 'Product Updated successfully!');
+   }
+   public function delete($id)
+   {
+      $product = Product::find($id);
+
+      $product->delete();
+
+      return redirect()->route('product-models.products')->with('success', 'Product Deleted successfully!');
+   }
+
+    public function deleteSelected(Request $request)
     {
-          $product = Product::find($id);
 
-         $product->delete();
+        $ids = $request->ids;
 
-          return redirect()->route('products')->with('success', 'Product Deleted successfully!');
+        if (!is_array($ids)) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid input'], 400);
+        }
 
+        Product::destroy($ids);
+        return response()->json(['status' => 'success']);
     }
 }

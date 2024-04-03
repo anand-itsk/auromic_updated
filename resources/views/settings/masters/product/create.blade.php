@@ -27,55 +27,59 @@
                                     <h5>Create Product</h5>
                                 </div>
                                 <div class="card-body">
-                            <div class="m-b-30">
-                                <form action="{{ route('products.store') }}" method="POST">
-                                    @csrf
-                                   <div class="form-group row justify-content-center">
+                                    <div class="m-b-30">
+                                        <form action="{{ route('product-models.products.store') }}" method="POST">
+                                            @csrf
+                                            <div class="form-group row justify-content-center">
                                                 <div class="col-md-6">
                                                     <div class="col-md-12">
                                                         <div class="mb-3">
-                                          <label for="firstNameinput" class="form-label">Name</label>
-                                            <input class="form-control" type="text" name="name" id="name">
-                                            @error('name')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-</div>
-                                        <div class="col-md-12">
+                                                            <label for="name" class="form-label mandatory">Name</label>
+                                                            <input class="form-control" type="text" name="name"
+                                                                id="name">
+                                                            @error('name')
+                                                                <span class="error"
+                                                                    style="color: red;">{{ $message }}</span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
                                                         <div class="mb-3">
-                                          <label for="firstNameinput" class="form-label">Code</label>
-                                        
-                                            <input class="form-control" type="text" name="code" id="code">
-                                            @error('code')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                                            <label for="firstNameinput" class="form-label">Code</label>
+                                                            <input class="form-control" type="text" name="code"
+                                                                id="code">
+                                                            @error('code')
+                                                                <span class="error"
+                                                                    style="color: red;">{{ $message }}</span>
+                                                            @enderror
+                                                        </div>
 
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <div class="d-flex justify-content-evenly">
+                                                            <button type="submit"
+                                                                class="btn btn-primary waves-effect waves-light">
+                                                                Submit
+                                                            </button>
+
+                                                            <a href="{{ route('product-models.products') }}"
+                                                                class="btn btn-secondary waves-effect m-l-5">
+                                                                Cancel
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                        </form>
                                     </div>
-                                   
-
-                                    <div class="form-group">
-                                        <div class="d-flex justify-content-evenly">
-                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                                Submit
-                                            </button>
-                                
-                                            <a href="{{ route('products') }}"
-                                                class="btn btn-secondary waves-effect m-l-5">
-                                                Cancel
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- DataTables JS -->
-    @include('links.js.datatable.datatable-js')
-    <script src="assets/plugins/dropzone/dist/dropzone.js"></script>
-@endsection
+            <!-- DataTables JS -->
+            @include('links.js.datatable.datatable-js')
+            <script src="assets/plugins/dropzone/dist/dropzone.js"></script>
+        @endsection

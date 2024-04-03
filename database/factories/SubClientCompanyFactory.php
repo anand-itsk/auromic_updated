@@ -22,8 +22,8 @@ class SubClientCompanyFactory extends Factory
     {
         return [
             'company_type_id' => 4,
-            'company_code' => fake()->name(),
-            'company_name' => Str::random(10),
+            'company_name' => fake()->name(),
+            'company_code' => Str::random(10),
             'created_by' => mt_rand(1, 10),
             'updated_by' => mt_rand(1, 10)
         ];

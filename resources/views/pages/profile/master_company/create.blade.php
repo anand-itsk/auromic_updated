@@ -32,7 +32,15 @@
                                 <form action="{{ route('profile.masters.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
-                                    <h5 class="text-primary">Company Info</h5>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h5 class="text-primary">Company Info</h5>
+                                        <button class="btn btn-secondary cancel_btn">
+                                            <a href="{{ route('profile.masters.index') }}" class="text-white">
+                                                Cancel
+                                            </a>
+                                        </button>
+                                    </div>
+
                                     <div class="form-group row">
                                         <label for="company_code" class="col-sm-2 col-form-label mandatory">Company
                                             Code</label>
@@ -58,7 +66,7 @@
                                     {{-- Office Addresses --}}
                                     <div class="form-group row">
                                         <label for="office_address" class="col-sm-2 col-form-label">Office Address</label>
-                                        <div class="col-sm-10 mb-4">
+                                        <div class="col-sm-4 mb-4">
                                             <textarea class="form-control" name="office_address" id="office_address" cols="10" rows="3"></textarea>
 
                                             @error('office_address')
@@ -111,8 +119,7 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
+
                                         <label for="starting_date" class="col-sm-2 col-form-label">Starting Date</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="date" name="starting_date"
@@ -123,7 +130,7 @@
                                         </div>
                                         <label for="business_nature" class="col-sm-2 col-form-label">Business
                                             Nature</label>
-                                        <div class="col-sm-2 mb-4">
+                                        <div class="col-sm-4 mb-4">
                                             <select class="form-control" name="business_nature" id="business_nature"
                                                 onchange="showTextBox()">
                                                 <option value="">Select</option>
@@ -137,13 +144,16 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <div class="col-sm-2">
+                                        {{-- <div class="col-sm-4 mb-4">
                                             <input type="text" name="others_buniess_nature" class="form-control"
                                                 id="otherText" style="display:none;" placeholder="Please specify">
-                                        </div>
+                                        </div> --}}
+
+
                                         <label for="email" class="col-sm-2 col-form-label">Email Id</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="email" name="company_email" id="email">
+                                            <input class="form-control" type="email" name="company_email"
+                                                id="email">
                                             @error('company_email')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -155,10 +165,20 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                    </div>
+                                        {{-- </div> --}}
 
-                                    {{-- Company Registration Details --}}
-                                    <div class="form-group row">
+
+
+
+
+
+
+
+
+
+
+                                        {{-- Company Registration Details --}}
+                                        {{-- <div class="form-group row"> --}}
 
 
                                         <label for="pf_code" class="col-sm-2 col-form-label">PF Code</label>
@@ -177,7 +197,10 @@
                                             @enderror
                                         </div>
 
-                                        <label for="esi_code" class="col-sm-2 col-form-label">ESI Code</label>
+                                        <label for="esi_code" class="col-sm-2 col-form-label">ESI Code <a class="shortcut_master"
+                                                href="{{ route('specified.esi_dispensaries.create') }}" target="_blank">+</a>
+
+                                        </label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="esi_code" id="esi_code">
                                             @error('esi_code')
@@ -210,10 +233,10 @@
                                             @enderror
                                         </div>
 
-                                        <label for="cst_no" class="col-sm-2 col-form-label">CST No</label>
+                                        <label for="gst_no" class="col-sm-2 col-form-label">GST No</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="cst_no" id="cst_no">
-                                            @error('cst_no')
+                                            <input class="form-control" type="text" name="gst_no" id="gst_no">
+                                            @error('gst_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -252,6 +275,7 @@
                                         </div>
                                     </div>
 
+                                    <hr />
                                     {{-- Authorised Person Info --}}
                                     <h5 class="text-primary">Authorised Person Info</h5>
                                     <div class="form-group row">
@@ -275,19 +299,18 @@
                                         </div>
                                         <label for="faorhus_name" class="col-sm-2 col-form-label">Profile Image</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input  type="file" name="photo"
-                                                id="imageUpload">
+                                            <input type="file" name="photo" id="imageUpload">
                                             @error('photo')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                             <br>
-                                         <img id="imagePreview" src="#" alt="Image Preview"
-                                             style="display: none; width: 50px; height: 50px;">
+                                            <img id="imagePreview" src="#" alt="Image Preview"
+                                                style="display: none; width: 50px; height: 50px;">
                                         </div>
-                                        
+
 
                                         <label for="gender" class="col-sm-2 col-form-label">Gender</label>
-                                        <div class="col-sm-2 mb-4">
+                                        <div class="col-sm-4 mb-4">
                                             <select class="form-control" name="gender" id="gender">
                                                 <option value="">Select</option>
                                                 <option value="male">Male</option>
@@ -304,7 +327,7 @@
                                     {{-- Addresses --}}
                                     <div class="form-group row">
                                         <label for="address" class="col-sm-2 col-form-label">Address</label>
-                                        <div class="col-sm-10 mb-4">
+                                        <div class="col-sm-4 mb-4">
                                             <textarea class="form-control" name="address" id="address" cols="10" rows="3"></textarea>
 
                                             @error('address')
@@ -355,10 +378,10 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                    </div>
+                                        {{-- </div> --}}
 
-                                    {{-- Other Details --}}
-                                    <div class="form-group row">
+                                        {{-- Other Details --}}
+                                        {{-- <div class="form-group row"> --}}
                                         <label for="blood_group" class="col-sm-2 col-form-label">Blood Group</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control" name="blood_group" id="blood_group">
@@ -386,7 +409,8 @@
                                         </div>
                                         <label for="email" class="col-sm-2 col-form-label">Email Id</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="email" name="person_email" id="email">
+                                            <input class="form-control" type="email" name="person_email"
+                                                id="email">
                                             @error('person_email')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -433,15 +457,15 @@
         </div>
     </div>
     <script></script>
-<script>
-   document.getElementById("imageUpload").addEventListener("change", function() {
-       var reader = new FileReader();
-       reader.onload = function(e) {
-           document.getElementById("imagePreview").setAttribute("src", e.target.result);
-           document.getElementById("imagePreview").style.display = "block";
-       }
-       reader.readAsDataURL(this.files[0]);
-   });
-</script>
+    <script>
+        document.getElementById("imageUpload").addEventListener("change", function() {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById("imagePreview").setAttribute("src", e.target.result);
+                document.getElementById("imagePreview").style.display = "block";
+            }
+            reader.readAsDataURL(this.files[0]);
+        });
+    </script>
     @include('links.js.select2.select2')
 @endsection

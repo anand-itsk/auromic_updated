@@ -16,7 +16,7 @@
                                 <li class="breadcrumb-item">Edit</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Edit User</h4>
+                        <h4 class="page-title">Edit Customer</h4>
                     </div>
                 </div>
             </div>
@@ -30,6 +30,14 @@
                                 <form action="{{ route('master.customers.update', $customer->id) }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
+                                    <div class="d-flex justify-content-end mb-2">
+                                        {{-- <h5 class="text-primary">Company Info</h5> --}}
+                                        <button class="btn btn-secondary cancel_btn">
+                                            <a href="{{ route('master.customers.index') }}" class="text-white">
+                                                Cancel
+                                            </a>
+                                        </button>
+                                    </div>
                                     <div class="form-group row">
                                         <label for="customer_code" class="col-sm-2 col-form-label mandatory">Customer
                                             Code</label>
@@ -58,7 +66,7 @@
                                             $officeAddress = $customer->addresses->where('address_type_id', 2)->first();
                                         @endphp
                                         <label for="office_address" class="col-sm-2 col-form-label">Office Address</label>
-                                        <div class="col-sm-10 mb-4">
+                                        <div class="col-sm-4 mb-4">
                                             <textarea class="form-control" name="office_address" id="office_address" cols="10" rows="3">{{ $officeAddress->address ?? '' }}</textarea>
                                             @error('office_address')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
@@ -114,14 +122,14 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                    </div>
-                                    {{--  Addresses --}}
-                                    <div class="form-group row">
+                                        {{-- </div> --}}
+                                        {{--  Addresses --}}
+                                        {{-- <div class="form-group row"> --}}
                                         @php
                                             $address = $customer->addresses->where('address_type_id', 3)->first();
                                         @endphp
                                         <label for="address" class="col-sm-2 col-form-label">Address</label>
-                                        <div class="col-sm-10 mb-4">
+                                        <div class="col-sm-4 mb-4">
                                             <textarea class="form-control" name="address" id="address" cols="10" rows="3">{{ $address->address ?? '' }}</textarea>
                                             @error('address')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
@@ -190,38 +198,38 @@
                                             @enderror
                                         </div>
 
-                                        <label for="tin_no" class="col-sm-2 col-form-label">TIN No</label>
+                                        <label for="tin_no" class="col-sm-2 col-form-label">Pan No</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="tin_no" id="tin_no"
-                                                value="{{ $customer->tin_no ?? '' }}">
-                                            @error('tin_no')
+                                            <input class="form-control" type="text" name="pan_no" id="pan_no"
+                                                value="{{ $customer->pan_no ?? '' }}">
+                                            @error('pan_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
 
                                         <label for="tin_date" class="col-sm-2 col-form-label">Date</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="date" name="tin_date" id="tin_date"
-                                                value="{{ $customer->tin_date }}">
-                                            @error('tin_date')
+                                            <input class="form-control" type="date" name="pan_date" id="pan_date"
+                                                value="{{ $customer->pan_date }}">
+                                            @error('pan_date')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
 
-                                        <label for="cst_no" class="col-sm-2 col-form-label">CST No</label>
+                                        <label for="gst_no" class="col-sm-2 col-form-label">GST No</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="cst_no" id="cst_no"
-                                                value="{{ $customer->cst_no }}">
-                                            @error('cst_no')
+                                            <input class="form-control" type="text" name="gst_no" id="gst_no"
+                                                value="{{ $customer->gst_no }}">
+                                            @error('gst_no')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
 
                                         <label for="cst_date" class="col-sm-2 col-form-label">Date</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="date" name="cst_date" id="cst_date"
-                                                value="{{ $customer->cst_date }}">
-                                            @error('cst_date')
+                                            <input class="form-control" type="date" name="gst_date" id="gst_date"
+                                                value="{{ $customer->gst_date }}">
+                                            @error('gst_date')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>

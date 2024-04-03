@@ -76,6 +76,16 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        <div class="form-group row">
+                                            <label for="name" class="col-sm-2 col-form-label">Remark</label>
+                                            <div class="col-sm-10">
+                                                <textarea name="remark" id="remark" class="form-control" cols="30" rows="10" value="{{$user->remark}}"></textarea>
+                                                @error('remark')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                        </div>
 
 
                                         <div class="form-group">

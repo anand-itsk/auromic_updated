@@ -22,6 +22,8 @@ class CustomerController extends Controller
     {
         return view('pages.master.customer.index');
     }
+
+ 
     // Index DataTable
     public function indexData()
     {
@@ -32,6 +34,20 @@ class CustomerController extends Controller
     // Create Page
     public function create()
     {
+
+    //     $latestcustomer = Customer::latest()->first();
+    // if ($latestcustomer) {
+    //     $customerCode = $latestcustomer->customer_code;
+    //     $customerCode++;
+    // } else {
+    //     $customerCode = 1;
+    // }
+
+    // // Format the order number with leading zeros
+    // $formattedCustomerCode = 'EMP' . str_pad($customerCode, 3, '0', STR_PAD_LEFT);
+
+
+
         $countries = Country::all();
         $states = State::all();
         $addressTypes = AddressType::all();
@@ -55,10 +71,10 @@ class CustomerController extends Controller
         $customer->phone = $input['phone'];
         $customer->email = $input['email'];
         $customer->mobile = $input['mobile'];
-        $customer->tin_no = $input['tin_no'];
-        $customer->tin_date = $input['tin_date'];
-        $customer->cst_no = $input['cst_no'];
-        $customer->cst_date = $input['cst_date'];
+        $customer->tin_no = $input['pan_no'];
+        $customer->tin_date = $input['pan_date'];
+        $customer->gst_no = $input['gst_no'];
+        $customer->cst_date = $input['gst_date'];
         $input['created_by'] = $auth_id;
         $input['updated_by'] = $auth_id;
         $customer = $customer->create($input);
@@ -124,7 +140,7 @@ class CustomerController extends Controller
         $customer->mobile = $input['mobile'];
         $customer->tin_no = $input['tin_no'];
         $customer->tin_date = $input['tin_date'];
-        $customer->cst_no = $input['cst_no'];
+        $customer->gst_no = $input['gst_no'];
         $customer->cst_date = $input['cst_date'];
 
         $customer->save();

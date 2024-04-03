@@ -19,7 +19,9 @@ return new class extends Migration
             $table->string('pf_no')->nullable();
             $table->date('pf_last_date')->nullable();
             $table->date('pension_joining_date')->nullable();
+             $table->string('uan_number')->nullable();
             $table->boolean('pension_applicable')->default(0);
+            $table->longtext('remark')->nullable();
             $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
             $table->timestamps();
         });

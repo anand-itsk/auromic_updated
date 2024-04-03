@@ -13,7 +13,8 @@
                         <div class="btn-group float-right">
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Auromics</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('profile.bank_details.index') }}">Company Bank Details</a>
+                                <li class="breadcrumb-item"><a href="{{ route('profile.bank_details.index') }}">Company Bank
+                                        Details</a>
                                 </li>
                                 <li class="breadcrumb-item">Create</li>
                             </ol>
@@ -29,13 +30,13 @@
                     <div class="card m-b-30">
                         <div class="card-body">
                             <div class="m-b-30">
-                                <form action="{{ route('profile.bank_details.store') }}" method="POST"
+                                <form  id="ifscForm" action="{{ route('profile.bank_details.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
-                                    <h5 class="text-primary">Company Info</h5>
+                                    <!-- <h5 class="text-primary">Company Info</h5> -->
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Companies</label>
-                                        <div class="col-sm-10 mb-4">
+                                        <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="company_id" id="company_id">
                                                 @foreach ($companies as $company)
                                                     <option value="{{ $company->id }}">
@@ -67,7 +68,7 @@
                                         </div>
 
                                         <label for="address" class="col-sm-2 col-form-label">Address</label>
-                                        <div class="col-sm-10 mb-4">
+                                        <div class="col-sm-4 mb-4">
                                             <textarea class="form-control" name="address" id="address" cols="10" rows="3"></textarea>
 
                                             @error('address')
@@ -75,7 +76,7 @@
                                             @enderror
                                         </div>
 
-                                    
+
                                         <label for="branch_code" class="col-sm-2 col-form-label">Branch
                                             Code</label>
                                         <div class="col-sm-4 mb-4">
@@ -110,6 +111,8 @@
                                             <button type="submit" class="btn btn-primary waves-effect waves-light">
                                                 Submit
                                             </button>
+
+                                             <button type="submit" class="btn btn-primary">Search</button>
                                             <a href="{{ route('profile.bank_details.create') }}"
                                                 class="btn btn-warning waves-effect waves-light">
                                                 Reset
@@ -122,7 +125,7 @@
                                     </div>
 
                                 </form>
-
+<div id="ifscResult"></div>
                             </div>
                         </div>
                     </div>
@@ -130,7 +133,56 @@
             </div>
         </div>
     </div>
-    <script></script>
-
-    @include('links.js.select2.select2')
+   <script>
+   $(document).ready(function() {
+    $('#ifscForm').submit(function(event) {
+        event.preventDefault();
+        
+        var bankName = $('#bank_name').val();
+        var branchName = $('#branch_name').val();
+        
+        // Clear previous errors
+        $('#bankNameError').text('');
+        $('#branchNameError').text('');
+        
+        // AJAX request
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('profile.bank_details.get-ifsc-code') }}', // Assuming your route name is 'get_ifsc'
+            data: {
+                _token: '{{ csrf_token() }}',
+                bank_name: bankName,
+                branch_name: branchName
+            },
+            success: function(response) {
+                // Check if 'ifsc_code' is defined in the response
+                if (response.hasOwnProperty('ifsc_code') && response.ifsc_code !== null) {
+                    // Display IFSC code
+                    $('#ifscResult').html('<p>IFSC Code: ' + response.ifsc_code + '</p>');
+                } else {
+                    // Display error message if 'ifsc_code' is not present or null
+                    $('#ifscResult').html('<p>Error: Unable to retrieve IFSC code.</p>');
+                }
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                // Handle errors
+                if (xhr.status == 422) {
+                    // Validation error
+                    var errors = xhr.responseJSON.errors;
+                    if (errors.hasOwnProperty('bank_name')) {
+                        $('#bankNameError').text(errors.bank_name[0]);
+                    }
+                    if (errors.hasOwnProperty('branch_name')) {
+                        $('#branchNameError').text(errors.branch_name[0]);
+                    }
+                } else {
+                    // Other errors
+                    $('#ifscResult').text('Error: ' + xhr.responseText);
+                }
+            }
+        });
+    });
+});
+</script>   
+ @include('links.js.select2.select2')
 @endsection
