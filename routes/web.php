@@ -371,6 +371,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete/selected', [ProductModelController::class, 'deleteSelected']);
             Route::post('/import', [ProductModelController::class, 'import'])->name('import');
             Route::get('/export', [ProductModelController::class, 'export']);
+            Route::post('/check-name', [ProductModelController::class, 'checkName'])->name('checkName');
+           
         });
 
         Route::prefix('/incentives')->name('incentives.')->group(function () {
@@ -427,6 +429,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete/selected', [OrderDetailController::class, 'deleteSelected']);
             Route::post('/import', [OrderDetailController::class, 'import'])->name('import');
             Route::get('/export', [OrderDetailController::class, 'export']);
+             Route::post('/check-name', [OrderDetailController::class, 'checkName'])->name('checkName');
+              Route::get('/get-product-details', [OrderDetailController::class, 'getProductDetails']);
         });
 
         Route::prefix('/employees')->name('employees.')->group(function () {

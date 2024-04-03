@@ -72,35 +72,26 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        {{-- DC Number --}}
-                                        <label for="customer_name" class="col-sm-2 col-form-label mandatory">DC
-                                            Number</label>
+                                        
+                                     
+                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Dc Number</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="dc_number" id="dc_number">
                                                 <option value="">Select DC</option>
                                                 @foreach ($delivery_challan as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->dc_no }}</option>
+                                                    <option value="{{ $item->id }}">{{ $item->dc_no }}
+                                                    </option>
                                                 @endforeach
                                             </select>
-                                            @error('dc_number')
+                                            @error('order_id')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-
-                                        <label for="order_no" class="col-sm-2 col-form-label ">Order No</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input type="text" class="form-control" name="order_no" id="order_no"
-                                                readonly>
-                                            @error('order_no')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-
-                                        <label for="model_name" class="col-sm-2 col-form-label ">Model Name</label>
+                                        <label for="customer_code" class="col-sm-2 col-form-label">Model</label>
                                         <div class="col-sm-4 mb-4">
                                             <input type="text" class="form-control" name="model_name" id="model_name"
                                                 readonly>
-                                            @error('model_name')
+                                            @error('product_model')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -122,6 +113,7 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
+                                        
 
                                         <label for="product_name" class="col-sm-2 col-form-label ">Product Name</label>
                                         <div class="col-sm-4 mb-4">
@@ -500,7 +492,7 @@
 
 
 
-    <script>
+    <!-- <script>
         // Function to fetch company name based on selected employee ID
         function fetchCompanyName() {
             var employeeId = $('#employee_id').val();
@@ -540,6 +532,46 @@
                 }
             });
         }
+
+        // Event listener for employee ID select change
+        $(document).ready(function() {
+            $('#employee_id').change(function() {
+                fetchCompanyName();
+            });
+        });
+    </script> -->
+
+       <script>
+        // Function to fetch company name based on selected employee ID
+        function fetchCompanyName() {
+            var employeeId = $('#employee_id').val();
+            var companyId = $('#employee_id option:selected').data('company-id');
+
+            // Set the company ID and name
+            $('#company_name').val($('#employee_id option:selected').data('company-name'));
+
+            // Fetch order IDs associated with the selected company
+            $.ajax({
+                url: '{{ route('job_allocation.job_giving.fetch-order-ids') }}',
+                type: 'GET',
+                data: {
+                    company_id: companyId
+                },
+                 success: function(response) {
+                        $('#dc_number').empty();
+                        $('#dc_number').append('<option value="">Select DC</option>');
+                        $.each(response.dc_numbers, function(key, value) {
+                            $('#dc_number').append('<option value="' + key + '">' + value + '</option>');
+                        });
+                    }
+                });
+            },
+                else {
+                $('#dc_number').empty();
+                $('#dc_number').append('<option value="">Select DC</option>');
+            }
+           
+       
 
         // Event listener for employee ID select change
         $(document).ready(function() {
@@ -598,18 +630,20 @@
                         },
                         dataType: 'json',
                         success: function(response) {
-                            $('#product').val(response.product);
+                            $('#product_name').val(response.product);
                             $('#raw_material_name').val(response.raw_material_name);
                             $('#raw_material_type').val(response.raw_material_type);
+                             $('#dc_number').val(response.dc_no);
                         },
                         error: function(xhr, status, error) {
                             console.error(error);
                         }
                     });
                 } else {
-                    $('#product').val('');
+                    $('#product_name').val('');
                     $('#raw_material_name').val('');
                     $('#raw_material_type').val('');
+                     $('#dc_number').val('');
                 }
             });
         });
@@ -630,6 +664,7 @@
                             $('#order_date').val(response.order_date);
                             $('#total_quantity').val(response.total_quantity);
                             $('#available_quantity').val(response.available_quantity);
+                             $('#total_weight').val(response.total_r_w_weight);
                         },
                         error: function(xhr, status, error) {
                             console.error(error);

@@ -35,10 +35,6 @@ class JobGiving extends Model
         return $this->belongsTo(ProductModel::class, 'product_model_id');
     }
 
-
-
-
-
     public function deliveryChellan()
     {
         return $this->belongsTo(DeliveryChallan::class, 'dc_id');

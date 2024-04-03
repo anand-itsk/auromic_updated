@@ -31,21 +31,21 @@ class ProductModelController extends Controller
     public function create()
     {
 
-        $latestModel = ProductModel::latest()->first();
-    if ($latestModel) {
-        $modelNumber = (int)substr($latestModel->model_code, 1); // Extract the numeric part
-        $modelNumber++;
-    } else {
-        $modelNumber = 1;
-    }
-
-    // Format the model code with leading zeros
-    $formattedModelCode = 'M' . str_pad($modelNumber, 3, '0', STR_PAD_LEFT);
 
         $raw_material = RawMaterial::all();
         $product = Product::all();
         $product_size = ProductSize::all();
-        return view('pages.master.product_model.create', compact('raw_material', 'product', 'product_size','formattedModelCode'));
+        return view('pages.master.product_model.create', compact('raw_material', 'product', 'product_size'));
+    }
+
+    public function checkName(Request $request)
+    {
+
+        $model_code = $request->input('model_code'); 
+
+        $exists = ProductModel::where('model_code', $model_code)->exists();
+
+        return response()->json(['exists' => $exists]);
     }
 
     public function store(Request $request)
