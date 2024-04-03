@@ -73,27 +73,13 @@
                                             @enderror
                                         </div>
                                         
-                                        {{-- DC Number --}}
-                                        <!-- <label for="customer_name" class="col-sm-2 col-form-label mandatory">DC
-                                            Number</label>
+                                     
+                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Dc Number</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="dc_number" id="dc_number">
                                                 <option value="">Select DC</option>
                                                 @foreach ($delivery_challan as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->dc_no }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('dc_number')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div> -->
-                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Order
-                                            No</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="order_id" id="order_id">
-                                                <option value="">Select Order</option>
-                                                @foreach ($order_nos as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->last_order_number }}
+                                                    <option value="{{ $item->id }}">{{ $item->dc_no }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -101,12 +87,10 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Model</label>
+                                        <label for="customer_code" class="col-sm-2 col-form-label">Model</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="product_model" id="product_model">
-                                                <option value="">Select Model</option>
-
-                                            </select>
+                                            <input type="text" class="form-control" name="model_name" id="model_name"
+                                                readonly>
                                             @error('product_model')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -129,14 +113,7 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="customer_code" class="col-sm-2 col-form-label ">Dc Number</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input type="text" class="form-control" name="dc_number"
-                                                id="dc_number"  readonly>
-                                            @error('dc_number')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                        
 
                                         <label for="product_name" class="col-sm-2 col-form-label ">Product Name</label>
                                         <div class="col-sm-4 mb-4">
@@ -515,7 +492,7 @@
 
 
 
-    <script>
+    <!-- <script>
         // Function to fetch company name based on selected employee ID
         function fetchCompanyName() {
             var employeeId = $('#employee_id').val();
@@ -555,6 +532,46 @@
                 }
             });
         }
+
+        // Event listener for employee ID select change
+        $(document).ready(function() {
+            $('#employee_id').change(function() {
+                fetchCompanyName();
+            });
+        });
+    </script> -->
+
+       <script>
+        // Function to fetch company name based on selected employee ID
+        function fetchCompanyName() {
+            var employeeId = $('#employee_id').val();
+            var companyId = $('#employee_id option:selected').data('company-id');
+
+            // Set the company ID and name
+            $('#company_name').val($('#employee_id option:selected').data('company-name'));
+
+            // Fetch order IDs associated with the selected company
+            $.ajax({
+                url: '{{ route('job_allocation.job_giving.fetch-order-ids') }}',
+                type: 'GET',
+                data: {
+                    company_id: companyId
+                },
+                 success: function(response) {
+                        $('#dc_number').empty();
+                        $('#dc_number').append('<option value="">Select DC</option>');
+                        $.each(response.dc_numbers, function(key, value) {
+                            $('#dc_number').append('<option value="' + key + '">' + value + '</option>');
+                        });
+                    }
+                });
+            },
+                else {
+                $('#dc_number').empty();
+                $('#dc_number').append('<option value="">Select DC</option>');
+            }
+           
+       
 
         // Event listener for employee ID select change
         $(document).ready(function() {

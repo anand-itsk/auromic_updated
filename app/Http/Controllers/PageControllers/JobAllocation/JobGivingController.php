@@ -59,20 +59,30 @@ class JobGivingController extends Controller
         return view('pages.job_allocation.job_giving.create', compact('delivery_challan', 'order_details', 'employee', 'productModels', 'order_nos'));
     }
 
-    public function fetchOrderIds(Request $request)
-    {
-        $companyId = $request->input('company_id');
+    // public function fetchOrderIds(Request $request)
+    // {
+    //     $companyId = $request->input('company_id');
 
-        // Fetch order IDs associated with the given company ID
-        // $orderIds = DeliveryChallan::whereHas('company', function ($query) use ($companyId) {
-        //     $query->where('company_id', $companyId);
-        // })->pluck('order_id')->unique();
-        $orderIds = DeliveryChallan::where('company_id', $companyId)->with('orderDetails')->get()->pluck('orderDetails.order_no_id')->unique()->toArray();;
-        // dd($orderIds);
-        // You may want to load the actual order details here instead of just IDs
-        // For now, I'll return the IDs only
-        $order_data = OrderNO::all();
-        return response()->json(['order_ids' => $orderIds, 'order_data' => $order_data]);
+    //     // Fetch order IDs associated with the given company ID
+    //     // $orderIds = DeliveryChallan::whereHas('company', function ($query) use ($companyId) {
+    //     //     $query->where('company_id', $companyId);
+    //     // })->pluck('order_id')->unique();
+    //     $orderIds = DeliveryChallan::where('company_id', $companyId)->with('orderDetails')->get()->pluck('orderDetails.order_no_id')->unique()->toArray();;
+    //     // dd($orderIds);
+    //     // You may want to load the actual order details here instead of just IDs
+    //     // For now, I'll return the IDs only
+    //     $order_data = OrderNO::all();
+    //     return response()->json(['order_ids' => $orderIds, 'order_data' => $order_data]);
+    // }
+     public function fetchOrderIds(Request $request)
+    {
+       $companyId = $request->input('company_name');
+    $deliveryChallans = DeliveryChallan::where('company_id', $companyId)->get();
+    $dcNumbers = [];
+    foreach ($deliveryChallans as $deliveryChallan) {
+        $dcNumbers[$deliveryChallan->id] = $deliveryChallan->dc_no;
+    }
+    return response()->json(['dc_numbers' => $dcNumbers]);
     }
 
     public function getQuantities($id)
@@ -97,7 +107,7 @@ class JobGivingController extends Controller
     public function getProductDetails(Request $request)
     {
         $productModelId = $request->input('product_model');
-        $productDetails = ProductModel::with(['product', 'rawMaterial.rawMaterialType','jobGiving.deliveryChellan'])->find($productModelId);
+        $productDetails = ProductModel::with(['product', 'rawMaterial.rawMaterialType'])->find($productModelId);
 
 
 
@@ -105,7 +115,6 @@ class JobGivingController extends Controller
             'product' => $productDetails->product->name,
             'raw_material_name' => $productDetails->rawMaterial->name,
             'raw_material_type' => $productDetails->rawMaterial->rawMaterialType->name,
-            'dc_no' => $productDetails->jobGiving->deliveryChellan->dc_no,
         ]);
     }
     public function getOrderDetails(Request $request)
@@ -155,9 +164,9 @@ class JobGivingController extends Controller
         // Check if input quantity exceeds available quantity
         $deliveryChallan = DeliveryChallan::find($input['dc_number']);
 
-        // $orderDetail = OrderDetail::where('id', $deliveryChallan->order_id)->first();
+        $orderDetail = OrderDetail::where('id', $deliveryChallan->order_id)->first();
 
-        // $product_model_id = $orderDetail->product_model_id;
+        $product_model_id = $orderDetail->product_model_id;
 
         $order_id = $deliveryChallan->order_id;
 
