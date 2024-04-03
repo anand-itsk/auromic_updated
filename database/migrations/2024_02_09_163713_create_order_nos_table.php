@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('order_nos', function (Blueprint $table) {
             $table->id();
             $table->string('last_order_number')->default('ORD0');
+            $table->string('customer_order_no')->nullable();
             $table->unsignedBigInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

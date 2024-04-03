@@ -78,6 +78,7 @@ class OrderDetailController extends Controller
         $order_no = new OrderNo();
 
         $order_no->last_order_number = $orderNumber;
+        $order_no->customer_order_no = $request->input('customer_order_no');
         $order_no->created_by = $user->id;
 
         $order_no->save();
