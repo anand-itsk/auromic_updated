@@ -64,7 +64,7 @@
                                         </div>
                                         <label class="col-sm-2 col-form-label">Product</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control" name="product" id="product">
+                                            <select class="form-control select2" name="product" id="product">
                                                 <option value="">Select Product</option>
                                                 @foreach ($products as $product)
                                                     <option value="{{ $product->id }}">{{ $product->name }}</option>
@@ -76,7 +76,7 @@
                                         </div>
                                         <label class="col-sm-2 col-form-label">Model</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control" name="product_model" id="product_model" disabled>
+                                            <select class="form-control select2" name="product_model" id="product_model" disabled>
                                                 <option value="">Select Product Model</option>
                                                 @foreach ($productModels as $productModel)
                                                     <option value="{{ $productModel->id }}"
@@ -155,13 +155,12 @@
                                         </div>
                                         <label class="col-sm-2 col-form-label">Order Status</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="order_status_id"
-                                                id="order_status_id">
-                                                <option value="">Select Order Status</option>
-                                                @foreach ($order_status as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                                @endforeach
-                                            </select>
+                                           <select class="form-control select2" name="order_status_id" id="order_status_id">
+        <option value="">Select Order Status</option>
+        @foreach ($order_status as $item)
+            <option value="{{ $item->id }}" @if($item->name === 'Open') selected @endif>{{ $item->name }}</option>
+        @endforeach
+    </select>
                                             @error('order_status_id')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror

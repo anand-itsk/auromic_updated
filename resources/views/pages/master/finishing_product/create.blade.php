@@ -40,7 +40,7 @@
                                                 href="{{ route('product-models.products.create') }}" target="_blank">+</a>
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control" name="product_id" id="product">
+                                            <select class="form-control select2" name="product_id" id="product">
                                                 <option value="">Select Product</option>
                                                 @foreach ($products as $product)
                                                     <option value="{{ $product->id }}">{{ $product->name }}</option>
@@ -55,7 +55,7 @@
                                                 href="{{ route('product-models.product_sizes.create') }}" target="_blank">+</a>
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control" name="product_size_id" id="product_size_id">
+                                            <select class="form-control select2" name="product_size_id" id="product_size_id">
                                                 <option value="">Select Product size</option>
                                                 @foreach ($product_size as $item)
                                                     <option value="{{ $item->id }}">{{ $item->name }}</option>

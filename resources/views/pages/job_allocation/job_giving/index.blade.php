@@ -207,8 +207,8 @@
                     },
 
                     {
-                        data: 'last_order_number',
-                        name: 'last_order_number',
+                        data: 'customer_order_no',
+                        name: 'customer_order_no',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }

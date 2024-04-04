@@ -31,7 +31,7 @@ class JobGivingController extends Controller
             return [
                 'id' => $job_giving->id,
                 'employee_name' => $job_giving->employee->employee_name ?? null,
-                'last_order_number' => $job_giving->order_details->orderNo->last_order_number ?? null,
+                'customer_order_no' => $job_giving->order_details->orderNo->customer_order_no ?? null,
                 'dc_no' => $job_giving->deliveryChellan->dc_no ?? null,
                 'model_name' => $job_giving->product_model->model_name ?? null,
                 'quantity' => $job_giving->quantity ?? null,

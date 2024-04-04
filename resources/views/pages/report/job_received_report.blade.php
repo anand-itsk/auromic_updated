@@ -138,9 +138,9 @@
                                                 <th>Company code</th>
                                                  <th>Employee Name</th>
                                                   <th>Incentive Applicable</th>
+                                                  <th>Incentive fee</th>
                                                   <th>Conveyance fee</th>
                                                   <th>Deducation fee</th>
-                                                  <th>Incentive fee</th>
                                                    <th>Total amount</th>
                                                     <th>Net amount</th>
                                                     <th>status</th>
@@ -261,6 +261,14 @@
                         }
                     },
                     {
+                        data: 'incentive_fee',
+                        name: 'incentive_fee',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                    {
                         data: 'conveyance_fee',
                         name: 'conveyance_fee',
                         render: function(data, type, row) {
@@ -277,14 +285,7 @@
                         
                     },
                     
-                     {
-                        data: 'incentive_fee',
-                        name: 'incentive_fee',
-                        render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-                        
-                    },
+                     
                     {
                         data: 'total_amount',
                         name: 'total_amount',

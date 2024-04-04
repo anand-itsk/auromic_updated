@@ -70,14 +70,13 @@
                            </div>
                            <label for="customer_code" class="col-sm-2 col-form-label ">Order
                            ID</label>
-                           <div class="col-sm-4 mb-4">
-                              <select class="form-control select2" name="order_id" id="order_id">
+                           <div class="col-sm-4 mb-4 ">
+                              <select class="form-control select2" name="order_id" id="order_id" disabled>
                               @foreach ($order_details as $item)
-                              <option value="{{ $item->id }}"
-                              @if ($item->id == $JobGiving->order_id) selected @endif>
-                              {{ $item->order_no }}
-                              </option>
-                              @endforeach
+            <option value="{{ $item->id }}" @if ($item->id == $JobGiving->order_id) selected @endif>
+                {{ $item->orderNo->customer_order_no }}
+            </option>
+        @endforeach
                               </select>
                               @error('order_id')
                               <span class="error" style="color: red;">{{ $message }}</span>

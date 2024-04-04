@@ -16,6 +16,7 @@ class DirectJobReceived extends Model
          'product_color_id',
          'incentive_applicable',
          'receving_date',
-         'assign_quantity'
+         'assign_meter',
+           'quantity'
     ];
 }

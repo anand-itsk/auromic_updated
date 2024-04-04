@@ -683,4 +683,20 @@
             });
         });
     </script>
+
+    <script>
+    $(document).ready(function () {
+        $('#quantity').on('input', function () {
+            var quantity = parseInt($(this).val());
+            var availableQuantity = parseInt($('#available_quantity').val());
+
+            // Check if quantity is greater than available quantity
+            if (quantity > availableQuantity) {
+                $('#quantity-error').text('Quantity cannot exceed Available Quantity').show();
+            } else {
+                $('#quantity-error').hide();
+            }
+        });
+    });
+</script>
 @endsection
