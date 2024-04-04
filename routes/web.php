@@ -431,6 +431,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/export', [OrderDetailController::class, 'export']);
              Route::post('/check-name', [OrderDetailController::class, 'checkName'])->name('checkName');
               Route::get('/get-product-details', [OrderDetailController::class, 'getProductDetails']);
+              Route::get('/getProductModels/{productId}', [OrderDetailController::class, 'getProductModels']);
+
         });
 
         Route::prefix('/employees')->name('employees.')->group(function () {

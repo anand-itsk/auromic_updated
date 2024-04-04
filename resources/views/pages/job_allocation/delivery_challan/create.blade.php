@@ -395,12 +395,14 @@
         $(document).ready(function() {
             $('#product_model').change(function() {
                 var productModelId = $(this).val();
+                 var orderId = $('#order_id').val();
                 if (productModelId) {
                     $.ajax({
                         url: '/job_allocation/delivery_challan/get-order-details', // Update the URL to your route
                         type: 'GET',
                         data: {
-                            product_model: productModelId
+                            product_model: productModelId,
+                             order_id: orderId
                         },
                         dataType: 'json',
                         success: function(response) {
@@ -453,5 +455,8 @@
             // Perform any actions you want here
         });
     </script>
+
+
+
     @include('links.js.select2.select2')
 @endsection

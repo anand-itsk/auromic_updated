@@ -72,7 +72,7 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label class="col-sm-2 col-form-label">Product <a class="shortcut_master"
+                                        <label class="col-sm-2 col-form-label mandatory">Product <a class="shortcut_master"
                                                 href="{{ route('product-models.products.create') }}" target="_blank">+</a>
                                         </label>
                                         <div class="col-sm-4 mb-4">
@@ -86,7 +86,7 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label class="col-sm-2 col-form-label">Model <a class="shortcut_master"
+                                        <label class="col-sm-2 col-form-label mandatory">Model <a class="shortcut_master"
                                                 href="{{ route('master.product_model.create') }}"
                                                 target="_blank">+</a></label>
                                         <div class="col-sm-4 mb-4">
@@ -154,7 +154,7 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="wages_employee" class="col-sm-2 col-form-label">Quantity</label>
+                                        <label for="wages_employee" class="col-sm-2 col-form-label mandatory">Quantity</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="quantity" id="quantity">
                                             @error('quantity')
@@ -162,7 +162,7 @@
                                             @enderror
                                         </div>
 
-                                        <label class="col-sm-2 col-form-label">Delivery Date</label>
+                                        <label class="col-sm-2 col-form-label mandatory">Delivery Date</label>
                                         <div class="col-sm-4 mb-4">
                                             <input type="date" class="form-control" name="delivery_date"
                                                 id="">
@@ -172,7 +172,7 @@
                                         </div>
 
 
-                                        <label class="col-sm-2 col-form-label">Product Color
+                                        <label class="col-sm-2 col-form-label mandatory">Product Color
                                             <a class="shortcut_master"
                                                 href="{{ route('product-models.product_colors.create') }}"
                                                 target="_blank">+</a>
@@ -343,6 +343,37 @@
             });
         });
     </script>
+
+
+
+<script>
+    $(document).ready(function() {
+        $('#product').change(function() {
+            var productId = $(this).val();
+            $('#product_model').prop('disabled', productId == '');
+            // Clear existing options
+            $('#product_model').empty();
+            // Add default option
+            $('#product_model').append('<option value="">Select Product Model</option>');
+            // Fetch product models via AJAX based on selected product
+            if (productId != '') {
+                $.ajax({
+                    url: '/master/order_detail/getProductModels/' + productId, // Replace with your route to fetch product models
+                    type: 'GET',
+                    success: function(response) {
+                        // Populate product models select dropdown
+                        $.each(response, function(key, value) {
+                            $('#product_model').append('<option value="' + value.id + '">' + value.model_name + '-' + value.model_code + '</option>');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+        });
+    });
+</script>
 
     @include('links.js.select2.select2')
 @endsection

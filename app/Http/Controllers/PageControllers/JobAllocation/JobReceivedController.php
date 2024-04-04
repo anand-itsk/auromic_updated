@@ -48,7 +48,7 @@ class JobReceivedController extends Controller
 
 
         $jobReceived->job_giving_id = $input['job_giving_id'];
-        $jobReceived->incentive_applicable = $input['Incentive_status'];
+        $jobReceived->incentive_applicable = 'NO';
         $jobReceived->receving_date = $input['receiving_date'];
         $jobReceived->status = $input['received_status'];
         $jobReceived->complete_quantity = $input['received_quantity'];

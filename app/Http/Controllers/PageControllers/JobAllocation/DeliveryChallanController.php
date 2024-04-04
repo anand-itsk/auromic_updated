@@ -96,9 +96,13 @@ class DeliveryChallanController extends Controller
     }
     public function getOrderDetails(Request $request)
     {
-        $productModelId = $request->input('product_model');
-        $orderDetail = OrderDetail::where('product_model_id', $productModelId)->first();
+        $orderId = $request->input('order_id');
+         $productModelId = $request->input('product_model');
+       $orderDetail = OrderDetail::where('order_no_id', $orderId)
+                               ->where('product_model_id', $productModelId)
+                               ->first();
 
+        if ($orderDetail) {
         return response()->json([
             'order_date' => $orderDetail->order_date,
             'total_quantity' => $orderDetail->quantity,
@@ -108,6 +112,11 @@ class DeliveryChallanController extends Controller
             'available_weight' => $orderDetail->available_weight,
             'product_color_id' => $orderDetail->productColor->name,
         ]);
+    } else {
+        return response()->json([
+            'error' => 'No matching order details found.'
+        ], 404); // Return 404 status code if no matching order details found
+    }
     }
 
     public function store(Request $request)
