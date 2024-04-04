@@ -137,6 +137,9 @@
                                             @enderror
                                         </div> --}}
 
+
+
+                                        
                                         {{-- <label for="order_date" class="col-sm-2 col-form-label">Weight</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="weight" id="weight">
