@@ -1,22 +1,122 @@
 @extends('layouts.app')
 <!-- DataTables CSS -->
 @section('content')
-    <!-- Add Select2 CSS -->
-    @include('links.css.select2.select2')
-    <div class="wrapper">
-        <div class="container-fluid">
-            <!-- Page-Title -->
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="page-title-box">
-                        <div class="btn-group float-right">
-                            <ol class="breadcrumb hide-phone p-0 m-0">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Auromics</a></li>
-                                <li class="breadcrumb-item"><a
-                                        href="{{ route('job_allocation.direct_job_giving.index') }}">Direct Job Giving</a>
-                                </li>
-                                <li class="breadcrumb-item">Edit</li>
-                            </ol>
+<!-- Add Select2 CSS -->
+@include('links.css.select2.select2')
+<div class="wrapper">
+   <div class="container-fluid">
+      <!-- Page-Title -->
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="page-title-box">
+               <div class="btn-group float-right">
+                  <ol class="breadcrumb hide-phone p-0 m-0">
+                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Auromics</a></li>
+                     <li class="breadcrumb-item"><a href="{{ route('job_allocation.direct_job_giving.index') }}">Direct Job Giving</a>
+                     </li>
+                     <li class="breadcrumb-item">Edit</li>
+                  </ol>
+               </div>
+               <h4 class="page-title">Edit Direct Job received</h4>
+            </div>
+         </div>
+      </div>
+      <!-- end page title end breadcrumb -->
+      <div class="row">
+         <div class="col-12">
+            <div class="card m-b-30">
+               <div class="card-body">
+                  <div class="m-b-30">
+                     <form action="{{ route('job_allocation.direct_job_received.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="direct_job_giving_id" value="{{$id}}">
+                        <div class="form-group row">
+                           <label for="employee_id" class="col-sm-2 col-form-label">
+                           Employee Name
+                           </label>
+                           <div class="col-sm-4 mb-4">
+                              <select class="form-control select2" name="employees" id="employees" disabled>
+                              @foreach ($employee as $item)
+                              <option value="{{ $item->id }}" 
+                              data-company-names="{{ $item->company->company_name }}" 
+                              data-company-types="{{ $item->company->companyType->name }}"
+                              {{ $item->id == $direct_job_giving->employee_id ? 'selected' : '' }}>
+                              {{ $item->employee_code }}/{{ $item->employee_name }}
+                              </option>
+                              @endforeach
+                              </select>
+                              @error('employee_id')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                           <label for="company_type" class="col-sm-2 col-form-label ">
+                           Company Type
+                           </label>
+                           <div class="col-sm-4 mb-4">
+                              <input type="text" class="form-control" name="company_types" id="company_types" readonly>
+                              @error('company_type')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                           <label for="company_name" class="col-sm-2 col-form-label ">
+                           Company Name
+                           </label>
+                           <div class="col-sm-4 mb-4">
+                              <input type="text" class="form-control" name="company_names" id="company_names" readonly>
+                              @error('company_name')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                           <label class="col-sm-2 col-form-label">Model</label>
+                           <div class="col-sm-4 mb-4">
+                              <select class="form-control" name="finishing_product_models_id" id="finishing_product_models_id" disabled>
+                              @foreach ($finishingProduct as $finishingProducts)
+                              <option value="{{ $finishingProducts->id }}" @if ($finishingProducts->id == $direct_job_giving->finishing_product_models_id) selected @endif>{{ $finishingProducts->model_code }}</option>
+                              @endforeach
+                              </select>
+                              @error('finishing_product_models_id')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                           <label for="order_date" class="col-sm-2 col-form-label ">Product Name</label>
+                           <div class="col-sm-4 mb-4">
+                              <input class="form-control" type="text" name="product" id="product" readonly value="{{$finishingProducts->product->name}}">
+                              @error('product_id')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                           <label for="customer_code" class="col-sm-2 col-form-label">Product Size</label>
+                           <div class="col-sm-4 mb-4">
+                              <select class="form-control select2" name="product_size_id" id="product_size_id" disabled>
+                                 <option value="">Select Product Size</option>
+                                 @foreach ($product_size as $item)
+                                 <option value="{{ $item->id }}" {{ $item->id == $direct_job_giving->product_size_id ? 'selected' : '' }}>{{ $item->name }}</option>
+                                 @endforeach
+                              </select>
+                              @error('product_size_id')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                           <label for="customer_code" class="col-sm-2 col-form-label">Product Color</label>
+                           <div class="col-sm-4 mb-4">
+                              <select class="form-control select2" name="product_color_id" id="product_color_id" disabled>
+                                 <option value="">Select Product color</option>
+                                 @foreach ($product_color as $item)
+                                 <option value="{{ $item->id }}" {{ $item->id == $direct_job_giving->product_color_id ? 'selected' : '' }}>{{ $item->name }}</option>
+                                 @endforeach
+                              </select>
+                              @error('product_color_id')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                           <label for="order_date" class="col-sm-2 col-form-label">Meter</label>
+                           <div class="col-sm-4 mb-4">
+                              <input class="form-control" type="text" name="meter" id="meter" readonly value="{{$direct_job_giving->meter}}">
+                              @error('meter')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                           
                         </div>
                         <h4 class="page-title">Edit Direct Job received</h4>
                     </div>
@@ -253,63 +353,52 @@
                                             @enderror
                                         </div>
 
-                                        <label for="order_date" id="amount_label"
-                                            class="col-sm-2 col-form-label ">Amount</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="amount" id="amount">
-                                            @error('amount')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="order_date" id="" class="col-sm-2 col-form-label ">Total
-                                            Meter</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="complete_quantity"
-                                                id="complete_quantity">
-                                            @error('complete_quantity')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <label for="order_date" class="col-sm-2 col-form-label">Available Meters</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="available_quantity"
-                                                id="available_quantity">
-                                            @error('available_quantity')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <label for="order_date" class="col-sm-2 col-form-label">Total Quanity</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="assign_quantity"
-                                                id="assign_quantity">
-                                            <span id="assign_quantity_error" class="error" style="color: red;"></span>
-                                            @error('assign_quantity')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="ml-3 d-flex flex-wrap px-4">
-                                        <label>
-                                            <input class="form-check-input" name="Direct_Job_Received_Without_Giving"
-                                                type="checkbox" value="1" id="Direct_Job_Received_Without_Giving">
-                                            Direct Job Received Without Giving</label>
-                                    </div>
+                           <label for="order_date" id="amount_label" class="col-sm-2 col-form-label ">Amount</label>
+                           <div class="col-sm-4 mb-4">
+                          <input class="form-control" type="text" name="amount" id="amount">
+                              @error('amount')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                        <label for="order_date" id="" class="col-sm-2 col-form-label ">Useage Meter</label>
+                           <div class="col-sm-4 mb-4">
+                          <input class="form-control" type="text" name="useage_meter" id="useage_meter">
+                              @error('useage_meter')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                          <label for="order_date" class="col-sm-2 col-form-label">Balance Meter</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="balance_meter" id="balance_meter">
+    @error('available_quantity')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+<label for="order_date" class="col-sm-2 col-form-label">Assign Meter</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="assign_meter" id="assign_meter">
+    <span id="assign_meter_error" class="error" style="color: red;"></span>
+    @error('assign_meter')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
 
-                            </div>
-                            <div class="form-group">
-                                <div class="d-flex justify-content-evenly">
-                                    <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                        Submit
-                                    </button>
-                                    <a href="{{ route('job_allocation.direct_job_giving.index') }}"
-                                        class="btn btn-secondary waves-effect m-l-5">
-                                        Cancel
-                                    </a>
-                                </div>
-                            </div>
-                            </form>
+<label for="order_date" class="col-sm-2 col-form-label">Quantity</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="quantity" id="quantity">
+    
+    @error('quantity')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+</div>
+                        <div class="ml-3 d-flex flex-wrap px-4">
+                           <label>
+                           <input class="form-check-input" name="Direct_Job_Received_Without_Giving" type="checkbox"
+                              value="1" id="Direct_Job_Received_Without_Giving">
+                           Direct Job Received Without Giving</label>
                         </div>
                     </div>
                 </div>
@@ -376,65 +465,50 @@
             // Initially hide the Amount label and input field
             $('#amount_label, #amount').hide();
 
-            // Listen for changes on the Incentive status dropdown
-            $('#Incentive_status').change(function() {
-                if ($(this).val() === 'Yes') {
-                    // If Yes is selected, show the Amount label and input field
-                    $('#amount_label, #amount').show();
-                } else {
-                    // If any other option is selected, hide the Amount label and input field
-                    $('#amount_label, #amount').hide();
-                }
-            });
-        });
-    </script>
+<script>
+$(document).ready(function(){
+    $('#useage_meter').on('input', function(){
+        var UseageMeter = $(this).val();
+        var totalMeter = {{$direct_job_giving->meter}};
+        var balanceMeter = totalMeter - UseageMeter;
+        
+        // Update available_quantity value
+        $('#balance_meter').val(balanceMeter);
 
+        // Clear available_quantity if complete_quantity is empty
+        if (UseageMeter === '') {
+            $('#balance_meter').val('');
+        }
+    });
 
-    <script>
-        $(document).ready(function() {
-            $('#complete_quantity').on('input', function() {
-                var completeQuantity = $(this).val();
-                var totalQuantity = {{ $direct_job_giving->quantity }};
-                var availableQuantity = totalQuantity - completeQuantity;
+    $('#balance_meter').on('input', function(){
+        var balanceMeter = $(this).val();
+        var totalMeter = {{$direct_job_giving->meter}};
+        var UseageMeter = totalMeter - balanceMeter;
 
-                // Update available_quantity value
-                $('#available_quantity').val(availableQuantity);
+        // Update complete_quantity value
+        $('#useage_meter').val(UseageMeter);
 
-                // Clear available_quantity if complete_quantity is empty
-                if (completeQuantity === '') {
-                    $('#available_quantity').val('');
-                }
-            });
+        // Clear complete_quantity if available_quantity is empty
+        if (balanceMeter === '') {
+            $('#UseageMeter').val('');
+        }
+    });
+});
+</script>
 
-            $('#available_quantity').on('input', function() {
-                var availableQuantity = $(this).val();
-                var totalQuantity = {{ $direct_job_giving->quantity }};
-                var completeQuantity = totalQuantity - availableQuantity;
-
-                // Update complete_quantity value
-                $('#complete_quantity').val(completeQuantity);
-
-                // Clear complete_quantity if available_quantity is empty
-                if (availableQuantity === '') {
-                    $('#complete_quantity').val('');
-                }
-            });
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $('#assign_quantity').on('input', function() {
-                var availableQuantity = parseInt($('#available_quantity').val());
-                var assignQuantity = parseInt($(this).val());
-                var errorSpan = $('#assign_quantity_error');
-
-                if (assignQuantity > availableQuantity) {
-                    errorSpan.text('Assign quantity cannot exceed available quantity');
-                } else {
-                    errorSpan.text('');
-                }
-            });
+<script>
+    $(document).ready(function () {
+        $('#assign_meter').on('input', function () {
+            var balanceMeter = parseInt($('#balance_meter').val());
+            var assignMeter = parseInt($(this).val());
+            var errorSpan = $('#assign_meter_error');
+            
+            if (assignMeter > balanceMeter) {
+                errorSpan.text('Assign Meter cannot exceed Balance meter');
+            } else {
+                errorSpan.text('');
+            }
         });
     </script>
 

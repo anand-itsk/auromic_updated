@@ -14,12 +14,12 @@
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Auromics</a></li>
                                 <li class="breadcrumb-item">Job Allocation</li>
                                 <li class="breadcrumb-item"><a
-                                        href="{{ route('job_allocation.delivery_challan.index') }}">Delivery Challan</a>
+                                        href="{{ route('job_allocation.delivery_challan.index') }}">Order Allocation</a>
                                 </li>
                                 <li class="breadcrumb-item">Create</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Create Delivery Challan</h4>
+                        <h4 class="page-title">Create Order Allocation</h4>
                     </div>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                                             <select class="form-control select2" name="order_id" id="order_id">
                                                 <option value="">Select Order</option>
                                                 @foreach ($order_nos as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->last_order_number }}
+                                                    <option value="{{ $item->id }}">{{ $item->customer_order_no }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -141,34 +141,18 @@
                                             @enderror
                                         </div>
 
-                                        <label for="customer_code" class="col-sm-2 col-form-label">Product Size
-                                            <a class="shortcut_master"
-                                                href="{{ route('product-models.product_sizes.create') }}" target="_blank">+</a>
-                                        </label>
+                                        <label for="customer_code" class="col-sm-2 col-form-label">Product Size</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="product_size_id"
-                                                id="product_size_id">
-                                                <option value="">Select Product Size</option>
-                                                @foreach ($product_size as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                                @endforeach
-                                            </select>
+                                             <input class="form-control" type="text" name="product_size_code"
+                                                id="product_size_code" readonly>
                                             @error('product_size_id')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="customer_code" class="col-sm-2 col-form-label">Product Color
-                                            <a class="shortcut_master"
-                                                href="{{ route('product-models.product_colors.create') }}" target="_blank">+</a>
-                                        </label>
+                                        <label for="customer_code" class="col-sm-2 col-form-label">Product Color</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="product_color_id"
-                                                id="product_color_id">
-                                                <option value="">Select Product color</option>
-                                                @foreach ($product_color as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                                @endforeach
-                                            </select>
+                                            <input class="form-control" type="text" name="product_color_id"
+                                                id="product_color_id" readonly>
                                             @error('product_color_id')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -390,6 +374,8 @@
                             $('#product').val(response.product);
                             $('#raw_material_name').val(response.raw_material_name);
                             $('#raw_material_type').val(response.raw_material_type);
+                             $('#product_size_code').val(response.product_size_code);
+                             $('#product_size_id').val(response.product_size_id);
                         },
                         error: function(xhr, status, error) {
                             console.error(error);
@@ -399,6 +385,8 @@
                     $('#product').val('');
                     $('#raw_material_name').val('');
                     $('#raw_material_type').val('');
+                    $('#product_size_code').val('');
+                    $('#product_size_id').val('');
                 }
             });
         });
@@ -422,6 +410,7 @@
                             $('#total_weight').val(response.total_r_w_weight);
                             $('#weightPerItem').val(response.weight_per_item);
                             $('#avaWeight').val(response.available_weight);
+                            $('#product_color_id').val(response.product_color_id);
 
                         },
                         error: function(xhr, status, error) {
@@ -432,6 +421,7 @@
                     $('#order_date').val('');
                     $('#total_quantity').val('');
                     $('#available_quantity').val('');
+                     $('#product_color_id').val('');
                 }
             });
         });

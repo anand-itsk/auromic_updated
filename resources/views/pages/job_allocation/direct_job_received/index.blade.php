@@ -94,8 +94,8 @@
                                             <th>finishing Product Model</th>
                                             <th>Product Size</th>
                                             <th>Product Color</th>
-                                             <th>quantity</th>
-                                             <th>Weight</th>
+                                             <th>Meter</th>
+                                            
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -300,13 +300,10 @@ $(document).ready(function() {
                 name: 'product_color.name'
             },
             {
-                data: 'quantity',
-                name: 'quantity'
+                data: 'meter',
+                name: 'meter'
             },
-            {
-                data: 'weight',
-                name: 'weight'
-            },
+           
            
             {
                 data: null,

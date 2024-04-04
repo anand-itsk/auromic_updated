@@ -15,12 +15,12 @@
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Auromics</a></li>
                                 <li class="breadcrumb-item">Job Allocation</li>
                                 <li class="breadcrumb-item"><a
-                                        href="{{ route('job_allocation.delivery_challan.index') }}">Delivery Challan</a>
+                                        href="{{ route('job_allocation.delivery_challan.index') }}">Order Allocation</a>
                                 </li>
                                 <li class="breadcrumb-item">Edit</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Edit Delivery Challan</h4>
+                        <h4 class="page-title">Edit Order Allocation</h4>
                     </div>
                 </div>
             </div>
@@ -85,7 +85,7 @@
     <select class="form-control select2" name="order_id" id="order_id">
         <option value="">Select Order</option>
             @foreach ($order_nos as $item)
-             <option value="{{ $item->id }}" {{ $item->id == $delivery_challans->order_id ? 'selected' : '' }}>{{ $item->last_order_number }}</option>
+             <option value="{{ $item->id }}" {{ $item->id == $delivery_challans->order_id ? 'selected' : '' }}>{{ $item->customer_order_no }}</option>
         @endforeach
     </select>
     @error('order_id')

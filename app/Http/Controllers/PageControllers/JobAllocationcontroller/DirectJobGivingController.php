@@ -66,8 +66,8 @@ class DirectJobGivingController extends Controller
      $direct_job_giving->finishing_product_models_id = $request->input('finishing_product_models_id');
      $direct_job_giving->product_size_id = $request->input('product_size_id');
      $direct_job_giving->product_color_id = $request->input('product_color_id');
-     $direct_job_giving->quantity = $request->input('quantity');
-     $direct_job_giving->weight = $request->input('weight');
+     $direct_job_giving->meter = $request->input('meter');
+    //  $direct_job_giving->weight = $request->input('weight');
     
 
   //  dd($direct_job_giving); 
@@ -110,8 +110,8 @@ public function update(Request $request, $id)
      $direct_job_giving->finishing_product_models_id = $request->input('finishing_product_models_id');
      $direct_job_giving->product_size_id = $request->input('product_size_id');
      $direct_job_giving->product_color_id = $request->input('product_color_id');
-     $direct_job_giving->quantity = $request->input('quantity');
-     $direct_job_giving->weight = $request->input('weight');
+     $direct_job_giving->quantity = $request->input('meter');
+     
 
   //  dd($direct_job_giving);
 

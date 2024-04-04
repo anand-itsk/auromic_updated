@@ -136,6 +136,10 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div> --}}
+
+
+
+                                        
                                         {{-- <label for="order_date" class="col-sm-2 col-form-label">Weight</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="weight" id="weight">
@@ -144,11 +148,10 @@
                                             @enderror
                                         </div> --}}
 
-                                        <label for="order_date" class="col-sm-2 col-form-label">Total Meter</label>
+                                        <label for="meter" class="col-sm-2 col-form-label">Meter</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="total_meters"
-                                                id="total_meters">
-                                            @error('total_meters')
+                                            <input class="form-control" type="text" name="meter" id="meter">
+                                            @error('meter')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>

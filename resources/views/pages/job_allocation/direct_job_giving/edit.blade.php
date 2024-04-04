@@ -117,20 +117,14 @@
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
 </div>
-<label for="order_date" class="col-sm-2 col-form-label">Quantity</label>
+<label for="order_date" class="col-sm-2 col-form-label">Meter</label>
 <div class="col-sm-4 mb-4">
-    <input class="form-control" type="text" name="quantity" id="quantity" value="{{$direct_job_giving->quantity}}">
-    @error('quantity')
+    <input class="form-control" type="text" name="meter" id="meter" value="{{$direct_job_giving->meter}}">
+    @error('meter')
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
 </div>
-<label for="order_date" class="col-sm-2 col-form-label">Weight</label>
-<div class="col-sm-4 mb-4">
-    <input class="form-control" type="text" name="weight" id="weight" value="{{$direct_job_giving->weight}}">
-    @error('weight')
-        <span class="error" style="color: red;">{{ $message }}</span>
-    @enderror
-</div>
+
    
 </div>
     <div class="form-group">

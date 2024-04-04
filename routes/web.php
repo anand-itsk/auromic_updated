@@ -430,6 +430,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/import', [OrderDetailController::class, 'import'])->name('import');
             Route::get('/export', [OrderDetailController::class, 'export']);
              Route::post('/check-name', [OrderDetailController::class, 'checkName'])->name('checkName');
+              Route::get('/get-product-details', [OrderDetailController::class, 'getProductDetails']);
         });
 
         Route::prefix('/employees')->name('employees.')->group(function () {

@@ -50,7 +50,8 @@ class DirectJobReceivedController extends Controller
         $direct_job_received->incentive_applicable = $request->input('incentive_applicable');
         $direct_job_received->receving_date = $request->input('receiving_date');
         $direct_job_received->amount = $request->input('amount');
-        $direct_job_received->assign_quantity = $request->input('assign_quantity');
+        $direct_job_received->assign_meter = $request->input('assign_meter');
+        $direct_job_received->quantity = $request->input('quantity');
 
         // Save the DirectJobReceived model to the database
         // dd($direct_job_received);
@@ -60,7 +61,7 @@ class DirectJobReceivedController extends Controller
         $direct_job_giving = DirectJobGiving::findOrFail($direct_job_giving_id);
 
         // Update the complete_quantity field
-        $direct_job_giving->complete_quantity = $request->input('complete_quantity');
+        $direct_job_giving->useage_meter = $request->input('useage_meter');
 
         // Save the changes to the database
         $direct_job_giving->save();

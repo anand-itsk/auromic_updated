@@ -14,9 +14,9 @@ class DirectJobGiving extends Model
          'finishing_product_models_id',
          'product_size_id',
          'product_color_id',
-         'quantity',
-         'complete_quantity',
-         'weight',
+         'meter',
+         'useage_meter',
+        //  'weight',
     ];
    public function employee(){
         return $this->belongsTo(Employee::class,'employee_id');

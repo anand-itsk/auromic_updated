@@ -31,7 +31,7 @@ class JobGivingController extends Controller
             return [
                 'id' => $job_giving->id,
                 'employee_name' => $job_giving->employee->employee_name ?? null,
-                'last_order_number' => $job_giving->order_details->orderNo->last_order_number ?? null,
+                'customer_order_no' => $job_giving->order_details->orderNo->customer_order_no ?? null,
                 'dc_no' => $job_giving->deliveryChellan->dc_no ?? null,
                 'model_name' => $job_giving->product_model->model_name ?? null,
                 'quantity' => $job_giving->quantity ?? null,
@@ -45,7 +45,7 @@ class JobGivingController extends Controller
     // Create Page
     public function create(Request $request)
     {
-        $delivery_challan = DeliveryChallan::all();
+        $delivery_challan = DeliveryChallan::with('orderDetails.orderNo', 'orderDetails.productModel')->get();
         $order_details = OrderDetail::all();
         $order_nos = OrderNo::all();
         $productModels = ProductModel::with(['rawMaterial.rawMaterialType', 'product'])->get();
@@ -59,20 +59,30 @@ class JobGivingController extends Controller
         return view('pages.job_allocation.job_giving.create', compact('delivery_challan', 'order_details', 'employee', 'productModels', 'order_nos'));
     }
 
+    // public function fetchOrderIds(Request $request)
+    // {
+    //     $companyId = $request->input('company_id');
+
+    //     // Fetch order IDs associated with the given company ID
+    //     // $orderIds = DeliveryChallan::whereHas('company', function ($query) use ($companyId) {
+    //     //     $query->where('company_id', $companyId);
+    //     // })->pluck('order_id')->unique();
+    //     $orderIds = DeliveryChallan::where('company_id', $companyId)->with('orderDetails')->get()->pluck('orderDetails.order_no_id')->unique()->toArray();;
+    //     // dd($orderIds);
+    //     // You may want to load the actual order details here instead of just IDs
+    //     // For now, I'll return the IDs only
+    //     $order_data = OrderNO::all();
+    //     return response()->json(['order_ids' => $orderIds, 'order_data' => $order_data]);
+    // }
     public function fetchOrderIds(Request $request)
     {
-        $companyId = $request->input('company_id');
-
-        // Fetch order IDs associated with the given company ID
-        // $orderIds = DeliveryChallan::whereHas('company', function ($query) use ($companyId) {
-        //     $query->where('company_id', $companyId);
-        // })->pluck('order_id')->unique();
-        $orderIds = DeliveryChallan::where('company_id', $companyId)->with('orderDetails')->get()->pluck('orderDetails.order_no_id')->unique()->toArray();;
-        // dd($orderIds);
-        // You may want to load the actual order details here instead of just IDs
-        // For now, I'll return the IDs only
-        $order_data = OrderNO::all();
-        return response()->json(['order_ids' => $orderIds, 'order_data' => $order_data]);
+        $companyId = $request->input('company_name');
+        $deliveryChallans = DeliveryChallan::where('company_id', $companyId)->get();
+        $dcNumbers = [];
+        foreach ($deliveryChallans as $deliveryChallan) {
+            $dcNumbers[$deliveryChallan->id] = $deliveryChallan->dc_no;
+        }
+        return response()->json(['dc_numbers' => $dcNumbers]);
     }
 
     public function getQuantities($id)
@@ -99,6 +109,8 @@ class JobGivingController extends Controller
         $productModelId = $request->input('product_model');
         $productDetails = ProductModel::with(['product', 'rawMaterial.rawMaterialType'])->find($productModelId);
 
+
+
         return response()->json([
             'product' => $productDetails->product->name,
             'raw_material_name' => $productDetails->rawMaterial->name,
@@ -113,6 +125,10 @@ class JobGivingController extends Controller
             'order_date' => $orderDetail->order_date,
             'total_quantity' => $orderDetail->quantity,
             'available_quantity' => $orderDetail->available_quantity,
+            'total_r_w_weight' => $orderDetail->total_raw_material,
+
+
+
         ]);
     }
 
@@ -140,7 +156,7 @@ class JobGivingController extends Controller
         $validatedData = $request->validate([
             'employee_id' => 'required',
             'quantity' => 'required',
-            'dc_number' => 'required',
+
         ]);
 
         $input = $request->all();
