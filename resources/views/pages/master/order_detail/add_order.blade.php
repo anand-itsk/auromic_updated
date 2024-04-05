@@ -131,7 +131,9 @@
                                         </div>
                                         <label for="wages_employee" class="col-sm-2 col-form-label ">Product Size</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="product_size_id"
+                                            <input class="form-control" type="text" name="product_size_code"
+                                                id="product_size_code" readonly>
+                                            <input class="form-control" type="hidden" name="product_size_id"
                                                 id="product_size_id" readonly>
                                             @error('product_size')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
@@ -231,7 +233,7 @@
                   <div class="col-12">
                     <div class="card m-b-30">
                         <div class="card-body">
-                            <h5>Order For HW24 Details</h5>
+                            <h5>Order For {{ $order_details->orderNo->customer_order_no }} Details</h5>
 <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap"
                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
@@ -242,17 +244,28 @@
                                                 <th>Total Quantity</th>
                                                 <th>Available Quantity</th>
                                                 <th>Total R.M Weight</th>
-
-
                                                 <th>Product Color</th>
-
                                                 <th>Order Status</th>
                                                 <th>Model Name</th>
-
-                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @foreach($orderDetails as $orderDetail)
+                                             @if ($orderDetail->orderNo->id == $order_details->order_no_id)
+        <tr>
+            <td>{{ $orderDetail->id }}</td>
+            <td>{{ $orderDetail->orderNo->customer_order_no }}</td>
+            <td>{{ $orderDetail->customer->customer_name }}</td>
+            <td>{{ $orderDetail->quantity }}</td>
+            <td>{{ $orderDetail->available_quantity }}</td>
+            <td>{{ $orderDetail->total_raw_material }}</td>
+            <td>{{ $orderDetail->productColor->name }}</td>
+            <td>{{ $orderDetail->orderStatus->name }}</td>
+            <td>{{ $orderDetail->productModel->model_name }}</td>
+            
+        </tr>
+          @endif
+        @endforeach
                                         </tbody>
                                     </table>
                         </div>
@@ -384,8 +397,8 @@
                             $('#product').val(response.product);
                             $('#raw_material_name').val(response.raw_material_name);
                             $('#raw_material_type').val(response.raw_material_type);
-                            $('#product_size_id').val(response.product_size_code);
-                            
+                            $('#product_size_code').val(response.product_size_code);
+                            $('#product_size_id').val(response.product_size_id);
                             $('#wages_employee').val(response.wages_product);
                             $('#raw_material_weight_item').val(response
                                 .raw_material_weight_item);

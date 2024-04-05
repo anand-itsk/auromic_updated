@@ -318,5 +318,7 @@
             });
         });
     </script>
+
+    
     @include('links.js.select2.select2')
 @endsection

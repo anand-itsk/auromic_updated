@@ -111,6 +111,7 @@ class DeliveryChallanController extends Controller
             'weight_per_item' => $orderDetail->weight_per_item,
             'available_weight' => $orderDetail->available_weight,
             'product_color_id' => $orderDetail->productColor->name,
+            'product_size_id' => $orderDetail->productSize->code,
         ]);
     } else {
         return response()->json([

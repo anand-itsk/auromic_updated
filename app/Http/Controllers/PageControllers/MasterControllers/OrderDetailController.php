@@ -158,6 +158,7 @@ class OrderDetailController extends Controller
     {
 
         $order_details = OrderDetail::find($id);
+        
         // dd($order_details->orderNo->last_order_number);
         // $order_no_id = $order_details->order_no_id;
         $customer = Customer::get();
@@ -165,9 +166,10 @@ class OrderDetailController extends Controller
         $order_status = OrderStatus::get();
         $product_size = ProductSize::get();
         $product_color = ProductColor::get();
-        $productModels = ProductModel::with(['rawMaterial.rawMaterialType'])->get();
-
-        return view('pages.master.order_detail.add_order', compact('order_details', 'customer', 'products', 'order_status', 'product_size', 'product_color', 'productModels'));
+        $productModels = ProductModel::with(['rawMaterial.rawMaterialType','productSize'])->get();
+        $orderDetails = OrderDetail::all();
+        // dd($orderDetails);
+        return view('pages.master.order_detail.add_order', compact('order_details', 'customer', 'products', 'order_status', 'product_size', 'product_color', 'productModels','orderDetails'));
     }
 
     public function update(Request $request, $id)
