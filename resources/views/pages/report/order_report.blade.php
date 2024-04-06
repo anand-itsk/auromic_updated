@@ -39,7 +39,10 @@
                        <div class="card mb-2">
                            <div class="card-body">
                 <div class="form-group row mb-0">
-                           <label for="customer_code" class="col-sm-2 col-form-label ">
+                          
+                            
+
+                <label for="customer_code" class="col-sm-2 col-form-label ">
                             Company Type
                            </label>
                            <div class="col-sm-2 mb-2">
@@ -68,30 +71,57 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-
                            
-                           <label for="customer_code" class="col-sm-2 col-form-label ">
-                           Joining Date
+                <label for="customer_code" class="col-sm-2 col-form-label ">
+                            Customer 
                            </label>
                            <div class="col-sm-2 mb-2">
-                            <input type="date" class="form-control" name="joining_date" id="joining_date">
-                              @error('joining_date')
+                              <select class="form-control select2" name="customer" id="customer">
+                                 <option value="">Select Type</option>
+                                  @foreach($customer as $type)
+            <option value="{{ $type->id }}">{{ $type->customer_name }}</option>
+        @endforeach
+                                 
+                              </select>
+                              @error('customer')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-
-                            <!-- <label for="customer_code" class="col-sm-2 col-form-label ">
-                           Gender
+                           
+                <label for="customer_code" class="col-sm-2 col-form-label ">
+                            Order No
                            </label>
                            <div class="col-sm-2 mb-2">
-                              <select class="form-control select2" name="gender" id="gender">
-                                 <option value="">Select Gender</option>
+                              <select class="form-control select2" name="order_id" id="order_id">
+                                 <option value="">Select Type</option>
+                                  @foreach($order_nos as $type)
+                   <option value="{{ $type->id }}">{{ $type->customer_order_no }}</option>
+                         @endforeach
                                  
                               </select>
-                              @error('gender')
+                              @error('order_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
-                           </div> -->
+                           </div>
+                          <label for="customer_code" class="col-sm-2 col-form-label ">
+                           From Date
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                            <input type="date" class="form-control" name="from_date" id="from_date">
+                              @error('from_date')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                           <label for="customer_code" class="col-sm-2 col-form-label ">
+                           Last Date
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                            <input type="date" class="form-control" name="last_date" id="last_date">
+                              @error('last_date')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                           
                            
                            
 </div>
@@ -246,36 +276,41 @@
 
 $(document).ready(function() {
     var table;
-
+ $('#companies').prop('disabled', true);
     // Initialize DataTable
-    $('#companies').prop('disabled', true);
+
     table = $('#users-table').DataTable({
         processing: true,
         serverSide: true,
         ajax: {
             url: '{{ route('report.order_report.data') }}',
-            data: function(d) {
+             data: function(d) {
                 // Add additional parameters here if needed
                 d.company_type = $('#company_type').val();
-                d.joining_date = $('#joining_date').val();
                  d.companies = $('#companies').val();
+                 d.customer = $('#customer').val();
+                 d.from_date = $('#from_date').val();
+                 d.last_date = $('#last_date').val();
+                 d.orderNoId = $('#order_id').val();
             }
+            
         },
         columns: [
             { data: 'id', name: 'id' },
-            { data: 'id', name: 'id' },
-            { data: 'id', name: 'id' },
-            { data: 'id', name: 'id' },
-            { data: 'id', name: 'id' },
-            { data: 'id', name: 'id' },
-            { data: 'id', name: 'id' },
-            { data: 'id', name: 'id' },
-            { data: 'id', name: 'id' },
-            { data: 'id', name: 'id' },
-            { data: 'id', name: 'id' },
-            { data: 'id', name: 'id' },
-            { data: 'id', name: 'id' },
-            { data: 'id', name: 'id' },
+            { data: 'order_no.last_order_number', name: 'order_no.last_order_number' },
+            { data: 'order_date', name: 'order_date' },
+            { data: 'customer.customer_name', name: 'customer.customer_name' },
+             { data: 'product_model.product.name', name: 'product_model.product.name' },
+            { data: 'product_model.model_name', name: 'product_model.model_name' },
+            { data: 'product_size.code', name: 'product_size.code' },
+            { data: 'product_color.name', name: 'product_color.name' },
+            { data: 'quantity', name: 'quantity' },
+            { data: 'available_quantity', name: 'available_quantity' },
+             { data: 'order_status.name', name: 'order_status.name' },
+             { data: 'order_status.name', name: 'order_status.name' },
+             { data: 'order_status.name', name: 'order_status.name' },
+            
+            
             
         ],
         order: [[0, 'desc']],
@@ -292,7 +327,6 @@ $(document).ready(function() {
         ]
     });
 
-    // Event listener for company type dropdown
     $('#company_type').on('change', function() {
         var selectedCompanyType = $(this).val();
         if (selectedCompanyType) {
@@ -303,18 +337,31 @@ $(document).ready(function() {
         // Reload DataTable with updated parameters
         table.ajax.reload();
     });
+ $('#companies').on('change', function() {
+        // Reload DataTable with updated parameters
+        table.ajax.reload();
+    });
+   
 
-    // Event listener for joining date dropdown
-    $('#joining_date').on('change', function() {
+     $('#customer').on('change', function() {
         // Reload DataTable with updated parameters
         table.ajax.reload();
     });
 
-    // Event listener for companies dropdown
-    $('#companies').on('change', function() {
+    $('#from_date').on('change', function() {
         // Reload DataTable with updated parameters
         table.ajax.reload();
     });
+    $('#last_date').on('change', function() {
+        // Reload DataTable with updated parameters
+        table.ajax.reload();
+    });
+    $('#order_id').on('change', function() {
+        // Reload DataTable with updated parameters
+        table.ajax.reload();
+    });
+
+   
 });
         function edit(id) {
             console.log("inside");
@@ -377,7 +424,8 @@ $(document).ready(function() {
             return `${day}-${month}-${year} ${strTime}`;
         }
     </script>
-    <script>
+        <script>
+        
     document.addEventListener("DOMContentLoaded", function () {
         var companyTypeSelect = document.getElementById('company_type');
         var companiesSelect = document.getElementById('companies');
@@ -400,5 +448,6 @@ $(document).ready(function() {
             });
         });
     });
-</script>
+
+    </script>
 @endsection

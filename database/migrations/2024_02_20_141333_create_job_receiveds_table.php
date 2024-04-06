@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('job_receiveds', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('job_giving_id');
-            $table->enum('incentive_applicable', ['Yes', 'No'])->default('Yes');
+            $table->enum('incentive_applicable', ['Yes', 'No'])->default('No');
             $table->string('before_days')->nullable();
             $table->string('after_days')->nullable();
             $table->string('current_weight')->nullable();

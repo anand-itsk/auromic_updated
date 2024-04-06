@@ -39,6 +39,36 @@
                        <div class="card mb-2">
                            <div class="card-body">
                 <div class="form-group row mb-0">
+
+                <label for="customer_code" class="col-sm-2 col-form-label ">
+                            Company Type
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                              <select class="form-control select2" name="company_type" id="company_type">
+                                 <option value="">Select Type</option>
+                                  @foreach($companyType as $type)
+            <option value="{{ $type->id }}">{{ $type->name }}</option>
+        @endforeach
+                                 
+                              </select>
+                              @error('company_type')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                            <label for="customer_code" class="col-sm-2 col-form-label ">
+                           Companies
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                             <select class="form-control select2" name="companies" id="companies" disabled>
+        <option value="">Select Company</option>
+        @foreach($company as $c)
+            <option value="{{ $c->id }}" data-type-id="{{ $c->company_type_id }}">{{ $c->company_name }}</option>
+        @endforeach
+    </select>
+                              @error('Companies')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
                                 
                                <label for="customer_code" class="col-sm-2 col-form-label ">
                            Status
@@ -55,20 +85,7 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="customer_code" class="col-sm-2 col-form-label ">
-                                            Incentive Applicable
-                                        </label>
-                                        <div class="col-sm-2 mb-2">
-                                            <select class="form-control select2" name="Incentive_status"
-                                                id="Incentive_status">
-
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                            </select>
-                                            @error('Incentive_status')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                         
 
                            
                            
@@ -220,7 +237,7 @@
             
         $(document).ready(function() {
            var table;
-            $('#companies').prop('disabled', true);
+       $('#companies').prop('disabled', true);
             table = $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -229,6 +246,8 @@
             data: function(d) {
                 // Add additional parameters here if needed
                d.status = $('#statuses').val();
+               d.company_type = $('#company_type').val();
+                 d.companies = $('#companies').val();
                 
             }
             
@@ -336,6 +355,23 @@
         // Reload DataTable with updated parameters
         table.ajax.reload();
     });
+
+    // Event listener for company type dropdown
+    $('#company_type').on('change', function() {
+        var selectedCompanyType = $(this).val();
+        if (selectedCompanyType) {
+            $('#companies').prop('disabled', false);
+        } else {
+            $('#companies').prop('disabled', true).val('');
+        }
+        // Reload DataTable with updated parameters
+        table.ajax.reload();
+    });
+ $('#companies').on('change', function() {
+        // Reload DataTable with updated parameters
+        table.ajax.reload();
+    });
+
             
 
 
@@ -431,7 +467,7 @@
         }
     </script>
 
-       <script>
+           <script>
         
     document.addEventListener("DOMContentLoaded", function () {
         var companyTypeSelect = document.getElementById('company_type');
