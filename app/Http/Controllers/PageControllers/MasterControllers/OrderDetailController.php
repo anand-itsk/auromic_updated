@@ -67,6 +67,14 @@ class OrderDetailController extends Controller
     }
 
 
+
+    public function getProductModels($productId)
+{
+    // Fetch product models based on the selected product ID
+    $productModels = ProductModel::where('product_id', $productId)->get();
+    return response()->json($productModels);
+}
+
     public function getProductDetails(Request $request)
     {
         $productModelId = $request->input('product_model');
@@ -150,6 +158,7 @@ class OrderDetailController extends Controller
     {
 
         $order_details = OrderDetail::find($id);
+        
         // dd($order_details->orderNo->last_order_number);
         // $order_no_id = $order_details->order_no_id;
         $customer = Customer::get();
@@ -157,9 +166,10 @@ class OrderDetailController extends Controller
         $order_status = OrderStatus::get();
         $product_size = ProductSize::get();
         $product_color = ProductColor::get();
-        $productModels = ProductModel::with(['rawMaterial.rawMaterialType'])->get();
-
-        return view('pages.master.order_detail.add_order', compact('order_details', 'customer', 'products', 'order_status', 'product_size', 'product_color', 'productModels'));
+        $productModels = ProductModel::with(['rawMaterial.rawMaterialType','productSize'])->get();
+        $orderDetails = OrderDetail::all();
+        // dd($orderDetails);
+        return view('pages.master.order_detail.add_order', compact('order_details', 'customer', 'products', 'order_status', 'product_size', 'product_color', 'productModels','orderDetails'));
     }
 
     public function update(Request $request, $id)
@@ -210,7 +220,7 @@ class OrderDetailController extends Controller
         $orderDetail->product_size_id = $request->input('product_size_id');
         $orderDetail->product_color_id = $request->input('product_color_id');
         $orderDetail->product_model_id = $request->input('product_model');
-        $orderDetail->order_status_id = $request->input('order_status_id');
+        $orderDetail->order_status_id = 2;
         $orderDetail->quantity = $request->input('quantity');
         $orderDetail->available_quantity = $request->input('quantity');
         $orderDetail->delivery_date = $request->input('delivery_date');

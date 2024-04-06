@@ -33,7 +33,7 @@
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Raw Material
+                                        <label class="col-sm-2 col-form-label mandatory">Raw Material
                                              <a class="shortcut_master"
                                                 href="{{ route('product-models.raw_materials.create') }}" target="_blank">+</a>
                                         </label>
@@ -66,7 +66,7 @@
                                             @enderror
                                         </div>
 
-                                        <label class="col-sm-2 col-form-label">Product Size
+                                        <label class="col-sm-2 col-form-label mandatory">Product Size
                                             <a class="shortcut_master"
                                                 href="{{ route('product-models.product_sizes.create') }}" target="_blank">+</a>
                                         </label>
@@ -101,7 +101,7 @@
                                             @enderror
                                         </div>
 
-                                        <label for="customer_code" class="col-sm-2 col-form-label">Req raw Material
+                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Req raw Material
                                             weight/item</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="raw_material_weight_item"

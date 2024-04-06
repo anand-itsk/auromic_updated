@@ -14,12 +14,12 @@
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Auromics</a></li>
                                 <li class="breadcrumb-item">Job Allocation</li>
                                 <li class="breadcrumb-item"><a
-                                        href="{{ route('job_allocation.delivery_challan.index') }}">Delivery Challan</a>
+                                        href="{{ route('job_allocation.delivery_challan.index') }}">Order Allocation</a>
                                 </li>
                                 <li class="breadcrumb-item">Create</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Create Delivery Challan</h4>
+                        <h4 class="page-title">Create Order Allocation</h4>
                     </div>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                                             <select class="form-control select2" name="order_id" id="order_id">
                                                 <option value="">Select Order</option>
                                                 @foreach ($order_nos as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->last_order_number }}
+                                                    <option value="{{ $item->id }}">{{ $item->customer_order_no }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -395,12 +395,14 @@
         $(document).ready(function() {
             $('#product_model').change(function() {
                 var productModelId = $(this).val();
+                 var orderId = $('#order_id').val();
                 if (productModelId) {
                     $.ajax({
                         url: '/job_allocation/delivery_challan/get-order-details', // Update the URL to your route
                         type: 'GET',
                         data: {
-                            product_model: productModelId
+                            product_model: productModelId,
+                             order_id: orderId
                         },
                         dataType: 'json',
                         success: function(response) {
@@ -453,5 +455,8 @@
             // Perform any actions you want here
         });
     </script>
+
+
+
     @include('links.js.select2.select2')
 @endsection

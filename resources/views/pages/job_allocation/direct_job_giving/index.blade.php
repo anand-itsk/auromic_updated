@@ -103,8 +103,8 @@
                                             <th>finishing Product Model</th>
                                             <th>Product Size</th>
                                             <th>Product Color</th>
-                                             <th>quantity</th>
-                                             <th>Weight</th>
+                                             <th>Meter</th>
+                                             
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -217,20 +217,13 @@ $(document).ready(function() {
                         }
             },
             {
-                data: 'quantity',
-                name: 'quantity',
+                data: 'meter',
+                name: 'meter',
                  render: function(data, type, row) {
                             return data ? data : '-';
                         }
             },
-            {
-                data: 'weight',
-                name: 'weight',
-                 render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-            },
-             
+            
            
             {
                 data: null,

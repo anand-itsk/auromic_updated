@@ -268,9 +268,9 @@
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="Incentive_status"
                                                 id="Incentive_status">
-
-                                                <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
+                                                <option value="Yes">Yes</option>
+                                                
                                             </select>
                                             @error('Incentive_status')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
@@ -282,7 +282,7 @@
                                         </label>
                                         <div class="col-sm-2 mb-4">
                                             <input type="text" class="form-control" name="before_days"
-                                                id="before_days">
+                                                id="before_days"disabled>
                                             @error('before_days')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -324,7 +324,7 @@
                                             Incentive
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <input type="text" class="form-control" name="incentive" id="incentive">
+                                            <input type="text" class="form-control" name="incentive" id="incentive" disabled>
                                             @error('incentive')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -461,4 +461,22 @@
 
         });
     </script>
+    <script>
+$(document).ready(function(){
+    $('#Incentive_status').change(function(){
+        // console.log("Option changed");
+        var beforeDaysInput = $('#before_days');
+        var incentiveInput = $('#incentive');
+
+        if($(this).val() === 'No'){
+            beforeDaysInput.prop('disabled', true);
+            incentiveInput.prop('disabled', true);
+        } else {
+            beforeDaysInput.prop('disabled', false);
+            incentiveInput.prop('disabled', false);
+        }
+    });
+});
+</script>
+
 @endsection

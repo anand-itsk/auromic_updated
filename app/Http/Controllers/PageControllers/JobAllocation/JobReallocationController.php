@@ -21,12 +21,12 @@ class JobReallocationController extends Controller
     // Index DataTable
     public function indexData()
     {
-        $Job_Giving = JobGiving::with('employee', 'order_details', 'delivery_chellan')->get();
+        $Job_Giving = JobGiving::with('employee', 'order_details', 'deliveryChellan')->get();
         $data = $Job_Giving->map(function ($job_giving) {
         return [
             'id' => $job_giving->id,
             'employee_name' => $job_giving->employee->employee_name ?? null,
-            'last_order_number' => $job_giving->order_details->orderNo->last_order_number ?? null,
+            'customer_order_no' => $job_giving->order_details->orderNo->customer_order_no ?? null,
             'dc_no' => $job_giving->delivery_chellan->dc_no ?? null,
             'status' => $job_giving->status ?? null,
         ];
@@ -68,7 +68,7 @@ class JobReallocationController extends Controller
         public function edit(Request $request, $id)
     {
        
-                $Job_Giving = JobGiving::with('employee', 'order_details','product_model','delivery_chellan')->find($id);
+                $Job_Giving = JobGiving::with('employee', 'order_details','product_model','deliveryChellan')->find($id);
          
                  $jobReceivedData = JobReceived::where('job_giving_id', $id)->latest()->first();
 

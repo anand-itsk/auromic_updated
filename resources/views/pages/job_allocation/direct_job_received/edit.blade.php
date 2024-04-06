@@ -109,20 +109,14 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="order_date" class="col-sm-2 col-form-label">Quantity</label>
+                           <label for="order_date" class="col-sm-2 col-form-label">Meter</label>
                            <div class="col-sm-4 mb-4">
-                              <input class="form-control" type="text" name="quantity" id="quantity" readonly value="{{$direct_job_giving->quantity}}">
-                              @error('quantity')
+                              <input class="form-control" type="text" name="meter" id="meter" readonly value="{{$direct_job_giving->meter}}">
+                              @error('meter')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="order_date" class="col-sm-2 col-form-label">Weight</label>
-                           <div class="col-sm-4 mb-4">
-                              <input class="form-control" type="text" name="weight" id="weight" readonly value="{{$direct_job_giving->weight}}">
-                              @error('weight')
-                              <span class="error" style="color: red;">{{ $message }}</span>
-                              @enderror
-                           </div>
+                           
                         </div>
                         <hr>
                         <div class="form-group row">
@@ -238,25 +232,34 @@
                            </div>
                         </div>
                         <div class="form-group row">
-                        <label for="order_date" id="" class="col-sm-2 col-form-label ">Complete Quantity</label>
+                        <label for="order_date" id="" class="col-sm-2 col-form-label ">Useage Meter</label>
                            <div class="col-sm-4 mb-4">
-                          <input class="form-control" type="text" name="complete_quantity" id="complete_quantity">
-                              @error('complete_quantity')
+                          <input class="form-control" type="text" name="useage_meter" id="useage_meter">
+                              @error('useage_meter')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                          <label for="order_date" class="col-sm-2 col-form-label">Available Quantity</label>
+                          <label for="order_date" class="col-sm-2 col-form-label">Balance Meter</label>
 <div class="col-sm-4 mb-4">
-    <input class="form-control" type="text" name="available_quantity" id="available_quantity">
+    <input class="form-control" type="text" name="balance_meter" id="balance_meter">
     @error('available_quantity')
     <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
 </div>
-<label for="order_date" class="col-sm-2 col-form-label">Assign Quantity</label>
+<label for="order_date" class="col-sm-2 col-form-label">Assign Meter</label>
 <div class="col-sm-4 mb-4">
-    <input class="form-control" type="text" name="assign_quantity" id="assign_quantity">
-    <span id="assign_quantity_error" class="error" style="color: red;"></span>
-    @error('assign_quantity')
+    <input class="form-control" type="text" name="assign_meter" id="assign_meter">
+    <span id="assign_meter_error" class="error" style="color: red;"></span>
+    @error('assign_meter')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
+<label for="order_date" class="col-sm-2 col-form-label">Quantity</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="quantity" id="quantity">
+    
+    @error('quantity')
     <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
 </div>
@@ -361,31 +364,31 @@
 
 <script>
 $(document).ready(function(){
-    $('#complete_quantity').on('input', function(){
-        var completeQuantity = $(this).val();
-        var totalQuantity = {{$direct_job_giving->quantity}};
-        var availableQuantity = totalQuantity - completeQuantity;
+    $('#useage_meter').on('input', function(){
+        var UseageMeter = $(this).val();
+        var totalMeter = {{$direct_job_giving->meter}};
+        var balanceMeter = totalMeter - UseageMeter;
         
         // Update available_quantity value
-        $('#available_quantity').val(availableQuantity);
+        $('#balance_meter').val(balanceMeter);
 
         // Clear available_quantity if complete_quantity is empty
-        if (completeQuantity === '') {
-            $('#available_quantity').val('');
+        if (UseageMeter === '') {
+            $('#balance_meter').val('');
         }
     });
 
-    $('#available_quantity').on('input', function(){
-        var availableQuantity = $(this).val();
-        var totalQuantity = {{$direct_job_giving->quantity}};
-        var completeQuantity = totalQuantity - availableQuantity;
+    $('#balance_meter').on('input', function(){
+        var balanceMeter = $(this).val();
+        var totalMeter = {{$direct_job_giving->meter}};
+        var UseageMeter = totalMeter - balanceMeter;
 
         // Update complete_quantity value
-        $('#complete_quantity').val(completeQuantity);
+        $('#useage_meter').val(UseageMeter);
 
         // Clear complete_quantity if available_quantity is empty
-        if (availableQuantity === '') {
-            $('#complete_quantity').val('');
+        if (balanceMeter === '') {
+            $('#UseageMeter').val('');
         }
     });
 });
@@ -393,13 +396,13 @@ $(document).ready(function(){
 
 <script>
     $(document).ready(function () {
-        $('#assign_quantity').on('input', function () {
-            var availableQuantity = parseInt($('#available_quantity').val());
-            var assignQuantity = parseInt($(this).val());
-            var errorSpan = $('#assign_quantity_error');
+        $('#assign_meter').on('input', function () {
+            var balanceMeter = parseInt($('#balance_meter').val());
+            var assignMeter = parseInt($(this).val());
+            var errorSpan = $('#assign_meter_error');
             
-            if (assignQuantity > availableQuantity) {
-                errorSpan.text('Assign quantity cannot exceed available quantity');
+            if (assignMeter > balanceMeter) {
+                errorSpan.text('Assign Meter cannot exceed Balance meter');
             } else {
                 errorSpan.text('');
             }

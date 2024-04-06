@@ -18,7 +18,7 @@ return new class extends Migration
            $table->unsignedBigInteger('product_size_id')->nullable();
             $table->unsignedBigInteger('product_color_id')->nullable();
             $table->string('meter')->nullable();
-            // $table->string('complete_quantity')->nullable();
+            $table->string('useage_meter')->nullable();
             // $table->string('weight')->nullable();
            $table->timestamps();
            $table->foreign('finishing_product_models_id')->references('id')->on('finishing_product_models')->onDelete('cascade');

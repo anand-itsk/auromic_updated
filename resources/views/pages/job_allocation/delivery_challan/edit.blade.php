@@ -15,19 +15,21 @@
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Auromics</a></li>
                                 <li class="breadcrumb-item">Job Allocation</li>
                                 <li class="breadcrumb-item"><a
-                                        href="{{ route('job_allocation.delivery_challan.index') }}">Delivery Challan</a>
+                                        href="{{ route('job_allocation.delivery_challan.index') }}">Order Allocation</a>
                                 </li>
                                 <li class="breadcrumb-item">Edit</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Edit Delivery Challan</h4>
+                        <h4 class="page-title">Edit Order Allocation</h4>
                     </div>
                 </div>
             </div>
             <!-- end page title end breadcrumb -->
 
             <div class="row">
-                <div class="col-12">
+
+
+                <div class="col-10">
                     <div class="card m-b-30">
                         <div class="card-body">
                             <div class="m-b-30">
@@ -85,7 +87,7 @@
     <select class="form-control select2" name="order_id" id="order_id">
         <option value="">Select Order</option>
             @foreach ($order_nos as $item)
-             <option value="{{ $item->id }}" {{ $item->id == $delivery_challans->order_id ? 'selected' : '' }}>{{ $item->last_order_number }}</option>
+             <option value="{{ $item->id }}" {{ $item->id == $delivery_challans->order_id ? 'selected' : '' }}>{{ $item->customer_order_no }}</option>
         @endforeach
     </select>
     @error('order_id')
@@ -96,6 +98,7 @@
 <div class="col-sm-4 mb-4">
     <select class="form-control select2" name="product_model" id="product_model">
        <option value="">Select Model</option>
+       
                              
     </select>
     @error('product_model')
@@ -106,32 +109,15 @@
 
    <label for="order_date" class="col-sm-2 col-form-label">Order Date</label>
 <div class="col-sm-4 mb-4">
-    <input class="form-control" type="text" name="order_date" id="order_date" readonly>
+    <input class="form-control" type="text" name="order_date" id="order_date"  readonly>
     @error('order_date')
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
 </div>
-
-<label for="order_date" class="col-sm-2 col-form-label">Total Quantity</label>
-<div class="col-sm-4 mb-4">
-    <input class="form-control" type="text" name="total_quantity" id="total_quantity" readonly>
-    @error('order_date')
-        <span class="error" style="color: red;">{{ $message }}</span>
-    @enderror
-</div>
-
-<label for="order_date" class="col-sm-2 col-form-label">Available Quantity</label>
-<div class="col-sm-4 mb-4">
-    <input class="form-control" type="text" name="available_quantity" id="available_quantity" readonly>
-    @error('order_date')
-        <span class="error" style="color: red;">{{ $message }}</span>
-    @enderror
-</div>
-
 
 <label for="order_date" class="col-sm-2 col-form-label ">Product Name</label>
 <div class="col-sm-4 mb-4">
-    <input class="form-control" type="text" name="product" id="product" readonly>
+    <input class="form-control" type="text" name="product" id="product" readonly >
     @error('product')
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
@@ -153,28 +139,14 @@
 
 <label for="customer_code" class="col-sm-2 col-form-label">Product Size</label>
 <div class="col-sm-4 mb-4">
-    <select class="form-control select2" name="product_size_id" id="product_size_id">
-        <option value="">Select Product Size</option>
-        @foreach ($product_size as $item)
-           <option value="{{ $item->id }}"
-            @if ($delivery_challans->product_size_id == $item->id) selected @endif>
-                                                        {{ $item->name }}</option>
-        @endforeach
-    </select>
+    <input class="form-control" type="text" name="product_size_id" id="product_size_id" readonly>
     @error('product_size_id')
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
 </div>
 <label for="customer_code" class="col-sm-2 col-form-label">Product Color</label>
 <div class="col-sm-4 mb-4">
-    <select class="form-control select2" name="product_color_id" id="product_color_id">
-        <option value="">Select Product color</option>
-        @foreach ($product_color as $item)
-            <option value="{{ $item->id }}"
-            @if ($delivery_challans->product_color_id == $item->id) selected @endif>
-                                                        {{ $item->name }}</option>
-        @endforeach
-    </select>
+  <input class="form-control" type="text" name="product_color_id" id="product_color_id" readonly>
     @error('product_color_id')
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
@@ -186,6 +158,44 @@
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
 </div>
+<label for="order_date" class="col-sm-2 col-form-label">Available Quantity</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="available_quantity"
+                                                id="available_quantity" readonly>
+                                            @error('order_date')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="order_date" class="col-sm-2 col-form-label">Weight</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="weight" id="weight" value="{{$delivery_challans->weight}}">
+                                            <input class="form-control" type="hidden" name="weightPerItem"
+                                                id="weightPerItem">
+                                            <input class="form-control" type="hidden" name="avaWeight" id="avaWeight">
+                                            <span id="weight_error" class="error" style="color: red;"></span>
+                                            @error('weight')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="order_date" class="col-sm-1 col-form-label">Excess</label>
+                                        <div class="col-sm-2 mb-4">
+                                            <input class="form-control" type="text" name="excess_weight"
+                                                id="excess_weight" value="{{$delivery_challans->excess}}" readonly>
+                                            @error('order_date')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="order_date" class="col-sm-1 col-form-label">Shortage</label>
+                                        <div class="col-sm-2 mb-4">
+                                            <input class="form-control" type="text" name="shortage_weight"
+                                                id="shortage_weight"value="{{$delivery_challans->shortage}}" readonly>
+                                            @error('order_date')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
 </div>
 
                                     <div class="form-group">
@@ -205,11 +215,47 @@
 
                             </div>
                         </div>
+                        
                     </div>
                 </div>
+
+
+                <div class="col-2">
+                    <div class="card m-b-30">
+                        <div class="card-body">
+                            <div class="m-b-30">
+                                <form action="{{ route('job_allocation.delivery_challan.store') }}" method="POST"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="form-group row">
+
+                                        <label for="order_date" class="col-form-label">Total Quantity</label>
+                                        <div class="mb-4">
+                                            <input class="form-control" type="text" name="total_quantity"
+                                                id="total_quantity" readonly>
+                                            @error('total_quantity')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="order_date" class="col-form-label">Total Weight</label>
+                                        <div class="mb-4">
+                                            <input class="form-control" type="text" name="total_weight"
+                                                id="total_weight" readonly>
+                                            @error('total_weight')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>
+    
 <script>
     $(document).ready(function() {
         $('#company_type_id').on('change', function() {
@@ -262,7 +308,7 @@
 <script>
     $(document).ready(function () {
         // Initially disable the product_model dropdown
-        $('#product_model').prop('disabled', true);
+        // $('#product_model').prop('disabled', true);
 
         $('#order_id').change(function () {
             var orderId = $(this).val();
@@ -279,6 +325,8 @@
                         $('#product_model').html(options);
                         // Enable the product_model dropdown
                         $('#product_model').prop('disabled', false);
+
+                         
                     }
                 });
             } else {
@@ -287,6 +335,7 @@
                 $('#product_model').prop('disabled', true);
             }
         });
+        $('#order_id').trigger('change');
     });
 </script>
 <script>
@@ -343,10 +392,77 @@
     });
 });
 
+
 </script>
 
 
+<script>
+        $(document).ready(function() {
+            $('#product_model').change(function() {
+                var productModelId = $(this).val();
+                 var orderId = $('#order_id').val();
+                if (productModelId) {
+                    $.ajax({
+                        url: '/job_allocation/delivery_challan/get-order-details', // Update the URL to your route
+                        type: 'GET',
+                        data: {
+                            product_model: productModelId,
+                             order_id: orderId
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            $('#order_date').val(response.order_date);
+                            $('#total_quantity').val(response.total_quantity);
+                            $('#available_quantity').val(response.available_quantity);
+                            $('#total_weight').val(response.total_r_w_weight);
+                            $('#weightPerItem').val(response.weight_per_item);
+                            $('#avaWeight').val(response.available_weight);
+                            $('#product_color_id').val(response.product_color_id);
+                             $('#product_size_id').val(response.product_size_id);
 
+                             
+
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
+                } else {
+                    $('#order_date').val('');
+                    $('#total_quantity').val('');
+                    $('#available_quantity').val('');
+                     $('#product_color_id').val('');
+                }
+            });
+        });
+
+        $('#weight').on('input', function() {
+            var weight = parseFloat($(this).val());
+            var weightPerQuantity = parseFloat($('#weightPerItem').val());
+            var totalQuantity = parseFloat($('#total_quantity').val());
+            var totalWeight = parseFloat($('#total_weight').val());
+            var givenQuantity = parseFloat($('#quantity').val());
+            var avaWeight = parseFloat($('#avaWeight').val());
+
+            var givenWeight = givenQuantity * weightPerQuantity;
+
+            // Calculate excess and shortage
+            var excess = weight - givenWeight;
+            var shortage = 0;
+
+            if (excess < 0) {
+                shortage = Math.abs(excess);
+                excess = 0;
+            }
+            $('#excess_weight').val(excess.toFixed(1));
+            $('#shortage_weight').val(shortage.toFixed(1));
+
+            // Output the results
+            console.log('Excess:', excess.toFixed(1));
+            console.log('Shortage:', shortage.toFixed(1));
+            // Perform any actions you want here
+        });
+    </script>
 
 
     @include('links.js.select2.select2')

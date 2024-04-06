@@ -15,7 +15,7 @@ class DirectJobGiving extends Model
          'product_size_id',
          'product_color_id',
          'meter',
-        //  'complete_quantity',
+         'useage_meter',
         //  'weight',
     ];
    public function employee(){
