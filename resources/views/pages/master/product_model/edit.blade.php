@@ -32,7 +32,7 @@
      <form action="{{ route('master.product_model.update',$product_model->id) }}" method="POST">
     @csrf
     <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Raw Material</label>
+        <label class="col-sm-2 col-form-label mandatory">Raw Material</label>
         <div class="col-sm-4 mb-4">
             <select class="form-control select2" name="raw_material_id" id="raw_material_id">
                 <option value="">Select Raw Material</option>
@@ -62,7 +62,7 @@
             @enderror
         </div>
 
-        <label class="col-sm-2 col-form-label">Product Size</label>
+        <label class="col-sm-2 col-form-label mandatory">Product Size</label>
         <div class="col-sm-4 mb-4">
             <select class="form-control select2" name="product_size_id" id="product_size_id">
                 <option value="">Select Product Size</option>
@@ -93,7 +93,7 @@
             @enderror
         </div>
 
-        <label for="customer_code" class="col-sm-2 col-form-label">Req raw Material weight/item</label>
+        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Req raw Material weight/item</label>
         <div class="col-sm-4 mb-4">
             <input class="form-control" type="text" name="raw_material_weight_item" id="model_code" value="{{ $product_model->raw_material_weight_item }}">
             @error('raw_material_weight_item')

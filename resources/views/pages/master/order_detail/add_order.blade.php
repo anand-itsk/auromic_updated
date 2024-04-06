@@ -62,7 +62,7 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label class="col-sm-2 col-form-label">Product</label>
+                                        <label class="col-sm-2 col-form-label mandatory">Product</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product" id="product">
                                                 <option value="">Select Product</option>
@@ -74,7 +74,7 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label class="col-sm-2 col-form-label">Model</label>
+                                        <label class="col-sm-2 col-form-label mandatory">Model</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_model" id="product_model" disabled>
                                                 <option value="">Select Product Model</option>
@@ -131,13 +131,15 @@
                                         </div>
                                         <label for="wages_employee" class="col-sm-2 col-form-label ">Product Size</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="product_size"
-                                                id="product_size" readonly>
+                                            <input class="form-control" type="text" name="product_size_code"
+                                                id="product_size_code" readonly>
+                                            <input class="form-control" type="hidden" name="product_size_id"
+                                                id="product_size_id" readonly>
                                             @error('product_size')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="wages_employee" class="col-sm-2 col-form-label">Quantity</label>
+                                        <label for="wages_employee" class="col-sm-2 col-form-label mandatory">Quantity</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="quantity" id="quantity">
                                             @error('quantity')
@@ -145,7 +147,7 @@
                                             @enderror
                                         </div>
 
-                                        <label class="col-sm-2 col-form-label">Delivery Date</label>
+                                        <label class="col-sm-2 col-form-label mandatory">Delivery Date</label>
                                         <div class="col-sm-4 mb-4">
                                             <input type="date" class="form-control" name="delivery_date"
                                                 id="">
@@ -153,7 +155,7 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label class="col-sm-2 col-form-label">Order Status</label>
+                                        <!-- <label class="col-sm-2 col-form-label">Order Status</label>
                                         <div class="col-sm-4 mb-4">
                                            <select class="form-control select2" name="order_status_id" id="order_status_id">
         <option value="">Select Order Status</option>
@@ -164,7 +166,7 @@
                                             @error('order_status_id')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
-                                        </div>
+                                        </div> -->
                                         <!-- <label class="col-sm-2 col-form-label">Product Size</label>
                                                 <div class="col-sm-4 mb-4">
                                                     <select class="form-control select2" name="product_size_id"
@@ -178,7 +180,7 @@
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
                                                 </div> -->
-                                        <label class="col-sm-2 col-form-label">Product Color</label>
+                                        <label class="col-sm-2 col-form-label mandatory">Product Color</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_color_id"
                                                 id="product_color_id">
@@ -222,7 +224,57 @@
                     </div>
                 </div>
             </div>
-        </div>
+
+
+            
+                <!-- Table starts fggg tyu-->
+
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card m-b-30">
+                        <div class="card-body">
+                            <h5>Order For {{ $order_details->orderNo->customer_order_no }} Details</h5>
+<table id="users-table" class="table table-striped table-bordered dt-responsive nowrap"
+                                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Order No</th>
+                                                <th>customer</th>
+                                                <th>Total Quantity</th>
+                                                <th>Available Quantity</th>
+                                                <th>Total R.M Weight</th>
+                                                <th>Product Color</th>
+                                                <th>Order Status</th>
+                                                <th>Model Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($orderDetails as $orderDetail)
+                                             @if ($orderDetail->orderNo->id == $order_details->order_no_id)
+        <tr>
+            <td>{{ $orderDetail->id }}</td>
+            <td>{{ $orderDetail->orderNo->customer_order_no }}</td>
+            <td>{{ $orderDetail->customer->customer_name }}</td>
+            <td>{{ $orderDetail->quantity }}</td>
+            <td>{{ $orderDetail->available_quantity }}</td>
+            <td>{{ $orderDetail->total_raw_material }}</td>
+            <td>{{ $orderDetail->productColor->name }}</td>
+            <td>{{ $orderDetail->orderStatus->name }}</td>
+            <td>{{ $orderDetail->productModel->model_name }}</td>
+            
+        </tr>
+          @endif
+        @endforeach
+                                        </tbody>
+                                    </table>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                
+
+        <!-- Table Ends -->
     </div>
     <!-- JavaScript to handle product selection -->
     <script>
@@ -299,6 +351,75 @@
         const orderNo = urlParams.get('orderNo');
         document.getElementById('order_no').value = orderNo;
     </script>
+
+    <script>
+    $(document).ready(function() {
+        $('#product').change(function() {
+            var productId = $(this).val();
+            $('#product_model').prop('disabled', productId == '');
+            // Clear existing options
+            $('#product_model').empty();
+            // Add default option
+            $('#product_model').append('<option value="">Select Product Model</option>');
+            // Fetch product models via AJAX based on selected product
+            if (productId != '') {
+                $.ajax({
+                    url: '/master/order_detail/getProductModels/' + productId, // Replace with your route to fetch product models
+                    type: 'GET',
+                    success: function(response) {
+                        // Populate product models select dropdown
+                        $.each(response, function(key, value) {
+                            $('#product_model').append('<option value="' + value.id + '">' + value.model_name + '-' + value.model_code + '</option>');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+<script>
+        $(document).ready(function() {
+            $('#product_model').change(function() {
+                var productModelId = $(this).val();
+                if (productModelId) {
+                    $.ajax({
+                        url: '/master/order_detail/get-product-details', // Update the URL to your route
+                        type: 'GET',
+                        data: {
+                            product_model: productModelId
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            $('#product').val(response.product);
+                            $('#raw_material_name').val(response.raw_material_name);
+                            $('#raw_material_type').val(response.raw_material_type);
+                            $('#product_size_code').val(response.product_size_code);
+                            $('#product_size_id').val(response.product_size_id);
+                            $('#wages_employee').val(response.wages_product);
+                            $('#raw_material_weight_item').val(response
+                                .raw_material_weight_item);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
+                } else {
+                    $('#product').val('');
+                    $('#raw_material_name').val('');
+                    $('#raw_material_type').val('');
+                    $('#product_size_code').val('');
+                    $('#product_size_id').val('');
+                    $('#wages_employee').val('');
+                    $('#raw_material_weight_item').val('');
+                }
+            });
+        });
+    </script>
+
 
     @include('links.js.select2.select2')
 @endsection
