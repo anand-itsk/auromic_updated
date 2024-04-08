@@ -23,15 +23,36 @@ class JobReceivedReportController extends Controller
 
 public function indexData(Request $request)
 {
+    
     $status = $request->input('status');
+    $companyType = $request->input('company_type');
+        $company = $request->input('companies');
+
 
     // Retrieve JobReceived data with eager loading
     $jobReceivedData = JobReceived::with(['jobGiving.employee', 'jobGiving.deliveryChellan.company']);
+
+ if ($companyType) {
+            $jobReceivedData->whereHas('jobGiving.deliveryChellan.company', function ($q) use ($companyType) {
+                $q->where('company_type_id', $companyType);
+            });
+        }
+
+        if ($company) {
+            // Convert $company to an array if it's not already one
+            $companies = is_array($company) ? $company : [$company];
+            $jobReceivedData->whereHas('jobGiving.deliveryChellan.company', function ($q) use ($companies) {
+                $q->whereIn('company_id', $companies);
+            });
+        }
+
 
     // Apply status filter if provided
     if ($status) {
         $jobReceivedData->where('status', $status);
     }
+
+    
 
     // Get the filtered data
     $jobReceivedData = $jobReceivedData->get();

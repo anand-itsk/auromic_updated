@@ -92,7 +92,6 @@
                                             <th>ID</th>
                                             <th>Employee</th>
                                             <th>finishing Product Model</th>
-                                            <th>Product Size</th>
                                             <th>Product Color</th>
                                              <th>Meter</th>
                                             
@@ -291,10 +290,7 @@ $(document).ready(function() {
                             return data ? data : '-';
                         }
             },
-            {
-                data: 'product_size.code',
-                name: 'product_size.code'
-            },
+            
             {
                 data: 'product_color.name',
                 name: 'product_color.name'

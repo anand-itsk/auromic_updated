@@ -28,11 +28,11 @@ class DailyGivenReportCompanyWiseController extends Controller
         $lastDate = $request->input('last_date');
 
         // Retrieve JobGiving data with eager loading
-        $jobGivingQuery = JobGiving::with('employee', 'order_details', 'delivery_chellan', 'product_model.productSize');
+        $jobGivingQuery = JobGiving::with('employee', 'order_details', 'deliveryChellan', 'product_model.productSize');
 
         // Apply company type filter if selected
         if ($companyType) {
-            $jobGivingQuery->whereHas('delivery_chellan.company', function ($q) use ($companyType) {
+            $jobGivingQuery->whereHas('deliveryChellan.company', function ($q) use ($companyType) {
                 $q->where('company_type_id', $companyType);
             });
         }
@@ -40,7 +40,7 @@ class DailyGivenReportCompanyWiseController extends Controller
         if ($company) {
             // Convert $company to an array if it's not already one
             $companies = is_array($company) ? $company : [$company];
-            $jobGivingQuery->whereHas('delivery_chellan.company', function ($q) use ($companies) {
+            $jobGivingQuery->whereHas('deliveryChellan.company', function ($q) use ($companies) {
                 $q->whereIn('company_id', $companies);
             });
         }
