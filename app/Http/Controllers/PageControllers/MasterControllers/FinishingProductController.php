@@ -42,7 +42,8 @@ class FinishingProductController extends Controller
      $finishing_product->product_size_id = $request->input('product_size_id');
      $finishing_product->model_code= $request->input('model_code');
      $finishing_product->model_name= $request->input('model_name');
-     $finishing_product->wages_one_product= $request->input('wages_one_product');
+     $finishing_product->wages_one_product= $request->input('meters_one_product');
+     $finishing_product->cutting_charge= $request->input('cutting_charge');
     $finishing_product->date= $request->input('date');
 
 //    dd($finishing_product); 

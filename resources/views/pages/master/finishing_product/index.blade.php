@@ -33,9 +33,9 @@
                                     <button id="deleteButton" class="icon-button delete-color"
                                         title="Delete Selected Record"><i class="fa fa-user-times"></i></button>
                                 </div> --}}
-                                  @error('file')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
+                                    @error('file')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
                                     <div>
                                         <button id="deleteButton" style="display: none;"
                                             class="icon-button text-white bg-danger rounded fs-14"
@@ -45,8 +45,8 @@
 
                                     <div>
                                         <!-- <button type="button" class="icon-button common-color bg-secondary rounded"
-                                            data-toggle="modal" data-target=".bs-example-modal-center"
-                                            title="Import file"><i class="fa fa-upload text-white"></i></button> -->
+                                                        data-toggle="modal" data-target=".bs-example-modal-center"
+                                                        title="Import file"><i class="fa fa-upload text-white"></i></button> -->
 
                                         <button class="icon-button  bg-primary rounded">
                                             <a href="{{ route('master.finishing_product.create') }}"
@@ -113,7 +113,7 @@
                                                 <th>Model Code</th>
                                                 <th>Model Name</th>
                                                 <th>Wages One Prodcut</th>
-                                                <th>Date</th>
+                                                <th>Cutting Charge</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -214,12 +214,12 @@
                         name: 'model_name'
                     },
                     {
-                        data: 'wages_one_product',
-                        name: 'wages_one_product'
+                        data: 'meters_one_product',
+                        name: 'meters_one_product'
                     },
                     {
-                        data: 'date',
-                        name: 'date'
+                        data: 'cutting_charge',
+                        name: 'cutting_charge'
                     },
                     {
                         data: null,
@@ -244,7 +244,8 @@
                     {
                         text: 'Export All',
                         action: function(e, dt, node, config) {
-                            window.location.href = '/master/finishing_product/export?' + $.param(dt.ajax
+                            window.location.href = '/master/finishing_product/export?' + $.param(dt
+                                .ajax
                                 .params());
                         }
                     }

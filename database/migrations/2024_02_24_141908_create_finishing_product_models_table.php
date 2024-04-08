@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id')->nullable();
             $table->unsignedBigInteger('product_size_id')->nullable();
-            $table->string('model_code');
+            $table->string('model_code')->nullable();
             $table->string('model_name')->nullable();
-            $table->string('wages_one_product')->nullable();
+            $table->string('meters_one_product')->nullable();
+            $table->string('cutting_charge')->nullable();
             $table->date('date')->nullable();
             $table->timestamps();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

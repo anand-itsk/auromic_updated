@@ -80,6 +80,7 @@
                                                 <option value="">Select Finishing Model</option>
                                                 @foreach ($finishingProduct as $finishingProducts)
                                                     <option value="{{ $finishingProducts->id }}">
+                                                        {{ $finishingProducts->model_name }} /
                                                         {{ $finishingProducts->model_code }}</option>
                                                 @endforeach
                                             </select>
@@ -95,23 +96,8 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="customer_code" class="col-sm-2 col-form-label">Product Size
-                                            <a class="shortcut_master"
-                                                href="{{ route('product-models.product_sizes.create') }}"
-                                                target="_blank">+</a>
-                                        </label>
-                                        <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="product_size_id"
-                                                id="product_size_id">
-                                                <option value="">Select Product Size</option>
-                                                @foreach ($product_size as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('product_size_id')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                        
+                                        
                                         <label for="customer_code" class="col-sm-2 col-form-label">Product Color
                                             <a class="shortcut_master"
                                                 href="{{ route('product-models.product_colors.create') }}"
@@ -129,23 +115,47 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        {{-- <label for="order_date" class="col-sm-2 col-form-label">Quantity</label>
+                                        <label for="product_size" class="col-sm-2 col-form-label">Product Size</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="quantity" id="quantity">
-                                            @error('quantity')
+                                            <input class="form-control" type="text" name="product_size"
+                                                id="product_size" readonly>
+                                            @error('product_size')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
-                                        </div> --}}
-
-                                        {{-- <label for="order_date" class="col-sm-2 col-form-label">Weight</label>
+                                        </div>
+                                        
+                                        <label for="product_color" class="col-sm-2 col-form-label">Product Color</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="weight" id="weight">
-                                            @error('weight')
+                                            <input class="form-control" type="text" name="product_color"
+                                                id="product_color" readonly>
+                                            @error('product_color')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
-                                        </div> --}}
+                                        </div>
 
-                                        <label for="meter" class="col-sm-2 col-form-label">Meter</label>
+
+                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Is Clothes by Cutting?</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <select class="form-control" name="finishing_product_models_id"
+                                                id="finishing_product_models_id">
+                                                <option value="0">No</option>
+                                                <option value="1">Yes</option>
+                                            </select>
+                                            @error('finishing_product_models_id')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="total_cutting_pices" class="col-sm-2 col-form-label">Total Cutting Pieces</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="total_cutting_pices" id="total_cutting_pices">
+                                            @error('total_cutting_pices')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+
+                                        <label for="meter" class="col-sm-2 col-form-label">Total Meter</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="meter" id="meter">
                                             @error('meter')
@@ -223,6 +233,7 @@
                         success: function(data) {
 
                             $('#product_name').val(data.product_name);
+                            $('#product_size').val(data.product_size);
 
                         }
                     });

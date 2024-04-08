@@ -19,9 +19,13 @@ return new class extends Migration
             $table->unsignedBigInteger('product_color_id')->nullable();
             $table->enum('incentive_applicable', ['Yes', 'No'])->default(NULL)->nullable();
             $table->date('receving_date');
-            $table->string('assign_meter')->nullable();
+            $table->boolean('is_cutting')->default(0);
+            $table->string('balance_meter')->nullable();
             $table->string('quantity')->nullable();
             $table->string('amount')->nullable();
+            $table->string('usage')->nullable();
+            $table->string('shortage')->nullable();
+            $table->string('wastage')->nullable();
             $table->timestamps();
             $table->foreign('direct_job_giving_id')->references('id')->on('direct_job_givings')->onDelete('cascade');
             $table->foreign('finishing_product_models_id')->references('id')->on('finishing_product_models')->onDelete('cascade');
