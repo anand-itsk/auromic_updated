@@ -85,6 +85,15 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
+                                                                <label for="product_size" class="col-sm-2 col-form-label">Product Size</label>
+<div class="col-sm-4 mb-4">
+   
+    <input class="form-control" type="text" name="product_size" id="product_size" readonly value="{{ $direct_job_giving->finishingProduct->productSize->code ?? '' }}">
+
+    @error('product_size')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
                            <label for="customer_code" class="col-sm-2 col-form-label">Product Size</label>
                            <div class="col-sm-4 mb-4">
                               <select class="form-control select2" name="product_size_id" id="product_size_id" disabled>
@@ -302,18 +311,11 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="order_date" class="col-sm-2 col-form-label ">Product Size</label>
+   
+                                        <label for="order_date" class="col-sm-2 col-form-label ">Meter of Product</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="product_size"
-                                                id="product_sizes" readonly>
-                                            @error('product_size')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <label for="order_date" class="col-sm-2 col-form-label ">Wages of Product</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="wages_product"
-                                                id="wages_one_products" readonly>
+                                            <input class="form-control" type="text" name="meters_one_product"
+                                                id="meters_one_product" readonly>
                                             @error('wages_product')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -452,7 +454,7 @@
 
                             $('#products').val(data.product_name);
                             $('#product_sizes').val(data.product_size);
-                            $('#wages_one_products').val(data.wages_one_product);
+                            $('#meters_one_product').val(data.meters_one_product);
 
                         }
                     });
@@ -460,11 +462,13 @@
             });
         });
     </script>
-    <script>
-        $(document).ready(function() {
-            // Initially hide the Amount label and input field
-            $('#amount_label, #amount').hide();
-
+   <script>
+    $(document).ready(function() {
+        // Initially hide the Amount label and input field
+        $('#amount_label').hide();
+        $('#amount').hide();
+    });
+</script>
 <script>
 $(document).ready(function(){
     $('#useage_meter').on('input', function(){
@@ -500,8 +504,8 @@ $(document).ready(function(){
 <script>
     $(document).ready(function () {
         $('#assign_meter').on('input', function () {
-            var balanceMeter = parseInt($('#balance_meter').val());
-            var assignMeter = parseInt($(this).val());
+            var balanceMeter = parseInt($('#balance_meter').val(), 10);
+            var assignMeter = parseInt($(this).val(), 10);
             var errorSpan = $('#assign_meter_error');
             
             if (assignMeter > balanceMeter) {
@@ -510,7 +514,8 @@ $(document).ready(function(){
                 errorSpan.text('');
             }
         });
-    </script>
+    });
+</script>
 
     @include('links.js.select2.select2')
 @endsection

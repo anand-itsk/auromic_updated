@@ -124,20 +124,12 @@
                                             @enderror
                                         </div>
                                         
-                                        <label for="product_color" class="col-sm-2 col-form-label">Product Color</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="product_color"
-                                                id="product_color" readonly>
-                                            @error('product_color')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-
+                                        
 
                                         <label for="customer_code" class="col-sm-2 col-form-label mandatory">Is Clothes by Cutting?</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control" name="finishing_product_models_id"
-                                                id="finishing_product_models_id">
+                                            <select class="form-control" name="clothes_by_cutting"
+                                                id="clothes_by_cutting">
                                                 <option value="0">No</option>
                                                 <option value="1">Yes</option>
                                             </select>

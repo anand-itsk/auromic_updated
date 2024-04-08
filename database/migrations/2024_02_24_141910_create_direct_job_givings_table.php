@@ -19,7 +19,8 @@ return new class extends Migration
             $table->unsignedBigInteger('product_color_id')->nullable();
             $table->string('meter')->nullable();
             $table->string('useage_meter')->nullable();
-            // $table->string('weight')->nullable();
+             $table->enum('clothes_by_cutting', ['0', '1'])->default('0');
+             $table->string('total_cutting_pieces')->nullable();
            $table->timestamps();
            $table->foreign('finishing_product_models_id')->references('id')->on('finishing_product_models')->onDelete('cascade');
            $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');

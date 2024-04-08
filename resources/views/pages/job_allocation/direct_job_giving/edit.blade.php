@@ -93,16 +93,13 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                          <label for="customer_code" class="col-sm-2 col-form-label">Product Size</label>
+                         <label for="product_size" class="col-sm-2 col-form-label">Product Size</label>
 <div class="col-sm-4 mb-4">
-    <select class="form-control select2" name="product_size_id" id="product_size_id">
-        <option value="">Select Product Size</option>
-        @foreach ($product_size as $item)
-            <option value="{{ $item->id }}" {{ $item->id == $direct_job_giving->product_size_id ? 'selected' : '' }}>{{ $item->name }}</option>
-        @endforeach
-    </select>
-    @error('product_size_id')
-        <span class="error" style="color: red;">{{ $message }}</span>
+   
+    <input class="form-control" type="text" name="product_size" id="product_size" readonly value="{{ $direct_job_giving->finishingProduct->productSize->code ?? '' }}">
+
+    @error('product_size')
+    <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
 </div>
 <label for="customer_code" class="col-sm-2 col-form-label">Product Color</label>
@@ -117,6 +114,24 @@
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
 </div>
+ <label for="customer_code" class="col-sm-2 col-form-label mandatory">Is Clothes by Cutting?</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <select class="form-control" name="finishing_product_models_id" id="finishing_product_models_id">
+    <option value="0" {{ $direct_job_giving->finishing_product_models_id == 0 ? 'selected' : '' }}>No</option>
+    <option value="1" {{ $direct_job_giving->finishing_product_models_id == 1 ? 'selected' : '' }}>Yes</option>
+</select>
+                                            @error('finishing_product_models_id')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="total_cutting_pices" class="col-sm-2 col-form-label">Total Cutting Pieces</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="total_cutting_pices" id="total_cutting_pices"value="{{$direct_job_giving->total_cutting_pieces}}">
+                                            @error('total_cutting_pices')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
 <label for="order_date" class="col-sm-2 col-form-label">Meter</label>
 <div class="col-sm-4 mb-4">
     <input class="form-control" type="text" name="meter" id="meter" value="{{$direct_job_giving->meter}}">
@@ -157,6 +172,8 @@
             $('#company_type').val(companyType);
         });
     </script>
+
+
 
 @include('links.js.select2.select2')
 @endsection

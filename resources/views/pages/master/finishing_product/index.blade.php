@@ -112,7 +112,7 @@
                                                 <th>Product size</th>
                                                 <th>Model Code</th>
                                                 <th>Model Name</th>
-                                                <th>Wages One Prodcut</th>
+                                                <th>Meter One Prodcut</th>
                                                 <th>Cutting Charge</th>
                                                 <th>Action</th>
                                             </tr>
