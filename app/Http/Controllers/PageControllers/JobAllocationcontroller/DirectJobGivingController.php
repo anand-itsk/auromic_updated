@@ -60,7 +60,7 @@ class DirectJobGivingController extends Controller
         $validatedData = $request->validate([
             'employee_id' => 'required',
             'finishing_product_models_id' => 'required',
-
+            'product_color_id' => 'required'
         ]);
 
         $direct_job_giving = new DirectJobGiving;

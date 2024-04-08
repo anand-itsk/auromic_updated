@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('model_code')->nullable();
             $table->string('model_name')->nullable();
             $table->string('meters_one_product')->nullable();
+            $table->string('wages_one_product')->nullable();
             $table->string('cutting_charge')->nullable();
             $table->date('date')->nullable();
             $table->timestamps();

@@ -15,6 +15,7 @@ class FinishingProductModel extends Model
         'model_code',
         'model_name',
         'meters_one_product',
+        'wages_one_product',
         'cutting_charge',
         'date'
 

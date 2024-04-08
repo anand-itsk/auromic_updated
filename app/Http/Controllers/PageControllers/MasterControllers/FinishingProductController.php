@@ -10,89 +10,89 @@ use App\Models\ProductSize;
 use App\Models\FinishingProductModel;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
+
 class FinishingProductController extends Controller
 {
-       public function index()
-     {
-        return view('pages.master.finishing_product.index');
-     }
-  public function indexData()
+    public function index()
     {
-        
-        $finishing_product = FinishingProductModel::with(['product','productSize'])->get();
-        
+        return view('pages.master.finishing_product.index');
+    }
+    public function indexData()
+    {
+
+        $finishing_product = FinishingProductModel::with(['product', 'productSize'])->get();
+
         return DataTables::of($finishing_product)->make(true);
     }
-     public function create()
+    public function create()
     {
-         $products = Product::all();
-         $product_size = ProductSize::get();
-        return view('pages.master.finishing_product.create',compact('products','product_size'));
+        $products = Product::all();
+        $product_size = ProductSize::get();
+        return view('pages.master.finishing_product.create', compact('products', 'product_size'));
     }
 
-     public function store(Request $request)
-{
-    // dd($request);
-    $validatedData = $request->validate([
-         'model_code' => 'required',  
-    ]);
-   
-     $finishing_product = new FinishingProductModel;
-     $finishing_product->product_id = $request->input('product_id');
-     $finishing_product->product_size_id = $request->input('product_size_id');
-     $finishing_product->model_code= $request->input('model_code');
-     $finishing_product->model_name= $request->input('model_name');
-     $finishing_product->wages_one_product= $request->input('meters_one_product');
-     $finishing_product->cutting_charge= $request->input('cutting_charge');
-    $finishing_product->date= $request->input('date');
+    public function store(Request $request)
+    {
+        // dd($request);
+        $validatedData = $request->validate([
+            'model_code' => 'required',
+        ]);
 
-//    dd($finishing_product); 
+        $finishing_product = new FinishingProductModel;
+        $finishing_product->product_id = $request->input('product_id');
+        $finishing_product->product_size_id = $request->input('product_size_id');
+        $finishing_product->model_code = $request->input('model_code');
+        $finishing_product->model_name = $request->input('model_name');
+        $finishing_product->wages_one_product = $request->input('meters_one_product');
+        $finishing_product->cutting_charge = $request->input('cutting_charge');
+        $finishing_product->date = $request->input('date');
 
-    $finishing_product->save();
+        //    dd($finishing_product); 
 
-  
-    return redirect()->route('master.finishing_product.index')
-        ->with('success', ' Finishing Product created successfully');
-}
+        $finishing_product->save();
+
+
+        return redirect()->route('master.finishing_product.index')
+            ->with('success', ' Finishing Product created successfully');
+    }
 
     public function edit($id)
     {
-        $finishing_product =FinishingProductModel::find($id);
-         $products = Product::all();
-         $product_size = ProductSize::all();
-        return view('pages.master.finishing_product.edit',compact('products','product_size','finishing_product'));
+        $finishing_product = FinishingProductModel::find($id);
+        $products = Product::all();
+        $product_size = ProductSize::all();
+        return view('pages.master.finishing_product.edit', compact('products', 'product_size', 'finishing_product'));
     }
-      public function update(Request $request,$id)
-{
-    // dd($request);
-   
-     $finishing_product =  FinishingProductModel::find($id);
-     $finishing_product->product_id = $request->input('product_id');
-     $finishing_product->product_size_id = $request->input('product_size_id');
-     $finishing_product->model_code= $request->input('model_code');
-     $finishing_product->model_name= $request->input('model_name');
-     $finishing_product->wages_one_product= $request->input('wages_one_product');
-    $finishing_product->date= $request->input('date');
-
-//    dd($finishing_product); 
-
-    $finishing_product->save();
-
-  
-    return redirect()->route('master.finishing_product.index')
-        ->with('success', ' Finishing Product Updated successfully');
-}
-  public function delete($id)
+    public function update(Request $request, $id)
     {
-         $finishing_product = FinishingProductModel::find($id);
+        // dd($request);
 
-         $finishing_product->delete();
+        $finishing_product =  FinishingProductModel::find($id);
+        $finishing_product->product_id = $request->input('product_id');
+        $finishing_product->product_size_id = $request->input('product_size_id');
+        $finishing_product->model_code = $request->input('model_code');
+        $finishing_product->model_name = $request->input('model_name');
+        $finishing_product->wages_one_product = $request->input('wages_one_product');
+        $finishing_product->date = $request->input('date');
 
-          return redirect()->route('master.finishing_product.index')->with('success', 'Finishing Product Deleted successfully!');
+        //    dd($finishing_product); 
 
+        $finishing_product->save();
+
+
+        return redirect()->route('master.finishing_product.index')
+            ->with('success', ' Finishing Product Updated successfully');
+    }
+    public function delete($id)
+    {
+        $finishing_product = FinishingProductModel::find($id);
+
+        $finishing_product->delete();
+
+        return redirect()->route('master.finishing_product.index')->with('success', 'Finishing Product Deleted successfully!');
     }
 
-     public function deleteSelected(Request $request)
+    public function deleteSelected(Request $request)
     {
 
         $ids = $request->ids;
@@ -105,7 +105,7 @@ class FinishingProductController extends Controller
         return response()->json(['status' => 'success']);
     }
 
-     public function export(Request $request)
+    public function export(Request $request)
     {
         return Excel::download(new FinishingProductExport($request->all()), 'FinishingProductDatas_' . date('d-m-Y') . '.xlsx');
     }
@@ -120,5 +120,4 @@ class FinishingProductController extends Controller
 
         return redirect()->route('master.finishing_product.index')->with('success', 'Data imported successfully');
     }
-
 }

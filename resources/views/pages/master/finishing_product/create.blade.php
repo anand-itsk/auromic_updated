@@ -111,6 +111,16 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
+
+                                        <label for="wages_one_product" class="col-sm-2 col-form-label">Wages for one
+                                            Product</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="wages_one_product"
+                                                id="wages_one_product">
+                                            @error('wages_one_product')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                     </div>
 
 
