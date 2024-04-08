@@ -190,6 +190,8 @@ class JobGivingController extends Controller
         $job_giving->dc_id = $input['dc_number'];
         $job_giving->weight = $input['weight'];
         $job_giving->days = $input['deadline_days'];
+        $job_giving->excess	 = $input['excess_weight'];
+        $job_giving->shortage	 = $input['shortage_weight'];
         $job_giving->save();
 
         // Update available quantity in delivery challan

@@ -42,12 +42,18 @@ class OrderDetail extends Model
     {
         return $this->belongsTo(OrderStatus::class, 'order_status_id');
     }
-    public function productModel()
-    {
-        return $this->belongsTo(ProductModel::class, 'product_model_id');
-    }
+public function productModel()
+{
+    return $this->belongsTo(ProductModel::class, 'product_model_id')->with('product');
+}
+    
     public function customer()
     {
         return $this->belongsTo(Customer::class, 'customer_id');
     }
+
+    public function deliveryChallans()
+{
+    return $this->hasMany(DeliveryChallan::class, 'order_id');
+}
 }
