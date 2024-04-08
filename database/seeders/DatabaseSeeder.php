@@ -47,6 +47,7 @@ class DatabaseSeeder extends Seeder
             OrderStatusTableSeeder::class,
             ProductColorTableSeeder::class,
             ProductModelTableSeeder::class,
+            FinisingProductModelTableSeeder::class
             // OrderNoTableSeeder::class,
             // OrderDetailTableSeeder::class
         ]);

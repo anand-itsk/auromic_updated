@@ -36,8 +36,8 @@
                                     <div class="form-group row">
 
                                         <label class="col-sm-2 col-form-label">Product
-                                            <a class="shortcut_master"
-                                                href="{{ route('product-models.products.create') }}" target="_blank">+</a>
+                                            <a class="shortcut_master" href="{{ route('product-models.products.create') }}"
+                                                target="_blank">+</a>
                                         </label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_id" id="product">
@@ -52,10 +52,12 @@
                                         </div>
                                         <label class="col-sm-2 col-form-label">Product Size
                                             <a class="shortcut_master"
-                                                href="{{ route('product-models.product_sizes.create') }}" target="_blank">+</a>
+                                                href="{{ route('product-models.product_sizes.create') }}"
+                                                target="_blank">+</a>
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="product_size_id" id="product_size_id">
+                                            <select class="form-control select2" name="product_size_id"
+                                                id="product_size_id">
                                                 <option value="">Select Product size</option>
                                                 @foreach ($product_size as $item)
                                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -91,12 +93,21 @@
                                             @enderror
                                         </div>
 
-                                        <label for="wages_product" class="col-sm-2 col-form-label">Wages of one
+                                        <label for="wages_product" class="col-sm-2 col-form-label">Meters of one
                                             Product</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="wages_one_product"
-                                                id="wages_one_product">
-                                            @error('wages_one_product')
+                                            <input class="form-control" type="text" name="meters_one_product"
+                                                id="meters_one_product">
+                                            @error('meters_one_product')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="wages_product" class="col-sm-2 col-form-label">Cutting charges</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="cutting_charges"
+                                                id="cutting_charges">
+                                            @error('cutting_charges')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>

@@ -80,6 +80,7 @@
                                                 <option value="">Select Finishing Model</option>
                                                 @foreach ($finishingProduct as $finishingProducts)
                                                     <option value="{{ $finishingProducts->id }}">
+                                                        {{ $finishingProducts->model_name }} /
                                                         {{ $finishingProducts->model_code }}</option>
                                                 @endforeach
                                             </select>
@@ -136,6 +137,9 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div> --}}
+
+
+
 
                                         {{-- <label for="order_date" class="col-sm-2 col-form-label">Weight</label>
                                         <div class="col-sm-4 mb-4">
@@ -223,6 +227,7 @@
                         success: function(data) {
 
                             $('#product_name').val(data.product_name);
+                            $('#product_size').val(data.product_size);
 
                         }
                     });
