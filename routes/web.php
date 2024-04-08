@@ -492,6 +492,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/import', [DirectJobGivingController::class, 'import'])->name('import');
             Route::get('/export', [DirectJobGivingController::class, 'export']);
             Route::get('/get-finishing-product-details/{id}', [DirectJobGivingController::class, 'getFinishingProductDetails']);
+             Route::get('/getProductSize', [DirectJobGivingController::class, 'getProductSize']);
+            
         });
         Route::prefix('/direct_job_received')->name('direct_job_received.')->group(function () {
             Route::get('/', [DirectJobReceivedController::class, 'index'])->name('index');

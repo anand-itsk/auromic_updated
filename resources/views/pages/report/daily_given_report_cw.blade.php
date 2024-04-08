@@ -172,6 +172,7 @@
                                     </div><!-- /.modal-dialog -->
                                 </div>
                                 <div class="card-body">
+ <div style="text-align: center;">
                                     <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap"
                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
@@ -192,7 +193,7 @@
                                         <tbody>
                                         </tbody>
                                     </table>
-
+</div>
                                 </div>
                             </div>
                         </div>
@@ -363,7 +364,57 @@
                 select: true,
                 dom: 'lBfrtip',
                 buttons: [
-                    'excel', 'print',
+                    'excel', 
+                    {
+        extend: 'print',
+        text: 'Print',
+        customize: function(win) {
+    // Initialize an empty title string
+
+
+    var title = "";
+
+    // Check if Company Type is selected and append to the title
+    // var companyType = $('#company_type').val();
+    // if (companyType) {
+    //     title += " Company Type: " + $('#company_type option:selected').text();
+    // }
+
+    // Check if Company is selected and append to the title
+    var company = $('#companies').val();
+    if (company) {
+        title +=  $('#companies option:selected').text();
+    }
+
+    // Check if From Date is selected and append to the title
+    // var fromDate = $('#from_date').val();
+    // if (fromDate) {
+    //     title += " From Date: " + fromDate;
+    // }
+
+    // Check if Last Date is selected and append to the title
+    // var lastDate = $('#last_date').val();
+    // if (lastDate) {
+    //     title += "Last Date: " + lastDate;
+    // }
+
+    // Set the constructed title to the <h1> element in the print view
+   var h1Element = $(win.document.body).find('h1');
+            h1Element.text(title);
+
+            // Decrease font size of company name in print view
+            h1Element.css('font-size', '18px');
+               
+
+$(win.document.body).find('table.dataTable').css('border-collapse', 'collapse');
+            $(win.document.body).find('table.dataTable th, table.dataTable td').css('text-align', 'center');
+    
+    $(win.document.head).append('<style>@page {size: landscape; }</style>');
+
+    // Add other customization as needed
+    $(win.document.body).find('table').addClass('compact');
+}
+                    },
                     {
                         text: 'Export All',
                         action: function(e, dt, node, config) {
@@ -372,8 +423,10 @@
                         }
                     }
                 ]
+                
 
             });
+
 
             // Event listener for company type dropdown
     $('#company_type').on('change', function() {
@@ -436,6 +489,28 @@
             });
         });
         
+
+function updateSelectedFilters() {
+  var selectedFilters = '';
+  // Get selected values from filter elements
+  var companyType = $('#company_type option:selected').text();
+  var companies = $('#companies option:selected').text();
+  var status = $('#statuses option:selected').text();
+  var fromDate = $('#from_date').val();
+  var lastDate = $('#last_date').val();
+  
+  // Construct the string with selected filter values
+  selectedFilters += 'Company Type: ' + companyType + ', ';
+  selectedFilters += 'Companies: ' + companies + ', ';
+  selectedFilters += 'Status: ' + status + ', ';
+  selectedFilters += 'From Date: ' + fromDate + ', ';
+  selectedFilters += 'Last Date: ' + lastDate;
+  
+  // Update the HTML content with selected filter values
+  $('#selectedFilters').text(selectedFilters);
+  
+}
+
 
         function edit(id) {
             console.log("inside");
@@ -524,4 +599,7 @@
     });
 
     </script>
+
+
+
 @endsection

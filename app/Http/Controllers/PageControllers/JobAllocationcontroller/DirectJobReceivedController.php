@@ -126,7 +126,7 @@ class DirectJobReceivedController extends Controller
 
     public function edit($id)
     {
-        $direct_job_giving = DirectJobGiving::find($id);
+        $direct_job_giving = DirectJobGiving::with('finishingProduct.productSize')->find($id);
         $finishingProduct = FinishingProductModel::all();
         $product_color = Productcolor::all();
         $product_size = ProductSize::get();
@@ -148,7 +148,7 @@ class DirectJobReceivedController extends Controller
 
             'product_name' => $finishingProduct->product->name,
             'product_size' => $finishingProduct->productSize->name,
-            'wages_one_product' => $finishingProduct->wages_one_product
+            'meters_one_product' => $finishingProduct->meters_one_product
 
         ]);
     }
