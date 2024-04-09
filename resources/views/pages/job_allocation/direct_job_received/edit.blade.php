@@ -31,6 +31,9 @@
                                 <form action="{{ route('job_allocation.direct_job_received.store') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="direct_job_giving_id" value="{{ $id }}">
+                                    <input type="hidden" name="product_color_id" value="{{ $direct_job_giving->product_color_id }}">
+<input type="hidden" name="finishing_product_models_id" value="{{ $direct_job_giving->finishing_product_models_id }}">
+<input type="hidden" name="employee_id" value="{{ $direct_job_giving->employee_id }}">
                                     <div class="form-group row">
                                         <label for="employee_id" class="col-sm-2 col-form-label">
                                             Employee Name

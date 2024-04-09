@@ -319,6 +319,10 @@
                             <li>
                                 <a href="{{ route('report.order_report.index') }}">Order Report</a>
                             </li>
+
+                             <li>
+                                <a href="{{ route('report.direct_job_giving_report.index') }}">Direct Job Given Report</a>
+                            </li>
                         
                         </ul>
                     </li>

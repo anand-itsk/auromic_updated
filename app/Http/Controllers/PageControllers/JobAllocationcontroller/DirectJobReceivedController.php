@@ -62,7 +62,7 @@ class DirectJobReceivedController extends Controller
         $direct_job_received->total_amount = $request->input('total_amount');
         $direct_job_received->net_amount = $request->input('net_amount');
 
-        $direct_job_received->incentive_applicable = $request->input('incentive_applicable');
+        $direct_job_received->incentive_applicable = $request->input('Incentive_status');
         $direct_job_received->receving_date = $request->input('receiving_date');
 
         // Save the DirectJobReceived model to the database
