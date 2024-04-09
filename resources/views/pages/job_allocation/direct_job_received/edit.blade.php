@@ -117,6 +117,19 @@
                                             @enderror
                                         </div>
 
+                                        <label for="meters_one_product" class="col-sm-2 col-form-label">Meter for one
+                                            product</label>
+                                        <div class="col-sm-4 mb-4">
+
+                                            <input class="form-control" type="text" name="meters_one_product"
+                                                id="meters_one_product" readonly
+                                                value="{{ $direct_job_giving->finishingProduct->meters_one_product ?? '' }}">
+
+                                            @error('meters_one_product')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
                                         <label for="customer_code" class="col-sm-2 col-form-label">Product Color</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_color_id"
@@ -132,7 +145,7 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="order_date" class="col-sm-2 col-form-label">Meter</label>
+                                        <label for="order_date" class="col-sm-2 col-form-label">Total Given Meters</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="meter" id="meter"
                                                 readonly value="{{ $direct_job_giving->meter }}">
@@ -174,46 +187,41 @@
                                             @enderror
                                         </div>
 
-                                        <label for="order_date" class="col-sm-2 col-form-label ">Cutting Charges</label>
+                                        <label for="cutting_charges" class="col-sm-2 col-form-label ">Cutting
+                                            Charges</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="received_quantity"
-                                                id="received_quantity" required="">
-                                            @error('order_id')
+                                            <input class="form-control" type="text" name="cutting_charges"
+                                                id="cutting_charges" required="">
+                                            @error('cutting_charges')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
 
-                                        <label for="order_date" class="col-sm-2 col-form-label ">Usage Meter</label>
+                                        <label for="usage_meters" class="col-sm-2 col-form-label ">Usage Meters</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="received_quantity"
-                                                id="received_quantity" required="">
-                                            @error('order_id')
+                                            <input class="form-control" type="text" name="usage_meters"
+                                                id="usage_meters" required="">
+                                            @error('usage_meters')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
 
-                                        <label for="order_date" class="col-sm-2 col-form-label ">Wastage Meter</label>
+                                        <label for="wastage_meters" class="col-sm-2 col-form-label ">Wastage
+                                            Meters</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="received_quantity"
-                                                id="received_quantity" required="">
-                                            @error('order_id')
+                                            <input class="form-control" type="text" name="wastage_meters"
+                                                id="wastage_meters" required="">
+                                            @error('wastage_meters')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
 
-                                        <label for="order_date" class="col-sm-2 col-form-label ">Balance Meter</label>
+                                        <label for="balance_meters" class="col-sm-2 col-form-label ">Balance
+                                            Meters</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="received_quantity"
-                                                id="received_quantity" readonly>
-                                            @error('order_id')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <label for="total_amount" class="col-sm-2 col-form-label ">Total Amount</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="total_amount"
-                                                id="total_amount" readonly>
-                                            @error('order_id')
+                                            <input class="form-control" type="text" name="balance_meters"
+                                                id="balance_meters" readonly>
+                                            @error('balance_meters')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -437,31 +445,67 @@
                             errorSpan.text('');
                         }
                     });
+
+
+                    function updateTotal() {
+                        var aValue = parseFloat($("#received_quantity").val()) || 0;
+                        var bValue = parseFloat($("#incentive").val()) || 0;
+                        var cValue = parseFloat($("#deduction").val()) || 0;
+                        var dValue = parseFloat($("#conveyance").val()) || 0;
+                        var wages = $('#wages_per_quantity').val();
+
+                        var cuttingCharges = parseFloat($("#cutting_charges").val()) || 0;
+                        var totalQuantity = $('#total_quantity').val();
+
+                        var total = (aValue * wages) + dValue + bValue + cuttingCharges - cValue;
+                        var net = (aValue * wages);
+                        var pendingQuantity = totalQuantity - aValue;
+                        $("#pending_quantity").val(pendingQuantity); // You can adjust the precision as needed
+                        $("#total_amount").val(total.toFixed(2)); // You can adjust the precision as needed
+                        $("#net_amount").val(net.toFixed(2)); // You can adjust the precision as needed
+                    }
+
+
+                    $("#received_quantity, #cutting_charges, #incentive, #deduction, #conveyance, #pending_quantity").on(
+                        "input",
+                        updateTotal);
+
+                    // Initial update
+                    updateTotal();
+
+
+                    function updateMeter() {
+                        console.log("inside");
+                        var aValue = parseFloat($("#usage_meters").val()) || 0;
+                        var bValue = parseFloat($("#wastage_meters").val()) || 0;
+                        var totalMeter = parseFloat($("#meter").val()) || 0;;
+
+                        var total = totalMeter - (aValue + bValue);
+                        $("#balance_meters").val(total);
+                    }
+
+
+                    $("#usage_meters, #wastage_meters").on("input",
+                        updateMeter);
+
+                    // Initial update
+                    updateMeter();
+
+
+                    $('#Incentive_status').change(function() {
+                        // console.log("Option changed");
+                        var beforeDaysInput = $('#before_days');
+                        var incentiveInput = $('#incentive');
+
+                        if ($(this).val() === 'No') {
+                            beforeDaysInput.prop('disabled', true);
+                            incentiveInput.prop('disabled', true);
+                        } else {
+                            beforeDaysInput.prop('disabled', false);
+                            incentiveInput.prop('disabled', false);
+                        }
+                    });
                 });
-
-
-                function updateTotal() {
-                    var aValue = parseFloat($("#received_quantity").val()) || 0;
-                    var bValue = parseFloat($("#incentive").val()) || 0;
-                    var cValue = parseFloat($("#deduction").val()) || 0;
-                    var dValue = parseFloat($("#conveyance").val()) || 0;
-                    var wages = $('#wages').val();
-                    var totalQuantity = $('#total_quantity').val();
-
-                    var total = (aValue * wages) + dValue + bValue - cValue;
-                    var net = (aValue * wages);
-                    var pendingQuantity = totalQuantity - aValue;
-                    $("#pending_quantity").val(pendingQuantity); // You can adjust the precision as needed
-                    $("#total_amount").val(total.toFixed(2)); // You can adjust the precision as needed
-                    $("#net_amount").val(net.toFixed(2)); // You can adjust the precision as needed
-                }
-
-
-                $("#received_quantity, #incentive, #deduction, #conveyance, #pending_quantity").on("input",
-                    updateTotal);
-
-                // Initial update
-                updateTotal();
             </script>
 
             @include('links.js.select2.select2')

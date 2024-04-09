@@ -47,11 +47,23 @@ class DirectJobReceivedController extends Controller
         $direct_job_received->finishing_product_models_id = $request->input('finishing_product_models_id');
         $direct_job_received->employee_id = $request->input('employee_id');
         $direct_job_received->product_color_id = $request->input('product_color_id');
+        $direct_job_received->is_cutting = $request->input('is_cutting') === 'Yes' ? 1 : 0;
+        $direct_job_received->balance_meter = $request->input('balance_meters');
+        $direct_job_received->quantity = $request->input('received_quantity');
+        $direct_job_received->wages_for_product = $request->input('wages_per_quantity');
+        $direct_job_received->usage = $request->input('usage_meters');
+        $direct_job_received->wastage = $request->input('wastage_meters');
+        $direct_job_received->before_days = $request->input('before_days');
+        $direct_job_received->after_days = $request->input('after_days');
+
+        $direct_job_received->conveyance_fee = $request->input('conveyance');
+        $direct_job_received->deducation_fee = $request->input('deduction');
+        $direct_job_received->incentive_fee = $request->input('incentive');
+        $direct_job_received->total_amount = $request->input('total_amount');
+        $direct_job_received->net_amount = $request->input('net_amount');
+
         $direct_job_received->incentive_applicable = $request->input('incentive_applicable');
         $direct_job_received->receving_date = $request->input('receiving_date');
-        $direct_job_received->amount = $request->input('amount');
-        $direct_job_received->assign_meter = $request->input('assign_meter');
-        $direct_job_received->quantity = $request->input('quantity');
 
         // Save the DirectJobReceived model to the database
         // dd($direct_job_received);

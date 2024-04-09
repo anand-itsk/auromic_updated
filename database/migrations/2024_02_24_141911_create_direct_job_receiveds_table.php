@@ -22,10 +22,17 @@ return new class extends Migration
             $table->boolean('is_cutting')->default(0);
             $table->string('balance_meter')->nullable();
             $table->string('quantity')->nullable();
-            $table->string('amount')->nullable();
+            $table->string('wages_for_product')->nullable();
             $table->string('usage')->nullable();
             $table->string('shortage')->nullable();
             $table->string('wastage')->nullable();
+            $table->string('before_days')->nullable();
+            $table->string('after_days')->nullable();
+            $table->string('conveyance_fee')->nullable();
+            $table->string('deducation_fee')->nullable();
+            $table->string('incentive_fee')->nullable();
+            $table->string('total_amount')->nullable();
+            $table->string('net_amount')->nullable();
             $table->timestamps();
             $table->foreign('direct_job_giving_id')->references('id')->on('direct_job_givings')->onDelete('cascade');
             $table->foreign('finishing_product_models_id')->references('id')->on('finishing_product_models')->onDelete('cascade');
