@@ -75,7 +75,7 @@
                                         </div>
                                         <label for="customer_code" class="col-sm-2 col-form-label mandatory">Model</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control" name="finishing_product_models_id"
+                                            <select class="form-control select2" name="finishing_product_models_id"
                                                 id="finishing_product_models_id">
                                                 <option value="">Select Finishing Model</option>
                                                 @foreach ($finishingProduct as $finishingProducts)

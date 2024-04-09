@@ -58,13 +58,13 @@
                            Finishing product model
                            </label>
                            <div class="col-sm-2 mb-2">
-                             <select class="form-control select2" name="finishing+product_model_id" id="finishing+product_model_id">
+                             <select class="form-control select2" name="finishing_product_model_id" id="finishing_product_model_id">
         <option value="">Select Company</option>
         @foreach($finishing_product as $finishing_products)
             <option value="{{ $finishing_products->id }}">{{ $finishing_products->model_code}}/{{ $finishing_products->model_name}}</option>
         @endforeach
     </select>
-                              @error('finishing+product_model_id')
+                              @error('finishing_product_model_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>                       
@@ -218,6 +218,7 @@
             url: '{{ route('report.direct_job_giving_report.data') }}',
             data: function(d) {
                  d.employee_id = $('#employee_id').val();
+                d.finishing_product_model_id = $('#finishing_product_model_id').val(); 
             }
         },
         columns: [{
@@ -270,7 +271,82 @@
         select: true,
         dom: 'lBfrtip',
         buttons: [
-            'excel', 'print',
+            'excel',
+             {
+        extend: 'print',
+        text: 'Print',
+        customize: function(win) {
+    // Initialize an empty title string
+
+
+    var title = "";
+
+    // Check if Company Type is selected and append to the title
+    // var companyType = $('#company_type').val();
+    // if (companyType) {
+    //     title += " Company Type: " + $('#company_type option:selected').text();
+    // }
+
+    // Check if Company is selected and append to the title
+    var company = $('#employee_id').val();
+    if (company) {
+        title +=  $('#employee_id option:selected').text();
+    }
+
+    // Check if From Date is selected and append to the title
+    // var fromDate = $('#from_date').val();
+    // if (fromDate) {
+    //     title += " From Date: " + fromDate;
+    // }
+
+    // Check if Last Date is selected and append to the title
+    // var lastDate = $('#last_date').val();
+    // if (lastDate) {
+    //     title += "Last Date: " + lastDate;
+    // }
+
+    // Set the constructed title to the <h1> element in the print view
+   var h1Element = $(win.document.body).find('h1');
+            h1Element.text(title);
+
+            // Decrease font size of company name in print view
+            h1Element.css('font-size', '18px');
+
+             var currentDate = new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric'
+    });
+    var dateElement = $('<div>').css({
+        'position': 'absolute',
+        'top': '20px',
+        'right': '20px',
+        'font-weight': 'bold',
+        'font-size': '16px'
+    }).text(currentDate);
+    $(win.document.body).append(dateElement);
+
+
+     var reportName = "Direct Job Given Report"; // Change this to the desired report name
+    var reportElement = $('<h2>').css({
+        'text-align': 'center',
+        'font-weight': 'bold',
+        'font-size': '24px',
+        'margin-top': '30px'
+    }).text(reportName);
+    $(win.document.body).prepend(reportElement);
+  
+               
+
+$(win.document.body).find('table.dataTable').css('border-collapse', 'collapse');
+            $(win.document.body).find('table.dataTable th, table.dataTable td').css('text-align', 'center');
+    
+    $(win.document.head).append('<style>@page {size: landscape; }</style>');
+
+    // Add other customization as needed
+    $(win.document.body).find('table').addClass('compact');
+}
+                    },
             {
                 text: 'Export All',
                 action: function(e, dt, node, config) {
@@ -286,6 +362,11 @@
         // Reload DataTable with updated parameters
         table.ajax.reload();
     });
+    $('#finishing_product_model_id').on('change', function() {
+        // Reload DataTable with updated parameters
+        table.ajax.reload();
+    });
+    
 
        
 
@@ -318,6 +399,22 @@
         });
         
 
+function updateSelectedFilters() {
+  var selectedFilters = '';
+  // Get selected values from filter elements
+  var employee = $('#employee_id option:selected').text();
+  var finishingProduct = $('#finishing_product_model_id option:selected').text();
+  
+  
+  // Construct the string with selected filter values
+ selectedFilters += 'Employee: ' + employee + ', ';
+  selectedFilters += 'Finishing Product: ' + finishingProduct + ', ';
+ 
+  
+  // Update the HTML content with selected filter values
+  $('#selectedFilters').text(selectedFilters);
+  
+}
 
 
 

@@ -17,6 +17,7 @@ use App\Http\Controllers\PageControllers\Report\EmployeeReportController;
 use App\Http\Controllers\PageControllers\Report\DailyGivenReportCompanyWiseController;
 use App\Http\Controllers\PageControllers\Report\JobReceivedReportController;
 use App\Http\Controllers\PageControllers\Report\DirectJobGivingReportController;
+use App\Http\Controllers\PageControllers\Report\DirectJobReceivedReportController;
 use App\Http\Controllers\PageControllers\SubClientCompanyController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -599,6 +600,11 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [DirectJobGivingReportController::class, 'index'])->name('index');
             Route::get('/data', [DirectJobGivingReportController::class, 'indexData'])->name('data');
             Route::get('/export', [DirectJobGivingReportController::class, 'export']);
+        });
+         Route::prefix('/direct_job_received_report')->name('direct_job_received_report.')->group(function () {
+            Route::get('/', [DirectJobReceivedReportController::class, 'index'])->name('index');
+            Route::get('/data', [DirectJobReceivedReportController::class, 'indexData'])->name('data');
+            Route::get('/export', [DirectJobReceivedReportController::class, 'export']);
         });
     });
 

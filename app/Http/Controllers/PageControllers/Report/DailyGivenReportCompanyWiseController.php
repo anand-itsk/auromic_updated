@@ -16,7 +16,7 @@ class DailyGivenReportCompanyWiseController extends Controller
     {
         $companyType = CompanyType::all();
         $company = Company::all();
-        return view('pages.report.daily_given_report_cw', compact('companyType', 'company'));
+        return view('pages.report.job_given_report', compact('companyType', 'company'));
     }
 
         public function indexData(Request $request)
@@ -62,7 +62,7 @@ class DailyGivenReportCompanyWiseController extends Controller
                     'id' => $job_giving->id,
                     'employee_code' => $job_giving->employee->employee_code ?? null,
                     'employee_name' => $job_giving->employee->employee_name ?? null,
-                    'last_order_number' => $job_giving->order_details->orderNo->last_order_number ?? null,
+                    'customer_order_no' => $job_giving->order_details->orderNo->customer_order_no ?? null,
                     'model_code' => $job_giving->product_model->model_code ?? null,
                     'model_name' => $job_giving->product_model->model_name ?? null,
                     'size' => $job_giving->product_model->productSize->name ?? null,

@@ -31,15 +31,14 @@
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="#">Auromics</a></li>
                                 <li class="breadcrumb-item"><a href="#">Report</a></li>
-                                <li class="breadcrumb-item active">Job Received Report</li>
+                                <li class="breadcrumb-item active">Job Giving Report</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Job Received Report</h4>
+                        <h4 class="page-title">Job Giving Report</h4>
                     </div>
                        <div class="card mb-2">
                            <div class="card-body">
                 <div class="form-group row mb-0">
-
                 <label for="customer_code" class="col-sm-2 col-form-label ">
                             Company Type
                            </label>
@@ -69,7 +68,35 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                                
+
+
+                           <label for="customer_code" class="col-sm-2 col-form-label ">
+                           From Date
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                            <input type="date" class="form-control" name="from_date" id="from_date">
+                              @error('company_type_id')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                           <label for="customer_code" class="col-sm-2 col-form-label ">
+                           Last Date
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                            <input type="date" class="form-control" name="last_date" id="last_date">
+                              @error('company_type_id')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                           <!-- <label for="customer_code" class="col-sm-2 col-form-label ">
+                           Date
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                            <input type="date" class="form-control" name="date" id="">
+                              @error('company_type_id')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div> -->
                                <label for="customer_code" class="col-sm-2 col-form-label ">
                            Status
                            </label>
@@ -85,33 +112,6 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-                           <label for="customer_code" class="col-sm-2 col-form-label">
-                                            Incentive Applicable
-                                        </label>
-                                        <div class="col-sm-2 mb-2">
-                                            <select class="form-control select2" name="incentive_status"
-                                                id="incentive_status">
-                                                 <option value="">Select</option>
-                                                <option value="No">No</option>
-                                                <option value="Yes">Yes</option>
-
-                                            </select>
-                                            @error('incentive_status')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-
-                                        <label for="customer_code" class="col-sm-2 col-form-label">
-                                            Received Date
-                                        </label>
-                                        <div class="col-sm-2 mb-2">
-                                            <input type="date" class="form-control"name="received_date" id="received_date">
-                                            @error('received_date')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                         
-
                            
                            
 </div>
@@ -172,31 +172,28 @@
                                     </div><!-- /.modal-dialog -->
                                 </div>
                                 <div class="card-body">
+ <div style="text-align: center;">
                                     <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap"
                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Employee code</th>
-                                                 <th>Employee Name</th>
-                                                  <th>Model Name</th>
-                                                   <th>Size</th>
-                                                   <th>Color</th>
-                                                    <th>Received qty</th>
-                                                    <th>Total Amount</th>
-                                                    <th>Ded</th>
-                                                    <th>Conv</th>
-                                                    <th>Inc</th>
-                                                    <th>Village</th>
-                                                    <th>Weight</th>
-                                               
+                                                <th>Employee Name</th>
+                                                <th>Order Number</th>
+                                                <th>Model Code</th>
+                                                 <th>Model Name</th>
+                                                  <th>Product Size</th>
+                                                    <th>Quantity</th>
+                                                     <th>Color</th>
+                                                        <th>Weight</th>
                                                         
                                             </tr>
                                         </thead>
                                         <tbody>
                                         </tbody>
                                     </table>
-
+</div>
                                 </div>
                             </div>
                         </div>
@@ -262,25 +259,24 @@
 
 
     <script>
-            
+           
         $(document).ready(function() {
-           var table;
-       $('#companies').prop('disabled', true);
+            var table;
+            $('#companies').prop('disabled', true);
             table = $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
                     ajax: {
-            url: '{{ route('report.job_received_report.data') }}',
+            url: '{{ route('report.daily_given_report_cw.data') }}',
             data: function(d) {
                 // Add additional parameters here if needed
-               d.status = $('#statuses').val();
-               d.company_type = $('#company_type').val();
+                d.company_type = $('#company_type').val();
                  d.companies = $('#companies').val();
-                 d.incentive_status = $('#incentive_status').val(); 
-                 d.received_date = $('#received_date').val(); 
-                
+                  d.status = $('#statuses').val();
+                 d.from_date = $('#from_date').val();
+                 d.last_date = $('#last_date').val();
+        
             }
-            
         },
                 columns: [{
                         data: 'id',
@@ -302,6 +298,21 @@
                         }
                         
                     },
+                     {
+                        data: 'customer_order_no',
+                        name: 'customer_order_no',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                    },
+                    {
+                        data: 'model_code',
+                        name: 'model_code',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
                     {
                         data: 'model_name',
                         name: 'model_name',
@@ -310,6 +321,7 @@
                         }
                         
                     },
+                    
                      {
                         data: 'size',
                         name: 'size',
@@ -319,77 +331,30 @@
                         
                     },
                     {
+                        data: 'quantity',
+                        name: 'quantity',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                     {
                         data: 'color',
                         name: 'color',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
-                        
                     },
 
-                     {
-                        data: 'received_qty',
-                        name: 'received_qty',
-                        render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-                        
-                    },
                     {
-                        data: 'total_amount',
-                        name: 'total_amount',
-                        render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-                        
-                    },
-                    {
-                        data: 'deducation_fee',
-                        name: 'deducation_fee',
-                        render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-                        
-                    },
-                     {
-                        data: 'conveyance_fee',
-                        name: 'conveyance_fee',
+                        data: 'weight',
+                        name: 'weight',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
                         
                     },
 
-                        {
-                        data: 'incentive_fee',
-                        name: 'incentive_fee',
-                        render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-                        
-                    },
-                    {
-                        data: 'incentive_fee',
-                        name: 'incentive_fee',
-                        render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-                        
-                    },
-                    {
-                        data: 'current_weight',
-                        name: 'current_weight',
-                        render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-                        
-                    },
-                    
-
-
-
-                    
-                     
                     
 
                 ],
@@ -399,8 +364,8 @@
                 select: true,
                 dom: 'lBfrtip',
                 buttons: [
-                    'excel',
-                                        {
+                    'excel', 
+                    {
         extend: 'print',
         text: 'Print',
         customize: function(win) {
@@ -410,30 +375,24 @@
     var title = "";
 
     // Check if Company Type is selected and append to the title
-    // var companyType = $('#company_type').val();
-    // if (companyType) {
-    //     title += " Company Type: " + $('#company_type option:selected').text();
-    // }
+    
 
-    // Check if Company is selected and append to the title
     var company = $('#companies').val();
     if (company) {
         title +=  $('#companies option:selected').text();
     }
+    // title += "\n";
 
-    // Check if From Date is selected and append to the title
-    // var fromDate = $('#from_date').val();
-    // if (fromDate) {
-    //     title += " From Date: " + fromDate;
+    // var companyType = $('#company_type').val();
+    // if (companyType) {
+    //     title += $('#company_type option:selected').text();":"
     // }
 
-    // Check if Last Date is selected and append to the title
-    // var lastDate = $('#last_date').val();
-    // if (lastDate) {
-    //     title += "Last Date: " + lastDate;
-    // }
+   
 
-    // Set the constructed title to the <h1> element in the print view
+   
+
+   
    var h1Element = $(win.document.body).find('h1');
             h1Element.text(title);
 
@@ -455,7 +414,7 @@
     $(win.document.body).append(dateElement);
 
 
-     var reportName = "Job Received Report"; // Change this to the desired report name
+     var reportName = "Job Given Report"; // Change this to the desired report name
     var reportElement = $('<h2>').css({
         'text-align': 'center',
         'font-weight': 'bold',
@@ -483,15 +442,12 @@ $(win.document.body).find('table.dataTable').css('border-collapse', 'collapse');
                         }
                     }
                 ]
+                
 
             });
 
-    $('#statuses').on('change', function() {
-        // Reload DataTable with updated parameters
-        table.ajax.reload();
-    });
 
-    // Event listener for company type dropdown
+            // Event listener for company type dropdown
     $('#company_type').on('change', function() {
         var selectedCompanyType = $(this).val();
         if (selectedCompanyType) {
@@ -507,15 +463,20 @@ $(win.document.body).find('table.dataTable').css('border-collapse', 'collapse');
         table.ajax.reload();
     });
 
+   $('#statuses').on('change', function() {
+        // Reload DataTable with updated parameters
+        table.ajax.reload();
+    });
+
+     $('#from_date').on('change', function() {
+        // Reload DataTable with updated parameters
+        table.ajax.reload();
+    });
+    $('#last_date').on('change', function() {
+        // Reload DataTable with updated parameters
+        table.ajax.reload();
+    });
             
-    $('#incentive_status').on('change', function() {
-        // Reload DataTable with updated parameters
-        table.ajax.reload();
-    });
-    $('#received_date').on('change', function() {
-        // Reload DataTable with updated parameters
-        table.ajax.reload();
-    });
 
 
 
@@ -553,22 +514,22 @@ function updateSelectedFilters() {
   // Get selected values from filter elements
   var companyType = $('#company_type option:selected').text();
   var companies = $('#companies option:selected').text();
-  var incentiveStatus = $('#incentive_status option:selected').text();
-  var receivedDate = $('#received_date').val();
-  
+  var status = $('#statuses option:selected').text();
+  var fromDate = $('#from_date').val();
+  var lastDate = $('#last_date').val();
   
   // Construct the string with selected filter values
   selectedFilters += 'Company Type: ' + companyType + ', ';
   selectedFilters += 'Companies: ' + companies + ', ';
   selectedFilters += 'Status: ' + status + ', ';
-  selectedFilters += 'Incentive Status: ' + incentiveStatus + ', ';
-  selectedFilters += 'Received Date: ' + receivedDate + ', ';
-  
+  selectedFilters += 'From Date: ' + fromDate + ', ';
+  selectedFilters += 'Last Date: ' + lastDate;
   
   // Update the HTML content with selected filter values
   $('#selectedFilters').text(selectedFilters);
   
 }
+
 
         function edit(id) {
             console.log("inside");
@@ -631,8 +592,7 @@ function updateSelectedFilters() {
             return `${day}-${month}-${year} ${strTime}`;
         }
     </script>
-
-           <script>
+    <script>
         
     document.addEventListener("DOMContentLoaded", function () {
         var companyTypeSelect = document.getElementById('company_type');
@@ -658,5 +618,7 @@ function updateSelectedFilters() {
     });
 
     </script>
-    
+
+
+
 @endsection

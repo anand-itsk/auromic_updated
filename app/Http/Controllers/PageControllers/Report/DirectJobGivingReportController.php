@@ -30,7 +30,7 @@ public function indexData(Request $request)
     }
 
     if ($finishing_product) {
-        $direct_job_giving->where('finishing_product_model_id', $finishing_product);
+        $direct_job_giving->where('finishing_product_models_id', $finishing_product);
     }
 
     return DataTables::of($direct_job_giving->get())->make(true);

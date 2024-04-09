@@ -26,11 +26,13 @@ public function indexData(Request $request)
     
     $status = $request->input('status');
     $companyType = $request->input('company_type');
-        $company = $request->input('companies');
+    $company = $request->input('companies');
+    $incentiveStatus = $request->input('incentive_status');
+    $received_date = $request->input('received_date');
 
 
     // Retrieve JobReceived data with eager loading
-    $jobReceivedData = JobReceived::with(['jobGiving.employee', 'jobGiving.deliveryChellan.company']);
+    $jobReceivedData = JobReceived::with(['jobGiving.employee', 'jobGiving.deliveryChellan.company','jobGiving.product_model','jobGiving.order_details']);
 
  if ($companyType) {
             $jobReceivedData->whereHas('jobGiving.deliveryChellan.company', function ($q) use ($companyType) {
@@ -52,6 +54,14 @@ public function indexData(Request $request)
         $jobReceivedData->where('status', $status);
     }
 
+    if ($incentiveStatus) {
+        $jobReceivedData->where('incentive_applicable', $incentiveStatus);
+    }
+
+    if ($received_date) {
+        $jobReceivedData->where('receving_date', $received_date);
+    }
+
     
 
     // Get the filtered data
@@ -61,15 +71,18 @@ public function indexData(Request $request)
     $data = $jobReceivedData->map(function ($job_received) {
         return [
             'id' => $job_received->id,
-            'company_code' => $job_received->jobGiving->deliveryChellan->company->company_code ?? null,
+            'employee_code' => $job_received->jobGiving->employee->employee_code ?? null,
             'employee_name' => $job_received->jobGiving->employee->employee_name ?? null,
-            'incentive_applicable' => $job_received->incentive_applicable,
-            'conveyance_fee' => $job_received->conveyance_fee,
-            'deducation_fee' => $job_received->deducation_fee,
+            'model_name' => $job_received->jobGiving->product_model->model_name,
+            'size' => $job_received->jobGiving->product_model->productSize->code,
+            'color' => $job_received->jobGiving->order_details->productColor->name,
+            'received_qty' => $job_received->complete_quantity,
             'incentive_fee' => $job_received->incentive_fee,
             'total_amount' => $job_received->total_amount,
-            'net_amount' => $job_received->net_amount,
-            'status' => $job_received->status,
+            'deducation_fee' => $job_received->deducation_fee,
+            'conveyance_fee' => $job_received->conveyance_fee,
+            'incentive_fee' => $job_received->incentive_fee,
+            'current_weight' => $job_received->current_weight,
         ];
     });
 
