@@ -96,9 +96,9 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        
-                                        
-                                        <label for="customer_code" class="col-sm-2 col-form-label">Product Color
+
+
+                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Product Color
                                             <a class="shortcut_master"
                                                 href="{{ route('product-models.product_colors.create') }}"
                                                 target="_blank">+</a>
@@ -115,33 +115,26 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="product_size" class="col-sm-2 col-form-label">Product Size</label>
+                                        <label for="product_size" class="col-sm-2 col-form-label">Product
+                                            Size</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="product_size"
-                                                id="product_size" readonly>
+                                            <input class="form-control" type="text" name="product_size" id="product_size"
+                                                readonly>
                                             @error('product_size')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        
-                                        
 
-                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Is Clothes by Cutting?</label>
+
+
+                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Is Clothes by
+                                            Cutting?</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control" name="clothes_by_cutting"
-                                                id="clothes_by_cutting">
+                                            <select class="form-control" name="clothes_by_cutting" id="clothes_by_cutting">
                                                 <option value="0">No</option>
                                                 <option value="1">Yes</option>
                                             </select>
                                             @error('finishing_product_models_id')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-
-                                        <label for="total_cutting_pices" class="col-sm-2 col-form-label">Total Cutting Pieces</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="total_cutting_pices" id="total_cutting_pices">
-                                            @error('total_cutting_pices')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -151,6 +144,16 @@
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="meter" id="meter">
                                             @error('meter')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="total_cutting_pices" class="col-sm-2 col-form-label">Total Cutting
+                                            Pieces</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="total_cutting_pices"
+                                                id="total_cutting_pices">
+                                            @error('total_cutting_pices')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -231,6 +234,30 @@
                     });
                 }
             });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Find the select box and the div that contains the "Total Meter" input by their IDs
+            var clothesByCuttingSelect = document.getElementById('clothes_by_cutting');
+            var meterInputContainer = document.getElementById('total_cutting_pices').parentNode;
+            var meterLabel = document.querySelector('label[for="total_cutting_pices"]');
+            // Function to show or hide the "Total Meter" input
+            function toggleMeterInput() {
+                // Check if the selected value is "1" (Yes)
+                if (clothesByCuttingSelect.value === '1') {
+                    meterLabel.style.display = '';
+                    meterInputContainer.style.display = ''; // Show
+                } else {
+                    meterLabel.style.display = 'none';
+                    meterInputContainer.style.display = 'none'; // Hide
+                }
+            }
+
+            // Initially call the function to set the correct display state based on the current selection
+            toggleMeterInput();
+
+            // Add an event listener to the select box to toggle the "Total Meter" input when the selection changes
+            clothesByCuttingSelect.addEventListener('change', toggleMeterInput);
         });
     </script>
     @include('links.js.select2.select2')

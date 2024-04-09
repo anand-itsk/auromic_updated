@@ -22,6 +22,7 @@ class FinisingProductModelTableSeeder extends Seeder
                 'model_name' => 'Pant',
                 'model_code' => 'PANTS',
                 'meters_one_product' => '2',
+                'wages_one_product' => '75',
                 'cutting_charge' => '35',
             ),
             
@@ -31,6 +32,7 @@ class FinisingProductModelTableSeeder extends Seeder
                 'model_name' => 'Pant',
                 'model_code' => 'PANTM',
                 'meters_one_product' => '2.5',
+                'wages_one_product' => '75',
                 'cutting_charge' => '35',
             ),
 
@@ -40,6 +42,7 @@ class FinisingProductModelTableSeeder extends Seeder
                 'model_name' => 'Pant',
                 'model_code' => 'PANTL',
                 'meters_one_product' => '3',
+                'wages_one_product' => '150',
                 'cutting_charge' => '40',
             ),
 
@@ -49,6 +52,7 @@ class FinisingProductModelTableSeeder extends Seeder
                 'model_name' => 'Pant',
                 'model_code' => 'PANTXL',
                 'meters_one_product' => '2',
+                'wages_one_product' => '225',
                 'cutting_charge' => '35',
             ),
 
