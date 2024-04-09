@@ -369,8 +369,8 @@
                         
                     },
                     {
-                        data: 'incentive_fee',
-                        name: 'incentive_fee',
+                        data: '',
+                        name: '',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }

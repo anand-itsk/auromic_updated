@@ -14,7 +14,7 @@
 <hr class="my-1" />
 
 
-<h6 class="font-weight-lighter text-primary">Company Info hgh</h6>
+<h6 class="font-weight-lighter text-primary">Company Info</h6>
 
 <div class="row">
 
