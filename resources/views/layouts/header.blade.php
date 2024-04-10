@@ -310,7 +310,7 @@
                             </li>
 
                             <li>
-                                <a href="{{ route('report.daily_given_report_cw.index') }}">Daily Report -(CW)</a>
+                                <a href="{{ route('report.daily_given_report_cw.index') }}">Job Giving Report</a>
                             </li>
                             <li>
                                 <a href="{{ route('report.job_received_report.index') }}">Job Received Report</a>
@@ -319,6 +319,15 @@
                             <li>
                                 <a href="{{ route('report.order_report.index') }}">Order Report</a>
                             </li>
+
+                             <li>
+                                <a href="{{ route('report.direct_job_giving_report.index') }}">Direct Job Given Report</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('report.direct_job_received_report.index') }}">Direct Job Received Report</a>
+                            </li>
+                            
                         
                         </ul>
                     </li>

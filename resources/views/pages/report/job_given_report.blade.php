@@ -31,15 +31,15 @@
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="#">Auromics</a></li>
                                 <li class="breadcrumb-item"><a href="#">Report</a></li>
-                                <li class="breadcrumb-item active">Employee Report</li>
+                                <li class="breadcrumb-item active">Job Giving Report</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Employee Report</h4>
+                        <h4 class="page-title">Job Giving Report</h4>
                     </div>
                        <div class="card mb-2">
                            <div class="card-body">
                 <div class="form-group row mb-0">
-                           <label for="customer_code" class="col-sm-2 col-form-label ">
+                <label for="customer_code" class="col-sm-2 col-form-label ">
                             Company Type
                            </label>
                            <div class="col-sm-2 mb-2">
@@ -69,29 +69,49 @@
                               @enderror
                            </div>
 
-                           
+
                            <label for="customer_code" class="col-sm-2 col-form-label ">
-                           Joining Date
+                           From Date
                            </label>
                            <div class="col-sm-2 mb-2">
-                            <input type="date" class="form-control" name="joining_date" id="joining_date">
-                              @error('joining_date')
+                            <input type="date" class="form-control" name="from_date" id="from_date">
+                              @error('company_type_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
-
-                            <!-- <label for="customer_code" class="col-sm-2 col-form-label ">
-                           Gender
+                           <label for="customer_code" class="col-sm-2 col-form-label ">
+                           Last Date
                            </label>
                            <div class="col-sm-2 mb-2">
-                              <select class="form-control select2" name="gender" id="gender">
-                                 <option value="">Select Gender</option>
-                                 
-                              </select>
-                              @error('gender')
+                            <input type="date" class="form-control" name="last_date" id="last_date">
+                              @error('company_type_id')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
+                           <!-- <label for="customer_code" class="col-sm-2 col-form-label ">
+                           Date
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                            <input type="date" class="form-control" name="date" id="">
+                              @error('company_type_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div> -->
+                               <label for="customer_code" class="col-sm-2 col-form-label ">
+                           Status
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                                 <select class="form-control select2" name="status" id="statuses">
+                                                <option value="">Select Status</option>
+                                                <option value="Incomplete">Incomplete</option>
+                                                <option value="Complete">Complete</option>
+                                                <option value="Pending">Pending</option>
+                                                <option value="cancelled">Cancelled</option>
+                                            </select>
+                              @error('status')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
                            
                            
 </div>
@@ -152,6 +172,7 @@
                                     </div><!-- /.modal-dialog -->
                                 </div>
                                 <div class="card-body">
+ <div style="text-align: center;">
                                     <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap"
                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
@@ -159,16 +180,20 @@
                                                 <th>ID</th>
                                                 <th>Employee code</th>
                                                 <th>Employee Name</th>
-                                                <th>DOB</th>
-                                                <th>Joning Date</th>
-                                                
-            
+                                                <th>Order Number</th>
+                                                <th>Model Code</th>
+                                                 <th>Model Name</th>
+                                                  <th>Product Size</th>
+                                                    <th>Quantity</th>
+                                                     <th>Color</th>
+                                                        <th>Weight</th>
+                                                        
                                             </tr>
                                         </thead>
                                         <tbody>
                                         </tbody>
                                     </table>
-
+</div>
                                 </div>
                             </div>
                         </div>
@@ -234,38 +259,113 @@
 
 
     <script>
-       var table;
-
-$(document).ready(function() {
-    var table;
-
-    // Initialize DataTable
-    $('#companies').prop('disabled', true);
-    table = $('#users-table').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: {
-            url: '{{ route('report.employee_report.data') }}',
+           
+        $(document).ready(function() {
+            var table;
+            $('#companies').prop('disabled', true);
+            table = $('#users-table').DataTable({
+                processing: true,
+                serverSide: true,
+                    ajax: {
+            url: '{{ route('report.daily_given_report_cw.data') }}',
             data: function(d) {
                 // Add additional parameters here if needed
                 d.company_type = $('#company_type').val();
-                d.joining_date = $('#joining_date').val();
                  d.companies = $('#companies').val();
+                  d.status = $('#statuses').val();
+                 d.from_date = $('#from_date').val();
+                 d.last_date = $('#last_date').val();
+        
             }
         },
-        columns: [
-            { data: 'id', name: 'id' },
-            { data: 'employee_code', name: 'employee_code', render: function(data, type, row) { return data ? data : '-'; } },
-            { data: 'employee_name', name: 'employee_name', render: function(data, type, row) { return data ? data : '-'; } },
-            { data: 'dob', name: 'dob', render: function(data, type, row) { return data ? data : '-'; } },
-            { data: 'joining_date', name: 'joining_date', render: function(data, type, row) { return data ? data : '-'; } }
-        ],
-        order: [[0, 'desc']],
-        select: true,
-        dom: 'lBfrtip',
-        buttons: [
-            'excel',
-                                {
+                columns: [{
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'employee_code',
+                        name: 'employee_code',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                    {
+                        data: 'employee_name',
+                        name: 'employee_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                     {
+                        data: 'customer_order_no',
+                        name: 'customer_order_no',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                    },
+                    {
+                        data: 'model_code',
+                        name: 'model_code',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                    {
+                        data: 'model_name',
+                        name: 'model_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                    
+                     {
+                        data: 'size',
+                        name: 'size',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                    {
+                        data: 'quantity',
+                        name: 'quantity',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                     {
+                        data: 'color',
+                        name: 'color',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                    },
+
+                    {
+                        data: 'weight',
+                        name: 'weight',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+
+                    
+
+                ],
+                order: [
+                    [0, 'desc']
+                ],
+                select: true,
+                dom: 'lBfrtip',
+                buttons: [
+                    'excel', 
+                    {
         extend: 'print',
         text: 'Print',
         customize: function(win) {
@@ -275,37 +375,31 @@ $(document).ready(function() {
     var title = "";
 
     // Check if Company Type is selected and append to the title
-    // var companyType = $('#company_type').val();
-    // if (companyType) {
-    //     title += " Company Type: " + $('#company_type option:selected').text();
-    // }
+    
 
-    // Check if Company is selected and append to the title
     var company = $('#companies').val();
     if (company) {
         title +=  $('#companies option:selected').text();
     }
+    // title += "\n";
 
-    // Check if From Date is selected and append to the title
-    // var fromDate = $('#from_date').val();
-    // if (fromDate) {
-    //     title += " From Date: " + fromDate;
+    // var companyType = $('#company_type').val();
+    // if (companyType) {
+    //     title += $('#company_type option:selected').text();":"
     // }
 
-    // Check if Last Date is selected and append to the title
-    // var lastDate = $('#last_date').val();
-    // if (lastDate) {
-    //     title += "Last Date: " + lastDate;
-    // }
+   
 
-    // Set the constructed title to the <h1> element in the print view
+   
+
+   
    var h1Element = $(win.document.body).find('h1');
             h1Element.text(title);
 
             // Decrease font size of company name in print view
             h1Element.css('font-size', '18px');
 
-               var currentDate = new Date().toLocaleDateString('en-US', {
+             var currentDate = new Date().toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'numeric',
         day: 'numeric'
@@ -320,7 +414,7 @@ $(document).ready(function() {
     $(win.document.body).append(dateElement);
 
 
-     var reportName = "Employee Report"; // Change this to the desired report name
+     var reportName = "Job Given Report"; // Change this to the desired report name
     var reportElement = $('<h2>').css({
         'text-align': 'center',
         'font-weight': 'bold',
@@ -328,6 +422,7 @@ $(document).ready(function() {
         'margin-top': '30px'
     }).text(reportName);
     $(win.document.body).prepend(reportElement);
+  
                
 
 $(win.document.body).find('table.dataTable').css('border-collapse', 'collapse');
@@ -339,16 +434,20 @@ $(win.document.body).find('table.dataTable').css('border-collapse', 'collapse');
     $(win.document.body).find('table').addClass('compact');
 }
                     },
-            {
-                text: 'Export All',
-                action: function(e, dt, node, config) {
-                    window.location.href = '/job_allocation/delivery_challan/export?' + $.param(dt.ajax.params());
-                }
-            }
-        ]
-    });
+                    {
+                        text: 'Export All',
+                        action: function(e, dt, node, config) {
+                            window.location.href = '/job_allocation/delivery_challan/export?' + $.param(dt.ajax
+                                .params());
+                        }
+                    }
+                ]
+                
 
-    // Event listener for company type dropdown
+            });
+
+
+            // Event listener for company type dropdown
     $('#company_type').on('change', function() {
         var selectedCompanyType = $(this).val();
         if (selectedCompanyType) {
@@ -359,31 +458,72 @@ $(win.document.body).find('table.dataTable').css('border-collapse', 'collapse');
         // Reload DataTable with updated parameters
         table.ajax.reload();
     });
-
-    // Event listener for joining date dropdown
-    $('#joining_date').on('change', function() {
+ $('#companies').on('change', function() {
         // Reload DataTable with updated parameters
         table.ajax.reload();
     });
 
-    // Event listener for companies dropdown
-    $('#companies').on('change', function() {
+   $('#statuses').on('change', function() {
         // Reload DataTable with updated parameters
         table.ajax.reload();
     });
-});
+
+     $('#from_date').on('change', function() {
+        // Reload DataTable with updated parameters
+        table.ajax.reload();
+    });
+    $('#last_date').on('change', function() {
+        // Reload DataTable with updated parameters
+        table.ajax.reload();
+    });
+            
+
+
+
+            $('#deleteButton').click(function() {
+                var ids = $.map(table.rows('.selected').data(), function(item) {
+                    return item.id;
+                });
+
+                if (ids.length === 0) {
+                    alert('No rows selected!');
+                    return;
+                }
+
+                if (confirm("Are you sure you want to delete these rows?")) {
+                    // Send AJAX request to delete the selected rows
+                    $.ajax({
+                        url: '/job_allocation/delivery_challan/delete/selected',
+                        type: 'POST',
+                        data: {
+                            ids: ids,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            // Handle response here
+                            table.ajax.reload(); // Reload the DataTable
+                        }
+                    });
+                }
+            });
+        });
+        
 
 function updateSelectedFilters() {
   var selectedFilters = '';
   // Get selected values from filter elements
   var companyType = $('#company_type option:selected').text();
   var companies = $('#companies option:selected').text();
-  var joiningDate = $('#joining_date').val();
+  var status = $('#statuses option:selected').text();
+  var fromDate = $('#from_date').val();
+  var lastDate = $('#last_date').val();
   
   // Construct the string with selected filter values
   selectedFilters += 'Company Type: ' + companyType + ', ';
   selectedFilters += 'Companies: ' + companies + ', ';
-  selectedFilters += 'Joining Date: ' + joiningDate;
+  selectedFilters += 'Status: ' + status + ', ';
+  selectedFilters += 'From Date: ' + fromDate + ', ';
+  selectedFilters += 'Last Date: ' + lastDate;
   
   // Update the HTML content with selected filter values
   $('#selectedFilters').text(selectedFilters);
@@ -453,6 +593,7 @@ function updateSelectedFilters() {
         }
     </script>
     <script>
+        
     document.addEventListener("DOMContentLoaded", function () {
         var companyTypeSelect = document.getElementById('company_type');
         var companiesSelect = document.getElementById('companies');
@@ -475,5 +616,9 @@ function updateSelectedFilters() {
             });
         });
     });
-</script>
+
+    </script>
+
+
+
 @endsection

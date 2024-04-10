@@ -31,69 +31,43 @@
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="#">Auromics</a></li>
                                 <li class="breadcrumb-item"><a href="#">Report</a></li>
-                                <li class="breadcrumb-item active">Employee Report</li>
+                                <li class="breadcrumb-item active">Direct Job Given Report</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Employee Report</h4>
+                        <h4 class="page-title">Direct Job Given Report</h4>
                     </div>
                        <div class="card mb-2">
                            <div class="card-body">
                 <div class="form-group row mb-0">
-                           <label for="customer_code" class="col-sm-2 col-form-label ">
-                            Company Type
+                <label for="customer_code" class="col-sm-2 col-form-label ">
+                            Employee
                            </label>
                            <div class="col-sm-2 mb-2">
-                              <select class="form-control select2" name="company_type" id="company_type">
-                                 <option value="">Select Type</option>
-                                  @foreach($companyType as $type)
-            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                              <select class="form-control select2" name="employee_id" id="employee_id">
+                                 <option value="">Select Employee</option>
+                                  @foreach($employee as $type)
+            <option value="{{ $type->id }}">{{ $type->employee_code }}/{{ $type->employee_name}}</option>
         @endforeach
                                  
                               </select>
-                              @error('company_type')
+                              @error('employee_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
                             <label for="customer_code" class="col-sm-2 col-form-label ">
-                           Companies
+                           Finishing product model
                            </label>
                            <div class="col-sm-2 mb-2">
-                             <select class="form-control select2" name="companies" id="companies" disabled>
+                             <select class="form-control select2" name="finishing_product_model_id" id="finishing_product_model_id">
         <option value="">Select Company</option>
-        @foreach($company as $c)
-            <option value="{{ $c->id }}" data-type-id="{{ $c->company_type_id }}">{{ $c->company_name }}</option>
+        @foreach($finishing_product as $finishing_products)
+            <option value="{{ $finishing_products->id }}">{{ $finishing_products->model_code}}/{{ $finishing_products->model_name}}</option>
         @endforeach
     </select>
-                              @error('Companies')
+                              @error('finishing_product_model_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
-                           </div>
-
-                           
-                           <label for="customer_code" class="col-sm-2 col-form-label ">
-                           Joining Date
-                           </label>
-                           <div class="col-sm-2 mb-2">
-                            <input type="date" class="form-control" name="joining_date" id="joining_date">
-                              @error('joining_date')
-                              <span class="error" style="color: red;">{{ $message }}</span>
-                              @enderror
-                           </div>
-
-                            <!-- <label for="customer_code" class="col-sm-2 col-form-label ">
-                           Gender
-                           </label>
-                           <div class="col-sm-2 mb-2">
-                              <select class="form-control select2" name="gender" id="gender">
-                                 <option value="">Select Gender</option>
-                                 
-                              </select>
-                              @error('gender')
-                              <span class="error" style="color: red;">{{ $message }}</span>
-                              @enderror
-                           </div> -->
-                           
-                           
+                           </div>                       
 </div>
 </div>
 </div>
@@ -152,6 +126,7 @@
                                     </div><!-- /.modal-dialog -->
                                 </div>
                                 <div class="card-body">
+ <div style="text-align: center;">
                                     <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap"
                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
@@ -159,16 +134,16 @@
                                                 <th>ID</th>
                                                 <th>Employee code</th>
                                                 <th>Employee Name</th>
-                                                <th>DOB</th>
-                                                <th>Joning Date</th>
-                                                
-            
+                                                <th>Model Code</th>
+                                                <th>Color</th>
+                                                 <th>Meter</th>
+                                                        
                                             </tr>
                                         </thead>
                                         <tbody>
                                         </tbody>
                                     </table>
-
+</div>
                                 </div>
                             </div>
                         </div>
@@ -234,38 +209,70 @@
 
 
     <script>
-       var table;
-
-$(document).ready(function() {
+   $(document).ready(function() {
     var table;
-
-    // Initialize DataTable
-    $('#companies').prop('disabled', true);
     table = $('#users-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: {
-            url: '{{ route('report.employee_report.data') }}',
+         ajax: {
+            url: '{{ route('report.direct_job_giving_report.data') }}',
             data: function(d) {
-                // Add additional parameters here if needed
-                d.company_type = $('#company_type').val();
-                d.joining_date = $('#joining_date').val();
-                 d.companies = $('#companies').val();
+                 d.employee_id = $('#employee_id').val();
+                d.finishing_product_model_id = $('#finishing_product_model_id').val(); 
             }
         },
-        columns: [
-            { data: 'id', name: 'id' },
-            { data: 'employee_code', name: 'employee_code', render: function(data, type, row) { return data ? data : '-'; } },
-            { data: 'employee_name', name: 'employee_name', render: function(data, type, row) { return data ? data : '-'; } },
-            { data: 'dob', name: 'dob', render: function(data, type, row) { return data ? data : '-'; } },
-            { data: 'joining_date', name: 'joining_date', render: function(data, type, row) { return data ? data : '-'; } }
+        columns: [{
+
+                data: 'id',
+                name: 'id'
+            },
+            {
+                data: 'employee.employee_code',
+                name: 'employee.employee_code',
+                 render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+            },
+            {
+                data: 'employee.employee_name',
+                name: 'employee.employee_name',
+                 render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+            },
+            {
+                data: 'finishing_product.model_code',
+                name: 'finishing_product.model_code',
+                 render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+            },
+            
+            {
+                data: 'product_color.name',
+                name: 'product_color.name',
+                 render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+            },
+            {
+                data: 'meter',
+                name: 'meter',
+                 render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+            },
+            
+           
         ],
-        order: [[0, 'desc']],
+        order: [
+            [0, 'desc']
+        ],
         select: true,
         dom: 'lBfrtip',
         buttons: [
             'excel',
-                                {
+             {
         extend: 'print',
         text: 'Print',
         customize: function(win) {
@@ -281,9 +288,9 @@ $(document).ready(function() {
     // }
 
     // Check if Company is selected and append to the title
-    var company = $('#companies').val();
+    var company = $('#employee_id').val();
     if (company) {
-        title +=  $('#companies option:selected').text();
+        title +=  $('#employee_id option:selected').text();
     }
 
     // Check if From Date is selected and append to the title
@@ -305,7 +312,7 @@ $(document).ready(function() {
             // Decrease font size of company name in print view
             h1Element.css('font-size', '18px');
 
-               var currentDate = new Date().toLocaleDateString('en-US', {
+             var currentDate = new Date().toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'numeric',
         day: 'numeric'
@@ -320,7 +327,7 @@ $(document).ready(function() {
     $(win.document.body).append(dateElement);
 
 
-     var reportName = "Employee Report"; // Change this to the desired report name
+     var reportName = "Direct Job Given Report"; // Change this to the desired report name
     var reportElement = $('<h2>').css({
         'text-align': 'center',
         'font-weight': 'bold',
@@ -328,6 +335,7 @@ $(document).ready(function() {
         'margin-top': '30px'
     }).text(reportName);
     $(win.document.body).prepend(reportElement);
+  
                
 
 $(win.document.body).find('table.dataTable').css('border-collapse', 'collapse');
@@ -342,53 +350,72 @@ $(win.document.body).find('table.dataTable').css('border-collapse', 'collapse');
             {
                 text: 'Export All',
                 action: function(e, dt, node, config) {
-                    window.location.href = '/job_allocation/delivery_challan/export?' + $.param(dt.ajax.params());
+                    window.location.href = '/job_allocation/direct_job_giving/export?' + $.param(dt.ajax
+                        .params());
                 }
             }
         ]
+
     });
 
-    // Event listener for company type dropdown
-    $('#company_type').on('change', function() {
-        var selectedCompanyType = $(this).val();
-        if (selectedCompanyType) {
-            $('#companies').prop('disabled', false);
-        } else {
-            $('#companies').prop('disabled', true).val('');
-        }
+     $('#employee_id').on('change', function() {
         // Reload DataTable with updated parameters
         table.ajax.reload();
     });
-
-    // Event listener for joining date dropdown
-    $('#joining_date').on('change', function() {
+    $('#finishing_product_model_id').on('change', function() {
         // Reload DataTable with updated parameters
         table.ajax.reload();
     });
+    
 
-    // Event listener for companies dropdown
-    $('#companies').on('change', function() {
-        // Reload DataTable with updated parameters
-        table.ajax.reload();
-    });
-});
+       
+
+            $('#deleteButton').click(function() {
+                var ids = $.map(table.rows('.selected').data(), function(item) {
+                    return item.id;
+                });
+
+                if (ids.length === 0) {
+                    alert('No rows selected!');
+                    return;
+                }
+
+                if (confirm("Are you sure you want to delete these rows?")) {
+                    // Send AJAX request to delete the selected rows
+                    $.ajax({
+                        url: '/job_allocation/delivery_challan/delete/selected',
+                        type: 'POST',
+                        data: {
+                            ids: ids,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            // Handle response here
+                            table.ajax.reload(); // Reload the DataTable
+                        }
+                    });
+                }
+            });
+        });
+        
 
 function updateSelectedFilters() {
   var selectedFilters = '';
   // Get selected values from filter elements
-  var companyType = $('#company_type option:selected').text();
-  var companies = $('#companies option:selected').text();
-  var joiningDate = $('#joining_date').val();
+  var employee = $('#employee_id option:selected').text();
+  var finishingProduct = $('#finishing_product_model_id option:selected').text();
+  
   
   // Construct the string with selected filter values
-  selectedFilters += 'Company Type: ' + companyType + ', ';
-  selectedFilters += 'Companies: ' + companies + ', ';
-  selectedFilters += 'Joining Date: ' + joiningDate;
+ selectedFilters += 'Employee: ' + employee + ', ';
+  selectedFilters += 'Finishing Product: ' + finishingProduct + ', ';
+ 
   
   // Update the HTML content with selected filter values
   $('#selectedFilters').text(selectedFilters);
   
 }
+
 
 
         function edit(id) {
@@ -452,28 +479,5 @@ function updateSelectedFilters() {
             return `${day}-${month}-${year} ${strTime}`;
         }
     </script>
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var companyTypeSelect = document.getElementById('company_type');
-        var companiesSelect = document.getElementById('companies');
 
-        companyTypeSelect.addEventListener('change', function () {
-            var selectedTypeId = this.value;
-
-            // Reset options
-            companiesSelect.innerHTML = '<option value="">Select Company</option>';
-
-            // Filter and populate options based on selected type
-            var companies = @json($company);
-            companies.forEach(function (company) {
-                if (company.company_type_id == selectedTypeId) {
-                    var option = document.createElement('option');
-                    option.value = company.id;
-                    option.textContent = company.company_name;
-                    companiesSelect.appendChild(option);
-                }
-            });
-        });
-    });
-</script>
 @endsection

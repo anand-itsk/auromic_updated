@@ -295,7 +295,7 @@ $(document).ready(function() {
         },
         columns: [
             { data: 'id', name: 'id' },
-            { data: 'order_no.last_order_number', name: 'order_no.last_order_number' },
+            { data: 'order_no.customer_order_no', name: 'order_no.customer_order_no' },
             { data: 'order_date', name: 'order_date' },
             { data: 'customer.customer_name', name: 'customer.customer_name' },
              { data: 'product_model.product.name', name: 'product_model.product.name' },
@@ -353,6 +353,31 @@ $(document).ready(function() {
 
             // Decrease font size of company name in print view
             h1Element.css('font-size', '18px');
+
+             var currentDate = new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric'
+    });
+    var dateElement = $('<div>').css({
+        'position': 'absolute',
+        'top': '20px',
+        'right': '20px',
+        'font-weight': 'bold',
+        'font-size': '16px'
+    }).text(currentDate);
+    $(win.document.body).append(dateElement);
+
+
+     var reportName = "Order Report"; // Change this to the desired report name
+    var reportElement = $('<h2>').css({
+        'text-align': 'center',
+        'font-weight': 'bold',
+        'font-size': '24px',
+        'margin-top': '30px'
+    }).text(reportName);
+    $(win.document.body).prepend(reportElement);
+  
                
 
 $(win.document.body).find('table.dataTable').css('border-collapse', 'collapse');
