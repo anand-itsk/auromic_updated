@@ -85,6 +85,31 @@
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
+                           <label for="customer_code" class="col-sm-2 col-form-label">
+                                            Incentive Applicable
+                                        </label>
+                                        <div class="col-sm-2 mb-2">
+                                            <select class="form-control select2" name="incentive_status"
+                                                id="incentive_status">
+                                                 <option value="">Select</option>
+                                                <option value="No">No</option>
+                                                <option value="Yes">Yes</option>
+
+                                            </select>
+                                            @error('incentive_status')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="customer_code" class="col-sm-2 col-form-label">
+                                            Received Date
+                                        </label>
+                                        <div class="col-sm-2 mb-2">
+                                            <input type="date" class="form-control"name="received_date" id="received_date">
+                                            @error('received_date')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                          
 
                            
@@ -152,12 +177,18 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Company code</th>
+                                                <th>Employee code</th>
                                                  <th>Employee Name</th>
-                                                  <th>Incentive Applicable</th>
-                                                   <th>Total amount</th>
-                                                    <th>Net amount</th>
-                                                    <th>status</th>
+                                                  <th>Model Name</th>
+                                                   <th>Size</th>
+                                                   <th>Color</th>
+                                                    <th>Received qty</th>
+                                                    <th>Total Amount</th>
+                                                    <th>Ded</th>
+                                                    <th>Conv</th>
+                                                    <th>Inc</th>
+                                                    <th>Village</th>
+                                                    <th>Weight</th>
                                                
                                                         
                                             </tr>
@@ -245,6 +276,8 @@
                d.status = $('#statuses').val();
                d.company_type = $('#company_type').val();
                  d.companies = $('#companies').val();
+                 d.incentive_status = $('#incentive_status').val(); 
+                 d.received_date = $('#received_date').val(); 
                 
             }
             
@@ -254,8 +287,8 @@
                         name: 'id'
                     },
                     {
-                        data: 'company_code',
-                        name: 'company_code',
+                        data: 'employee_code',
+                        name: 'employee_code',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
@@ -269,15 +302,39 @@
                         }
                         
                     },
-                     {
-                        data: 'incentive_applicable',
-                        name: 'incentive_applicable',
+                    {
+                        data: 'model_name',
+                        name: 'model_name',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
+                        
                     },
-                   
-                     
+                     {
+                        data: 'size',
+                        name: 'size',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                    {
+                        data: 'color',
+                        name: 'color',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+
+                     {
+                        data: 'received_qty',
+                        name: 'received_qty',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
                     {
                         data: 'total_amount',
                         name: 'total_amount',
@@ -286,23 +343,53 @@
                         }
                         
                     },
-                     {
-                        data: 'net_amount',
-                        name: 'net_amount',
+                    {
+                        data: 'deducation_fee',
+                        name: 'deducation_fee',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
+                        
                     },
-
-                    {
-                        data: 'status',
-                        name: 'status',
+                     {
+                        data: 'conveyance_fee',
+                        name: 'conveyance_fee',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
                         
                     },
 
+                        {
+                        data: 'incentive_fee',
+                        name: 'incentive_fee',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                    {
+                        data: '',
+                        name: '',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                    {
+                        data: 'current_weight',
+                        name: 'current_weight',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                        
+                    },
+                    
+
+
+
+                    
+                     
                     
 
                 ],
@@ -352,6 +439,31 @@
 
             // Decrease font size of company name in print view
             h1Element.css('font-size', '18px');
+
+             var currentDate = new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric'
+    });
+    var dateElement = $('<div>').css({
+        'position': 'absolute',
+        'top': '20px',
+        'right': '20px',
+        'font-weight': 'bold',
+        'font-size': '16px'
+    }).text(currentDate);
+    $(win.document.body).append(dateElement);
+
+
+     var reportName = "Job Received Report"; // Change this to the desired report name
+    var reportElement = $('<h2>').css({
+        'text-align': 'center',
+        'font-weight': 'bold',
+        'font-size': '24px',
+        'margin-top': '30px'
+    }).text(reportName);
+    $(win.document.body).prepend(reportElement);
+  
                
 
 $(win.document.body).find('table.dataTable').css('border-collapse', 'collapse');
@@ -396,6 +508,14 @@ $(win.document.body).find('table.dataTable').css('border-collapse', 'collapse');
     });
 
             
+    $('#incentive_status').on('change', function() {
+        // Reload DataTable with updated parameters
+        table.ajax.reload();
+    });
+    $('#received_date').on('change', function() {
+        // Reload DataTable with updated parameters
+        table.ajax.reload();
+    });
 
 
 
@@ -433,12 +553,16 @@ function updateSelectedFilters() {
   // Get selected values from filter elements
   var companyType = $('#company_type option:selected').text();
   var companies = $('#companies option:selected').text();
+  var incentiveStatus = $('#incentive_status option:selected').text();
+  var receivedDate = $('#received_date').val();
   
   
   // Construct the string with selected filter values
   selectedFilters += 'Company Type: ' + companyType + ', ';
   selectedFilters += 'Companies: ' + companies + ', ';
   selectedFilters += 'Status: ' + status + ', ';
+  selectedFilters += 'Incentive Status: ' + incentiveStatus + ', ';
+  selectedFilters += 'Received Date: ' + receivedDate + ', ';
   
   
   // Update the HTML content with selected filter values
