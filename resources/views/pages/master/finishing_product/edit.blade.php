@@ -94,6 +94,26 @@
                                             @enderror
                                         </div>
 
+                                        <label for="wages_product" class="col-sm-2 col-form-label">Meters of one
+                                            Product</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="meters_one_product"
+                                                id="meters_one_product" value="{{ $finishing_product->meters_one_product}}">
+                                            @error('meters_one_product')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="wages_product" class="col-sm-2 col-form-label">Cutting charges</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="cutting_charges"
+                                                id="cutting_charges" value="{{ $finishing_product->cutting_charge}}">
+                                            @error('cutting_charges')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+
                                         <label for="wages_product" class="col-sm-2 col-form-label">Wages of one
                                             Product</label>
                                         <div class="col-sm-4 mb-4">

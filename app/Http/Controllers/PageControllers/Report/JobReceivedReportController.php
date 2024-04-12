@@ -67,8 +67,13 @@ public function indexData(Request $request)
     // Get the filtered data
     $jobReceivedData = $jobReceivedData->get();
 
+   
+
     // Prepare data for DataTables
     $data = $jobReceivedData->map(function ($job_received) {
+         $villageAddress = $job_received->jobGiving->employee->addresses()
+    ->where('address_type_id', 4)
+    ->first();
         return [
             'id' => $job_received->id,
             'employee_code' => $job_received->jobGiving->employee->employee_code ?? null,
@@ -82,6 +87,7 @@ public function indexData(Request $request)
             'deducation_fee' => $job_received->deducation_fee,
             'conveyance_fee' => $job_received->conveyance_fee,
             'incentive_fee' => $job_received->incentive_fee,
+           'villageArea' =>$villageAddress ? $villageAddress->village_area : null,
             'current_weight' => $job_received->current_weight,
         ];
     });

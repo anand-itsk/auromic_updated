@@ -102,6 +102,17 @@
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
                                 </div>
+<!-- resign employee modal -->
+<div class="modal employe-resign-modal-center">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Modal content goes here</p>
+    </div>
+</div>
+
+
+<!--  -->
 
                                 {{-- Create Modal --}}
                                 <div class="modal fade employe-create-modal-center" tabindex="-1" role="dialog"
@@ -129,7 +140,7 @@
                                                                             Code</label>
                                                                         <div class="col-sm-12 mb-4">
 
-                                                                            <input class="form-control" type="text"  name="employee_code" value="{{ $randomEmployeeCode }}" readonly>
+                                                                            <input class="form-control" type="text"  name="employee_code" value="{{$formattedEmployeeNumber}}" readonly>
                                                                             @error('employee_code')
                                                                                 <span class="error"
                                                                                     style="color: red;">{{ $message }}</span>
@@ -289,6 +300,8 @@
                         <button onclick="edit(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
                         <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
                         <button onclick="showDetails(${row.id})" class="icon-button common-color"><i class="fa fa-eye"></i></button>
+                        <button onclick="openResignModal(${row.id})" class="icon-button custom-color">Working</i></button>
+                        
                     `;
                         }
 
@@ -311,6 +324,13 @@
                 ]
 
             });
+
+            function openResignModal(id) {
+        // Set any necessary data using the id parameter if needed
+
+        // Show the modal
+         $('.employe-resign-modal-center').modal('show');
+    }
 
             // Listen for row selection event
             $('#users-table').on('select.dt deselect.dt', function() {
@@ -353,6 +373,8 @@
                 }
             });
         });
+
+        
 
         function edit(id) {
             console.log("inside");

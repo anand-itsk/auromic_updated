@@ -216,6 +216,8 @@ class JobGivingController extends Controller
             $query->with('companyType');
         }])->get();
         $JobGiving = JobGiving::find($id);
+
+        
         // dd($JobGiving);
         return view('pages.job_allocation.job_giving.edit', compact('delivery_challan', 'order_details', 'employee', 'JobGiving', 'productModels', 'id'));
     }
@@ -226,10 +228,7 @@ class JobGivingController extends Controller
     {
         $validatedData = $request->validate([
             'employee_id' => 'required',
-            'order_id' => 'required',
-            'product_model_id' => 'required',
             'quantity' => 'required',
-            'date' => 'required',
             'status' => 'required'
         ]);
 
@@ -252,11 +251,15 @@ class JobGivingController extends Controller
 
         // Update job giving record
         $job_giving->employee_id = $input['employee_id'];
-        $job_giving->order_id = $input['order_id'];
-        $job_giving->product_model_id = $input['product_model_id'];
         $job_giving->quantity = $input['quantity'];
-        $job_giving->date = $input['date'];
+        // $job_giving->date = $input['date'];
         $job_giving->status = $input['status'];
+          $job_giving->quantity = $input['quantity'];
+        $job_giving->dc_id = $input['dc_number'];
+        $job_giving->weight = $input['weight'];
+        $job_giving->days = $input['deadline_days'];
+        $job_giving->excess	 = $input['excess_weight'];
+        $job_giving->shortage	 = $input['shortage_weight'];
 
         if (isset($input['dc_number'])) {
             $job_giving->dc_id = $input['dc_number'];

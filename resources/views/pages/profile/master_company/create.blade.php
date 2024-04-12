@@ -197,10 +197,7 @@
                                             @enderror
                                         </div>
 
-                                        <label for="esi_code" class="col-sm-2 col-form-label">ESI Code <a class="shortcut_master"
-                                                href="{{ route('specified.esi_dispensaries.create') }}" target="_blank">+</a>
-
-                                        </label>
+                                        <label for="esi_code" class="col-sm-2 col-form-label">ESI Code </label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="esi_code" id="esi_code">
                                             @error('esi_code')
@@ -407,7 +404,7 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="email" class="col-sm-2 col-form-label">Email Id</label>
+                                        <label for="email" class="col-sm-2 col-form-label mandatory">Email Id</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="email" name="person_email"
                                                 id="email">

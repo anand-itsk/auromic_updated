@@ -307,7 +307,10 @@
                     @enderror
                 </div>
 
-                <label class="col-sm-2 col-form-label">ESI Dispensary</label>
+                <label class="col-sm-2 col-form-label">ESI Dispensary<a class="shortcut_master"
+                                                href="{{ route('specified.esi_dispensaries.create') }}" target="_blank">+</a>
+
+                </label>
                 <div class="col-sm-4">
                     <select class="form-control select2" name="esi_dispensary_id" id="esi_dispensary_id">
                         @foreach ($esi_despensaries as $item)

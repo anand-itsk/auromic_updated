@@ -43,6 +43,10 @@ class Employee extends Model
     {
         return $this->morphMany(Address::class, 'addressable');
     }
+    public function villageAddress()
+{
+    return $this->hasOne(Address::class)->where('address_type_id', 4);
+}
 
     public function identityProof()
     {

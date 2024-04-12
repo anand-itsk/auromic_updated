@@ -147,16 +147,13 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-
-                                        <label for="total_cutting_pices" class="col-sm-2 col-form-label">Total Cutting
-                                            Pieces</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="total_cutting_pices"
-                                                id="total_cutting_pices">
+                                        <label for="meter" class="col-sm-2 col-form-label">Total Cutting Pieces</label>
+                                          <div class="col-sm-4 mb-4">
+                                <input class="form-control" type="text" name="total_cutting_pices" id="total_cutting_pices">
                                             @error('total_cutting_pices')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
-                                        </div>
+</div>
 
                                     </div>
                                     <div class="form-group">
