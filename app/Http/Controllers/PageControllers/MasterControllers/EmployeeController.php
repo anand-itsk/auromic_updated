@@ -53,8 +53,8 @@ public function index()
         $formattedEmployeeNumber = 'EMP' . str_pad($employeeNumber, STR_PAD_LEFT);
         $existingEmployee = Employee::where('employee_code', $formattedEmployeeNumber)->exists();
     }
-
-    return view('pages.master.employee.index',compact('formattedEmployeeNumber'));
+          $resigning_reason = ResigningReason::all();
+    return view('pages.master.employee.index',compact('formattedEmployeeNumber','resigning_reason'));
 }
 
    
@@ -808,4 +808,35 @@ public function index()
         $employee = Employee::where('id', $id)->first();
         return view('pages.master.employee.show', ['employee' => $employee]);
     }
+
+public function storeResign(Request $request)
+{
+    // Validate the incoming request data
+    $request->validate([
+        'employee_id' => 'required|exists:employees,id',
+        'relieving_date' => 'required|date',
+        'resigning_reason_id' => 'required|exists:resigning_reasons,id',
+    ]);
+
+    // Find the employee by their ID
+    $employee = Employee::findOrFail($request->employee_id);
+
+    // Update the resigning_date and resigning_reason_id fields in the Employee table
+    $employee->update([
+        'resigning_date' => $request->relieving_date,
+        'resigning_reason_id' => $request->resigning_reason_id,
+    ]);
+
+    // Create a record in the EmployeeHistory table
+    $employeeHistory = new EmployeeHistory();
+    $employeeHistory->employee_id = $request->employee_id; 
+    $employeeHistory->relieving_date = $request->resigning_date;
+    $employeeHistory->relieving_reason = $request->resigning_reason_id;
+    $employeeHistory->save();
+
+
+    return redirect()->route('master.employees.index')
+        ->with('success', 'Employee Updated successfully');
+}
+
 }
