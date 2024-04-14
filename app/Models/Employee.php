@@ -23,6 +23,7 @@ class Employee extends Model
         'marital_status',
         'std_code',
         'phone',
+        'status',
         'photo',
         'religion_id',
         'caste_id',
@@ -43,6 +44,10 @@ class Employee extends Model
     {
         return $this->morphMany(Address::class, 'addressable');
     }
+    public function villageAddress()
+{
+    return $this->hasOne(Address::class)->where('address_type_id', 4);
+}
 
     public function identityProof()
     {

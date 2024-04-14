@@ -71,10 +71,10 @@ class CustomerController extends Controller
         $customer->phone = $input['phone'];
         $customer->email = $input['email'];
         $customer->mobile = $input['mobile'];
-        $customer->tin_no = $input['pan_no'];
-        $customer->tin_date = $input['pan_date'];
+        $customer->pan_no = $input['pan_no'];
+        $customer->pann_date = $input['pan_date'];
         $customer->gst_no = $input['gst_no'];
-        $customer->cst_date = $input['gst_date'];
+        $customer->gst_date = $input['gst_date'];
         $input['created_by'] = $auth_id;
         $input['updated_by'] = $auth_id;
         $customer = $customer->create($input);
@@ -138,10 +138,10 @@ class CustomerController extends Controller
         $customer->phone = $input['phone'];
         $customer->email = $input['email'];
         $customer->mobile = $input['mobile'];
-        $customer->tin_no = $input['tin_no'];
-        $customer->tin_date = $input['tin_date'];
+        $customer->pan_no = $input['pan_no'];
+        $customer->pan_date = $input['pan_date'];
         $customer->gst_no = $input['gst_no'];
-        $customer->cst_date = $input['cst_date'];
+        $customer->gst_date = $input['gst_date'];
 
         $customer->save();
 

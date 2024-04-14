@@ -453,6 +453,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/store', [EmployeeController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [EmployeeController::class, 'edit'])->name('edit');
             Route::post('/store_personal/{id}', [EmployeeController::class, 'storePersonal'])->name('store.personal');
+            Route::post('/store_resign', [EmployeeController::class, 'storeResign'])->name('store.resign');
             Route::post('/store_finance/{id}', [EmployeeController::class, 'storeFinance'])->name('store.finance');
 
             //Family

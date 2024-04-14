@@ -32,28 +32,32 @@ use Yajra\DataTables\DataTables;
 class EmployeeController extends Controller
 {
     // Index Page
-    public function index()
-    {
-        $randomEmployeeCode = $this->generateEmployeeCode();
-        return view('pages.master.employee.index',['randomEmployeeCode' => $randomEmployeeCode]);
-    }
-    private function generateEmployeeCode()
+public function index()
 {
-    // Generate a random number between 1 and 999
-$latestemployee = Employee::latest()->first();
-    if ($latestemployee) {
-        $employeeCode = $latestemployee->employee_code;
-        $employeeCode++;
+    $latestEmployeenumber = Employee::latest()->first();
+    if ($latestEmployeenumber) {
+        $employeeNumber = (int)substr($latestEmployeenumber->employee_code, 2); // Extract the numeric part
+        $employeeNumber++;
     } else {
-        $employeeCode = 1;
+        $employeeNumber = 1;
     }
 
-    // Format the order number with leading zeros
-    $formattedEmployeeCode =  str_pad($employeeCode, 3, '0', STR_PAD_LEFT);
+    // Format the employee number with leading zeros
+    $formattedEmployeeNumber = 'EMP' . str_pad($employeeNumber, STR_PAD_LEFT);
 
+    $existingEmployee = Employee::where('employee_code', $formattedEmployeeNumber)->exists();
 
-    return $formattedEmployeeCode;
+    // If the generated code already exists, generate a new one
+    while ($existingEmployee) {
+        $employeeNumber++;
+        $formattedEmployeeNumber = 'EMP' . str_pad($employeeNumber, STR_PAD_LEFT);
+        $existingEmployee = Employee::where('employee_code', $formattedEmployeeNumber)->exists();
+    }
+          $resigning_reason = ResigningReason::all();
+    return view('pages.master.employee.index',compact('formattedEmployeeNumber','resigning_reason'));
 }
+
+   
     // Index DataTable
     public function indexData()
     {
@@ -681,6 +685,7 @@ $latestemployee = Employee::latest()->first();
         $local_offices = LocalOffice::all();
         $esi_despensaries = EsiDispensary::all();
         $family_members = EmployeeFamilyMemberDetail::where('employee_id', $id)->get();
+        // dd($family_members);
         $resigning_reason = ResigningReason::all();
         $photoPath = $employee->photo ?? null;
 
@@ -803,4 +808,35 @@ $latestemployee = Employee::latest()->first();
         $employee = Employee::where('id', $id)->first();
         return view('pages.master.employee.show', ['employee' => $employee]);
     }
+
+public function storeResign(Request $request)
+{
+    // Validate the incoming request data
+    $request->validate([
+        'employee_id' => 'required|exists:employees,id',
+        'relieving_date' => 'required|date',
+        'resigning_reason_id' => 'required|exists:resigning_reasons,id',
+    ]);
+
+    // Find the employee by their ID
+    $employee = Employee::findOrFail($request->employee_id);
+
+    // Update the resigning_date and resigning_reason_id fields in the Employee table
+    $employee->update([
+        'resigning_date' => $request->relieving_date,
+        'resigning_reason_id' => $request->resigning_reason_id,
+    ]);
+
+    // Create a record in the EmployeeHistory table
+    $employeeHistory = new EmployeeHistory();
+    $employeeHistory->employee_id = $request->employee_id; 
+    $employeeHistory->relieving_date = $request->resigning_date;
+    $employeeHistory->relieving_reason = $request->resigning_reason_id;
+    $employeeHistory->save();
+
+
+    return redirect()->route('master.employees.index')
+        ->with('success', 'Employee Updated successfully');
+}
+
 }

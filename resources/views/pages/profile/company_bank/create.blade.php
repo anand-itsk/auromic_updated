@@ -39,6 +39,7 @@
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="company_id" id="company_id">
                                                 @foreach ($companies as $company)
+                                                <option value="">Select Company</option>
                                                     <option value="{{ $company->id }}">
                                                         {{ $company->company_name }} -
                                                         {{ optional($company->authorisedPerson)->name ?? 'No Authorised Person' }}
@@ -112,7 +113,7 @@
                                                 Submit
                                             </button>
 
-                                             <button type="submit" class="btn btn-primary">Search</button>
+                                          
                                             <a href="{{ route('profile.bank_details.create') }}"
                                                 class="btn btn-warning waves-effect waves-light">
                                                 Reset
@@ -125,7 +126,7 @@
                                     </div>
 
                                 </form>
-<div id="ifscResult"></div>
+
                             </div>
                         </div>
                     </div>
@@ -133,7 +134,7 @@
             </div>
         </div>
     </div>
-   <script>
+   <!-- <script>
    $(document).ready(function() {
     $('#ifscForm').submit(function(event) {
         event.preventDefault();
@@ -183,6 +184,6 @@
         });
     });
 });
-</script>   
+</script>    -->
  @include('links.js.select2.select2')
 @endsection

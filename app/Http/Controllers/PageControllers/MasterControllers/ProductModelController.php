@@ -53,7 +53,7 @@ class ProductModelController extends Controller
         // dd($request);
         $validatedData = $request->validate([
             'product_id' => 'required',
-            'model_code' => 'required',
+            'model_code' => 'unique:product_models',
             'model_name' => 'required',
         ]);
 

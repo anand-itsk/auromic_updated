@@ -176,8 +176,6 @@ class OrderDetailController extends Controller
     {
 
         $validatedData = $request->validate([
-
-            'order_no' => 'required',
             'order_date' => 'required|date',
             'customer_id' => 'required|exists:customers,id',
 
@@ -185,7 +183,7 @@ class OrderDetailController extends Controller
         $orderDetail =  OrderDetail::find($id);
 
 
-        $orderDetail->order_no = $request->input('order_no');
+       
         $orderDetail->order_date = $request->input('order_date');
         $orderDetail->customer_id = $request->input('customer_id');
         $orderDetail->product_size_id = $request->input('product_size_id');
@@ -196,7 +194,7 @@ class OrderDetailController extends Controller
         $orderDetail->available_quantity = $request->input('quantity');
         $orderDetail->delivery_date = $request->input('delivery_date');
         $orderDetail->total_raw_material = $request->input('total_raw_material');
-
+        // $orderDetail->weight_per_item = $weight_per_item;
         $orderDetail->save();
 
         return redirect()->route('master.order_detail.index')
