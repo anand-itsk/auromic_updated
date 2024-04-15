@@ -17,6 +17,9 @@ class ResigningReasonTableSeeder extends Seeder
 
         $datas = array(
             array('name' => 'Not Specified', 'code' => 'NS'),
+            array('name' => 'Switch Company', 'code' => 'SWC'),
+            array('name' => 'Personal Reason', 'code' => 'PR'),
+            array('name' => 'Health Issue', 'code' => 'HI'),
         );
 
         DB::table('resigning_reasons')->insert($datas);

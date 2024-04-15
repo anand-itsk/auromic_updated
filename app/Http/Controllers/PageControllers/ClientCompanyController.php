@@ -223,7 +223,7 @@ class ClientCompanyController extends Controller
         $company = Company::findOrFail($id);
         $company->delete();
 
-        return response()->json(['success' => 'Company deleted successfully']);
+        // return response()->json(['success' => 'Company deleted successfully']);
     }
     // Multi Delete
     public function deleteSelected(Request $request)
@@ -254,6 +254,6 @@ class ClientCompanyController extends Controller
     // Import Users
     public function export(Request $request)
     {
-        return Excel::download(new CompanyExport($request->all()), 'CustomerDatas_' . date('d-m-Y') . '.xlsx');
+        return Excel::download(new CompanyExport($request->all()), 'ClientCompany_' . date('d-m-Y') . '.xlsx');
     }
 }

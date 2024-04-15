@@ -138,20 +138,20 @@
     <div class="col-md-6">
         <div class="row">
             <div class="col-md-4">
-                <span class="font-weight-bold">TIN No</span>
+                <span class="font-weight-bold">PAN No</span>
             </div>
             <div class="col-md-8 ">
-                <span> {{ $customer->tin_no ?? '-' }}</span>
+                <span> {{ $customer->pan_no ?? '-' }}</span>
             </div>
         </div>
     </div>
     <div class="col-md-6">
         <div class="row">
             <div class="col-md-4">
-                <span class="font-weight-bold">TIN Date</span>
+                <span class="font-weight-bold">PAN Date</span>
             </div>
             <div class="col-md-8 ">
-                <span> {{ $customer->tin_date ?? '-' }}</span>
+                <span> {{ $customer->pan_date ?? '-' }}</span>
             </div>
         </div>
     </div>
@@ -168,10 +168,10 @@
     <div class="col-md-6">
         <div class="row">
             <div class="col-md-4">
-                <span class="font-weight-bold">CST Date</span>
+                <span class="font-weight-bold">GST Date</span>
             </div>
             <div class="col-md-8 ">
-                <span> {{ $customer->cst_date ?? '-' }}</span>
+                <span> {{ $customer->gst_date ?? '-' }}</span>
             </div>
         </div>
     </div>

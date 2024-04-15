@@ -374,7 +374,6 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/import', [ProductModelController::class, 'import'])->name('import');
             Route::get('/export', [ProductModelController::class, 'export']);
             Route::post('/check-name', [ProductModelController::class, 'checkName'])->name('checkName');
-           
         });
 
         Route::prefix('/incentives')->name('incentives.')->group(function () {
@@ -431,10 +430,9 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete/selected', [OrderDetailController::class, 'deleteSelected']);
             Route::post('/import', [OrderDetailController::class, 'import'])->name('import');
             Route::get('/export', [OrderDetailController::class, 'export']);
-             Route::post('/check-name', [OrderDetailController::class, 'checkName'])->name('checkName');
-              Route::get('/get-product-details', [OrderDetailController::class, 'getProductDetails']);
-              Route::get('/getProductModels/{productId}', [OrderDetailController::class, 'getProductModels']);
-
+            Route::post('/check-name', [OrderDetailController::class, 'checkName'])->name('checkName');
+            Route::get('/get-product-details', [OrderDetailController::class, 'getProductDetails']);
+            Route::get('/getProductModels/{productId}', [OrderDetailController::class, 'getProductModels']);
         });
 
         Route::prefix('/employees')->name('employees.')->group(function () {
@@ -453,6 +451,9 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/store', [EmployeeController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [EmployeeController::class, 'edit'])->name('edit');
             Route::post('/store_personal/{id}', [EmployeeController::class, 'storePersonal'])->name('store.personal');
+            Route::post('/store_resign', [EmployeeController::class, 'storeResign'])->name('store.resign');
+            Route::post('/store_rejoining', [EmployeeController::class, 'storeRejoining'])->name('store.rejoining');
+            Route::post('/cancel_relieving', [EmployeeController::class, 'storeCancel'])->name('store.cancel_relieving');
             Route::post('/store_finance/{id}', [EmployeeController::class, 'storeFinance'])->name('store.finance');
 
             //Family
@@ -494,8 +495,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/import', [DirectJobGivingController::class, 'import'])->name('import');
             Route::get('/export', [DirectJobGivingController::class, 'export']);
             Route::get('/get-finishing-product-details/{id}', [DirectJobGivingController::class, 'getFinishingProductDetails']);
-             Route::get('/getProductSize', [DirectJobGivingController::class, 'getProductSize']);
-            
+            Route::get('/getProductSize', [DirectJobGivingController::class, 'getProductSize']);
         });
         Route::prefix('/direct_job_received')->name('direct_job_received.')->group(function () {
             Route::get('/', [DirectJobReceivedController::class, 'index'])->name('index');
@@ -531,9 +531,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/export', [DeliveryChallanController::class, 'export']);
             Route::get('/get-product-model/{orderId}', [DeliveryChallanController::class, 'getProductModel']);
             Route::get('get-models-by-order-id', [DeliveryChallanController::class, 'getModelsByOrderId'])->name('getModelsByOrderId');
-           Route::get('/get-product-details', [DeliveryChallanController::class, 'getProductDetails']);
-           Route::get('/get-order-details', [DeliveryChallanController::class,'getOrderDetails']);
-
+            Route::get('/get-product-details', [DeliveryChallanController::class, 'getProductDetails']);
+            Route::get('/get-order-details', [DeliveryChallanController::class, 'getOrderDetails']);
         });
 
         Route::prefix('/job_giving')->name('job_giving.')->group(function () {
@@ -585,7 +584,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/export', [DailyGivenReportCompanyWiseController::class, 'export']);
         });
 
-         Route::prefix('/job_received_report')->name('job_received_report.')->group(function () {
+        Route::prefix('/job_received_report')->name('job_received_report.')->group(function () {
             Route::get('/', [JobReceivedReportController::class, 'index'])->name('index');
             Route::get('/data', [JobReceivedReportController::class, 'indexData'])->name('data');
             Route::get('/export', [JobReceivedReportController::class, 'export']);
@@ -601,7 +600,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/data', [DirectJobGivingReportController::class, 'indexData'])->name('data');
             Route::get('/export', [DirectJobGivingReportController::class, 'export']);
         });
-         Route::prefix('/direct_job_received_report')->name('direct_job_received_report.')->group(function () {
+        Route::prefix('/direct_job_received_report')->name('direct_job_received_report.')->group(function () {
             Route::get('/', [DirectJobReceivedReportController::class, 'index'])->name('index');
             Route::get('/data', [DirectJobReceivedReportController::class, 'indexData'])->name('data');
             Route::get('/export', [DirectJobReceivedReportController::class, 'export']);

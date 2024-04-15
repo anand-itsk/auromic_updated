@@ -369,8 +369,8 @@
                         
                     },
                     {
-                        data: '',
-                        name: '',
+                        data: 'villageArea',
+                        name: 'villageArea',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }

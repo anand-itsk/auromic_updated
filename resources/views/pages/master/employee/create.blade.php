@@ -583,7 +583,7 @@
 
                                                                     <label for="resigning_date"
                                                                         class="col-sm-2 col-form-label">Resigning Date
-                                                                        Date</label>
+                                                                        </label>
                                                                     <div class="col-sm-4 mb-4">
                                                                         <input class="form-control" type="date"
                                                                             name="resigning_date" id="resigning_date">

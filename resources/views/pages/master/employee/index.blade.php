@@ -30,9 +30,9 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card m-b-30">
-                                 @error('file')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
+                                @error('file')
+                                    <span class="error" style="color: red;">{{ $message }}</span>
+                                @enderror
                                 <div class="d-flex justify-content-between p-2 bd-highlight">
                                     <div>
                                         <button id="deleteButton" style="display: none;"
@@ -40,11 +40,11 @@
                                             title="Delete Selected Record">
                                             Delete Selected Record</button>
                                     </div>
-                                    
+
                                     <div>
                                         <!-- <button type="button" class="icon-button common-color bg-secondary rounded"
-                                            data-toggle="modal" data-target=".bs-example-modal-center"
-                                            title="Import Employee"><i class="fa fa-upload text-white"></i></button> -->
+                                                                                                                    data-toggle="modal" data-target=".bs-example-modal-center"
+                                                                                                                    title="Import Employee"><i class="fa fa-upload text-white"></i></button> -->
                                         <button type="button" class="icon-button common-color  bg-primary rounded "
                                             data-toggle="modal" data-target=".employe-create-modal-center"
                                             title="Create Employee"><i class="fa fa-user-plus text-white"></i></button>
@@ -103,6 +103,209 @@
                                     </div><!-- /.modal-dialog -->
                                 </div>
 
+
+
+                                <!-- resign employee modal -->
+                                <div class="modal employe-resign-modal-center" tabindex="-1" role="dialog"
+                                    aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title mt-0">Resign Employee</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body pb-0">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card m-b-30">
+                                                            <div class="card-body py-0">
+                                                                <form action="{{ route('master.employees.store.resign') }}"
+                                                                    method="POST" enctype="multipart/form-data">
+                                                                    @csrf
+                                                                    <div class="row">
+                                                                        <input type="hidden" class="employee_id"
+                                                                            name="employee_id" value=""
+                                                                            id="employee_id">
+                                                                        <input type="text"
+                                                                            class="employee_name form-control"
+                                                                            name="employee_name" value=""
+                                                                            id="employee_name" readonly>
+
+                                                                        <label for="employee_status"
+                                                                            class="mandatory col-form-label col-sm-12 col-form-label">Employee
+                                                                            Status</label>
+                                                                        <div class="col-sm-12 mb-4">
+                                                                            <select id="employee_status"
+                                                                                class="form-control"
+                                                                                name="employee_status"
+                                                                                id="employee_status">
+                                                                                <option value="">Select</option>
+                                                                                <option value="serve_notice_period">Serve
+                                                                                    Notice Period
+                                                                                </option>
+                                                                                <option value="relieved">Relieved
+                                                                                </option>
+                                                                                <option value="terminated">Terminated
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <label for="employee_code"
+                                                                            class="col-sm-12 col-form-label mandatory">Date
+                                                                        </label>
+                                                                        <div class="col-sm-12 mb-4">
+                                                                            <input class="form-control" type="date"
+                                                                                name="relieving_date">
+                                                                            @error('employee_code')
+                                                                                <span class="error"
+                                                                                    style="color: red;">{{ $message }}</span>
+                                                                            @enderror
+                                                                        </div>
+                                                                        <label for="employee_name"
+                                                                            class="col-sm-12 col-form-label mandatory">Reason
+                                                                        </label>
+                                                                        <div class="col-sm-12 mb-4">
+                                                                            <select class="form-control"
+                                                                                name="resigning_reason_id"
+                                                                                id="resigning_reason_id ">
+                                                                                <option value="">Select</option>
+                                                                                @foreach ($resigning_reason as $item)
+                                                                                    <option value="{{ $item->id }}">
+                                                                                        {{ $item->name }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                            @error('resigning_reason_id')
+                                                                                <span class="error"
+                                                                                    style="color: red;">{{ $message }}</span>
+                                                                            @enderror
+                                                                        </div>
+                                                                    </div>
+                                                                    <button type="submit"
+                                                                        class="btn btn-primary">Create</button>
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">Close</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+                                <!--  -->
+
+                                <!-- Rejoin -->
+                                <div class="modal employe-rejoin-modal-center" tabindex="-1" role="dialog"
+                                    aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title mt-0">Rejoin Employee</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body pb-0">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card m-b-30">
+                                                            <div class="card-body py-0">
+                                                                <form
+                                                                    action="{{ route('master.employees.store.rejoining') }}"
+                                                                    method="POST" enctype="multipart/form-data">
+                                                                    @csrf
+                                                                    <div class="row">
+                                                                        <input type="hidden" class="employee_id"
+                                                                            name="employee_id" value=""
+                                                                            id="employee_id">
+                                                                        <input type="text"
+                                                                            class="employee_name form-control"
+                                                                            name="employee_name" value=""
+                                                                            id="employee_name" readonly>
+                                                                        <label for="rejoining_date"
+                                                                            class="col-sm-12 col-form-label mandatory">Rejoining
+                                                                            Date</label>
+                                                                        <div class="col-sm-12 mb-4">
+                                                                            <input class="form-control" type="date"
+                                                                                name="rejoining_date">
+                                                                            @error('rejoining_date')
+                                                                                <span class="error"
+                                                                                    style="color: red;">{{ $message }}</span>
+                                                                            @enderror
+                                                                        </div>
+                                                                    </div>
+                                                                    <button type="submit"
+                                                                        class="btn btn-primary">Create</button>
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">Close</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+                                <!--  -->
+
+                                <!-- Cancel Relieving -->
+                                <div class="modal employe-cancel-relieving-modal-center" tabindex="-1" role="dialog"
+                                    aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title mt-0">Cancel Notice Period</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body pb-0">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card m-b-30">
+                                                            <div class="card-body py-0">
+                                                                <form
+                                                                    action="{{ route('master.employees.store.cancel_relieving') }}"
+                                                                    method="POST" enctype="multipart/form-data">
+                                                                    @csrf
+                                                                    <div class="row">
+                                                                        <input type="hidden" class="employee_id"
+                                                                            name="employee_id" value=""
+                                                                            id="employee_id">
+                                                                        <input type="text"
+                                                                            class="employee_name form-control"
+                                                                            name="employee_name" value=""
+                                                                            id="employee_name" readonly>
+                                                                        <label for="rejoining_date"
+                                                                            class="col-sm-12 col-form-label mandatory">Do you want to cancel Notice Period?</label>
+                                                                    </div>
+                                                                    <button type="submit"
+                                                                        class="btn btn-primary">Yes</button>
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">Close</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+                                <!--  -->
+
                                 {{-- Create Modal --}}
                                 <div class="modal fade employe-create-modal-center" tabindex="-1" role="dialog"
                                     aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -129,7 +332,10 @@
                                                                             Code</label>
                                                                         <div class="col-sm-12 mb-4">
 
-                                                                            <input class="form-control" type="text"  name="employee_code" value="{{ $randomEmployeeCode }}" readonly>
+                                                                            <input class="form-control" type="text"
+                                                                                name="employee_code"
+                                                                                value="{{ $formattedEmployeeNumber }}"
+                                                                                readonly>
                                                                             @error('employee_code')
                                                                                 <span class="error"
                                                                                     style="color: red;">{{ $message }}</span>
@@ -190,6 +396,7 @@
                                                 <th>ID</th>
                                                 <th>Employee Code</th>
                                                 <th>Employee Name</th>
+                                                <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -281,6 +488,10 @@
                         name: 'employee_name'
                     },
                     {
+                        data: 'status',
+                        name: 'status'
+                    },
+                    {
                         data: null,
                         orderable: false,
                         searchable: false,
@@ -289,6 +500,8 @@
                         <button onclick="edit(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
                         <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
                         <button onclick="showDetails(${row.id})" class="icon-button common-color"><i class="fa fa-eye"></i></button>
+                        <button onclick="openResignModal(${row.id}, '${row.employee_name}', '${row.status}')" class="icon-button custom-color"><i class="fa fa-user"></i></button>
+                        
                     `;
                         }
 
@@ -311,6 +524,8 @@
                 ]
 
             });
+
+
 
             // Listen for row selection event
             $('#users-table').on('select.dt deselect.dt', function() {
@@ -353,6 +568,21 @@
                 }
             });
         });
+
+        function openResignModal(id, name, status) {
+            // Set any necessary data using the id parameter if needed
+            $('.employee_id').val(id);
+            $('.employee_name').val(name);
+            // $('#employeesIdInput').val(id);
+            // Show the modal based on the status
+            if (status === 'working') {
+                $('.employe-resign-modal-center').modal('show');
+            } else if (status === 'relieving') {
+                $('.employe-cancel-relieving-modal-center').modal('show');
+            } else if (status === 'relieved') {
+                $('.employe-rejoin-modal-center').modal('show');
+            }
+        }
 
         function edit(id) {
             console.log("inside");
@@ -418,21 +648,21 @@
         }
     </script>
 
-    
-<script>
-    function generateEmployeeCode() {
-        // Generate a random number between 1 and 999
-        const randomNumber = Math.floor(Math.random() * 999) + 1;
 
-        // Format the number with leading zeros
-        const formattedEmployeeCode = 'EMP' + String(randomNumber).padStart(3, '0');
+    <script>
+        function generateEmployeeCode() {
+            // Generate a random number between 1 and 999
+            const randomNumber = Math.floor(Math.random() * 999) + 1;
 
-        return formattedEmployeeCode;
-    }
+            // Format the number with leading zeros
+            const formattedEmployeeCode = 'EMP' + String(randomNumber).padStart(3, '0');
 
-    // Call the function to generate the employee code when the page loads
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('employee_code').value = generateEmployeeCode();
-    });
-</script>
+            return formattedEmployeeCode;
+        }
+
+        // Call the function to generate the employee code when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('employee_code').value = generateEmployeeCode();
+        });
+    </script>
 @endsection

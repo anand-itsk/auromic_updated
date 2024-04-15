@@ -170,7 +170,7 @@ class DeliveryChallanController extends Controller
 
         // Set success message for display
         return redirect()->route('job_allocation.delivery_challan.index')
-            ->with('success', 'Delivery challan created successfully');
+            ->with('success', 'Order Allocation created successfully');
     }
 
 
@@ -237,7 +237,7 @@ class DeliveryChallanController extends Controller
         $orderDetail->save();
 
         return redirect()->route('job_allocation.delivery_challan.index')
-            ->with('success', 'Delivery challan updated successfully');
+            ->with('success', 'Order Allocation updated successfully');
     }
 
 
@@ -261,12 +261,12 @@ class DeliveryChallanController extends Controller
 
         $delivery_challan->delete();
 
-        return redirect()->route('job_allocation.delivery_challan.index')->with('success', 'Delivery Challan Deleted successfully!');
+        return redirect()->route('job_allocation.delivery_challan.index')->with('success', 'Order Allocation Deleted successfully!');
     }
 
     public function export(Request $request)
     {
-        return Excel::download(new DeliveryChallanExport($request->all()), 'DeliveryChallanDatas_' . date('d-m-Y') . '.xlsx');
+        return Excel::download(new DeliveryChallanExport($request->all()), 'OrderAllocationDatas_' . date('d-m-Y') . '.xlsx');
     }
 
     public function import(Request $request)

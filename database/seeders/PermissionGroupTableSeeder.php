@@ -32,6 +32,60 @@ class PermissionGroupTableSeeder extends Seeder
             [
                 'name'  => 'Sub-client Company'
             ],
+            [
+                'name' => 'Users'
+            ],
+            [
+                'name' => 'Permissions'
+            ],
+            [
+                'name' => 'Country'
+            ],
+            [
+                'name' => 'State'
+            ],
+            [
+                'name' => 'District'
+            ],
+            [
+                'name' => 'Religion'
+            ],
+            [
+                'name' => 'Caste'
+            ],
+            [
+                'name' => 'Nationality'
+            ],
+            [
+                'name' => 'Company Type'
+            ],
+            [
+                'name' => 'Resigning'
+            ],
+            [
+                'name' => 'Local Offices'
+            ],
+            [
+                'name' => 'ESI Dispensary'
+            ],
+            [
+                'name' => 'Raw Material Type'
+            ],
+            [
+                'name' => 'Raw Material'
+            ],
+            [
+                'name' => 'Product'
+            ],
+            [
+                'name' => 'Product Size'
+            ],
+            [
+                'name' => 'Product Color'
+            ],
+            [
+                'name' => 'Order Status'
+            ],
             
 
         ];

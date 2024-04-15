@@ -4,7 +4,14 @@
     <!-- Add Select2 CSS -->
     @include('links.css.select2.select2')
     @include('links.css.wizard-form.wizard-form')
-
+    <style>
+        .employee_status {
+            padding: 6px 15px 4px 10px;
+            text-transform: capitalize;
+            color: white;
+            width: fit-content;
+        }
+    </style>
     <div class="wrapper">
         <div class="container-fluid">
             <!-- Page-Title -->
@@ -40,7 +47,13 @@
 
                                     </div>
                                     <div class="card m-b-30">
-
+                                        @if ($employee->status == 'working')
+                                            <span class="employee_status bg-success">{{ $employee->status }}</span>
+                                        @elseif($employee->status == 'relieving')
+                                            <span class="employee_status bg-warning">{{ $employee->status }}</span>
+                                        @else
+                                            <span class="employee_status bg-danger">{{ $employee->status }}</span>
+                                        @endif
                                         <div class="card-body">
                                             <div class="m-b-30">
                                                 <div class="row text-center">
@@ -60,7 +73,8 @@
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <h6>Company Code</h6>
-                                                                <p class="mb-1">{{ $employee->company->company_code }}</p>
+                                                                <p class="mb-1">{{ $employee->company->company_code }}
+                                                                </p>
                                                             </div>
                                                         </div>
 
@@ -71,9 +85,10 @@
                                                             @if (!empty($employee->photo))
                                                                 <img src="{{ asset('/storage/' . $employee->photo) }}"
                                                                     alt="Profile Image">
-                                                           @else
-    <img src="{{ asset('assets/images/no-profile.png') }}" alt="No Profile Image">
-@endif
+                                                            @else
+                                                                <img src="{{ asset('assets/images/no-profile.png') }}"
+                                                                    alt="No Profile Image">
+                                                            @endif
                                                         </div>
                                                     </div>
 
