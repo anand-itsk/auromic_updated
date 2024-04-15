@@ -157,6 +157,15 @@
                                             @enderror
                                         </div>
 
+                                        <label for="order_date" class="col-sm-2 col-form-label">Cutting Pices</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="meter" id="meter"
+                                                readonly value="{{ $direct_job_giving->meter }}">
+                                            @error('meter')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
                                         <label for="is_cutting" class="col-sm-2 col-form-label">Is Cutting</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="is_cutting" id="is_cutting"

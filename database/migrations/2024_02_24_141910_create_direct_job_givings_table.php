@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('useage_meter')->nullable();
             $table->enum('clothes_by_cutting', ['0', '1'])->default('0');
             $table->string('total_cutting_pieces')->nullable();
+            $table->string('total_quantity')->nullable();
             $table->timestamps();
             $table->foreign('finishing_product_models_id')->references('id')->on('finishing_product_models')->onDelete('cascade');
             $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
