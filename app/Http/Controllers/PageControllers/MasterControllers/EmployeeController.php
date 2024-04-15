@@ -32,32 +32,32 @@ use Yajra\DataTables\DataTables;
 class EmployeeController extends Controller
 {
     // Index Page
-public function index()
-{
-    $latestEmployeenumber = Employee::latest()->first();
-    if ($latestEmployeenumber) {
-        $employeeNumber = (int)substr($latestEmployeenumber->employee_code, 2); // Extract the numeric part
-        $employeeNumber++;
-    } else {
-        $employeeNumber = 1;
-    }
+    public function index()
+    {
+        $latestEmployeenumber = Employee::latest()->first();
+        if ($latestEmployeenumber) {
+            $employeeNumber = (int)substr($latestEmployeenumber->employee_code, 2); // Extract the numeric part
+            $employeeNumber++;
+        } else {
+            $employeeNumber = 1;
+        }
 
-    // Format the employee number with leading zeros
-    $formattedEmployeeNumber = 'EMP' . str_pad($employeeNumber, STR_PAD_LEFT);
-
-    $existingEmployee = Employee::where('employee_code', $formattedEmployeeNumber)->exists();
-
-    // If the generated code already exists, generate a new one
-    while ($existingEmployee) {
-        $employeeNumber++;
+        // Format the employee number with leading zeros
         $formattedEmployeeNumber = 'EMP' . str_pad($employeeNumber, STR_PAD_LEFT);
-        $existingEmployee = Employee::where('employee_code', $formattedEmployeeNumber)->exists();
-    }
-          $resigning_reason = ResigningReason::all();
-    return view('pages.master.employee.index',compact('formattedEmployeeNumber','resigning_reason'));
-}
 
-   
+        $existingEmployee = Employee::where('employee_code', $formattedEmployeeNumber)->exists();
+
+        // If the generated code already exists, generate a new one
+        while ($existingEmployee) {
+            $employeeNumber++;
+            $formattedEmployeeNumber = 'EMP' . str_pad($employeeNumber, STR_PAD_LEFT);
+            $existingEmployee = Employee::where('employee_code', $formattedEmployeeNumber)->exists();
+        }
+        $resigning_reason = ResigningReason::all();
+        return view('pages.master.employee.index', compact('formattedEmployeeNumber', 'resigning_reason'));
+    }
+
+
     // Index DataTable
     public function indexData()
     {
@@ -218,7 +218,7 @@ public function index()
             $employee->photo = $filename;
         }
 
- 
+
         // Store data
         $employee->update([
             'company_id' => $request->company_id,
@@ -244,17 +244,17 @@ public function index()
             'resigning_reason_id' => $request->resigning_reason_id,
         ]);
 
-       if ($request->filled('resigning_date') && $request->filled('resigning_reason_id')) {
-    
-    $employeeHistory = new EmployeeHistory();
-    $employeeHistory->employee_id = $id; 
-    $employeeHistory->joining_date = $employee->joining_date;
-    $employeeHistory->relieving_date = $request->resigning_date;
-    $employeeHistory->relieving_reason = $request->resigning_reason_id;
-    $employeeHistory->save();
-}
+        if ($request->filled('resigning_date') && $request->filled('resigning_reason_id')) {
 
-    
+            $employeeHistory = new EmployeeHistory();
+            $employeeHistory->employee_id = $id;
+            $employeeHistory->joining_date = $employee->joining_date;
+            $employeeHistory->relieving_date = $request->resigning_date;
+            $employeeHistory->relieving_reason = $request->resigning_reason_id;
+            $employeeHistory->save();
+        }
+
+
 
         if (
             $request->voter_id_number !== null ||
@@ -277,7 +277,7 @@ public function index()
                 ]);
             } else {
 
-                
+
                 $employee->identityProof()->create([
                     'voter_id_number' => $request->voter_id_number,
                     'driving_license_number' => $request->driving_license_number,
@@ -347,7 +347,7 @@ public function index()
             $employee->addresses()->save($corrs_Address);
         }
 
-        
+
         // Return success response
         return response()->json(['success' => true, 'message' => 'Step 1 completed successfully.']);
     }
@@ -422,8 +422,8 @@ public function index()
                     'pf_last_date' => $request->pf_last_date,
                     'pension_joining_date' => $request->pension_joining_date,
                     'pension_applicable' => $request->pension_applicable ?? '0',
-                    'remark'=>$request->remark,
-                    'uan_number'=>$request->uan_number
+                    'remark' => $request->remark,
+                    'uan_number' => $request->uan_number
                 ]);
             } else {
                 $employee->pfInfo()->create([
@@ -433,8 +433,8 @@ public function index()
                     'pf_last_date' => $request->pf_last_date,
                     'pension_joining_date' => $request->pension_joining_date,
                     'pension_applicable' => $request->pension_applicable  ?? '0',
-                    'remark'=>$request->remark,
-                    'uan_number'=>$request->uan_number
+                    'remark' => $request->remark,
+                    'uan_number' => $request->uan_number
                 ]);
             }
         }
@@ -469,7 +469,7 @@ public function index()
             }
         }
 
-     
+
         // Return success response
         return response()->json(['success' => true, 'message' => 'Step 2 completed successfully.']);
     }
@@ -518,7 +518,7 @@ public function index()
     // Store Nominee Data
     public function storeNominee(Request $request, $id)
     {
-            // dd($request);
+        // dd($request);
         $employee = Employee::findOrFail($id);
         //   dd($employee);
         $employee->nominee()->create([
@@ -537,7 +537,7 @@ public function index()
             'success' => true, 'message' => 'Step 3 completed successfully.',
             'emp_id' => $employee->id
         ]);
-    } 
+    }
 
     // Show Nominees Member table
     public function getNominee(Request $request)
@@ -585,9 +585,9 @@ public function index()
             'marital_status' => $request->marital_status,
             'religion_id' => $request->religion_id,
             'faorhus_name' => $request->faorhus_name,
-             'guardian_name' => $request->guardian_name,
-              'guardian_address' => $request->guardian_address,
-               'guardian_relation_with_emp' => $request->guardian_relation_with_emp,
+            'guardian_name' => $request->guardian_name,
+            'guardian_address' => $request->guardian_address,
+            'guardian_relation_with_emp' => $request->guardian_relation_with_emp,
         ]);
 
         // Check if the finance detail already has an office address
@@ -809,34 +809,96 @@ public function index()
         return view('pages.master.employee.show', ['employee' => $employee]);
     }
 
-public function storeResign(Request $request)
-{
-    // Validate the incoming request data
-    $request->validate([
-        'employee_id' => 'required|exists:employees,id',
-        'relieving_date' => 'required|date',
-        'resigning_reason_id' => 'required|exists:resigning_reasons,id',
-    ]);
+    public function storeResign(Request $request)
+    {
 
-    // Find the employee by their ID
-    $employee = Employee::findOrFail($request->employee_id);
+        // Validate the incoming request data
+        $request->validate([
+            'employee_id' => 'required|exists:employees,id',
+            'employee_status' => 'required',
+            'relieving_date' => 'required|date',
+            'resigning_reason_id' => 'required|exists:resigning_reasons,id',
+        ]);
 
-    // Update the resigning_date and resigning_reason_id fields in the Employee table
-    $employee->update([
-        'resigning_date' => $request->relieving_date,
-        'resigning_reason_id' => $request->resigning_reason_id,
-    ]);
+        if ($request->employee_status == "serve_notice_period") {
+            $status = "relieving";
+        } elseif ($request->employee_status == "relieved") {
+            $status = "relieved";
+        }
 
-    // Create a record in the EmployeeHistory table
-    $employeeHistory = new EmployeeHistory();
-    $employeeHistory->employee_id = $request->employee_id; 
-    $employeeHistory->relieving_date = $request->resigning_date;
-    $employeeHistory->relieving_reason = $request->resigning_reason_id;
-    $employeeHistory->save();
+        // Find the employee by their ID
+        $employee = Employee::findOrFail($request->employee_id);
+        // Update the resigning_date and resigning_reason_id fields in the Employee table
+        $employee->update([
+            'status' => $status,
+            'resigning_date' => $request->relieving_date,
+            'resigning_reason_id' => $request->resigning_reason_id,
+        ]);
+
+        // Create a record in the EmployeeHistory table
+        $employeeHistory = new EmployeeHistory();
+        $employeeHistory->employee_id = $request->employee_id;
+        $employeeHistory->relieving_date = $request->resigning_date;
+        $employeeHistory->relieving_reason = $request->resigning_reason_id;
+        $employeeHistory->save();
 
 
-    return redirect()->route('master.employees.index')
-        ->with('success', 'Employee Updated successfully');
-}
+        return redirect()->route('master.employees.index')
+            ->with('success', 'Employee Updated successfully');
+    }
 
+    public function storeRejoining(Request $request)
+    {
+
+        // Validate the incoming request data
+        $request->validate([
+            'employee_id' => 'required|exists:employees,id',
+            'rejoining_date' => 'required|date',
+        ]);
+
+        // Find the employee by their ID
+        $employee = Employee::findOrFail($request->employee_id);
+        // Update the resigning_date and resigning_reason_id fields in the Employee table
+        $employee->update([
+            'status' => "rejoining",
+            'joining_date' => $request->rejoining_date,
+        ]);
+
+        // Create a record in the EmployeeHistory table
+        $employeeHistory = new EmployeeHistory();
+        $employeeHistory->employee_id = $request->employee_id;
+        $employeeHistory->joining_date = $request->rejoining_date;
+        $employeeHistory->relieving_reason = $request->resigning_reason_id;
+        $employeeHistory->save();
+
+
+        return redirect()->route('master.employees.index')
+            ->with('success', 'Employee Updated successfully');
+    }
+
+    public function storeCancel(Request $request)
+    {
+
+        // Validate the incoming request data
+        $request->validate([
+            'employee_id' => 'required|exists:employees,id',
+        ]);
+
+        // Find the employee by their ID
+        $employee = Employee::findOrFail($request->employee_id);
+        // Update the resigning_date and resigning_reason_id fields in the Employee table
+        $employee->update([
+            'status' => "working",
+        ]);
+
+        $lastRecord = EmployeeHistory::where('employee_id',  $employee->id)->latest('id')->first();
+        if ($lastRecord) {
+            $lastRecord->delete();
+        } else {
+            return response()->json(['message' => 'No record found to delete.']);
+        }
+
+        return redirect()->route('master.employees.index')
+            ->with('success', 'Employee Updated successfully');
+    }
 }

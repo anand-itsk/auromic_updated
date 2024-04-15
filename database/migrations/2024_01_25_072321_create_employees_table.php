@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('marital_status')->nullable();
             $table->string('std_code')->nullable();
             $table->string('phone')->nullable();
-            $table->enum('status', ['working', 'relieving', 'relieved', 'rejoining'])->nullable()->default('working');
+            $table->enum('status', ['working', 'relieving', 'relieved', 'terminated', 'rejoining'])->nullable()->default('working');
             $table->unsignedBigInteger('religion_id')->nullable();
             $table->unsignedBigInteger('caste_id')->nullable();
             $table->unsignedBigInteger('nationality_id')->nullable();
