@@ -28,6 +28,14 @@
                     <li class="nav-item"><a
                             class="nav-link {{ request()->is('user-management/permissions') ? 'active' : '' }}"
                             href="{{ route('user-management.permissions') }}">Roles & Permissions</a></li>
+
+                             <li class="nav-item"><a
+                            class="nav-link {{ request()->is('user-management/permission_group') ? 'active' : '' }}"
+                            href="{{ route('user-management.permission_group') }}">Permission Group</a></li>
+
+                            <li class="nav-item"><a
+                            class="nav-link {{ request()->is('user-management/permission_control') ? 'active' : '' }}"
+                            href="{{ route('user-management.permission_control') }}">Permission Control</a></li>
                     <!-- More sub-items here -->
                 </ul>
             </li>

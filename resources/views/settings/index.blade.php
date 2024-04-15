@@ -29,6 +29,15 @@
                                         <a class="text-muted"
                                             href="{{ route('user-management.permissions') }}">Permissions</a>
                                     </div>
+                                    <div class="link-list">
+                                        <a class="text-muted"
+                                            href="{{ route('user-management.permission_group') }}">Permissions Group</a>
+                                    </div>
+                                     <div class="link-list">
+                                        <a class="text-muted"
+                                            href="{{ route('user-management.permission_control') }}">Permissions control</a>
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>

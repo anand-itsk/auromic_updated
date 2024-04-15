@@ -80,7 +80,7 @@
                                             <select class="form-control select2" name="dc_number" id="dc_number">
                                                 <option value="">Select DC</option>
                                                 @foreach ($delivery_challan as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->dc_no }} /
+                                                    <option value="{{ $item->id }}" data-company="{{ $item->company->name }}">{{ $item->dc_no }} /
                                                         {{ $item->orderDetails->orderNo->customer_order_no }} /
                                                         {{ $item->orderDetails->productModel->model_name }} /
                                                         {{ $item->orderDetails->productModel->model_code }}
@@ -561,7 +561,7 @@
                 type: 'GET',
                 data: {
                     company_id: companyId
-                },
+                },  
                 success: function(response) {
                     $('#dc_number').empty();
                     $('#dc_number').append('<option value="">Select DC</option>');
@@ -587,7 +587,14 @@
     </script>
 
 
-
+<script>
+    $(document).ready(function() {
+        $('#dc_number').change(function() {
+            var companyName = $(this).find(':selected').data('company');
+            $('#company_name').val(companyName);
+        });
+    });
+</script>
 
     <script>
         $(document).ready(function() {
