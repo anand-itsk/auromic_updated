@@ -167,11 +167,14 @@
                             <!-- <img src="{{ asset('assets/images/users/user-1.jpg') }}" alt="user"
                                 class="rounded-circle"> -->
 
-                                 @if (!empty($user->profile_image))
-                                        <img src="{{ asset('/storage/' . $user->profile_image) }}"   class="rounded-circle" alt="Profile Image" style="width: 50px; height: 50px;">
-                                        @else
-                                        <img class="profile-image rounded-circle" src="{{ asset('assets/images/no-profile.png') }}"  class="rounded-circle"  alt="No Profile Image">
-                                        @endif
+                            @if (!empty($user->profile_image))
+                                <img src="{{ asset('/storage/' . $user->profile_image) }}" class="rounded-circle"
+                                    alt="Profile Image" style="width: 50px; height: 50px;">
+                            @else
+                                <img class="profile-image rounded-circle"
+                                    src="{{ asset('assets/images/no-profile.png') }}" class="rounded-circle"
+                                    alt="No Profile Image">
+                            @endif
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown ">
                             <a class="dropdown-item" href="{{ route('my-profile') }}"><i
@@ -227,18 +230,26 @@
                     <li class="has-submenu">
                         <a href="#"><i class="dripicons-view-thumb"></i>Profile</a>
                         <ul class="submenu">
-                            <li>
-                                <a href="{{ route('profile.masters.index') }}">Master Company</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('profile.clients.index') }}">Client Company</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('profile.sub_clients.index') }}">Sub-client Company</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('profile.bank_details.index') }}">Bank Details</a>
-                            </li>
+                            @can('Master Company')
+                                <li>
+                                    <a href="{{ route('profile.masters.index') }}">Master Company</a>
+                                </li>
+                            @endcan
+                            @can('Client Company')
+                                <li>
+                                    <a href="{{ route('profile.clients.index') }}">Client Company</a>
+                                </li>
+                            @endcan
+                            @can('Sub-client Company')
+                                <li>
+                                    <a href="{{ route('profile.sub_clients.index') }}">Sub-client Company</a>
+                                </li>
+                            @endcan
+                            @can('Bank Details')
+                                <li>
+                                    <a href="{{ route('profile.bank_details.index') }}">Bank Details</a>
+                                </li>
+                            @endcan
 
 
 
@@ -249,26 +260,36 @@
                     <li class="has-submenu">
                         <a href="#"><i class="dripicons-briefcase"></i>Master</a>
                         <ul class="submenu">
-                            <li>
-                                <a href="{{ route('master.customers.index') }}">Customers</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('master.employees.index') }}">Employees</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('master.product_model.index') }}">Product Model</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('master.order_detail.index') }}">Order Details</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('master.incentives.index') }}">Incentive</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('master.finishing_product.index') }}">Finishing Product</a>
-                            </li>
-
-
+                            @can('Customers')
+                                <li>
+                                    <a href="{{ route('master.customers.index') }}">Customers</a>
+                                </li>
+                            @endcan
+                            @can('Employees')
+                                <li>
+                                    <a href="{{ route('master.employees.index') }}">Employees</a>
+                                </li>
+                            @endcan
+                            @can('Product Model')
+                                <li>
+                                    <a href="{{ route('master.product_model.index') }}">Product Model</a>
+                                </li>
+                            @endcan
+                            @can('Order Details')
+                                <li>
+                                    <a href="{{ route('master.order_detail.index') }}">Order Details</a>
+                                </li>
+                            @endcan
+                            @can('Incentive')
+                                <li>
+                                    <a href="{{ route('master.incentives.index') }}">Incentive</a>
+                                </li>
+                            @endcan
+                            @can('Finishing Products')
+                                <li>
+                                    <a href="{{ route('master.finishing_product.index') }}">Finishing Product</a>
+                                </li>
+                            @endcan
                         </ul>
                     </li>
 
@@ -276,62 +297,79 @@
                     <li class="has-submenu">
                         <a href="#"><i class="dripicons-briefcase"></i>Job Allocation</a>
                         <ul class="submenu">
-                            <li>
-                                <a href="{{ route('job_allocation.delivery_challan.index') }}">Order Allocation</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('job_allocation.job_giving.index') }}">Job Giving</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('job_allocation.job_received.index') }}">Job Received</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('job_allocation.job_reallocation.index') }}">Job Reallocation</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('job_allocation.direct_job_giving.index') }}">Direct Job Giving</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('job_allocation.direct_job_received.index') }}">Direct Job
-                                    Received</a>
-                            </li>
-
-
-
+                            @can('Order Allocation')
+                                <li>
+                                    <a href="{{ route('job_allocation.delivery_challan.index') }}">Order Allocation</a>
+                                </li>
+                            @endcan
+                            @can('Job Giving')
+                                <li>
+                                    <a href="{{ route('job_allocation.job_giving.index') }}">Job Giving</a>
+                                </li>
+                            @endcan
+                            @can('Job Received')
+                                <li>
+                                    <a href="{{ route('job_allocation.job_received.index') }}">Job Received</a>
+                                </li>
+                            @endcan
+                            @can('Job Reallocation')
+                                <li>
+                                    <a href="{{ route('job_allocation.job_reallocation.index') }}">Job Reallocation</a>
+                                </li>
+                            @endcan
+                            @can('Direct Job Giving')
+                                <li>
+                                    <a href="{{ route('job_allocation.direct_job_giving.index') }}">Direct Job Giving</a>
+                                </li>
+                            @endcan
+                            @can('Direct Job Received')
+                                <li>
+                                    <a href="{{ route('job_allocation.direct_job_received.index') }}">Direct Job
+                                        Received</a>
+                                </li>
+                            @endcan
                         </ul>
                     </li>
-                    {{--Report--}}
-                     <li class="has-submenu">
+                    {{-- Report --}}
+                    <li class="has-submenu">
                         <a href="#"><i class="dripicons-briefcase"></i>Report</a>
                         <ul class="submenu">
-                            <li>
-                                <a href="{{ route('report.employee_report.index') }}">Employee Report</a>
-                            </li>
+                            @can('Employee Report')
+                                <li>
+                                    <a href="{{ route('report.employee_report.index') }}">Employee Report</a>
+                                </li>
+                            @endcan
+                            @can('Order Report')
+                                <li>
+                                    <a href="{{ route('report.order_report.index') }}">Order Report</a>
+                                </li>
+                            @endcan
+                            @can('Job Giving Report')
+                                <li>
+                                    <a href="{{ route('report.daily_given_report_cw.index') }}">Job Giving Report</a>
+                                </li>
+                            @endcan
+                            @can('Job Received Report')
+                                <li>
+                                    <a href="{{ route('report.job_received_report.index') }}">Job Received Report</a>
+                                </li>
+                            @endcan
+                            @can('Direct Job Giving Report')
+                                <li>
+                                    <a href="{{ route('report.direct_job_giving_report.index') }}">Direct Job Given
+                                        Report</a>
+                                </li>
+                            @endcan
+                            @can('Direct Job Received Report')
+                                <li>
+                                    <a href="{{ route('report.direct_job_received_report.index') }}">Direct Job Received
+                                        Report</a>
+                                </li>
+                            @endcan
 
-                            <li>
-                                <a href="{{ route('report.daily_given_report_cw.index') }}">Job Giving Report</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('report.job_received_report.index') }}">Job Received Report</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('report.order_report.index') }}">Order Report</a>
-                            </li>
-
-                             <li>
-                                <a href="{{ route('report.direct_job_giving_report.index') }}">Direct Job Given Report</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('report.direct_job_received_report.index') }}">Direct Job Received Report</a>
-                            </li>
-                            
-                        
                         </ul>
                     </li>
-                    
+
                 </ul>
                 <!-- End navigation menu -->
             </div> <!-- end #navigation -->
