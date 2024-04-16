@@ -20,6 +20,8 @@ use App\Http\Controllers\PageControllers\Report\DirectJobGivingReportController;
 use App\Http\Controllers\PageControllers\Report\DirectJobReceivedReportController;
 use App\Http\Controllers\PageControllers\SubClientCompanyController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PermissionControlController;
+use App\Http\Controllers\PermissionGroupController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CountryController;
@@ -100,6 +102,25 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/permission-edit/{id}', [PermissionController::class, 'edit'])->name('permission.edit');
         Route::post('/permission-update/{id}', [PermissionController::class, 'update'])->name('permission.update');
         Route::get('/permission-delete/{id}', [PermissionController::class, 'delete'])->name('permission.delete');
+
+     // permissionControl
+        Route::get('/permission_control', [PermissionControlController::class, 'index'])->name('permission_control');
+        Route::get('permission_control/data', [PermissionControlController::class, 'indexData'])->name('permission_control.data');
+        Route::get('/permission_control-create', [PermissionControlController::class, 'create'])->name('permission_control.create');
+        Route::post('/permission_control-store', [PermissionControlController::class, 'store'])->name('permission_control.store');
+        Route::get('/permission_control-edit/{id}', [PermissionControlController::class, 'edit'])->name('permission_control.edit');
+        Route::post('/permission_control-update/{id}', [PermissionControlController::class, 'update'])->name('permission_control.update');
+        Route::delete('/permission_control-delete/{id}', [PermissionControlController::class, 'delete'])->name('permission_control.delete');
+
+
+        // permissionGroup
+        Route::get('/permission_group', [PermissionGroupController::class, 'index'])->name('permission_group');
+         Route::get('permission_group/data', [PermissionGroupController::class, 'indexData'])->name('permission_group.data');
+        Route::get('/permission_group-create', [PermissionGroupController::class, 'create'])->name('permission_group.create');
+        Route::post('/permission_group-store', [PermissionGroupController::class, 'store'])->name('permission_group.store');
+        Route::get('/permission_group-edit/{id}', [PermissionGroupController::class, 'edit'])->name('permission_group.edit');
+        Route::post('/permission_group-update/{id}', [PermissionGroupController::class, 'update'])->name('permission_group.update');
+        Route::delete('/permission_group-delete/{id}', [PermissionGroupController::class, 'delete'])->name('permission_group.delete');
     });
 
     Route::prefix('common')->name('common.')->group(function () {
@@ -533,6 +554,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('get-models-by-order-id', [DeliveryChallanController::class, 'getModelsByOrderId'])->name('getModelsByOrderId');
             Route::get('/get-product-details', [DeliveryChallanController::class, 'getProductDetails']);
             Route::get('/get-order-details', [DeliveryChallanController::class, 'getOrderDetails']);
+            // routes/web.php
+Route::get('/getSubCompanies/{companyId}', [DeliveryChallanController::class, 'getSubCompanies']);
+
         });
 
         Route::prefix('/job_giving')->name('job_giving.')->group(function () {

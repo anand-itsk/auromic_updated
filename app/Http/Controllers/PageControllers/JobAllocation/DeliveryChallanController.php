@@ -13,6 +13,7 @@ use App\Models\ProductSize;
 use App\Models\ProductColor;
 use App\Models\DeliveryChallan;
 use App\Models\OrderDetail;
+use App\Models\CompanyHierarchy;
 use App\Models\OrderNo;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -55,11 +56,26 @@ class DeliveryChallanController extends Controller
         $productModels = ProductModel::with(['rawMaterial.rawMaterialType'])->get();
         $product_size = ProductSize::all();
         $product_color = ProductColor::all();
+        $company_hierarchy = CompanyHierarchy::all();
 
 
 
-        return view('pages.job_allocation.delivery_challan.create', compact('company', 'authorised_people', 'order_details', 'company_types', 'customer', 'productModels', 'product_size', 'product_color', 'formattedDCNumber', 'order_nos'));
+        return view('pages.job_allocation.delivery_challan.create', compact('company', 'authorised_people', 'order_details', 'company_types', 'customer', 'productModels', 'product_size', 'product_color', 'formattedDCNumber', 'order_nos','company_hierarchy'));
     }
+
+    public function getSubCompanies($companyId)
+{
+       
+        // dd($companyId);
+
+       $companyHierarchy = CompanyHierarchy::where('parent_company_id', $companyId)
+        ->with('company') // Eager load the company relationship
+        ->get();
+    
+        //  dd($companyHierarchy);
+    
+       return response()->json($companyHierarchy);
+}
 
     public function getCompanies($companytypeid)
     {
@@ -69,7 +85,6 @@ class DeliveryChallanController extends Controller
 
     public function getModelsByOrderId(Request $request)
     {
-
         $orderId = $request->order_id;
         // Retrieve models based on the selected order_id
         $models = OrderDetail::where('order_no_id', $orderId)->distinct('product_model_id')->pluck('product_model_id');
@@ -154,6 +169,7 @@ class DeliveryChallanController extends Controller
         // Create and save the delivery challan
         $delivery_challan = new DeliveryChallan();
         $delivery_challan->company_id = $input['company_id'];
+        $delivery_challan->sub_company_id = $input['parent_company_id'];
         $delivery_challan->dc_no = $input['dc_number'];
         $delivery_challan->order_id = $input['order_id'];
         $delivery_challan->dc_date = $input['dc_date'];
@@ -196,8 +212,10 @@ class DeliveryChallanController extends Controller
             ->where('product_model_id', $request->product_model)
             ->get();
 
+             $companyHierarchy = CompanyHierarchy::where('company_id', $delivery_challans->sub_company_id)->first();
+$subCompanyName = $companyHierarchy ? $companyHierarchy->company->company_name : null;
 
-        return view('pages.job_allocation.delivery_challan.edit', compact('company', 'authorised_people', 'order_details', 'delivery_challans', 'company_types', 'productModels', 'product_size', 'product_color', 'customer', 'order_detail', 'order_nos'));
+        return view('pages.job_allocation.delivery_challan.edit', compact('company', 'authorised_people', 'order_details', 'delivery_challans', 'company_types', 'productModels', 'product_size', 'product_color', 'customer', 'order_detail', 'order_nos','subCompanyName','companyHierarchy'));
     }
 
 
@@ -225,6 +243,7 @@ class DeliveryChallanController extends Controller
 
         // Update delivery challan details
         $delivery_challan->company_id = $input['company_id'];
+         $delivery_challan->sub_company_id = $input['parent_company_id'];
         $delivery_challan->dc_no = $input['dc_number'];
         $delivery_challan->dc_date = $input['dc_date'];
         $delivery_challan->quantity = $input['quantity'];

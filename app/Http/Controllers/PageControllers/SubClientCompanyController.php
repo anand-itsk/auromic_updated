@@ -9,6 +9,7 @@ use App\Models\Address;
 use App\Models\AddressType;
 use App\Models\AuthorisedPerson;
 use App\Models\Company;
+use App\Models\CompanyHierarchy;
 use App\Models\CompanyRegistrationDetails;
 use App\Models\Country;
 use App\Models\State;
@@ -67,8 +68,29 @@ class SubClientCompanyController extends Controller
         $company = $company->create($input);
 
         $input['company_id'] = $company->id;
+
         $company_registration_details = CompanyRegistrationDetails::create($input);
         $authorised_person = AuthorisedPerson::create($input);
+
+        $companyName = $request->input('company_name');
+        
+       if ($request->filled('client_company')) {
+    // Get the name of the selected client company from the request
+    $selectedClientCompanyName = $request->input('client_company');
+    
+    // Find the company with the matching company_name
+    $selectedClientCompany = Company::where('company_name', $selectedClientCompanyName)->first();
+
+    if ($selectedClientCompany) {
+        // If the company is found, create a new entry in the company_hierarchy table
+        $company_hierarchy = new CompanyHierarchy;
+        $company_hierarchy->company_id = $company->id;
+        $company_hierarchy->parent_company_id = $selectedClientCompany->id; // Use the company_id of the selected client company
+        $company_hierarchy->save();
+    } 
+     
+
+     
 
         if (
             $input['office_address'] !== null ||
@@ -101,6 +123,8 @@ class SubClientCompanyController extends Controller
         return redirect()->route('profile.sub_clients.index')
             ->with('success', 'SubClient Company created successfully');
     }
+
+}
     // Edit
     public function edit(Address $address, $id)
     {
