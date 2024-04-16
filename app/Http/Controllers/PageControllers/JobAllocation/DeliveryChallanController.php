@@ -85,7 +85,6 @@ class DeliveryChallanController extends Controller
 
     public function getModelsByOrderId(Request $request)
     {
-
         $orderId = $request->order_id;
         // Retrieve models based on the selected order_id
         $models = OrderDetail::where('order_no_id', $orderId)->distinct('product_model_id')->pluck('product_model_id');
@@ -216,7 +215,7 @@ class DeliveryChallanController extends Controller
              $companyHierarchy = CompanyHierarchy::where('company_id', $delivery_challans->sub_company_id)->first();
 $subCompanyName = $companyHierarchy ? $companyHierarchy->company->company_name : null;
 
-        return view('pages.job_allocation.delivery_challan.edit', compact('company', 'authorised_people', 'order_details', 'delivery_challans', 'company_types', 'productModels', 'product_size', 'product_color', 'customer', 'order_detail', 'order_nos','companyHierarchy','subCompanyName'));
+        return view('pages.job_allocation.delivery_challan.edit', compact('company', 'authorised_people', 'order_details', 'delivery_challans', 'company_types', 'productModels', 'product_size', 'product_color', 'customer', 'order_detail', 'order_nos','subCompanyName','companyHierarchy'));
     }
 
 

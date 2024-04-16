@@ -65,14 +65,14 @@
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
 </div>
+<label for="customer_name" class="col-sm-2 col-form-label">Sub Company name</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="sub_company_name" id="sub_company_name" value="{{ $subCompanyName }}">
+    @error('dc_date')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
 
- <label for="customer_name" class="col-sm-2 col-form-label ">Sub Company name</label>
-                           <div class="col-sm-4 mb-4">
-                               <input class="form-control" type="text" name="sub_company_name" id="sub_company_name" value="{{ $subCompanyName }}" readonly>
-                              @error('dc_date')
-                              <span class="error" style="color: red;">{{ $message }}</span>
-                              @enderror
-                           </div>
     <label for="customer_name" class="col-sm-2 col-form-label ">DC Date</label>
                            <div class="col-sm-4 mb-4">
                               <input class="form-control" type="date" name="dc_date" id="dc_date" value="{{$delivery_challans->dc_date}}">
@@ -302,17 +302,6 @@
 </script>
 
 
-
-
-
-
-
-
-
-
-
-
-
 <script>
     $(document).ready(function () {
         // Initially disable the product_model dropdown
@@ -333,8 +322,6 @@
                         $('#product_model').html(options);
                         // Enable the product_model dropdown
                         $('#product_model').prop('disabled', false);
-
-                         
                     }
                 });
             } else {
@@ -346,6 +333,7 @@
         $('#order_id').trigger('change');
     });
 </script>
+
 <script>
     $(document).ready(function() {
         $('#product_model').change(function() {

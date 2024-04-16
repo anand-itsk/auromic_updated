@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('delivery_challans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('company_id');
-            $table->unsignedBigInteger('sub_company_id')->nullable();;
+            $table->unsignedBigInteger('sub_company_id')->nullable();
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('product_size_id')->nullable();
             $table->unsignedBigInteger('product_color_id')->nullable();

@@ -367,6 +367,8 @@
 
                                 $('#deliveryDate').val(data.dcDetail.order_details
                                     .delivery_date);
+                                     $('#company_name').val(data.dcDetail.company
+                                    .company_name);
                             } else {
                                 $('#order_date').val('');
 

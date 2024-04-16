@@ -155,7 +155,7 @@ class JobGivingController extends Controller
     {
         $productModelId = $id;
         // $orderDetail = OrderDetail::where('product_model_id', $productModelId)->first();
-        $dcDetail = DeliveryChallan::where('id', $productModelId)->with('orderDetails', 'orderDetails.orderNo', 'orderDetails.productModel', 'orderDetails.customer', 'orderDetails.productModel.product', 'orderDetails.productModel.rawMaterial.rawMaterialType')->first();
+        $dcDetail = DeliveryChallan::where('id', $productModelId)->with('orderDetails', 'orderDetails.orderNo', 'orderDetails.productModel', 'orderDetails.customer', 'orderDetails.productModel.product', 'orderDetails.productModel.rawMaterial.rawMaterialType','company')->first();
         // dd($dcDetail->orderDetails);
 
         return response()->json([
