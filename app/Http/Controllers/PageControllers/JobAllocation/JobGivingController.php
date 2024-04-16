@@ -76,13 +76,32 @@ class JobGivingController extends Controller
     // }
     public function fetchOrderIds(Request $request)
     {
-        $companyId = $request->input('company_name');
-        $deliveryChallans = DeliveryChallan::where('company_id', $companyId)->get();
-        $dcNumbers = [];
-        foreach ($deliveryChallans as $deliveryChallan) {
-            $dcNumbers[$deliveryChallan->id] = $deliveryChallan->dc_no;
-        }
-        return response()->json(['dc_numbers' => $dcNumbers]);
+        // $companyId = $request->input('company_name');
+        // $deliveryChallans = DeliveryChallan::where('company_id', $companyId)->get();
+        // $dcNumbers = [];
+        // foreach ($deliveryChallans as $deliveryChallan) {
+        //     $dcNumbers[$deliveryChallan->id] = $deliveryChallan->dc_no;
+        // }
+        // return response()->json(['dc_numbers' => $dcNumbers]);
+
+
+        $companyId = $request->input('company_id');
+    
+    // Assuming you have a Company model and a deliveryChallans relationship
+    $company = Company::findOrFail($companyId);
+    $deliveryChallans = $company->deliveryChallans;
+
+     $dcNumbers = $deliveryChallans->map(function ($deliveryChallan) {
+        return [
+            'id' => $deliveryChallan->id,
+            'dc_no' => $deliveryChallan->dc_no,
+            'customer_order_no' => $deliveryChallan->orderDetails->orderNo->customer_order_no,
+            'model_code' => $deliveryChallan->orderDetails->productModel->model_code,
+            'model_name' => $deliveryChallan->orderDetails->productModel->model_name,
+        ];
+    });
+
+    return response()->json(['dc_numbers' => $dcNumbers]);
     }
 
     public function getQuantities($id)

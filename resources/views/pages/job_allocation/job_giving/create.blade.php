@@ -80,7 +80,7 @@
                                             <select class="form-control select2" name="dc_number" id="dc_number">
                                                 <option value="">Select DC</option>
                                                 @foreach ($delivery_challan as $item)
-                                                    <option value="{{ $item->id }}" data-company="{{ $item->company->name }}">{{ $item->dc_no }} /
+                                                    <option value="{{ $item->id }}">{{ $item->dc_no }} /
                                                         {{ $item->orderDetails->orderNo->customer_order_no }} /
                                                         {{ $item->orderDetails->productModel->model_name }} /
                                                         {{ $item->orderDetails->productModel->model_code }}
@@ -140,6 +140,16 @@
                                             <input class="form-control" type="text" name="raw_material_type"
                                                 id="raw_material_type" readonly>
                                             @error('raw_material_type')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                         <label for="customer_code" class="col-sm-2 col-form-label">
+                                            Wages of 1 Product
+                                        </label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input type="text" class="form-control" name="wages" id="wages"
+                                                readonly >
+                                            @error('wages')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -349,6 +359,8 @@
 
                                 $('#raw_material_type').val(data.dcDetail.order_details
                                     .product_model.raw_material.raw_material_type.name);
+                                $('#wages').val(data.dcDetail.order_details.product_model
+                                    .wages_product);
 
                                 $('#weightPerItem').val(data.dcDetail.order_details
                                     .weight_per_item);
@@ -546,45 +558,43 @@
         });
     </script> -->
 
-    <script>
-        // Function to fetch company name based on selected employee ID
-        function fetchCompanyName() {
-            var employeeId = $('#employee_id').val();
-            var companyId = $('#employee_id option:selected').data('company-id');
+<script>
+    // Function to fetch company name based on selected employee ID
+    function fetchCompanyName() {
+        var companyId = $('#employee_id option:selected').data('company-id');
 
-            // Set the company ID and name
-            $('#company_name').val($('#employee_id option:selected').data('company-name'));
+        // Set the company ID and name
+        $('#company_name').val($('#employee_id option:selected').data('company-name'));
 
-            // Fetch order IDs associated with the selected company
-            $.ajax({
-                url: '{{ route('job_allocation.job_giving.fetch-order-ids') }}',
-                type: 'GET',
-                data: {
-                    company_id: companyId
-                },  
-                success: function(response) {
-                    $('#dc_number').empty();
-                    $('#dc_number').append('<option value="">Select DC</option>');
-                    $.each(response.dc_numbers, function(key, value) {
-                        $('#dc_number').append('<option value="' + key + '">' + value + '</option>');
-                    });
-                }
-            });
-        },
-        else {
-            $('#dc_number').empty();
-            $('#dc_number').append('<option value="">Select DC</option>');
-        }
+        $('#dc_number').prop('disabled', false);
 
-
-
-        // Event listener for employee ID select change
-        $(document).ready(function() {
-            $('#employee_id').change(function() {
-                fetchCompanyName();
-            });
+        // Fetch order IDs associated with the selected company
+        $.ajax({
+            url: '{{ route('job_allocation.job_giving.fetch-order-ids') }}',
+            type: 'GET',
+            data: {
+                company_id: companyId
+            },  
+            success: function(response) {
+                $('#dc_number').empty();
+                $('#dc_number').append('<option value="">Select DC</option>');
+                $.each(response.dc_numbers, function(index, dc) {
+                    $('#dc_number').append('<option value="' + dc.id + '">' + dc.dc_no + ' / ' + dc.customer_order_no + ' / ' + dc.model_name + ' / ' + dc.model_code + '</option>');
+                });
+            }
         });
-    </script>
+    }
+
+    // Event listener for employee ID select change
+    $(document).ready(function() {
+        // Disable dc_number initially
+        $('#dc_number').prop('disabled', true);
+
+        $('#employee_id').change(function() {
+            fetchCompanyName();
+        });
+    });
+</script>
 
 
 <script>

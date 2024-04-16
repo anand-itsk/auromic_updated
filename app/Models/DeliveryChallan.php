@@ -10,6 +10,7 @@ class DeliveryChallan extends Model
     use HasFactory;
     protected $fillable = [
         'company_id',
+         'sub_company_id',
         'dc_id',
         'order_id',
         'product_size_id',
@@ -42,5 +43,9 @@ class DeliveryChallan extends Model
     public function productColor()
     {
         return $this->belongsTo(ProductColor::class, 'product_color_id');
+    }
+    public function subCompany()
+    {
+        return $this->belongsTo(CompanyHierarchy::class, 'sub_company_id', 'company_id');
     }
 }

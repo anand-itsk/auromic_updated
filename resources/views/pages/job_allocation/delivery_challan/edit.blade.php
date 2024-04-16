@@ -65,6 +65,14 @@
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
 </div>
+
+ <label for="customer_name" class="col-sm-2 col-form-label ">Sub Company name</label>
+                           <div class="col-sm-4 mb-4">
+                               <input class="form-control" type="text" name="sub_company_name" id="sub_company_name" value="{{ $subCompanyName }}" readonly>
+                              @error('dc_date')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div>
     <label for="customer_name" class="col-sm-2 col-form-label ">DC Date</label>
                            <div class="col-sm-4 mb-4">
                               <input class="form-control" type="date" name="dc_date" id="dc_date" value="{{$delivery_challans->dc_date}}">

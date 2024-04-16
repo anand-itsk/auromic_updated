@@ -61,4 +61,8 @@ class Company extends Model
     {
         return $this->hasMany(DeliveryChallan::class, 'company_id');
     }
+    public function deliveryChallans()
+    {
+        return $this->hasMany(DeliveryChallan::class, 'company_id');
+    }
 }

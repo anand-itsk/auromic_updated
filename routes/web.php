@@ -554,6 +554,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('get-models-by-order-id', [DeliveryChallanController::class, 'getModelsByOrderId'])->name('getModelsByOrderId');
             Route::get('/get-product-details', [DeliveryChallanController::class, 'getProductDetails']);
             Route::get('/get-order-details', [DeliveryChallanController::class, 'getOrderDetails']);
+            // routes/web.php
+Route::get('/getSubCompanies/{companyId}', [DeliveryChallanController::class, 'getSubCompanies']);
+
         });
 
         Route::prefix('/job_giving')->name('job_giving.')->group(function () {
