@@ -31,9 +31,11 @@
                                 <form action="{{ route('job_allocation.direct_job_received.store') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="direct_job_giving_id" value="{{ $id }}">
-                                    <input type="hidden" name="product_color_id" value="{{ $direct_job_giving->product_color_id }}">
-<input type="hidden" name="finishing_product_models_id" value="{{ $direct_job_giving->finishing_product_models_id }}">
-<input type="hidden" name="employee_id" value="{{ $direct_job_giving->employee_id }}">
+                                    <input type="hidden" name="product_color_id"
+                                        value="{{ $direct_job_giving->product_color_id }}">
+                                    <input type="hidden" name="finishing_product_models_id"
+                                        value="{{ $direct_job_giving->finishing_product_models_id }}">
+                                    <input type="hidden" name="employee_id" value="{{ $direct_job_giving->employee_id }}">
                                     <div class="form-group row">
                                         <label for="employee_id" class="col-sm-2 col-form-label">
                                             Employee Name
@@ -157,21 +159,22 @@
                                             @enderror
                                         </div>
 
-                                        <label for="order_date" class="col-sm-2 col-form-label">Cutting Pices</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="meter" id="meter"
-                                                readonly value="{{ $direct_job_giving->meter }}">
-                                            @error('meter')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
 
-                                        <label for="is_cutting" class="col-sm-2 col-form-label">Is Cutting</label>
+                                        <label for="is_cutting" class="col-sm-2 col-form-label">Is Cutting?</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="is_cutting" id="is_cutting"
                                                 readonly
                                                 value="{{ $direct_job_giving->clothes_by_cutting == 1 ? 'Yes' : 'No' }}">
                                             @error('is_cutting')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="order_date" class="col-sm-2 col-form-label">Cutting Pices</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="meter" id="meter"
+                                                readonly value="{{ $direct_job_giving->total_cutting_pieces ?? '-' }}">
+                                            @error('meter')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
