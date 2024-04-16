@@ -17,8 +17,6 @@ class EsiDispensaryTableSeeder extends Seeder
 
         $datas = array(
             array('name' => "Not Specified", 'code' => 'NS'),
-            array('name' => "Esi Dispensaries 1", 'code' => '1'),
-            array('name' => "Esi Dispensaries 2", 'code' => '2'),
             
         );
         DB::table('esi_dispensaries')->insert($datas);
