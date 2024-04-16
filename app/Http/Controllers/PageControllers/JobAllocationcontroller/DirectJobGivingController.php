@@ -50,6 +50,7 @@ class DirectJobGivingController extends Controller
 
             'product_name' => $finishingProduct->product->name,
             'product_size' => $finishingProduct->productSize->code,
+            'meters_one_product' => $finishingProduct->meters_one_product,
 
         ]);
     }
@@ -71,7 +72,7 @@ class DirectJobGivingController extends Controller
         $direct_job_giving->meter = $request->input('meter');
         $direct_job_giving->clothes_by_cutting = $request->input('clothes_by_cutting');
         $direct_job_giving->total_cutting_pieces = $request->input('total_cutting_pices');
-        //  $direct_job_giving->weight = $request->input('weight');
+        $direct_job_giving->total_quantity = $request->input('total_quantity');
 
 
         //  dd($direct_job_giving); 
@@ -115,7 +116,7 @@ class DirectJobGivingController extends Controller
         $direct_job_giving->product_size_id = $request->input('product_size_id');
         $direct_job_giving->product_color_id = $request->input('product_color_id');
         $direct_job_giving->meter = $request->input('meter');
-         $direct_job_giving->clothes_by_cutting = $request->input('finishing_product_models_id');
+        $direct_job_giving->clothes_by_cutting = $request->input('finishing_product_models_id');
         $direct_job_giving->total_cutting_pieces = $request->input('total_cutting_pices');
 
 

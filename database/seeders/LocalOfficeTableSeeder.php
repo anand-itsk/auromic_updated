@@ -17,8 +17,6 @@ class LocalOfficeTableSeeder extends Seeder
 
         $company_registration_details = array(
             array('name' => "Not Specified", 'code' => 'NS'),
-            array('name' => "local_offices 1", 'code' => '1'),
-            array('name' => "local_offices 2", 'code' => '2'),
             
         );
         DB::table('local_offices')->insert($company_registration_details);

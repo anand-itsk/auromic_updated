@@ -17,7 +17,6 @@ class PaymentModeTableSeeder extends Seeder
 
         $company_registration_details = array(
             array('name' => "Not Specified", 'code' => 'NS'),
-            array('name' => "Payment Mode 1", 'code' => '1'),
             
         );
         DB::table('payment_modes')->insert($company_registration_details);

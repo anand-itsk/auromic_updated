@@ -17,8 +17,6 @@ class CasteTableSeeder extends Seeder
         
         $datas = array(
             array('name' => "Not Specified", 'code' => 'N/S'),
-            array('name' => "Caste 1", 'code' => 'C1'),
-
         );
 
         DB::table('castes')->insert($datas);

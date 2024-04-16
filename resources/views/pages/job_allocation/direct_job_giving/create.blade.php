@@ -105,7 +105,7 @@
                                         </label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_color_id"
-                                                id="product_color_id">
+                                                id="product_color_id" required>
                                                 <option value="">Select Product color</option>
                                                 @foreach ($product_color as $item)
                                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -125,12 +125,23 @@
                                             @enderror
                                         </div>
 
+                                        <label for="meter_for_one_product" class="col-sm-2 col-form-label">Meter for one
+                                            product</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="meter_for_one_product"
+                                                id="meter_for_one_product" readonly>
+                                            @error('meter_for_one_product')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
 
 
                                         <label for="customer_code" class="col-sm-2 col-form-label mandatory">Is Clothes by
                                             Cutting?</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control" name="clothes_by_cutting" id="clothes_by_cutting">
+                                            <select class="form-control" name="clothes_by_cutting"
+                                                id="clothes_by_cutting">
                                                 <option value="0">No</option>
                                                 <option value="1">Yes</option>
                                             </select>
@@ -147,13 +158,25 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="meter" class="col-sm-2 col-form-label">Total Cutting Pieces</label>
-                                          <div class="col-sm-4 mb-4">
-                                <input class="form-control" type="text" name="total_cutting_pices" id="total_cutting_pices">
+                                        <label for="total_cutting_pices" class="col-sm-2 col-form-label">Total Cutting
+                                            Pieces</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="total_cutting_pices"
+                                                id="total_cutting_pices">
                                             @error('total_cutting_pices')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
-</div>
+                                        </div>
+
+                                        <label for="total_quantity" class="col-sm-2 col-form-label">Receiving
+                                            Quantity</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="total_quantity"
+                                                id="total_quantity" readonly>
+                                            @error('total_quantity')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
 
                                     </div>
                                     <div class="form-group">
@@ -210,6 +233,17 @@
                 $('#company_name').val(companyName);
                 $('#company_type').val(companyType);
             });
+
+
+            $('#meter').on('input', function() {
+                var meterForOneProduct = parseFloat($('#meter_for_one_product').val(), 10);
+                var totalMeter = parseFloat($(this).val(), 10);
+                var errorSpan = $('#assign_meter_error');
+                var net = ( totalMeter/meterForOneProduct );
+
+                $('#total_quantity').val(net);
+
+            });
         });
     </script>
     <script>
@@ -226,6 +260,7 @@
 
                             $('#product_name').val(data.product_name);
                             $('#product_size').val(data.product_size);
+                            $('#meter_for_one_product').val(data.meters_one_product);
 
                         }
                     });
