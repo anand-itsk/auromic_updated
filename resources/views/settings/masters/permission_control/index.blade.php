@@ -64,9 +64,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Name</th>
-                                                   
-                                                   
+                                                    <th>Name</th>  
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -105,7 +103,7 @@ $(document).ready(function() {
                 data: 'name',
                 name: 'name'
             },
-            
+           
            
             {
                 data: null,

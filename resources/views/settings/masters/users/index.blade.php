@@ -15,6 +15,12 @@
             {{ session('success') }}
         </div>
         @endif
+    <div class="alert alert-success alert-dismissible fade show" role="alert" style="display:none;">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <strong></strong> User deleted successfully.
+</div>
         <div class="row">
             <div class="col-xl-2">
                 <div class="row">
@@ -405,7 +411,7 @@ $(document).ready(function() {
                 render: function(data, type, row) {
                     return `
                         <button onclick="editUser(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
-                        <button onclick="deleteUser(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
+                        <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
                     `;
                 }
 
@@ -459,16 +465,60 @@ function editUser(id) {
 
 
 
-function deleteUser(id) {
+// function deleteUser(id) {
+//     // Send an AJAX request to delete the user
+//     if (confirm('Are you sure you want to delete this user?')) {
+//         $.ajax({
+//             url: 'user-management/user/delete/' + id,
+//             type: 'DELETE',
+//             data: {
+//                 _token: '{{ csrf_token() }}',
+//             },
+//               success: function(result) {
+//                 // Show success message
+//                 $('.alert-success').show();
+
+//                 // Hide success message after 5 seconds
+//                 setTimeout(function(){
+//                     $('.alert-success').alert('close');
+//                 }, 5000);
+
+//                 // Reload the DataTable after success message is shown
+//                 table.ajax.reload(); // Reload the DataTable
+//             }
+
+
+
+
+//         });
+//     }
+// }
+
+
+
+
+
+
+        function deleteCustomer(id) {
+    console.log("inside")
     // Send an AJAX request to delete the user
-    if (confirm('Are you sure you want to delete this user?')) {
+    if (confirm('Are you sure you want to delete this master company?')) {
         $.ajax({
-            url: 'user-management/user/delete/' + id,
+            url: '/user-management/user/delete/' + id,
             type: 'DELETE',
             data: {
                 _token: '{{ csrf_token() }}',
             },
             success: function(result) {
+                // Show success message
+                $('.alert-success').show();
+
+                // Hide success message after 5 seconds
+                setTimeout(function(){
+                    $('.alert-success').alert('close');
+                }, 5000);
+
+                // Reload the DataTable after success message is shown
                 table.ajax.reload(); // Reload the DataTable
             }
         });

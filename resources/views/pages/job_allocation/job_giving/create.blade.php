@@ -384,6 +384,11 @@
 
             $('#weight').on('input', function() {
                 var weight = parseFloat($(this).val());
+                      if (isNaN(weight)) {
+        $('#excess_weight').val('0.0');
+        $('#shortage_weight').val('0.0');
+        return; 
+    }
                 var weightPerQuantity = parseFloat($('#weightPerItem').val());
                 var totalQuantity = parseFloat($('#total_quantity').val());
                 var totalWeight = parseFloat($('#total_weight').val());

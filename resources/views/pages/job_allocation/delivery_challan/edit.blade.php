@@ -322,6 +322,9 @@
                         $('#product_model').html(options);
                         // Enable the product_model dropdown
                         $('#product_model').prop('disabled', false);
+
+                        // Automatically select the first product model
+                        $('#product_model').val(response[0].id).change();
                     }
                 });
             } else {
@@ -434,6 +437,11 @@
 
         $('#weight').on('input', function() {
             var weight = parseFloat($(this).val());
+                  if (isNaN(weight)) {
+        $('#excess_weight').val('0.0');
+        $('#shortage_weight').val('0.0');
+        return; 
+    }
             var weightPerQuantity = parseFloat($('#weightPerItem').val());
             var totalQuantity = parseFloat($('#total_quantity').val());
             var totalWeight = parseFloat($('#total_weight').val());
