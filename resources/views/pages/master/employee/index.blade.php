@@ -42,9 +42,9 @@
                                     </div>
 
                                     <div>
-                                        <!-- <button type="button" class="icon-button common-color bg-secondary rounded"
+                                        <button type="button" class="icon-button common-color bg-secondary rounded"
                                                                                                                     data-toggle="modal" data-target=".bs-example-modal-center"
-                                                                                                                    title="Import Employee"><i class="fa fa-upload text-white"></i></button> -->
+                                                                                                                    title="Import Employee"><i class="fa fa-upload text-white"></i></button>
                                         <button type="button" class="icon-button common-color  bg-primary rounded "
                                             data-toggle="modal" data-target=".employe-create-modal-center"
                                             title="Create Employee"><i class="fa fa-user-plus text-white"></i></button>
