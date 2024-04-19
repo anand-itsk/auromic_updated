@@ -143,6 +143,16 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
+                                         <label for="customer_code" class="col-sm-2 col-form-label">
+                                            Wages of 1 Product
+                                        </label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input type="text" class="form-control" name="wages" id="wages"
+                                                readonly >
+                                            @error('wages')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="order_date" class="col-sm-2 col-form-label">Quantity</label>
@@ -349,12 +359,16 @@
 
                                 $('#raw_material_type').val(data.dcDetail.order_details
                                     .product_model.raw_material.raw_material_type.name);
+                                $('#wages').val(data.dcDetail.order_details.product_model
+                                    .wages_product);
 
                                 $('#weightPerItem').val(data.dcDetail.order_details
                                     .weight_per_item);
 
                                 $('#deliveryDate').val(data.dcDetail.order_details
                                     .delivery_date);
+                                     $('#company_name').val(data.dcDetail.company
+                                    .company_name);
                             } else {
                                 $('#order_date').val('');
 
@@ -370,6 +384,11 @@
 
             $('#weight').on('input', function() {
                 var weight = parseFloat($(this).val());
+                      if (isNaN(weight)) {
+        $('#excess_weight').val('0.0');
+        $('#shortage_weight').val('0.0');
+        return; 
+    }
                 var weightPerQuantity = parseFloat($('#weightPerItem').val());
                 var totalQuantity = parseFloat($('#total_quantity').val());
                 var totalWeight = parseFloat($('#total_weight').val());
@@ -546,48 +565,53 @@
         });
     </script> -->
 
-    <script>
-        // Function to fetch company name based on selected employee ID
-        function fetchCompanyName() {
-            var employeeId = $('#employee_id').val();
-            var companyId = $('#employee_id option:selected').data('company-id');
+<script>
+    // Function to fetch company name based on selected employee ID
+    function fetchCompanyName() {
+        var companyId = $('#employee_id option:selected').data('company-id');
 
-            // Set the company ID and name
-            $('#company_name').val($('#employee_id option:selected').data('company-name'));
+        // Set the company ID and name
+        $('#company_name').val($('#employee_id option:selected').data('company-name'));
 
-            // Fetch order IDs associated with the selected company
-            $.ajax({
-                url: '{{ route('job_allocation.job_giving.fetch-order-ids') }}',
-                type: 'GET',
-                data: {
-                    company_id: companyId
-                },
-                success: function(response) {
-                    $('#dc_number').empty();
-                    $('#dc_number').append('<option value="">Select DC</option>');
-                    $.each(response.dc_numbers, function(key, value) {
-                        $('#dc_number').append('<option value="' + key + '">' + value + '</option>');
-                    });
-                }
-            });
-        },
-        else {
-            $('#dc_number').empty();
-            $('#dc_number').append('<option value="">Select DC</option>');
-        }
+        $('#dc_number').prop('disabled', false);
 
-
-
-        // Event listener for employee ID select change
-        $(document).ready(function() {
-            $('#employee_id').change(function() {
-                fetchCompanyName();
-            });
+        // Fetch order IDs associated with the selected company
+        $.ajax({
+            url: '{{ route('job_allocation.job_giving.fetch-order-ids') }}',
+            type: 'GET',
+            data: {
+                company_id: companyId
+            },  
+            success: function(response) {
+                $('#dc_number').empty();
+                $('#dc_number').append('<option value="">Select DC</option>');
+                $.each(response.dc_numbers, function(index, dc) {
+                    $('#dc_number').append('<option value="' + dc.id + '">' + dc.dc_no + ' / ' + dc.customer_order_no + ' / ' + dc.model_name + ' / ' + dc.model_code + '</option>');
+                });
+            }
         });
-    </script>
+    }
+
+    // Event listener for employee ID select change
+    $(document).ready(function() {
+        // Disable dc_number initially
+        $('#dc_number').prop('disabled', true);
+
+        $('#employee_id').change(function() {
+            fetchCompanyName();
+        });
+    });
+</script>
 
 
-
+<script>
+    $(document).ready(function() {
+        $('#dc_number').change(function() {
+            var companyName = $(this).find(':selected').data('company');
+            $('#company_name').val(companyName);
+        });
+    });
+</script>
 
     <script>
         $(document).ready(function() {

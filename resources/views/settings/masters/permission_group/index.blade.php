@@ -15,11 +15,11 @@
             {{ session('success') }}
         </div>
         @endif
-                                  <div class="alert alert-success alert-dismissible fade show" role="alert" style="display:none;">
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="display:none;">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
-    <strong></strong> Country deleted successfully.
+    <strong></strong> Permission Group deleted successfully.
 </div>
         <div class="row">
             <div class="col-xl-2">
@@ -38,7 +38,7 @@
                     <div class="col-12">
                         <div class="card m-b-30 rightsetup">
                             <div class="card-header pb-0 pt-0 bg-white">
-                                <h5>Country</h5>
+                                <h5>Perimission Group</h5>
                             </div>
 
                             <div class="card-body pt-0">
@@ -52,8 +52,8 @@
                                             </div>
                                             <div>
                                                
-                                                <a href="{{route('common.country.create')}}"
-                                                    class="icon-link common-color" title="Create New country">
+                                                <a href="{{route('user-management.permission_group.create')}}"
+                                                    class="icon-link common-color" title="Create New permission group">
                                                     <i class="fa fa-user-plus"></i>
                                                 </a>
                                             </div>
@@ -65,7 +65,7 @@
                                                 <tr>
                                                     <th>ID</th>
                                                     <th>Name</th>
-                                                    <th>Code</th>
+                                                   
                                                    
                                                     <th>Action</th>
                                                 </tr>
@@ -96,7 +96,7 @@ $(document).ready(function() {
     table = $('#users-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{{route('common.country.data')}}',
+        ajax: '{{route('user-management.permission_group.data')}}',
         columns: [{
                 data: 'id',
                 name: 'id'
@@ -105,10 +105,7 @@ $(document).ready(function() {
                 data: 'name',
                 name: 'name'
             },
-            {
-                data: 'code',
-                name: 'code'
-            },
+            
            
             {
                 data: null,
@@ -117,7 +114,7 @@ $(document).ready(function() {
                 render: function(data, type, row) {
                     return `
                         <button onclick="editUser(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
-                        <button onclick="deleteUser(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
+                        <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
                                               
                     `;
                 }
@@ -166,21 +163,23 @@ $(document).ready(function() {
 function editUser(id) {
     console.log("inside");
     // Redirect to the user edit page or open a modal for editing
-    window.location.href = 'country/edit/' + id;
+    window.location.href = 'permission_group-edit/' + id;
 }
 
 
 
-function deleteUser(id) {
+
+ function deleteCustomer(id) {
+    console.log("inside")
     // Send an AJAX request to delete the user
-    if (confirm('Are you sure you want to delete this Country?')) {
+    if (confirm('Are you sure you want to delete this Permission Group?')) {
         $.ajax({
-            url: 'country/delete/' + id,
-            type: 'get',
+            url: '/user-management/permission_group-delete/' + id,
+            type: 'DELETE',
             data: {
                 _token: '{{ csrf_token() }}',
             },
-              success: function(result) {
+            success: function(result) {
                 // Show success message
                 $('.alert-success').show();
 
@@ -192,10 +191,6 @@ function deleteUser(id) {
                 // Reload the DataTable after success message is shown
                 table.ajax.reload(); // Reload the DataTable
             }
-
-
-
-
         });
     }
 }

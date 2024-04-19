@@ -46,8 +46,8 @@
                                         <label class="col-sm-2 col-form-label">Master Companies</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="master_company" id="master_company">
-                                                @foreach ($master_companies as $company)
                                                 <option value="">Select</option>
+                                            @foreach ($master_companies as $company)
                                                     <option value="{{ $company->company_name }}">
                                                         {{ $company->company_name }} -
                                                         {{ optional($company->authorisedPerson)->name ?? 'No Authorised Person' }}

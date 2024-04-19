@@ -17,12 +17,6 @@ class ProductColorTableSeeder extends Seeder
 
         $datas = array(
             array('name' => "Not Specified", 'code' => 'N/S'),
-            array('name' => "Pink", 'code' => 'PC'),
-            array('name' => "Red", 'code' => 'RC'),
-            array('name' => "Yello", 'code' => 'YC'),
-            array('name' => "Blue", 'code' => 'BC'),
-            array('name' => "Green", 'code' => 'GC'),
-            array('name' => "C Mix", 'code' => 'MC'),
 
         );
 

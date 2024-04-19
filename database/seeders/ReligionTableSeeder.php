@@ -17,7 +17,6 @@ class ReligionTableSeeder extends Seeder
 
         $datas = array(
             array('name' => "Not Specified", 'code' => 'N/S'),
-            array('name' => "Religion 1", 'code' => 'R1'),
 
         );
 

@@ -64,6 +64,23 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
+                                        <label for="customer_code" class="col-sm-2 col-form-label">
+                                           Sub Company Name
+                                        </label>
+                                        <div class="col-sm-4 mb-4">
+                                            <select class="form-control select2 w-100" name="parent_company_id" id="parent_company_id"
+                                                disabled>
+                                                <option value="">select</option>
+                                                <option value="">Select Company</option>
+                                                @foreach ($company_hierarchy as $companyItem)
+                                                    <option value="{{ $companyItem->id }}">{{ $companyItem->company->company_name}}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('company_id')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                         <label for="customer_name" class="col-sm-2 col-form-label mandatory">DC Date</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="date" name="dc_date" id="dc_date">
@@ -430,6 +447,11 @@
 
         $('#weight').on('input', function() {
             var weight = parseFloat($(this).val());
+            if (isNaN(weight)) {
+        $('#excess_weight').val('0.0');
+        $('#shortage_weight').val('0.0');
+        return; 
+    }
             var weightPerQuantity = parseFloat($('#weightPerItem').val());
             var totalQuantity = parseFloat($('#total_quantity').val());
             var totalWeight = parseFloat($('#total_weight').val());
@@ -456,6 +478,44 @@
         });
     </script>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+       
+        $('#company_id').change(function () {
+            var companyId = $(this).val();
+            if (companyId) {
+                $.ajax({
+                    url: '/job_allocation/delivery_challan/getSubCompanies/' + companyId,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        $('#parent_company_id').empty();
+                        $.each(data, function (key, value) {
+                             $('#parent_company_id').append('<option value="' + value.company.id + '">' + value.company.company_name + '</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#parent_company_id').empty();
+                $('#parent_company_id').append('<option value="">Select Sub Company</option>');
+            }
+        });
+    });
+</script>
+
+
+<script>
+        $(document).ready(function() {
+            $('#company_id').on('change', function() {
+                var customerId = $(this).val();
+                if (customerId !== '') {
+                    $('#parent_company_id').prop('disabled', false);
+                } else {
+                    $('#parent_company_id').prop('disabled', true);
+                }
+            });
+        });
+    </script>
 
 
     @include('links.js.select2.select2')

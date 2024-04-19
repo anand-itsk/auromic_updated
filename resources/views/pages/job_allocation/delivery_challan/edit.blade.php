@@ -65,6 +65,14 @@
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
 </div>
+<label for="customer_name" class="col-sm-2 col-form-label">Sub Company name</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="sub_company_name" id="sub_company_name" value="{{ $subCompanyName }}">
+    @error('dc_date')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
     <label for="customer_name" class="col-sm-2 col-form-label ">DC Date</label>
                            <div class="col-sm-4 mb-4">
                               <input class="form-control" type="date" name="dc_date" id="dc_date" value="{{$delivery_challans->dc_date}}">
@@ -294,17 +302,6 @@
 </script>
 
 
-
-
-
-
-
-
-
-
-
-
-
 <script>
     $(document).ready(function () {
         // Initially disable the product_model dropdown
@@ -326,7 +323,8 @@
                         // Enable the product_model dropdown
                         $('#product_model').prop('disabled', false);
 
-                         
+                        // Automatically select the first product model
+                        $('#product_model').val(response[0].id).change();
                     }
                 });
             } else {
@@ -338,6 +336,7 @@
         $('#order_id').trigger('change');
     });
 </script>
+
 <script>
     $(document).ready(function() {
         $('#product_model').change(function() {
@@ -438,6 +437,11 @@
 
         $('#weight').on('input', function() {
             var weight = parseFloat($(this).val());
+                  if (isNaN(weight)) {
+        $('#excess_weight').val('0.0');
+        $('#shortage_weight').val('0.0');
+        return; 
+    }
             var weightPerQuantity = parseFloat($('#weightPerItem').val());
             var totalQuantity = parseFloat($('#total_quantity').val());
             var totalWeight = parseFloat($('#total_weight').val());
