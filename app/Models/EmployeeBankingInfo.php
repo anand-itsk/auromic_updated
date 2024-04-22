@@ -14,6 +14,7 @@ class EmployeeBankingInfo extends Model
         'bank_name',
         'address',
         'account_number',
+        'ifsc_code',
         'payment_mode_id',
         'account_type',
         'bank_ref_no',

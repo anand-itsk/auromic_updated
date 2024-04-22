@@ -4,6 +4,10 @@ namespace App\Imports;
 
 use App\Models\Address;
 use App\Models\Employee;
+use App\Models\PfInfo;
+use App\Models\EsiInfo;
+use App\Models\EmployeeBankingInfo;
+use App\Models\EmployeeIdentityProof;
 use DateTime;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
@@ -12,6 +16,8 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class EmployeeDataImport implements ToCollection, WithHeadingRow
 {
+
+    
     /**
      * @param Collection $collection
      */
@@ -45,7 +51,7 @@ class EmployeeDataImport implements ToCollection, WithHeadingRow
                 'employee_name' => $row['employee_name'] ?? null,
                 'joining_date' => isset($row['date_of_joining']) ? (new DateTime($row['date_of_joining']))->format('Y-m-d') : null,
                 'faorhus_name' => $row['fathershusbands_name'] ?? null,
-                // 'dob' => isset($row['dob']) ? (new DateTime($row['dob']))->format('Y-m-d') : null,
+                'dob' => isset($row['dob']) ? (new DateTime($row['dob']))->format('Y-m-d') : null,
                 'gender' => $gender ?? null,
                 'mobile' => $row['mobile'] ?? null,
                 'email' => $row['email'] ?? null,
@@ -81,6 +87,32 @@ class EmployeeDataImport implements ToCollection, WithHeadingRow
                 $correspAddress->pincode = $row['pin_corresp'];
                 $employee->addresses()->save($correspAddress);
             }
+
+            $pfInfo = new PfInfo();
+            $pfInfo->employee_id = $employee->id; 
+            $pfInfo->pf_no = $row['pf_no']; 
+            $pfInfo->uan_number = $row['uan']; 
+            $pfInfo->save();
+
+             $esiInfo = new EsiInfo();
+            $esiInfo->employee_id = $employee->id; 
+            $esiInfo->esi_no = $row['esi_no']; 
+            $esiInfo->save();
+
+
+            $bankingInfo = new EmployeeBankingInfo();
+            $bankingInfo->employee_id = $employee->id; 
+            $bankingInfo->bank_name = $row['bank_name']; 
+            $bankingInfo->account_number = $row['account_number'];
+            $bankingInfo->ifsc_code = $row['ifsc_code'];
+            $bankingInfo->save();
+
+            $identity_proofInfo = new EmployeeIdentityProof();
+            $identity_proofInfo->employee_id = $employee->id; 
+            $identity_proofInfo->aadhar_number = $row['aadhar_number']; 
+            $identity_proofInfo->aadhar_name = $row['aadhar_name'];
+            $identity_proofInfo->save();
+             
         }
     }
 }
