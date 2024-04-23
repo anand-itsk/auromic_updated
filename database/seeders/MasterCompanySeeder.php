@@ -15,12 +15,11 @@ class MasterCompanySeeder extends Seeder
     public function run(): void
     {
 
-        Company::factory(\Database\Factories\MasterCompanyFactory::class)->count(10)->create();
-
+        
 
         Company::create([
-            'company_code' => 'C001',
-            'company_name' => 'Syscorp',
+            'company_code' => 'AURO',
+            'company_name' => 'Auromics',
             'created_by' => 1,
             'updated_by' => 1
         ]);
