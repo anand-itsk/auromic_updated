@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('bank_name')->nullable();
             $table->text('address')->nullable();
             $table->string('account_number')->nullable();
+            $table->string('ifsc_code')->nullable();
             $table->unsignedBigInteger('payment_mode_id')->default(1);
             $table->string('account_type')->nullable();
             $table->string('bank_ref_no')->nullable();

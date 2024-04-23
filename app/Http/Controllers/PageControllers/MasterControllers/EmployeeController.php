@@ -12,7 +12,7 @@ use App\Models\Country;
 use App\Models\Customer;
 use App\Models\Employee;
 use App\Exports\EmployeeExport;
-use App\Imports\EmployeeImport;
+use App\Imports\EmployeeDataImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\EmployeeFamilyMemberDetail;
 use App\Models\EmployeeNominee;
@@ -364,6 +364,7 @@ class EmployeeController extends Controller
                 'bank_name' => $request->bank_name,
                 'address' => $request->address,
                 'account_number' => $request->account_number,
+                'ifsc_code' => $request->ifsc_code,
                 'payment_mode_id' => $request->payment_mode_id,
                 'account_type' => $request->account_type,
                 'bank_ref_no' => $request->bank_ref_no,
@@ -374,6 +375,7 @@ class EmployeeController extends Controller
                 'bank_name' => $request->bank_name,
                 'address' => $request->address,
                 'account_number' => $request->account_number,
+                'ifsc_code' => $request->ifsc_code,
                 'payment_mode_id' => $request->payment_mode_id,
                 'account_type' => $request->account_type,
                 'bank_ref_no' => $request->bank_ref_no,
@@ -786,7 +788,7 @@ class EmployeeController extends Controller
             'file' => 'required|file|mimes:xlsx,csv'
         ]);
 
-        Excel::import(new EmployeeImport, request()->file('file'));
+        Excel::import(new EmployeeDataImport, request()->file('file'));
 
         return redirect()->route('master.employees.index')->with('success', 'Data imported successfully');
     }
