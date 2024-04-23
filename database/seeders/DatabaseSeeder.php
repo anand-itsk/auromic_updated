@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             AddressTypeTableSeeder::class,
             UserTableSeeder::class,
             CompanyTypeTableSeeder::class,
-            // CompanyTableSeeder::class,
+            CompanyTableSeeder::class,
             // CompanyHierarchieTableSeeder::class,
             // CompanyRegistrationDetailTableSeeder::class,
             // BankDetailTableSeeder::class,

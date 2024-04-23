@@ -19,40 +19,32 @@ class CompanyTableSeeder extends Seeder
     {
         Company::create([
             'company_type_id' => 2,
-            'company_code' => 'MC001',
+            'company_code' => 'AURO',
             'company_name' => 'Auromic',
             'created_by' => 1,
             'updated_by' => 1
         ]);
 
         Company::create([
-            'company_type_id' => 2,
-            'company_code' => 'MC002',
-            'company_name' => 'Auromic2',
+            'company_type_id' => 3,
+            'company_code' => 'Arthi',
+            'company_name' => 'Arthi',
             'created_by' => 1,
             'updated_by' => 1
         ]);
 
         Company::create([
             'company_type_id' => 3,
-            'company_code' => 'CC001',
-            'company_name' => 'Arthi Machine Knitting Works',
+            'company_code' => 'SRISAKTHI',
+            'company_name' => 'Sri Sakthi',
             'created_by' => 1,
             'updated_by' => 1
         ]);
 
         Company::create([
-            'company_type_id' => 4,
-            'company_code' => 'SC002',
-            'company_name' => 'Sri Sakthi Crochet Works',
-            'created_by' => 1,
-            'updated_by' => 1
-        ]);
-
-        Company::create([
-            'company_type_id' => 4,
-            'company_code' => 'SC002',
-            'company_name' => 'Jayam Mother Hand Knitting Works',
+            'company_type_id' => 3,
+            'company_code' => 'OMSAKTHI',
+            'company_name' => 'OM Sakthi',
             'created_by' => 1,
             'updated_by' => 1
         ]);

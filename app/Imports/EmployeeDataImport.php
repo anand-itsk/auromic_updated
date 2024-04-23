@@ -17,7 +17,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class EmployeeDataImport implements ToCollection, WithHeadingRow
 {
 
-    
+
     /**
      * @param Collection $collection
      */
@@ -25,7 +25,22 @@ class EmployeeDataImport implements ToCollection, WithHeadingRow
     {
 
 
+
         foreach ($collection as $row) {
+            // Define the expected date format
+            $dateFormat = 'd/m/y';
+
+            // Create a DateTime object from the provided date, with error handling
+            $dob = isset($row['dob']) ? DateTime::createFromFormat($dateFormat, $row['dob']) : null;
+
+            if ($dob) {
+                // If successful, format to 'Y-m-d' (ISO 8601)
+                $formattedDate = $dob->format('Y-m-d');
+            } else {
+                // Handle invalid date parsing or null values
+                $formattedDate = null;
+            }
+
             // Check if user with the same email already exists
             $existing = Employee::where('employee_code', $row['code'])
                 ->where('employee_name', $row['employee_name'])
@@ -51,7 +66,7 @@ class EmployeeDataImport implements ToCollection, WithHeadingRow
                 'employee_name' => $row['employee_name'] ?? null,
                 'joining_date' => isset($row['date_of_joining']) ? (new DateTime($row['date_of_joining']))->format('Y-m-d') : null,
                 'faorhus_name' => $row['fathershusbands_name'] ?? null,
-                'dob' => isset($row['dob']) ? (new DateTime($row['dob']))->format('Y-m-d') : null,
+                // 'dob' => isset($row['dob']) ? (new DateTime($row['dob']))->format('Y-d-m') : null,
                 'gender' => $gender ?? null,
                 'mobile' => $row['mobile'] ?? null,
                 'email' => $row['email'] ?? null,
@@ -89,30 +104,29 @@ class EmployeeDataImport implements ToCollection, WithHeadingRow
             }
 
             $pfInfo = new PfInfo();
-            $pfInfo->employee_id = $employee->id; 
-            $pfInfo->pf_no = $row['pf_no']; 
-            $pfInfo->uan_number = $row['uan']; 
+            $pfInfo->employee_id = $employee->id;
+            $pfInfo->pf_no = $row['pf_no'];
+            $pfInfo->uan_number = $row['uan'];
             $pfInfo->save();
 
-             $esiInfo = new EsiInfo();
-            $esiInfo->employee_id = $employee->id; 
-            $esiInfo->esi_no = $row['esi_no']; 
+            $esiInfo = new EsiInfo();
+            $esiInfo->employee_id = $employee->id;
+            $esiInfo->esi_no = $row['esi_no'];
             $esiInfo->save();
 
 
             $bankingInfo = new EmployeeBankingInfo();
-            $bankingInfo->employee_id = $employee->id; 
-            $bankingInfo->bank_name = $row['bank_name']; 
-            $bankingInfo->account_number = $row['account_number'];
-            $bankingInfo->ifsc_code = $row['ifsc_code'];
+            $bankingInfo->employee_id = $employee->id;
+            $bankingInfo->bank_name = $row['bank_name'];
+            $bankingInfo->account_number = $row['ac_number'];
+            $bankingInfo->ifsc_code = $row['ifsc'];
             $bankingInfo->save();
 
             $identity_proofInfo = new EmployeeIdentityProof();
-            $identity_proofInfo->employee_id = $employee->id; 
-            $identity_proofInfo->aadhar_number = $row['aadhar_number']; 
-            $identity_proofInfo->aadhar_name = $row['aadhar_name'];
+            $identity_proofInfo->employee_id = $employee->id;
+            $identity_proofInfo->aadhar_number = $row['aadhar_number'];
+            $identity_proofInfo->aadhar_name = $row['name_as_per_aadhar'];
             $identity_proofInfo->save();
-             
         }
     }
 }
