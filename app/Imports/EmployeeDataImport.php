@@ -94,7 +94,7 @@ class EmployeeDataImport implements ToCollection, WithHeadingRow
 
 
                 $correspAddress = new Address();
-                $correspAddress->address_type_id = 4; // Assuming this is the type ID for office addresses
+                $correspAddress->address_type_id = 5; // Assuming this is the type ID for office addresses
 
 
                 $correspAddress->address = $row['address_corresp'];
