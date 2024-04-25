@@ -106,13 +106,18 @@
                                                             ->first();
                                                     @endphp
                                                     <div class="col-md-4">
+                                                    @php
+                                                            $permanentAddress = $employee->addresses
+                                                                ->where('address_type_id', 4)
+                                                                ->first();
+                                                        @endphp
                                                         <h6 class="font-weight-lighter text-primary">Permanent Address</h6>
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <span class="font-weight-bold">Address</span>
                                                             </div>
                                                             <div class="col-md-8 ">
-                                                                <span> {{ $officeAddress->address ?? '-' }}</span>
+                                                                <span> {{ $permanentAddress->address ?? '-' }}</span>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -120,7 +125,7 @@
                                                                 <span class="font-weight-bold">Country</span>
                                                             </div>
                                                             <div class="col-md-8 ">
-                                                                <span> {{ $officeAddress->country->name ?? '-' }}</span>
+                                                                <span> {{ $permanentAddress->country->name ?? '-' }}</span>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -128,7 +133,7 @@
                                                                 <span class="font-weight-bold">State</span>
                                                             </div>
                                                             <div class="col-md-8 ">
-                                                                <span> {{ $officeAddress->state->name ?? '-' }}</span>
+                                                                <span> {{ $permanentAddress->state->name ?? '-' }}</span>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -136,7 +141,7 @@
                                                                 <span class="font-weight-bold">Pin Code</span>
                                                             </div>
                                                             <div class="col-md-8 ">
-                                                                <span> {{ $officeAddress->pincode ?? '-' }}</span>
+                                                                <span> {{ $permanentAddress->pincode ?? '-' }}</span>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -152,7 +157,7 @@
                                                     <div class="col-md-4">
                                                         @php
                                                             $address = $employee->addresses
-                                                                ->where('address_type_id', 4)
+                                                                ->where('address_type_id', 5)
                                                                 ->first();
                                                         @endphp
                                                         <h6 class="font-weight-lighter text-primary">Correspondence Address
@@ -564,7 +569,7 @@
                                                             <div class="col-md-4">
                                                                 <span class="font-weight-bold">PF No</span>
                                                             </div>
-                                                            <div class="col-md-8 ">
+                                                            <div class="col-md-8">
                                                                 <span>
                                                                     {{ $employee->pfInfo->pf_no ?? '-' }}</span>
                                                             </div>
@@ -602,13 +607,24 @@
                                                                 <span class="font-weight-bold">Pension Joining Date
                                                                 </span>
                                                             </div>
-                                                            <div class="col-md-8 ">
+                                                            <div class="col-md-8">
                                                                 <span>
                                                                     {{ $employee->pfInfo->pension_joining_date ?? '-' }}</span>
                                                             </div>
                                                         </div>
-
-                                                    </div>
+                                                     <div class="row">
+<div class="col-md-4">
+                                                                <span class="font-weight-bold">UAN
+                                                                </span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <span>
+                                                                    {{ $employee->pfInfo->uan_number ?? '-' }}</span>
+                                                            </div>
+                                                     </div>
+    </div>
+                                                       
+                                                   
 
                                                     {{-- ESI Info --}}
                                                     <div class="col-md-3">
@@ -670,6 +686,9 @@
                                                         </div>
 
                                                     </div>
+
+
+    </div>
 
 
                                                 </div>

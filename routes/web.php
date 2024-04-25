@@ -34,6 +34,7 @@ use App\Http\Controllers\CompanyTypeController;
 use App\Http\Controllers\ResigningReasonsController;
 use App\Http\Controllers\LocalOfficeController;
 use App\Http\Controllers\EsiDispensaryController;
+use App\Http\Controllers\PaymentModeController;
 use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\OrderReportController;
 use App\Http\Controllers\RawMaterialTypeController;
@@ -227,6 +228,17 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/esi_dispensary-update/{id}', [EsiDispensaryController::class, 'update'])->name('esi_dispensaries.update');
         Route::get('/esi_dispensary-delete/{id}', [EsiDispensaryController::class, 'delete'])->name('esi_dispensaries.delete');
         Route::post('esi_dispensary/select-esi_dispensary-delete', [EsiDispensaryController::class, 'deleteSelected']);
+
+        //Payment Mode
+        Route::get('/payment_mode', [PaymentModeController::class, 'index'])->name('payment_modes');
+        Route::get('payment_mode/data', [PaymentModeController::class, 'indexData'])->name('payment_modes.data');
+        Route::get('/payment_mode-create', [PaymentModeController::class, 'create'])->name('payment_modes.create');
+        Route::post('/payment_mode-store', [PaymentModeController::class, 'store'])->name('payment_modes.store');
+        Route::get('/payment_mode-edit/{id}', [PaymentModeController::class, 'edit'])->name('payment_modes.edit');
+        Route::post('/payment_mode-update/{id}', [PaymentModeController::class, 'update'])->name('payment_modes.update');
+        Route::get('/payment_mode-delete/{id}', [PaymentModeController::class, 'delete'])->name('payment_modes.delete');
+        Route::post('payment_mode/select-payment_mode-delete', [PaymentModeController::class, 'deleteSelected']);
+
     });
 
 

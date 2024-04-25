@@ -65,4 +65,10 @@ class Company extends Model
     {
         return $this->hasMany(DeliveryChallan::class, 'company_id');
     }
+
+    public function companyHierarchy()
+    {
+        return $this->hasOne(CompanyHierarchy::class, 'company_id','parent_company_id');
+    }
+   
 }

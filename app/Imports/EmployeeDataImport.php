@@ -116,6 +116,7 @@ class EmployeeDataImport implements ToCollection, WithHeadingRow
 
 
             $bankingInfo = new EmployeeBankingInfo();
+
             $bankingInfo->employee_id = $employee->id;
             $bankingInfo->bank_name = $row['bank_name'];
             $bankingInfo->account_number = $row['ac_number'];

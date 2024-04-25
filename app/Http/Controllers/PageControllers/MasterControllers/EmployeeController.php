@@ -62,7 +62,8 @@ class EmployeeController extends Controller
     public function indexData()
     {
         // Eager load the roles relationship
-        $company = Employee::query();
+        $company = Employee::with(['company','company.companyHierarchy'])->get();
+        // dd($company[0]);
         return DataTables::of($company)->make(true);
     }
 
