@@ -120,6 +120,7 @@ class EmployeeDataImport implements ToCollection, WithHeadingRow
             $bankingInfo->bank_name = $row['bank_name'];
             $bankingInfo->account_number = $row['ac_number'];
             $bankingInfo->ifsc_code = $row['ifsc'];
+            $bankingInfo->payment_mode_id = $row['payment_mode'];
             $bankingInfo->save();
 
             $identity_proofInfo = new EmployeeIdentityProof();
