@@ -45,7 +45,8 @@
                 <label class="col-sm-2 col-form-label">Payment Mode</label>
                 <div class="col-sm-4 mb-4">
                     <select class="form-control select2" name="payment_mode_id" id="payment_mode_id">
-                        @foreach ($payment_modes as $item)
+    
+                    @foreach ($payment_modes as $item)
                             <option value="{{ $item->id }}"
                                 {{ $employee->financeDetail && $employee->financeDetail->payment_mode_id == $item->id ? 'selected' : '' }}>
                                 {{ $item->name }}

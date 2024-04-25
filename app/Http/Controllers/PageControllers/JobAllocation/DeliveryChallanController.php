@@ -69,7 +69,7 @@ class DeliveryChallanController extends Controller
         // dd($companyId);
 
        $companyHierarchy = CompanyHierarchy::where('parent_company_id', $companyId)
-        ->with('company') // Eager load the company relationship
+        ->with('company') 
         ->get();
     
         //  dd($companyHierarchy);

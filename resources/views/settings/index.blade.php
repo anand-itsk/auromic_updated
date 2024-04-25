@@ -88,6 +88,10 @@
                                         <a class="text-muted" href="{{ route('specified.esi_dispensaries') }}">ESI
                                             Dispensary</a>
                                     </div>
+                                    <div class="link-list">
+                                        <a class="text-muted" href="{{ route('specified.esi_dispensaries') }}">
+                                            Payment Mode</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

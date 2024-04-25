@@ -18,4 +18,10 @@ class CompanyHierarchy extends Model
     {
         return $this->belongsTo(Company::class, 'company_id');
     }
+    public function parentCompany()
+    {
+        return $this->belongsTo(Company::class, 'parent_company_id');
+    }
+
+     
 }

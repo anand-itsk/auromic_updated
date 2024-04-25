@@ -396,6 +396,7 @@
                                                 <th>ID</th>
                                                 <th>Employee Code</th>
                                                 <th>Employee Name</th>
+                                                 <th>Company Name</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -487,6 +488,14 @@
                         data: 'employee_name',
                         name: 'employee_name'
                     },
+                    
+                    
+                    {
+                        data: 'company.company_name',
+                        name: 'company.company_name'
+                    },
+
+                    
                     {
                         data: 'status',
                         name: 'status'

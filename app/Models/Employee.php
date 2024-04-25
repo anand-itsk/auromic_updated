@@ -37,7 +37,7 @@ class Employee extends Model
 
     public function company()
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(Company::class,'company_id');
     }
 
     public function addresses()
@@ -103,4 +103,12 @@ class Employee extends Model
     {
         return $this->belongsTo(ResigningReason::class);
     }
+
+
+public function parentCompany()
+    {
+        return $this->belongsTo(CompanyHierarchy::class, 'company_id', 'company_id')
+                    ->select('parent_company_id');
+    }
+
 }
