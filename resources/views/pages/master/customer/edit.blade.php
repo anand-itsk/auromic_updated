@@ -152,8 +152,13 @@
 
                                         <label class="col-sm-2 col-form-label">State</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="state_id" id="state_id" disabled>
-                                            </select>
+                                            <select class="form-control select2" name="state_id" id="state_id">
+                                           @foreach ($states as $item)
+                                                    <option value="{{ $item->id }}"
+                                                        {{ $address && $address->state_id == $item->id ? 'selected' : '' }}>
+                                                        {{ $item->name }}</option>
+                                                @endforeach
+                                        </select>
                                             @error('state_id')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
