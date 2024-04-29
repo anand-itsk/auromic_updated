@@ -24,21 +24,30 @@ class EmployeeDataImport implements ToCollection, WithHeadingRow
     public function collection(Collection $collection)
     {
 
-
+        // dd($collection);
 
         foreach ($collection as $row) {
             // Define the expected date format
-            $dateFormat = 'd/m/y';
-
             // Create a DateTime object from the provided date, with error handling
-            $dob = isset($row['dob']) ? DateTime::createFromFormat($dateFormat, $row['dob']) : null;
-
+            // $dob = isset($row['dob']) ? DateTime::createFromFormat($dateFormat, $row['dob']) : null;
+            $dob = DateTime::createFromFormat('d/m/Y', $row['dob']);
+            $doj = DateTime::createFromFormat('d/m/Y', $row['date_of_joining']);
             if ($dob) {
                 // If successful, format to 'Y-m-d' (ISO 8601)
                 $formattedDate = $dob->format('Y-m-d');
+                // dd($formattedDate);
             } else {
                 // Handle invalid date parsing or null values
                 $formattedDate = null;
+            }
+
+            if ($doj) {
+                // If successful, format to 'Y-m-d' (ISO 8601)
+                $dojFormate = $doj->format('Y-m-d');
+                // dd($formattedDate);
+            } else {
+                // Handle invalid date parsing or null values
+                $dojFormate = null;
             }
 
             // Check if user with the same email already exists
@@ -64,9 +73,9 @@ class EmployeeDataImport implements ToCollection, WithHeadingRow
                 'company_id' => $row['company_id'] ?? null,
                 'employee_code' => $row['code'] ?? null,
                 'employee_name' => $row['employee_name'] ?? null,
-                'joining_date' => isset($row['date_of_joining']) ? (new DateTime($row['date_of_joining']))->format('Y-m-d') : null,
+                'joining_date' => $dojFormate,
                 'faorhus_name' => $row['fathershusbands_name'] ?? null,
-                // 'dob' => isset($row['dob']) ? (new DateTime($row['dob']))->format('Y-d-m') : null,
+                'dob' => $formattedDate,
                 'gender' => $gender ?? null,
                 'mobile' => $row['mobile'] ?? null,
                 'email' => $row['email'] ?? null,

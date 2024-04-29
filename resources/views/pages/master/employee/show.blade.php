@@ -106,7 +106,7 @@
                                                             ->first();
                                                     @endphp
                                                     <div class="col-md-4">
-                                                    @php
+                                                        @php
                                                             $permanentAddress = $employee->addresses
                                                                 ->where('address_type_id', 4)
                                                                 ->first();
@@ -265,7 +265,8 @@
                                                                 <span class="font-weight-bold">DOB</span>
                                                             </div>
                                                             <div class="col-md-8 ">
-                                                                <span> {{ $employee->dob ?? '-' }}</span>
+                                                                <span>
+                                                                    {{ $employee->dob ? date('d/M/Y', strtotime($employee->dob)) : '-' }}</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -342,8 +343,8 @@
                                                                 <span class="font-weight-bold">Phone</span>
                                                             </div>
                                                             <div class="col-md-8 ">
-                                                                <span> {{ $employee->std_code ?? '-' }} -
-                                                                    {{ $employee->phone ?? '-' }}</span>
+                                                                <span> {{ $employee->std_code ?? '' }} -
+                                                                    {{ $employee->phone ?? '' }}</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -387,7 +388,8 @@
                                                                 <span class="font-weight-bold">Joining Date</span>
                                                             </div>
                                                             <div class="col-md-8 ">
-                                                                <span> {{ $employee->joining_date ?? '-' }}</span>
+                                                                <span>
+                                                                    {{ $employee->joining_date ? date('d/M/Y', strtotime($employee->joining_date)) : '-' }}</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -395,10 +397,10 @@
                                                     <div class="col-md-4">
                                                         <div class="row">
                                                             <div class="col-md-4">
-                                                                <span class="font-weight-bold">Prob Period</span>
+                                                                <span class="font-weight-bold">Prob Period in Month</span>
                                                             </div>
                                                             <div class="col-md-8 ">
-                                                                <span> {{ $employee->prob_period ?? '-' }} month</span>
+                                                                <span> {{ $employee->prob_period ?? '-' }}</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -612,8 +614,8 @@
                                                                     {{ $employee->pfInfo->pension_joining_date ?? '-' }}</span>
                                                             </div>
                                                         </div>
-                                                     <div class="row">
-<div class="col-md-4">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
                                                                 <span class="font-weight-bold">UAN
                                                                 </span>
                                                             </div>
@@ -621,10 +623,10 @@
                                                                 <span>
                                                                     {{ $employee->pfInfo->uan_number ?? '-' }}</span>
                                                             </div>
-                                                     </div>
-    </div>
-                                                       
-                                                   
+                                                        </div>
+                                                    </div>
+
+
 
                                                     {{-- ESI Info --}}
                                                     <div class="col-md-3">
@@ -688,96 +690,96 @@
                                                     </div>
 
 
-    </div>
-
-
                                                 </div>
 
-                                                <hr class="my-1" />
-                                                {{-- Family Members --}}
-                                                <h5 class="font-weight-lighter mt-4 text-center text-primary">Family Member
-                                                    Details</h5>
-                                                <table class="table table-striped table-bordered dt-responsive nowrap"
-                                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Name</th>
-                                                            <th>Relation</th>
-                                                            <th>Date of Birth</th>
-                                                            <th>Residing</th>
-                                                            <th>Remark</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($employee->familyMembers as $familyMember)
-                                                            <tr>
-                                                                <td>{{ $familyMember->name }}</td>
-                                                                <td>{{ $familyMember->relation_with_emp }}</td>
-                                                                <td>{{ $familyMember->dob }}</td>
-                                                                <td>{{ $familyMember->is_residing ? 'Yes' : 'No' }}</td>
-                                                                <td>{{ $familyMember->remark }}</td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-
-                                                <hr class="my-1" />
-                                                {{-- Nominess Members --}}
-                                                <h5 class="font-weight-lighter mt-4 text-center text-primary">Nominee
-                                                    Details</h5>
-                                                <table class="table table-striped table-bordered dt-responsive nowrap"
-                                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Family Member</th>
-                                                            <th>Gratuity Sharing</th>
-                                                            <th>Marital Status</th>
-                                                            <th>Religion ID</th>
-                                                            <th>Forhus Name</th>
-                                                            <th>Guardian Name</th>
-                                                            <th>Guardian Address</th>
-                                                            <th>Guardian Relation with Emp</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($employee->nominee as $nominees)
-                                                            <tr>
-                                                                <td>{{ $nominees->familyMember->name }}</td>
-                                                                <td>{{ $nominees->gratuity_sharing }}</td>
-                                                                <td>{{ $nominees->marital_status }}</td>
-                                                                <td>{{ $nominees->religion_id }}</td>
-                                                                <td>{{ $nominees->faorhus_name }}</td>
-                                                                <td>{{ $nominees->guardian_name }}</td>
-                                                                <td>{{ $nominees->guardian_address }}</td>
-                                                                <td>{{ $nominees->guardian_relation_with_emp }}</td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                                <div class="row">
-                                                    {{-- Banking Info --}}
-                                                    <div class="col-md-12">
-                                                        {{-- <h6 class="font-weight-lighter text-primary">Banking Info</h6> --}}
-                                                        <table></table>
-                                                    </div>
-
-
-
-                                                </div>
 
                                             </div>
+
+                                            <hr class="my-1" />
+                                            {{-- Family Members --}}
+                                            <h5 class="font-weight-lighter mt-4 text-center text-primary">Family Member
+                                                Details</h5>
+                                            <table class="table table-striped table-bordered dt-responsive nowrap"
+                                                style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Relation</th>
+                                                        <th>Date of Birth</th>
+                                                        <th>Residing</th>
+                                                        <th>Remark</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($employee->familyMembers as $familyMember)
+                                                        <tr>
+                                                            <td>{{ $familyMember->name }}</td>
+                                                            <td>{{ $familyMember->relation_with_emp }}</td>
+                                                            <td>{{ $familyMember->dob }}</td>
+                                                            <td>{{ $familyMember->is_residing ? 'Yes' : 'No' }}</td>
+                                                            <td>{{ $familyMember->remark }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+
+                                            <hr class="my-1" />
+                                            {{-- Nominess Members --}}
+                                            <h5 class="font-weight-lighter mt-4 text-center text-primary">Nominee
+                                                Details</h5>
+                                            <table class="table table-striped table-bordered dt-responsive nowrap"
+                                                style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Family Member</th>
+                                                        <th>Gratuity Sharing</th>
+                                                        <th>Marital Status</th>
+                                                        <th>Religion ID</th>
+                                                        <th>Forhus Name</th>
+                                                        <th>Guardian Name</th>
+                                                        <th>Guardian Address</th>
+                                                        <th>Guardian Relation with Emp</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($employee->nominee as $nominees)
+                                                        <tr>
+                                                            <td>{{ $nominees->familyMember->name }}</td>
+                                                            <td>{{ $nominees->gratuity_sharing }}</td>
+                                                            <td>{{ $nominees->marital_status }}</td>
+                                                            <td>{{ $nominees->religion_id }}</td>
+                                                            <td>{{ $nominees->faorhus_name }}</td>
+                                                            <td>{{ $nominees->guardian_name }}</td>
+                                                            <td>{{ $nominees->guardian_address }}</td>
+                                                            <td>{{ $nominees->guardian_relation_with_emp }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                            <div class="row">
+                                                {{-- Banking Info --}}
+                                                <div class="col-md-12">
+                                                    {{-- <h6 class="font-weight-lighter text-primary">Banking Info</h6> --}}
+                                                    <table></table>
+                                                </div>
+
+
+
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
+
                     </div>
                 </div>
-            </section>
-
-
         </div>
+        </section>
+
+
+    </div>
     </div>
 
 
