@@ -397,6 +397,7 @@
                                                 <th>Employee Code</th>
                                                 <th>Employee Name</th>
                                                  <th>Company Name</th>
+                                                 <th>Company Type</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -489,13 +490,16 @@
                         name: 'employee_name'
                     },
                     
-                    
                     {
-                        data: 'company.company_name',
-                        name: 'company.company_name'
+                        data: 'company_name',
+                        name: 'company_name'
                     },
 
-                    
+                    {
+                        data: 'company_type_name',
+                        name: 'company_type_name'
+                    },
+
                     {
                         data: 'status',
                         name: 'status'

@@ -23,7 +23,7 @@
                                 <div class="card-body">
                                     <h4 class="mt-0 extra-medium-font"> User Management</h4>
                                     <div class="link-list">
-                                        <a class="text-muted" href="{{ route('user-management.users') }}">Users</a>
+                                        <a class="text-muted" href="{{ route('user-management.users') }}">Users     ({{ $user_count }})</a>
                                     </div>
                                     <div class="link-list">
                                         <a class="text-muted"
@@ -48,22 +48,22 @@
                                     <h4 class="mt-0 extra-medium-font">Common</h4>
 
                                     <div class="link-list">
-                                        <a class="text-muted" href="{{ route('common.countries') }}">Country</a>
+                                        <a class="text-muted" href="{{ route('common.countries') }}">Country ({{$country_count}})</a>
                                     </div>
                                     <div class="link-list">
-                                        <a class="text-muted" href="{{ route('common.states') }}">State</a>
+                                        <a class="text-muted" href="{{ route('common.states') }}">State ({{$state_count}})</a>
                                     </div>
                                     <div class="link-list">
-                                        <a class="text-muted" href="{{ route('common.districts') }}">Districts</a>
+                                        <a class="text-muted" href="{{ route('common.districts') }}">Districts ({{$districts_count}})</a>
                                     </div>
                                     <div class="link-list">
-                                        <a class="text-muted" href="{{ route('common.religions') }}">Religion</a>
+                                        <a class="text-muted" href="{{ route('common.religions') }}">Religion ({{$religion_count}})</a>
                                     </div>
                                     <div class="link-list">
-                                        <a class="text-muted" href="{{ route('common.castes') }}">Caste</a>
+                                        <a class="text-muted" href="{{ route('common.castes') }}">Caste ({{$caste_count}})</a>
                                     </div>
                                     <div class="link-list">
-                                        <a class="text-muted" href="{{ route('common.nationalities') }}">Nationality</a>
+                                        <a class="text-muted" href="{{ route('common.nationalities') }}">Nationality ({{$nationality_count}})</a>
                                     </div>
                                 </div>
                             </div>
@@ -74,23 +74,23 @@
                                 <div class="card-body">
                                     <h4 class="mt-0 extra-medium-font">Specified</h4>
                                     <div class="link-list">
-                                        <a class="text-muted" href="{{ route('specified.company_types') }}">Company Type</a>
+                                        <a class="text-muted" href="{{ route('specified.company_types') }}">Company Type ({{$company_type_count}})</a>
                                     </div>
                                     <div class="link-list">
                                         <a class="text-muted"
-                                            href="{{ route('specified.resigning_reasons') }}">Resigning</a>
+                                            href="{{ route('specified.resigning_reasons') }}">Resigning ({{$resigning_reason_count}})</a>
                                     </div>
                                     <div class="link-list">
                                         <a class="text-muted" href="{{ route('specified.local_offices') }}">Local
-                                            Offices</a>
+                                            Offices ({{$local_offices_count}})</a>
                                     </div>
                                     <div class="link-list">
                                         <a class="text-muted" href="{{ route('specified.esi_dispensaries') }}">ESI
-                                            Dispensary</a>
+                                            Dispensary ({{$esi_dispensary_count}})</a>
                                     </div>
                                     <div class="link-list">
                                         <a class="text-muted" href="{{ route('specified.esi_dispensaries') }}">
-                                            Payment Mode</a>
+                                            Payment Mode ({{$payment_mode_count}})</a>
                                     </div>
                                 </div>
                             </div>
@@ -102,26 +102,26 @@
                                     <h4 class="mt-0 extra-medium-font">Products/Models</h4>
                                     <div class="link-list">
                                         <a class="text-muted m-b-0" href="{{ route('product-models.raw_material_types') }}">Raw
-                                            Material Type</a>
+                                            Material Type ({{$raw_material_type_count}})</a>
                                     </div>
                                     <div class="link-list">
                                         <a class="text-muted m-b-0" href="{{ route('product-models.raw_materials') }}">Raw
-                                            Material</a>
+                                            Material ({{$raw_material_count}})</a>
                                     </div>
                                     <div class="link-list">
-                                        <a class="text-muted m-b-0" href="{{ route('product-models.products') }}">Product</a>
+                                        <a class="text-muted m-b-0" href="{{ route('product-models.products') }}">Product ({{$product_count}})</a>
                                     </div>
                                     <div class="link-list">
                                         <a class="text-muted m-b-0" href="{{ route('product-models.product_sizes') }}">Product
-                                            Size</a>
+                                            Size ({{$product_size_count}})</a>
                                     </div>
                                     <div class="link-list">
                                         <a class="text-muted m-b-0" href="{{ route('product-models.product_colors') }}">Product
-                                            Color</a>
+                                            Color ({{$product_color_count}})</a>
                                     </div>
                                     <div class="link-list">
                                         <a class="text-muted m-b-0" href="{{ route('product-models.order_statuses') }}">Order
-                                            Status</a>
+                                            Status ({{$order_status_count}})</a>
                                     </div>
                                 </div>
                             </div>
