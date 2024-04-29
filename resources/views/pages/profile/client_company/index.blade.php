@@ -118,6 +118,8 @@
                                                 <th>ID</th>
                                                 <th>Company Code</th>
                                                 <th>Company Name</th>
+                                                <th>Authorised Person</th>
+                                                <th>Email</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -207,6 +209,14 @@
                     {
                         data: 'company_name',
                         name: 'company_name'
+                    },
+                    {
+                        data: 'authorised_person_name',
+                        name: 'authorised_person_name'
+                    },
+                    {
+                        data: 'authorised_person_email',
+                        name: 'authorised_person_email'
                     },
                     {
                         data: null,
