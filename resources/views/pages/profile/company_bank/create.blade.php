@@ -38,8 +38,8 @@
                                         <label class="col-sm-2 col-form-label">Companies</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="company_id" id="company_id">
-                                                @foreach ($companies as $company)
-                                                <option value="">Select Company</option>
+                                                    <option value="">Select Company</option>
+                                            @foreach ($companies as $company)
                                                     <option value="{{ $company->id }}">
                                                         {{ $company->company_name }} -
                                                         {{ optional($company->authorisedPerson)->name ?? 'No Authorised Person' }}

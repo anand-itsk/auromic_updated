@@ -117,8 +117,9 @@ class CustomerController extends Controller
         $user = User::with('roles')->find($id);
         $customer = Customer::with('addresses')->find($id);
         $countries = Country::all();
+        $states = State::all();
         // dd($customer);
-        return view('pages.master.customer.edit', compact('customer', 'user', 'countries', 'address'));
+        return view('pages.master.customer.edit', compact('customer', 'user', 'countries', 'address','states'));
     }
     // Update
     public function update(Request $request, $id)

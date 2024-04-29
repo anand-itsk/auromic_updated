@@ -234,7 +234,9 @@
                            </label>
                            <div class="col-sm-4 mb-4">
                               <input type="text" class="form-control" name="quantity" id="quantity">
-                              @error('employee_id')
+                              <span id="quantity-error" class="error" style="color: red; display: none;"></span>
+    @error('quantity')
+                              
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
                            </div>
@@ -307,5 +309,22 @@
 
     // Initial calculation on page load
     updateBalanceQuantity();
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#quantity').on('input', function() {
+            var quantity = $(this).val();
+            var availableQuantity = $('#available_quantity').val();
+            
+            if (parseInt(quantity) > parseInt(availableQuantity)) {
+                $('#quantity-error').text('Quantity cannot exceed available balance quantity.');
+                $('#quantity-error').show();
+               //  $(this).val(''); // Clear the input field
+            } else {
+                $('#quantity-error').hide();
+            }
+        });
+    });
 </script>
 @endsection
