@@ -259,6 +259,7 @@ $(document).ready(function() {
             { data: 'employee_name', name: 'employee_name', render: function(data, type, row) { return data ? data : '-'; } },
             { data: 'dob', name: 'dob', render: function(data, type, row) { return data ? data : '-'; } },
             { data: 'joining_date', name: 'joining_date', render: function(data, type, row) { return data ? data : '-'; } }
+            
         ],
         order: [[0, 'desc']],
         select: true,

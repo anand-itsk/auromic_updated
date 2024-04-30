@@ -72,7 +72,7 @@ class EmployeeController extends Controller
             'company_name' => $employee->company->company_name,
             'company_type_name' => $employee->company->companyType->name,
             'status' => $employee->status,
-            // Add other necessary data fields here
+        
         ];
     });
 

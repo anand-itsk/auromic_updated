@@ -499,11 +499,23 @@
                         data: 'company_type_name',
                         name: 'company_type_name'
                     },
+                    
 
-                    {
-                        data: 'status',
-                        name: 'status'
-                    },
+                   { 
+                data: 'status', 
+                name: 'status',
+                render: function(data, type, full, meta) {
+                    var statusClass = '';
+                    if (data === 'working') {
+                        statusClass = 'bg-success'; 
+                    } else if (data === 'relieving') {
+                        statusClass = 'bg-warning'; 
+                    } else {
+                        statusClass = 'bg-danger'; 
+                    }
+                    return '<span class="employee_status ' + statusClass + '">' + data + '</span>';
+                }
+            },
                     {
                         data: null,
                         orderable: false,
