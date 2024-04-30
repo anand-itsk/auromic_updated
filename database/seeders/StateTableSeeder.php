@@ -18,7 +18,6 @@ class StateTableSeeder extends Seeder
         DB::table('states')->delete();
         $states = array(
             array('country_id' => 1, 'name' => "Not Specified", 'code' => "NS"),
-            array('country_id' => 101, 'name' => "Not Specified", 'code' => "NS"),
             array('country_id' => 101, 'name' => "Andhra Pradesh", 'code' => "AD"),
             array('country_id' => 101, 'name' => "Arunachal Pradesh", 'code' => "AR"),
             array('country_id' => 101, 'name' => "Assam", 'code' => "AS"),
