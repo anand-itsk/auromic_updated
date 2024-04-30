@@ -17,4 +17,6 @@ class CompanyBankDetail extends Model
     {
         return $this->belongsTo(BankDetail::class, 'bank_detail_id', 'id');
     }
+
+
 }

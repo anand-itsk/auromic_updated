@@ -397,6 +397,7 @@
                                                 <th>Employee Code</th>
                                                 <th>Employee Name</th>
                                                  <th>Company Name</th>
+                                                 <th>Company Type</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -489,17 +490,32 @@
                         name: 'employee_name'
                     },
                     
-                    
                     {
-                        data: 'company.company_name',
-                        name: 'company.company_name'
+                        data: 'company_name',
+                        name: 'company_name'
                     },
 
-                    
                     {
-                        data: 'status',
-                        name: 'status'
+                        data: 'company_type_name',
+                        name: 'company_type_name'
                     },
+                    
+
+                   { 
+                data: 'status', 
+                name: 'status',
+                render: function(data, type, full, meta) {
+                    var statusClass = '';
+                    if (data === 'working') {
+                        statusClass = 'bg-success'; 
+                    } else if (data === 'relieving') {
+                        statusClass = 'bg-warning'; 
+                    } else {
+                        statusClass = 'bg-danger'; 
+                    }
+                    return '<span class="employee_status ' + statusClass + '">' + data + '</span>';
+                }
+            },
                     {
                         data: null,
                         orderable: false,

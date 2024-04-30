@@ -49,6 +49,7 @@ public function indexData(Request $request)
     $companies = is_array($company) ? $company : [$company];
     $query->whereIn('company_id', $companies);
 }
+
     // Get employees data
     $employees = $query->get();
 

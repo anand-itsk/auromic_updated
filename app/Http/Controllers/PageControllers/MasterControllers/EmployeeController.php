@@ -61,10 +61,22 @@ class EmployeeController extends Controller
     // Index DataTable
     public function indexData()
     {
-        // Eager load the roles relationship
-        $company = Employee::with(['company','company.companyHierarchy'])->get();
-        // dd($company[0]);
-        return DataTables::of($company)->make(true);
+     $employees = Employee::with(['company', 'company.companyType', 'company.companyHierarchy'])->get();
+    
+    // Transform the data if necessary
+    $data = $employees->map(function ($employee) {
+        return [
+             'id' => $employee->id,
+            'employee_code' => $employee->employee_code,
+            'employee_name' => $employee->employee_name,
+            'company_name' => $employee->company->company_name,
+            'company_type_name' => $employee->company->companyType->name,
+            'status' => $employee->status,
+        
+        ];
+    });
+
+    return DataTables::of($data)->make(true);
     }
 
     // Show Family Member table

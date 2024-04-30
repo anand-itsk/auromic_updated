@@ -92,6 +92,7 @@
                                                 <th>ID</th>
                                                 <th>Company Name</th>
                                                 <th>Company Code</th>
+                                                <th>Bank Count  </th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -184,6 +185,13 @@
                         data: 'company_code',
                         name: 'company_code'
                     },
+                    {
+                        data: 'bank_count',
+                        name: 'bank_count',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                    },  
                     {
                         data: null,
                         orderable: false,

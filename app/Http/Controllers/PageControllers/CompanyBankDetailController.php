@@ -22,8 +22,12 @@ class CompanyBankDetailController extends Controller
     public function indexData()
     {
         // Eager load the roles relationship
-        $company = Company::query();
-        return DataTables::of($company)->make(true);
+       $companies = Company::withCount('companyBankDetails')->get();
+    return DataTables::of($companies)
+        ->addColumn('bank_count', function ($company) {
+            return $company->company_bank_details_count ?? '-';
+        })
+        ->make(true);
     }
     // Create Page
     public function create()
