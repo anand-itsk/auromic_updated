@@ -24,11 +24,19 @@
                         <span class="error" style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>
-                <label for="ifsc_code" class="col-sm-2 col-form-label">SIFSC</label>
+                <label for="ifsc_code" class="col-sm-2 col-form-label">IFSC</label>
                 <div class="col-sm-4 mb-4">
                     <input class="form-control" type="text" name="ifsc_code" id="ifsc_code"
                         value={{ $employee->financeDetail ? $employee->financeDetail->ifsc_code : '' }}>
                     @error('ifsc_code')
+                        <span class="error" style="color: red;">{{ $message }}</span>
+                    @enderror
+                </div>
+                <label for="ifsc_code" class="col-sm-2 col-form-label">Name as per bank</label>
+                <div class="col-sm-4 mb-4">
+                    <input class="form-control" type="text" name="name_as_per_bank" id="name_as_per_bank"
+                        value={{ $employee->financeDetail ? $employee->financeDetail->name_as_per_bank : '' }}>
+                    @error('name_as_per_bank')
                         <span class="error" style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>

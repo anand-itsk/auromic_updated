@@ -25,7 +25,7 @@
                             <div class="card">
                                 <div class="card-body d-flex justify-content-between align-items-center">
                                     <div>
-                                        <h4 class="fs-19 mt-0">New Order</h4>
+                                        <h4 class="fs-19 mt-0">Total Order</h4>
                                         <h4 class="cost-text m-0">{{ $order_count }}</h4>
                                     </div>
                                     <div class="card-rigth-icon card-box2-blue">
@@ -170,6 +170,62 @@
                 </div>
             </div>
             <!-- end row -->
+
+            <div class="row">
+                        <div class="col-lg-3 mt-2">
+                            <div class="card">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h4 class="fs-19 mt-0">Today Order</h4>
+                                        <h4 class="cost-text m-0">{{$todayOrderCount}}</h4>
+                                    </div>
+                                    <div class="card-rigth-icon card-box2-blue">
+                                        <i class="dripicons-briefcase"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 mt-2">
+                            <div class="card">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h4 class="fs-19 mt-0">Pending Order</h4>
+                                        <h4 class="cost-text m-0">{{ $jobGivingCountPending}}</h4>
+
+                                    </div>
+                                    <div class="card-rigth-icon  card-box2-pink">
+                                        <i class="dripicons-briefcase"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 mt-2">
+                            <div class="card">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h4 class="fs-19 mt-0">Complete Order</h4>
+                                        <h4 class="cost-text m-0">{{ $jobGivingCountComplete}}</h4>
+                                    </div>
+                                    <div class="card-rigth-icon card-box2-green">
+                                        <i class="dripicons-briefcase"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 mt-2">
+                            <div class="card">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h4 class="fs-19 mt-0">Cancel Order</h4>
+                                        <h4 class="cost-text m-0">{{ $jobGivingCountcancelled}}</h4>
+                                    </div>
+                                    <div class="card-rigth-icon card-box2-violet">
+                                        <i class="dripicons-briefcase"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
             {{-- chart Starts  --}}
             {{-- <div class="row mt-4">

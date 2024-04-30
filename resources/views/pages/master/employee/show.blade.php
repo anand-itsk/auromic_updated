@@ -11,7 +11,11 @@
             color: white;
             width: fit-content;
         }
+
+
     </style>
+    
+    
     <div class="wrapper">
         <div class="container-fluid">
             <!-- Page-Title -->
@@ -38,6 +42,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="d-flex justify-content-end align-items-center pb-2">
+                                        <button class="btn btn-secondary mr-2" onclick="printPage()">Print</button>
                                         <a class="mr-2" href="{{ route('master.employees.edit', $employee->id) }}"><button
                                                 class="btn btn-primary">
                                                 Edit</button></a>
@@ -45,8 +50,9 @@
                                                 class="btn btn-danger">
                                                 Close</button></a>
 
+
                                     </div>
-                                    <div class="card m-b-30">
+                                    <div class="card m-b-30" >
                                         @if ($employee->status == 'working')
                                             <span class="employee_status bg-success">{{ $employee->status }}</span>
                                         @elseif($employee->status == 'relieving')
@@ -248,7 +254,7 @@
                                                             <div class="col-md-8 ">
                                                                 <span>
                                                                     {{ $employee->identityProof->aadhar_number ?? '-' }} /
-                                                                    {{ $employee->identityProof->aadhar_name }}</span>
+                                                                    {{ $employee->identityProof->aadhar_name ??'-' }}</span>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -845,7 +851,23 @@
 
     </div>
     </div>
-
+<script>
+function printPage() {
+    var content = document.querySelector('.card-body').innerHTML;
+    var printWindow = window.open('', '', 'height=1000,width=1000');
+    printWindow.document.write('<html><head><title>AUROMOCS</title>');
+    // Adding CSS style for landscape orientation
+    printWindow.document.write('<style>@page { size: landscape; }</style>');
+    // Adding CSS to remove table borders
+    printWindow.document.write('<style>table { border-collapse: collapse; } th, td { border: none; }</style>');
+    printWindow.document.write('</head><body>');
+    // Printing the content as it is
+    printWindow.document.write(content);
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+    printWindow.print();
+}
+</script>
 
     @include('links.js.select2.select2')
 @endsection

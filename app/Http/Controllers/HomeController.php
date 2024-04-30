@@ -12,6 +12,7 @@ use App\Models\JobReceived;
 use App\Models\JobAllocationHistory;
 use App\Models\DirectJobGiving;
 use App\Models\DirectJobReceived;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -32,6 +33,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $today = Carbon::today();
+        $todayOrderCount = OrderDetail::whereDate('created_at', $today)->count();
         $order_count = OrderDetail::count();
         $master_company_count = Company::where('company_type_id', 2)->count();
         $client_company_count = Company::where('company_type_id', 3)->count();
@@ -52,10 +55,13 @@ class HomeController extends Controller
         $product_model = ProductModel::count();
         $jobGivingCountWithDcId = JobGiving::whereNotNull('dc_id')->count();
         $jobGivingCountWithoutDcId = JobGiving::count();
+        $jobGivingCountPending = JobGiving::where('status', 'Pending')->count();
+        $jobGivingCountComplete = JobGiving::where('status', 'complete')->count();
+        $jobGivingCountcancelled = JobGiving::where('status', 'cancelled')->count();
         $job_received = JobReceived::count();
         $job_reallocation = JobAllocationHistory::count();
         $direct_job_giving = DirectJobGiving::count();
         $direct_job_received = DirectJobReceived::count();
-        return view('home', compact('order_count', 'master_company_count', 'client_company_count', 'subclient_company_count', 'employee_count_master', 'employee_count_client', 'employee_count_subclient', 'employee', 'company', 'product_model', 'jobGivingCountWithDcId', 'jobGivingCountWithoutDcId', 'job_received', 'job_reallocation', 'direct_job_giving', 'direct_job_received', 'recentEmployees'));
+        return view('home', compact('order_count', 'master_company_count', 'client_company_count', 'subclient_company_count', 'employee_count_master', 'employee_count_client', 'employee_count_subclient', 'employee', 'company', 'product_model', 'jobGivingCountWithDcId', 'jobGivingCountWithoutDcId', 'job_received', 'job_reallocation', 'direct_job_giving', 'direct_job_received', 'recentEmployees','todayOrderCount','jobGivingCountPending','jobGivingCountComplete','jobGivingCountcancelled'));
     }
 }
