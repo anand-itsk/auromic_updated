@@ -122,10 +122,19 @@
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-4">
-                                                                <span class="font-weight-bold">Country</span>
+                                                                <span class="font-weight-bold">City</span>
                                                             </div>
                                                             <div class="col-md-8 ">
-                                                                <span> {{ $permanentAddress->country->name ?? '-' }}</span>
+                                                                <span> {{ $permanentAddress->village_area ?? '-' }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <span class="font-weight-bold">District</span>
+                                                            </div>
+                                                            <div class="col-md-8 ">
+                                                                <span>
+                                                                    {{ $permanentAddress->district->name ?? '-' }}</span>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -142,6 +151,14 @@
                                                             </div>
                                                             <div class="col-md-8 ">
                                                                 <span> {{ $permanentAddress->pincode ?? '-' }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <span class="font-weight-bold">Country</span>
+                                                            </div>
+                                                            <div class="col-md-8 ">
+                                                                <span> {{ $permanentAddress->country->name ?? '-' }}</span>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -172,12 +189,22 @@
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-4">
-                                                                <span class="font-weight-bold">Country</span>
+                                                                <span class="font-weight-bold">City</span>
                                                             </div>
                                                             <div class="col-md-8 ">
-                                                                <span> {{ $address->country->name ?? '-' }}</span>
+                                                                <span> {{ $address->village_area ?? '-' }}</span>
                                                             </div>
                                                         </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <span class="font-weight-bold">District</span>
+                                                            </div>
+                                                            <div class="col-md-8 ">
+                                                                <span>
+                                                                    {{ $address->district->name ?? '-' }}</span>
+                                                            </div>
+                                                        </div>
+
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <span class="font-weight-bold">State</span>
@@ -196,6 +223,14 @@
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-4">
+                                                                <span class="font-weight-bold">Country</span>
+                                                            </div>
+                                                            <div class="col-md-8 ">
+                                                                <span> {{ $address->country->name ?? '-' }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4">
                                                                 <span class="font-weight-bold">Mobile</span>
                                                             </div>
                                                             <div class="col-md-8 ">
@@ -206,6 +241,16 @@
                                                     <div class="col-md-4">
 
                                                         <h6 class="font-weight-lighter text-primary">Identity Proof</h6>
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <span class="font-weight-bold">Aadhar Number</span>
+                                                            </div>
+                                                            <div class="col-md-8 ">
+                                                                <span>
+                                                                    {{ $employee->identityProof->aadhar_number ?? '-' }} /
+                                                                    {{ $employee->identityProof->aadhar_name }}</span>
+                                                            </div>
+                                                        </div>
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <span class="font-weight-bold">Voter ID No</span>
@@ -460,15 +505,6 @@
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-4">
-                                                                <span class="font-weight-bold">Address</span>
-                                                            </div>
-                                                            <div class="col-md-8 ">
-                                                                <span>
-                                                                    {{ $employee->financeDetail->address ?? '-' }}</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-4">
                                                                 <span class="font-weight-bold">Account Number</span>
                                                             </div>
                                                             <div class="col-md-8 ">
@@ -476,6 +512,34 @@
                                                                     {{ $employee->financeDetail->account_number ?? '-' }}</span>
                                                             </div>
                                                         </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <span class="font-weight-bold">IFSC Code</span>
+                                                            </div>
+                                                            <div class="col-md-8 ">
+                                                                <span>
+                                                                    {{ $employee->financeDetail->ifsc_code ?? '-' }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <span class="font-weight-bold">Name as per Bank</span>
+                                                            </div>
+                                                            <div class="col-md-8 ">
+                                                                <span>
+                                                                    {{ $employee->financeDetail->name_as_per_bank ?? '-' }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <span class="font-weight-bold">Address</span>
+                                                            </div>
+                                                            <div class="col-md-8 ">
+                                                                <span>
+                                                                    {{ $employee->financeDetail->address ?? '-' }}</span>
+                                                            </div>
+                                                        </div>
+
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <span class="font-weight-bold">Payment Mode</span>

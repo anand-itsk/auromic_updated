@@ -3309,3 +3309,10 @@ a.shortcut_master {
   color: #fff;
   border-radius: 4px;
 }
+
+.employee_status_tb {
+  padding: 5px;
+  color: #fff;
+  border-radius: 4px;
+  text-transform: capitalize;
+}

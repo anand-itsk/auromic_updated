@@ -513,7 +513,7 @@
                     } else {
                         statusClass = 'bg-danger'; 
                     }
-                    return '<span class="employee_status ' + statusClass + '">' + data + '</span>';
+                    return '<span class="employee_status_tb ' + statusClass + '">' + data + '</span>';
                 }
             },
                     {

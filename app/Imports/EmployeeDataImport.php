@@ -81,7 +81,7 @@ class EmployeeDataImport implements ToCollection, WithHeadingRow
                 'email' => $row['email'] ?? null,
                 'marital_status' => $row['marital_status'] ?? null,
                 'std_code' => $row['std_code'] ?? null,
-                'religion_id' => $row['religion_id'] ?? null,
+                'religion_id' => $row['religion'] ?? null,
                 'prob_period' => $row['prob_period'] ?? null,
                 'confirm_date' => isset($row['confirmation_date']) ? (new DateTime($row['confirmation_date']))->format('Y-m-d') : null,
             ]);
@@ -95,7 +95,10 @@ class EmployeeDataImport implements ToCollection, WithHeadingRow
 
                 $officeAddress->address = $row['address_permanent'];
                 $officeAddress->village_area = $row['city_permanent'];
+                $officeAddress->district_id = $row['district_permanent'] ?? 1;
+                $officeAddress->state_id = $row['state_permanent'] ?? 1;
                 $officeAddress->pincode = $row['pin_permanent'];
+                $officeAddress->country_id =  101;
                 $employee->addresses()->save($officeAddress);
             }
 
@@ -108,7 +111,10 @@ class EmployeeDataImport implements ToCollection, WithHeadingRow
 
                 $correspAddress->address = $row['address_corresp'];
                 $correspAddress->village_area = $row['city_corresp'];
+                $correspAddress->district_id = $row['district_corresp'] ?? 1;
+                $correspAddress->state_id = $row['state_corresp'] ?? 1;
                 $correspAddress->pincode = $row['pin_corresp'];
+                $correspAddress->country_id = 101;
                 $employee->addresses()->save($correspAddress);
             }
 
@@ -131,6 +137,7 @@ class EmployeeDataImport implements ToCollection, WithHeadingRow
             $bankingInfo->account_number = $row['ac_number'];
             $bankingInfo->ifsc_code = $row['ifsc'];
             $bankingInfo->payment_mode_id = $row['payment_mode'] ?? "1";
+            $bankingInfo->name_as_per_bank = $row['name_as_per_bank'];
             $bankingInfo->save();
 
             $identity_proofInfo = new EmployeeIdentityProof();

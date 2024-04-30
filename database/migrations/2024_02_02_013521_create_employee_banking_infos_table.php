@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('account_type')->nullable();
             $table->string('bank_ref_no')->nullable();
             $table->string('range')->nullable();
+            $table->string('name_as_per_bank')->nullable();
             $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
             $table->timestamps();
         });

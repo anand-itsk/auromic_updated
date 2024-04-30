@@ -18,6 +18,7 @@ class EmployeeBankingInfo extends Model
         'payment_mode_id',
         'account_type',
         'bank_ref_no',
+        'name_as_per_bank',
         'range',
     ];
 
