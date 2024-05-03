@@ -29,8 +29,16 @@ class SubClientCompanyController extends Controller
     public function indexData()
     {
         // Eager load the roles relationship
-        $company = Company::query()->where('company_type_id', 4);
-        return DataTables::of($company)->make(true);
+         $company = Company::with('authorisedPerson')->where('company_type_id', 4)->get();
+    
+    return DataTables::of($company)
+        ->addColumn('authorised_person_name', function($company) {
+            return $company->authorisedPerson->name ?? '-';
+        })
+        ->addColumn('authorised_person_email', function($company) {
+            return $company->authorisedPerson->personal_email ?? '-';
+        })
+        ->make(true);
     }
     // Create Page
     public function create()

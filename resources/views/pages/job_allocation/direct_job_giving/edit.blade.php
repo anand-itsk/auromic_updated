@@ -39,8 +39,8 @@
                               <select class="form-control select2" name="employee_id" id="employee_id">
     @foreach ($employee as $item)
         <option value="{{ $item->id }}" 
-            data-company-name="{{ $item->company->company_name }}" 
-            data-company-type="{{ $item->company->companyType->name }}"
+            data-company-name="{{ $item->company->company_name ??''}}" 
+            data-company-type="{{ $item->company->companyType->name ?? ''}}"
             {{ $item->id == $direct_job_giving->employee_id ? 'selected' : '' }}>
             {{ $item->employee_code }}/{{ $item->employee_name }}
         </option>

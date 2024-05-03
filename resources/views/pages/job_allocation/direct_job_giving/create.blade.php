@@ -43,8 +43,8 @@
                                                 <option value="">Select Employee</option>
                                                 @foreach ($employee as $item)
                                                     <option value="{{ $item->id }}"
-                                                        data-company-name="{{ $item->company->company_name }}/{{ $item->company->authorisedPerson->name }}"
-                                                        data-company-type="{{ $item->company->companyType->name }}">
+                                                        data-company-name="{{ $item->company->company_name ??''}}/{{ $item->company->authorisedPerson->name ?? ''}}"
+                                                        data-company-type="{{ $item->company->companyType->name ?? ''}}">
                                                         {{ $item->employee_code }}/{{ $item->employee_name }}
                                                     </option>
                                                 @endforeach
