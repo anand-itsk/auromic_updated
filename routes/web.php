@@ -510,6 +510,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete/selected', [EmployeeController::class, 'deleteSelected']);
             Route::post('/import', [EmployeeController::class, 'import'])->name('import');
             Route::get('/export', [EmployeeController::class, 'export']);
+            Route::get('/printview/{id}', [EmployeeController::class, 'printView'])->name('printview');
+
         });
     });
     // Job Allocation

@@ -42,7 +42,9 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="d-flex justify-content-end align-items-center pb-2">
-                                        <button class="btn btn-secondary mr-2" onclick="printPage()">Print</button>
+                                        
+                                        <button class="btn btn-secondary mr-2" onclick="window.location.href='{{ route('master.employees.printview',$employee->id) }}'">Print</button>
+
                                         <a class="mr-2" href="{{ route('master.employees.edit', $employee->id) }}"><button
                                                 class="btn btn-primary">
                                                 Edit</button></a>
@@ -62,7 +64,7 @@
                                         @endif
                                         <div class="card-body">
                                             <div class="m-b-30">
-                                                <!-- <div class="row text-center">
+                                                <div class="row text-center">
                                                     <div class="col-md-9">
                                                         <div class="row">
                                                             <div class="col-md-3">
@@ -100,9 +102,9 @@
 
 
 
-                                                </div> -->
+                                                </div>
                                                 <!----demo--->
-<div class="row">
+<!-- <div class="row">
 <div class="col-lg-9">
     
 
@@ -138,13 +140,13 @@
 </div>
 </div>
 
-
+ -->
                                                 <!-------end--->
 
                                                 <hr class="my-1">
                                                 <h5 class="font-weight-lighter text-center text-primary">Personal Details
                                                 </h5>
-                                                <!-- <div class="row">
+                                                <div class="row">
                                                     @php
                                                         $officeAddress = $employee->addresses
                                                             ->where('address_type_id', 3)
@@ -342,11 +344,11 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div> -->
+                                                </div>
                                                 <!-- Repeat for all fields as per the modal layout -->
                                                 <!---demo--->
         
-                                                <table class="table table-borderless">
+                                                <!-- <table class="table table-borderless">
                     <thead>
                         <tr>
 
@@ -407,11 +409,11 @@
                         </tr>
 
                     </tbody>
-                </table>
+                </table> -->
                                                 <!-----end--->
 
                                                 <hr class="my-1" />
-                                                <!-- <h6 class="font-weight-lighter mt-4 text-primary">Other Details</h6>
+                                                <h6 class="font-weight-lighter mt-4 text-primary">Other Details</h6>
                                                 <div class="row">
 
                                                     <div class="col-md-4">
@@ -594,10 +596,10 @@
                                                     </div>
 
 
-                                                </div> -->
+                                                </div>
 
                                                 
-                                                <table class="table table-borderless">
+                                                <!-- <table class="table table-borderless">
                     <thead>
                         <tr>
 
@@ -650,13 +652,12 @@
                   
 
                     </tbody>
-                </table>
+                </table> -->
 
                                                 <hr class="my-1" />
                                                 {{-- Finance Details --}}
+                                                
                                                 <h5 class="font-weight-lighter text-center text-primary">Finance
-                                                    Details</h5>
-                                                <!-- <h5 class="font-weight-lighter text-center text-primary">Finance
                                                     Details</h5>
                                                 <div class="row">
                                                     {{-- Banking Info --}}
@@ -925,9 +926,9 @@
                                                 </div>
 
 
-                                            </div> -->
+                                            </div>
                                             <!--  -->
-                                            <table class="table table-borderless">
+                                            <!-- <table class="table table-borderless">
                     <thead>
                         <tr>
 
@@ -1007,7 +1008,7 @@
                         </tr>
 
                     </tbody>
-                </table>
+                </table> -->
 
                                             <!--  -->
 

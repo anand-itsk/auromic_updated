@@ -918,4 +918,12 @@ class EmployeeController extends Controller
         return redirect()->route('master.employees.index')
             ->with('success', 'Employee Updated successfully');
     }
+
+
+    public function printView($id)
+{
+    $employee = Employee::findOrFail($id);
+    return view('pages.master.employee.printview', ['employee' => $employee]);
+}
+
 }
