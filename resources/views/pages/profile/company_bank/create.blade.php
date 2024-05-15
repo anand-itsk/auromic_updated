@@ -35,9 +35,9 @@
                                     @csrf
                                     <!-- <h5 class="text-primary">Company Info</h5> -->
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Companies</label>
+                                        <label class="col-sm-2 col-form-label mandatory">Companies</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="company_id" id="company_id">
+                                            <select class="form-control select2" name="company_id" id="company_id" required>
                                                     <option value="">Select Company</option>
                                             @foreach ($companies as $company)
                                                     <option value="{{ $company->id }}">
@@ -52,7 +52,7 @@
                                         </div>
                                         <label for="bank_name" class="col-sm-2 col-form-label mandatory">Bank Name</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="bank_name" id="bank_name">
+                                            <input class="form-control" type="text" name="bank_name" id="bank_name" required>
                                             @error('bank_name')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -62,7 +62,7 @@
                                             No</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="account_number"
-                                                id="account_number">
+                                                id="account_number" required>
                                             @error('account_number')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror

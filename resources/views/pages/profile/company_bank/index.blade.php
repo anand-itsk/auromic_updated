@@ -179,11 +179,17 @@
 
                     {
                         data: 'company_name',
-                        name: 'company_name'
+                        name: 'company_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'company_code',
-                        name: 'company_code'
+                        name: 'company_code',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'bank_count',

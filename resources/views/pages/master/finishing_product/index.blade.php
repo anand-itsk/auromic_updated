@@ -199,27 +199,45 @@
                     },
                     {
                         data: 'product.name',
-                        name: 'product.name'
+                        name: 'product.name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'product_size.name',
-                        name: 'product_size.name'
+                        name: 'product_size.name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'model_code',
-                        name: 'model_code'
+                        name: 'model_code',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'model_name',
-                        name: 'model_name'
+                        name: 'model_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'meters_one_product',
-                        name: 'meters_one_product'
+                        name: 'meters_one_product',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'cutting_charge',
-                        name: 'cutting_charge'
+                        name: 'cutting_charge',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: null,

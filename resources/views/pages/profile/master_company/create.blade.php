@@ -46,7 +46,7 @@
                                             Code</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="company_code"
-                                                id="company_code">
+                                                id="company_code" required>
                                             @error('company_code')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -57,7 +57,7 @@
                                             Name</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="company_name"
-                                                id="company_name">
+                                                id="company_name" required>
                                             @error('company_name')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -278,7 +278,7 @@
                                     <div class="form-group row">
                                         <label for="name" class="col-sm-2 col-form-label mandatory">Name</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="name" id="name">
+                                            <input class="form-control" type="text" name="name" id="name" required>
                                             @error('name')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -407,7 +407,7 @@
                                         <label for="email" class="col-sm-2 col-form-label mandatory">Email Id</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="email" name="person_email"
-                                                id="email">
+                                                id="email" required>
                                             @error('person_email')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror

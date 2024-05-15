@@ -45,7 +45,7 @@
                                             Code</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="customer_code"
-                                                id="customer_code">
+                                                id="customer_code" required>
                                             @error('customer_code')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -56,7 +56,7 @@
                                             Name</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="customer_name"
-                                                id="customer_name">
+                                                id="customer_name" required>
                                             @error('customer_name')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror

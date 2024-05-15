@@ -197,16 +197,25 @@
                     },
                     {
                       data: 'finishing_product.model_code',
-                       name: 'finishing_product.model_code'
+                       name: 'finishing_product.model_code',
+                       render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     
                     {
                         data: 'duration_period',
-                        name: 'duration_period'
+                        name: 'duration_period',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                      {
                         data: 'amount',
-                        name: 'amount'
+                        name: 'amount',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
 
 

@@ -281,7 +281,10 @@ $(document).ready(function() {
             },
              {
                 data: 'employee.employee_name',
-                name: 'employee.employee_name'
+                name: 'employee.employee_name',
+                render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
             },
               {
                 data: 'finishing_product.model_code',
@@ -293,11 +296,17 @@ $(document).ready(function() {
             
             {
                 data: 'product_color.name',
-                name: 'product_color.name'
+                name: 'product_color.name',
+                render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
             },
             {
                 data: 'meter',
-                name: 'meter'
+                name: 'meter',
+                render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
             },
            
            

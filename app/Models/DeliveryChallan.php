@@ -13,8 +13,6 @@ class DeliveryChallan extends Model
          'sub_company_id',
         'dc_id',
         'order_id',
-        'product_size_id',
-        'product_color_id',
         'quantity',
         'weight',
         'available_quantity',

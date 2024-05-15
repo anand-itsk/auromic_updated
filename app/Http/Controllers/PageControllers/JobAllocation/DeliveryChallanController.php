@@ -178,6 +178,7 @@ class DeliveryChallanController extends Controller
         $delivery_challan->weight = $input['weight'];
         $delivery_challan->excess = $input['excess_weight'];
         $delivery_challan->shortage = $input['shortage_weight'];
+        
         $delivery_challan->save();
 
         // Update available quantity in order details
@@ -243,12 +244,9 @@ $subCompanyName = $companyHierarchy ? $companyHierarchy->company->company_name :
 
         // Update delivery challan details
         $delivery_challan->company_id = $input['company_id'];
-         $delivery_challan->sub_company_id = $input['parent_company_id'];
         $delivery_challan->dc_no = $input['dc_number'];
         $delivery_challan->dc_date = $input['dc_date'];
         $delivery_challan->quantity = $input['quantity'];
-        $delivery_challan->product_size_id = $input['product_size_id'];
-        $delivery_challan->product_color_id = $input['product_color_id'];
         $delivery_challan->save();
 
         // Update available quantity in order details

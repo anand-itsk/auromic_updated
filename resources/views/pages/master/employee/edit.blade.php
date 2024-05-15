@@ -701,7 +701,7 @@
                                                                     <div class="col-sm-4 mb-4">
                                                                         <input class="form-control" type="date"
                                                                             value="{{ $employee->joining_date }}"
-                                                                            name="joining_date" id="joining_date">
+                                                                            name="joining_date" id="joining_date" required>
                                                                         @error('joining_date')
                                                                             <span class="error"
                                                                                 style="color: red;">{{ $message }}</span>

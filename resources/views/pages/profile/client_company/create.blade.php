@@ -43,9 +43,9 @@
                                         </button>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Master Companies</label>
+                                        <label class="col-sm-2 col-form-label mandatory">Master Companies</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="master_company" id="master_company">
+                                            <select class="form-control select2" name="master_company" id="master_company" required>
                                                 <option value="">Select</option>
                                             @foreach ($master_companies as $company)
                                                     <option value="{{ $company->company_name }}">
@@ -58,11 +58,11 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="company_code" class="col-sm-2 col-form-label mandatory">Company
+                                        <label for="company_code" class="col-sm-2 col-form-label">Company
                                             Code</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="company_code"
-                                                id="company_code">
+                                                id="company_code" required>
                                             @error('company_code')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -73,7 +73,7 @@
                                             Name</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="company_name"
-                                                id="company_name">
+                                                id="company_name" required>
                                             @error('company_name')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -283,7 +283,7 @@
                                     <div class="form-group row">
                                         <label for="name" class="col-sm-2 col-form-label mandatory">Name</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="name" id="name">
+                                            <input class="form-control" type="text" name="name" id="name" required>
                                             @error('name')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -412,7 +412,7 @@
                                         <label for="email" class="col-sm-2 col-form-label mandatory">Email Id</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="email" name="person_email"
-                                                id="email">
+                                                id="email" required>
                                             @error('person_email')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror

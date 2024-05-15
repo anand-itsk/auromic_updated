@@ -76,7 +76,7 @@
                                                 href="{{ route('product-models.products.create') }}" target="_blank">+</a>
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="product" id="product">
+                                            <select class="form-control select2" name="product" id="product"required>
                                                 <option value="">Select Product</option>
                                                 @foreach ($products as $product)
                                                     <option value="{{ $product->id }}">{{ $product->name }}</option>
@@ -156,7 +156,7 @@
                                         </div>
                                         <label for="wages_employee" class="col-sm-2 col-form-label mandatory">Quantity</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="quantity" id="quantity">
+                                            <input class="form-control" type="text" name="quantity" id="quantity"required>
                                             @error('quantity')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -165,7 +165,7 @@
                                         <label class="col-sm-2 col-form-label mandatory">Delivery Date</label>
                                         <div class="col-sm-4 mb-4">
                                             <input type="date" class="form-control" name="delivery_date"
-                                                id="">
+                                                id=""required>
                                             @error('delivery_date')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -179,7 +179,7 @@
                                         </label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_color_id"
-                                                id="product_color_id">
+                                                id="product_color_id"required>
                                                 <option value="">Select Product Color</option>
                                                 @foreach ($product_color as $item)
                                                     <option value="{{ $item->id }}">{{ $item->name }}</option>

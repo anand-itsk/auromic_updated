@@ -223,7 +223,10 @@
 
                     {
                         data: 'product.name',
-                        name: 'product.name'
+                        name: 'product.name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'product_size.code',
@@ -234,11 +237,17 @@
                     },
                     {
                         data: 'model_code',
-                        name: 'model_code'
+                        name: 'model_code',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'model_name',
-                        name: 'model_name'
+                        name: 'model_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'raw_material_weight_item',
@@ -249,7 +258,10 @@
                     },
                     {
                         data: 'wages_product',
-                        name: 'wages_product'
+                        name: 'wages_product',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: null,

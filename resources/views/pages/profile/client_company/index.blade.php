@@ -204,19 +204,31 @@
                     },
                     {
                         data: 'company_code',
-                        name: 'company_code'
+                        name: 'company_code',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'company_name',
-                        name: 'company_name'
+                        name: 'company_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'authorised_person_name',
-                        name: 'authorised_person_name'
+                        name: 'authorised_person_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'authorised_person_email',
-                        name: 'authorised_person_email'
+                        name: 'authorised_person_email',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: null,

@@ -39,7 +39,7 @@
                                         </label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="raw_material_id"
-                                                id="raw_material_id">
+                                                id="raw_material_id" required>
                                                 <option value="">Select Raw Material</option>
                                                 @foreach ($raw_material as $item)
                                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -55,7 +55,7 @@
                                                 href="{{ route('product-models.products.create') }}" target="_blank">+</a>
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="product_id" id="product_id ">
+                                            <select class="form-control select2" name="product_id" id="product_id"required>
                                                 <option value="">Select Product</option>
                                                 @foreach ($product as $item)
                                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -72,7 +72,7 @@
                                         </label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_size_id"
-                                                id="product_size_id">
+                                                id="product_size_id"required>
                                                 <option value="">Select Product Size</option>
                                                 @foreach ($product_size as $item)
                                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -85,7 +85,7 @@
 
                                         <label for="model_code" class="col-sm-2 col-form-label mandatory">Model Code</label>
 <div class="col-sm-4 mb-4">
-    <input class="form-control" type="text" name="model_code" id="model_code">
+    <input class="form-control" type="text" name="model_code" id="model_code"required>
     <div id="model_codeError" style="color: red;"></div>
     @error('model_code')
         <span class="error" style="color: red;">{{ $message }}</span>
@@ -95,7 +95,7 @@
                                         <label for="customer_code" class="col-sm-2 col-form-label mandatory">Model
                                             Name</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="model_name" id="model_name">
+                                            <input class="form-control" type="text" name="model_name" id="model_name"required>
                                             @error('model_name')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -105,7 +105,7 @@
                                             weight/item</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="raw_material_weight_item"
-                                                id="model_code">
+                                                id="model_code"required>
                                             @error('raw_material_weight_item')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror

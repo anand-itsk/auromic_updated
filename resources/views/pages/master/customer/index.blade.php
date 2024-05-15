@@ -195,11 +195,17 @@
                     },
                     {
                         data: 'customer_code',
-                        name: 'customer_code'
+                        name: 'customer_code',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'customer_name',
-                        name: 'customer_name'
+                        name: 'customer_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: null,
