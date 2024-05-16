@@ -1,6 +1,6 @@
 @extends('layouts.app')
 <!-- DataTables CSS -->
-
+@section('title', 'Order Allocation')
 
 @section('content')
     @include('links.css.datatable.datatable-css')
@@ -207,6 +207,7 @@
                             return data ? data : '-';
                         }
                     },
+                
 
                     {
                         data: 'order_details.customer_order_no',

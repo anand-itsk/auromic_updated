@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Edit Raw Material Type')
 <!-- DataTables CSS -->
 {{-- @include('links.css.datatable.datatable-css') --}}
 @section('content')

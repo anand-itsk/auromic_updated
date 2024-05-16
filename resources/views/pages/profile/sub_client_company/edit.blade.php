@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Edit Sub Client Companies')
 <!-- DataTables CSS -->
 @section('content')
     <!-- Add Select2 CSS -->

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 <!-- DataTables CSS -->
-
+@section('title', 'Roles&Permission')
 
 @section('content')
 @include('links.css.datatable.datatable-css')

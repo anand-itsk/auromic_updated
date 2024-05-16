@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Finishing Product')
 <!-- DataTables CSS -->
 @section('content')
     @include('links.css.datatable.datatable-css')

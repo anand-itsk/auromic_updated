@@ -1,5 +1,8 @@
 @extends('layouts.app')
+
 <!-- DataTables CSS -->
+@section('title', 'Create Master Companies')
+
 @section('content')
     <!-- Add Select2 CSS -->
     @include('links.css.select2.select2')
@@ -404,10 +407,10 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="email" class="col-sm-2 col-form-label mandatory">Email Id</label>
+                                        <label for="email" class="col-sm-2 col-form-label">Email Id</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="email" name="person_email"
-                                                id="email" required>
+                                                id="email">
                                             @error('person_email')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror

@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Edit Job Reallocation')
 <!-- DataTables CSS -->
 @section('content')
 <!-- Add Select2 CSS -->
@@ -186,7 +187,7 @@
                            Employee
                            </label>
                            <div class="col-sm-4 mb-4">
-                              <select class="form-control select2" name="employee_id" id="employee_id">
+                              <select class="form-control select2" name="employee_id" id="employee_id" required>
                                  <option value="">Select Employee</option>
                                  @foreach ($employee as $item)
                                  <option value="{{ $item->id }}" 
@@ -223,7 +224,7 @@
                            </label>
                            <div class="col-sm-4 mb-4">
                               <input class="form-control" type="date" name="receiving_date"
-                                 id="receiving_date" required="">
+                                 id="receiving_date" required>
                               @error('order_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
@@ -233,7 +234,7 @@
                            Quantity
                            </label>
                            <div class="col-sm-4 mb-4">
-                              <input type="text" class="form-control" name="quantity" id="quantity">
+                              <input type="text" class="form-control" name="quantity" id="quantity" required>
                               <span id="quantity-error" class="error" style="color: red; display: none;"></span>
     @error('quantity')
                               

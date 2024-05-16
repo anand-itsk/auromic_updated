@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Edit User')
 <!-- DataTables CSS -->
 @section('content')
 <link href="assets/plugins/dropzone/dist/dropzone.css" rel="stylesheet" type="text/css">

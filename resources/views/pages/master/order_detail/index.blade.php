@@ -1,6 +1,6 @@
 @extends('layouts.app')
 <!-- DataTables CSS -->
-
+@section('title', 'Order Details')
 
 @section('content')
     @include('links.css.datatable.datatable-css')
@@ -268,7 +268,7 @@
                             return `
                         <button onclick="edit(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
                         <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
-                        <button onclick="showDetails(${row.id})" class="icon-button common-color"><i class="fa fa-eye"></i></button>
+                    
                        <button onclick="addOrder(${row.id})" class="icon-button common-color"><i class="fa fa-plus"></i></button>
 
 

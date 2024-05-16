@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Create Company Bank')
 <!-- DataTables CSS -->
 @section('content')
     <!-- Add Select2 CSS -->

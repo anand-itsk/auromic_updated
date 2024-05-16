@@ -58,7 +58,7 @@ class MasterCompanyController extends Controller
             'company_name' => 'required|max:255',
             'name' => 'required',
             'photo' => 'nullable|image|max:200000',
-            'person_email' => 'required|email|unique:authorised_people',
+            // 'person_email' => 'required|email|unique:authorised_people',
         ]);
         $input = $request->all();
         // dd($input);

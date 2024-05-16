@@ -1,7 +1,7 @@
 @extends('layouts.app')
 <!-- DataTables CSS -->
 
-
+@section('title', 'Profile')
 @section('content')
 <style>
     .profile-image {

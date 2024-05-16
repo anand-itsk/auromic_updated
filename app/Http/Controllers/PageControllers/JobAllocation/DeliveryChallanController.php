@@ -30,7 +30,7 @@ class DeliveryChallanController extends Controller
     // Index DataTable
     public function indexData()
     {
-        $delivery_challans = DeliveryChallan::with('company', 'order_details', 'productSize', 'productColor')->get();
+        $delivery_challans = DeliveryChallan::with('company','subCompany', 'order_details', 'productSize', 'productColor')->get();
         return DataTables::of($delivery_challans)->make(true);
     }
     // Create Page

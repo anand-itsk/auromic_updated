@@ -1,6 +1,6 @@
 @extends('layouts.app')
 <!-- DataTables CSS -->
-
+@section('title', 'Direct Job Received Report')
 
 @section('content')
     @include('links.css.datatable.datatable-css')
@@ -31,10 +31,10 @@
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="#">Auromics</a></li>
                                 <li class="breadcrumb-item"><a href="#">Report</a></li>
-                                <li class="breadcrumb-item active">Direct Job Given Report</li>
+                                <li class="breadcrumb-item active">Direct Job Received Report</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Direct Job Given Report</h4>
+                        <h4 class="page-title">Direct Job Received Report</h4>
                     </div>
                        <div class="card mb-2">
                            <div class="card-body">

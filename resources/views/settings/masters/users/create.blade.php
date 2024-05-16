@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Create User')
 <!-- DataTables CSS -->
 {{-- @include('links.css.datatable.datatable-css') --}}
 @section('content')

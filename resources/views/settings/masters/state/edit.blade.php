@@ -1,4 +1,6 @@
 @extends('layouts.app')
+
+@section('title', 'Edit State')
 <!-- DataTables CSS -->
 {{-- @include('links.css.datatable.datatable-css') --}}
 @section('content')

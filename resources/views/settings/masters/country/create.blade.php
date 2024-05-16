@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Create Countries')
 @section('content')
     <div class="wrapper">
         <div class="container-fluid">

@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Create Finishing Product')
 <!-- DataTables CSS -->
 @section('content')
     <!-- Add Select2 CSS -->
@@ -72,7 +73,7 @@
                                         <label for="wages_product" class="col-sm-2 col-form-label mandatory">Model
                                             Code</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="model_code" id="model_code">
+                                            <input class="form-control" type="text" name="model_code" id="model_code" required>
                                             @error('model_code')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror

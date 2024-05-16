@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Create Order Allocation')
 <!-- DataTables CSS -->
 @section('content')
     <!-- Add Select2 CSS -->
@@ -38,7 +39,7 @@
                                         </label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="company_type_id"
-                                                id="company_type_id">
+                                                id="company_type_id" required>
                                                 <option value="">Select Company Type</option>
                                                 @foreach ($company_types as $item)
                                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -53,7 +54,7 @@
                                         </label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2 w-100" name="company_id" id="company_id"
-                                                disabled>
+                                                disabled required>
                                                 <option value="">Select Company</option>
                                                 @foreach ($company as $companyItem)
                                                     <option value="{{ $companyItem->id }}">{{ $companyItem->company_name }}
@@ -69,7 +70,7 @@
                                         </label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2 w-100" name="parent_company_id" id="parent_company_id"
-                                                disabled>
+                                                disabled required>
                                                 <option value="">select</option>
                                                 <option value="">Select Company</option>
                                                 @foreach ($company_hierarchy as $companyItem)
@@ -83,7 +84,7 @@
                                         </div>
                                         <label for="customer_name" class="col-sm-2 col-form-label mandatory">DC Date</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="date" name="dc_date" id="dc_date">
+                                            <input class="form-control" type="date" name="dc_date" id="dc_date" required>
                                             @error('dc_date')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -101,7 +102,7 @@
                                         <label for="customer_code" class="col-sm-2 col-form-label mandatory">Order
                                             No</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="order_id" id="order_id">
+                                            <select class="form-control select2" name="order_id" id="order_id" required>
                                                 <option value="">Select Order</option>
                                                 @foreach ($order_nos as $item)
                                                     <option value="{{ $item->id }}">{{ $item->customer_order_no }}
@@ -114,7 +115,7 @@
                                         </div>
                                         <label for="customer_code" class="col-sm-2 col-form-label mandatory">Model</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="product_model" id="product_model">
+                                            <select class="form-control select2" name="product_model" id="product_model" required>
                                                 <option value="">Select Model</option>
 
                                             </select>
