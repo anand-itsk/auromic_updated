@@ -350,7 +350,7 @@ $(win.document.body).find('table.dataTable').css('border-collapse', 'collapse');
             {
                 text: 'Export All',
                 action: function(e, dt, node, config) {
-                    window.location.href = '/job_allocation/direct_job_giving/export?' + $.param(dt.ajax
+                    window.location.href = '/report/direct_job_giving_report/export?' + $.param(dt.ajax
                         .params());
                 }
             }

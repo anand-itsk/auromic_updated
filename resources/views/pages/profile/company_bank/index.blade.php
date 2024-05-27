@@ -126,7 +126,7 @@
                             </div>
                         </div>
 
-                        <div class="modal-footer">
+                        <!-- <div class="modal-footer">
 
                             <div class="row w-100">
                                 <div class="col-md-10">
@@ -157,7 +157,7 @@
 
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

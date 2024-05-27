@@ -9,6 +9,7 @@ use App\Models\Company;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\JobGivingReportExport;
 
 class DailyGivenReportCompanyWiseController extends Controller
 {
@@ -75,4 +76,10 @@ class DailyGivenReportCompanyWiseController extends Controller
             // Return data for DataTables
             return DataTables::of($data)->make(true);
         }
+
+        public function export(Request $request)
+    {
+        return Excel::download(new JobGivingReportExport($request->all()), 'JobgivingReportDatas_' . date('d-m-Y') . '.xlsx');
+    }
+
 }

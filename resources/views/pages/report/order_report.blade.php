@@ -392,7 +392,7 @@ $(win.document.body).find('table.dataTable').css('border-collapse', 'collapse');
             {
                 text: 'Export All',
                 action: function(e, dt, node, config) {
-                    window.location.href = '/job_allocation/delivery_challan/export?' + $.param(dt.ajax.params());
+                    window.location.href = '/report/order_report/export?' + $.param(dt.ajax.params());
                 }
             }
         ]

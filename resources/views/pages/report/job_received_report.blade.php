@@ -478,7 +478,7 @@ $(win.document.body).find('table.dataTable').css('border-collapse', 'collapse');
                     {
                         text: 'Export All',
                         action: function(e, dt, node, config) {
-                            window.location.href = '/job_allocation/delivery_challan/export?' + $.param(dt.ajax
+                            window.location.href = '/report/job_received_report/export?' + $.param(dt.ajax
                                 .params());
                         }
                     }

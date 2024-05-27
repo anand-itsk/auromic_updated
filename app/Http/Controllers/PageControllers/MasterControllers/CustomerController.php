@@ -192,7 +192,7 @@ class CustomerController extends Controller
         $user = Customer::findOrFail($id);
         $user->delete();
 
-        return response()->json(['success' => 'Customer deleted successfully']);
+        // return response()->json(['success' => 'Customer deleted successfully']);
     }
     // Multi Delete
     public function deleteSelected(Request $request)

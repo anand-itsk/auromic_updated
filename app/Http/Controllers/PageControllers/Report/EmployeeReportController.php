@@ -9,6 +9,7 @@ use App\Models\Company;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\EmployeeReportExport;
 
 class EmployeeReportController extends Controller
 {
@@ -56,5 +57,10 @@ public function indexData(Request $request)
     // Return the data using DataTables
     return DataTables::of($employees)->make(true);
 }
+
+ public function export(Request $request)
+    {
+        return Excel::download(new EmployeeReportExport($request->all()), 'EmployeeReportDatas_' . date('d-m-Y') . '.xlsx');
+    }
 
 }

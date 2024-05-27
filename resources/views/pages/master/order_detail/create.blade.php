@@ -78,7 +78,7 @@
                                                 href="{{ route('product-models.products.create') }}" target="_blank">+</a>
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="product" id="product"required>
+                                            <select class="form-control select2" name="product" id="product">
                                                 <option value="">Select Product</option>
                                                 @foreach ($products as $product)
                                                     <option value="{{ $product->id }}">{{ $product->name }}</option>

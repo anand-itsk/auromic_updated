@@ -169,7 +169,7 @@ class DeliveryChallanController extends Controller
         // Create and save the delivery challan
         $delivery_challan = new DeliveryChallan();
         $delivery_challan->company_id = $input['company_id'];
-        $delivery_challan->sub_company_id = $input['parent_company_id'];
+        $delivery_challan->sub_company_id = isset($input['parent_company_id']) && !empty($input['parent_company_id']) ? $input['parent_company_id'] : null;
         $delivery_challan->dc_no = $input['dc_number'];
         $delivery_challan->order_id = $input['order_id'];
         $delivery_challan->dc_date = $input['dc_date'];

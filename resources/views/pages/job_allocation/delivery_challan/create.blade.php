@@ -70,7 +70,7 @@
                                         </label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2 w-100" name="parent_company_id" id="parent_company_id"
-                                                disabled required>
+                                                disabled >
                                                 <option value="">select</option>
                                                 <option value="">Select Company</option>
                                                 @foreach ($company_hierarchy as $companyItem)

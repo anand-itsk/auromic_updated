@@ -10,6 +10,7 @@ use App\Models\OrderStatus;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\OrderReportExport;
 
 class OrderReportController extends Controller
 {
@@ -68,4 +69,8 @@ class OrderReportController extends Controller
     return DataTables::of($order_details)->make(true);
 }
 
+ public function export(Request $request)
+    {
+        return Excel::download(new OrderReportExport($request->all()), 'OrderReportDatas_' . date('d-m-Y') . '.xlsx');
+    }
 }

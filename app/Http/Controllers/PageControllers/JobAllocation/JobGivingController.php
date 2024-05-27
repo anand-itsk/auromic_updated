@@ -270,7 +270,6 @@ class JobGivingController extends Controller
 
         // Update job giving record
         $job_giving->employee_id = $input['employee_id'];
-        $job_giving->quantity = $input['quantity'];
         // $job_giving->date = $input['date'];
         $job_giving->status = $input['status'];
           $job_giving->quantity = $input['quantity'];

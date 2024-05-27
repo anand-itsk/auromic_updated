@@ -9,6 +9,7 @@ use App\Models\Employee;
 use App\Models\FinishingProductModel;
 use Yajra\DataTables\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\DirectJobReportExport;
 
 class DirectJobGivingReportController extends Controller
 {
@@ -35,4 +36,9 @@ public function indexData(Request $request)
 
     return DataTables::of($direct_job_giving->get())->make(true);
 }
+
+ public function export(Request $request)
+    {
+        return Excel::download(new DirectJobReportExport($request->all()), 'DirectJobReportDatas_' . date('d-m-Y') . '.xlsx');
+    }
 }

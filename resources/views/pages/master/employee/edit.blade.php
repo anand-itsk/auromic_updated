@@ -278,6 +278,8 @@
                                                             {{-- Correspondence Address --}}
                                                             @php
                                                                 $corrs_address = $employee->addresses->where('address_type_id', 4)->first();
+                                                                $selected_country_id = $corrs_address->country_id ?? null;
+                                                                 
                                                             @endphp
                                                             <div class="row m-2">
                                                                 <div class="d-flex" style="flex-wrap: inherit">
@@ -300,7 +302,7 @@
                                                                     <label for="corrs_address"
                                                                         class="col-sm-2 col-form-label">Address</label>
                                                                     <div class="col-sm-4 mb-4">
-                                                                        <textarea class="form-control" name="corrs_address" id="corrs_address" cols="10" rows="3"> {{ $corrs_address->address ?? '' }} </textarea>
+                                                                        <textarea class="form-control" name="corrs_address" id="corrs_address" cols="10" rows="3"> {{ $corrs_address->address ?? '' }}  </textarea>
 
                                                                         @error('corrs_address')
                                                                             <span class="error"
@@ -312,7 +314,7 @@
                                                                         class="col-sm-2 col-form-label">Village/Area</label>
                                                                     <div class="col-sm-4 mb-4">
                                                                         <input class="form-control" type="text"
-                                                                            name="corrs_area" id="corrs_area">
+                                                                            name="corrs_area" id="corrs_area" value="{{ $corrs_address->village_area ?? '' }}">
 
                                                                         @error('corrs_area')
                                                                             <span class="error"
@@ -325,9 +327,9 @@
                                                                         <select class="form-control select2"
                                                                             name="corrs_country_id" id="corrs_country_id">
                                                                             @foreach ($countries as $item)
-                                                                                <option value="{{ $item->id }}">
-                                                                                    {{ $item->name }}
-                                                                                </option>
+                                                                               <option value="{{ $item->id }}" {{ $item->id == $selected_country_id ? 'selected' : '' }}>
+            {{ $item->name }}
+        </option>
                                                                             @endforeach
                                                                         </select>
                                                                         @error('corrs_country_id')
@@ -364,7 +366,7 @@
                                                                         class="col-sm-2 col-form-label">Pincode</label>
                                                                     <div class="col-sm-4">
                                                                         <input class="form-control" type="text"
-                                                                            name="corrs_pincode" id="corrs_pincode">
+                                                                            name="corrs_pincode" id="corrs_pincode" value="{{ $corrs_address->pincode ?? '' }}">
                                                                         @error('corrs_pincode')
                                                                             <span class="error"
                                                                                 style="color: red;">{{ $message }}</span>

@@ -10,6 +10,7 @@ use App\Models\CompanyType;
 use App\Models\Company;
 use Yajra\DataTables\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\JobReceivedReportExport;
 
 class JobReceivedReportController extends Controller
 {
@@ -98,4 +99,11 @@ public function indexData(Request $request)
     // Return data for DataTables
     return DataTables::of($dataArray)->make(true);
 }
+
+
+        public function export(Request $request)
+    {
+        return Excel::download(new JobReceivedReportExport($request->all()), 'JobReceivedReportDatas_' . date('d-m-Y') . '.xlsx');
+    }
+
 }

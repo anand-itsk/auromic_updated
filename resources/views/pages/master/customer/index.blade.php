@@ -15,6 +15,12 @@
                     {{ session('success') }}
                 </div>
             @endif
+            <div class="alert alert-success alert-dismissible fade show" role="alert" style="display:none;">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <strong></strong> Customer deleted successfully.
+</div>
             <div class="row">
                 <div class="col-sm-12">
                     <div class="page-title-box">
@@ -287,22 +293,37 @@
             window.location.href = '/master/customers/edit/' + id;
         }
 
-        function deleteCustomer(id) {
-            console.log("inside")
-            // Send an AJAX request to delete the user
-            if (confirm('Are you sure you want to delete this user?')) {
-                $.ajax({
-                    url: '/master/customers/delete/' + id,
-                    type: 'DELETE',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                    },
-                    success: function(result) {
-                        table.ajax.reload(); // Reload the DataTable
-                    }
-                });
+    
+
+
+function deleteCustomer(id) {
+    console.log("inside")
+    // Send an AJAX request to delete the user
+    if (confirm('Are you sure you want to delete this Customer?')) {
+        $.ajax({
+            url: '/master/customers/delete/' + id,
+            type: 'DELETE',
+            data: {
+                _token: '{{ csrf_token() }}',
+            },
+            success: function(result) {
+                // Show success message
+                $('.alert-success').show();
+
+                // Hide success message after 5 seconds
+                setTimeout(function(){
+                    $('.alert-success').alert('close');
+                }, 5000);
+
+                // Reload the DataTable after success message is shown
+                table.ajax.reload(); // Reload the DataTable
             }
-        }
+        });
+    }
+}
+
+
+
 
         function showDetails(userId) {
             // Fetch user details using AJAX

@@ -16,7 +16,7 @@
     </style>
     
     
-    <div class="wrapper">
+    <div class="wrapper">   
         <div class="container-fluid">
             <!-- Page-Title -->
             <div class="row">
@@ -155,7 +155,7 @@
                                                     <div class="col-md-4">
                                                         @php
                                                             $permanentAddress = $employee->addresses
-                                                                ->where('address_type_id', 4)
+                                                                ->where('address_type_id', 3)
                                                                 ->first();
                                                         @endphp
                                                         <h6 class="font-weight-lighter text-primary">Permanent Address</h6>
@@ -221,7 +221,7 @@
                                                     <div class="col-md-4">
                                                         @php
                                                             $address = $employee->addresses
-                                                                ->where('address_type_id', 5)
+                                                                ->where('address_type_id', 4)
                                                                 ->first();
                                                         @endphp
                                                         <h6 class="font-weight-lighter text-primary">Correspondence Address

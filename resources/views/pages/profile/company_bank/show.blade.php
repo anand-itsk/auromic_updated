@@ -30,6 +30,7 @@
                 <td>{{ $bank_detail->bankDetail->branch_code }}</td>
                 <td>{{ $bank_detail->bankDetail->branch_name }}</td>
                 <td>{{ $bank_detail->bankDetail->ifsc_code }}</td>
+                <!-- <td>{{ $bank_detail->bankDetail->created_at}}</td> -->
             </tr>
         @endforeach
     @endif

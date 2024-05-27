@@ -642,6 +642,7 @@ Route::get('/getSubCompanies/{companyId}', [DeliveryChallanController::class, 'g
             Route::get('/', [DirectJobReceivedReportController::class, 'index'])->name('index');
             Route::get('/data', [DirectJobReceivedReportController::class, 'indexData'])->name('data');
             Route::get('/export', [DirectJobReceivedReportController::class, 'export']);
+           
         });
     });
 

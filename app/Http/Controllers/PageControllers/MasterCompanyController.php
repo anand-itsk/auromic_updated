@@ -37,7 +37,7 @@ class MasterCompanyController extends Controller
             return $company->authorisedPerson->name ?? '-';
         })
         ->addColumn('authorised_person_email', function($company) {
-            return $company->authorisedPerson->personal_email ?? '-';
+            return $company->authorisedPerson->person_email ?? '-';
         })
         ->make(true);
     }
@@ -58,7 +58,7 @@ class MasterCompanyController extends Controller
             'company_name' => 'required|max:255',
             'name' => 'required',
             'photo' => 'nullable|image|max:200000',
-            // 'person_email' => 'required|email|unique:authorised_people',
+            'person_email' => 'email|unique:authorised_people',
         ]);
         $input = $request->all();
         // dd($input);
@@ -134,7 +134,7 @@ class MasterCompanyController extends Controller
             'company_name' => 'required|max:255',
             'name' => 'required',
             'photo' => 'nullable|image|max:200000',
-            // 'person_email' => 'required|email|unique:authorised_people',
+            'person_email' => 'email|unique:authorised_people',
         ]);
 
         $input = $request->all();
