@@ -16,7 +16,7 @@ class EmployeeReportExport implements FromCollection,WithHeadings
         return Employee::all();
     }
 
-    public function headings(): array
+   public function headings(): array
     {
         return [
             'Id',
@@ -33,6 +33,7 @@ class EmployeeReportExport implements FromCollection,WithHeadings
             'Marital Status',
             'STD Code',
             'Phone',
+            'Status',
             'Religion',
             'Caste',
             'Nationality',

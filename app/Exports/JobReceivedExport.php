@@ -1,12 +1,11 @@
 <?php
 
 namespace App\Exports;
-
 use App\Models\JobReceived;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class JobReceivedReportExport implements FromCollection,WithHeadings
+class JobReceivedExport implements FromCollection,WithHeadings
 {
     /**
     * @return \Illuminate\Support\Collection

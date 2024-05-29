@@ -21,9 +21,15 @@ class DeliveryChallanExport implements FromCollection,WithHeadings
         return [
             'Id',
             'Company Name',
+            'Sub Company Name',
             'Order Number',
             'DC NO',
              'DC Date',
+             'Quantity',
+             'Weight',
+             'Available Weight',
+             'Excess',
+             'Shortage',
             'created_at',
             'updated_at'
         ];

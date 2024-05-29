@@ -2,7 +2,7 @@
     <h4 class="text-center pb-4">Nominee</h4>
     <div class="d-flex justify-content-end mb-2">
         <button type="button" class="btn icon-button btn-primary" data-toggle="modal" data-target=".employee-nominee-add"
-            title="Add Nominee Member"><i class="fa fa-user-plus"></i></button>
+            title="Add Nominee Member" id="addNomineeButton"><i class="fa fa-user-plus"></i></button>
     </div>
     <table class="table table-striped table-bordered dt-responsive nowrap"
         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -46,12 +46,10 @@
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Select Family Member</label>
                                             <div class="col-sm-4 mb-4">
-                                                <select class="form-control select2" name="family_member_id" id="family_member_id">
-                                                @foreach ($family_members as $item)
-                                                <option value="">Select</option>
-                                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                                 @endforeach
-                                                </select>
+                                               <select class="form-control select2" name="family_member_id" id="family_member_id">
+        <option value="">Select</option>
+        <!-- Options will be populated by AJAX -->
+    </select>
                                                 @error('family_memeber_id')
                                                     <span class="error" style="color: red;">{{ $message }}</span>
                                                 @enderror
@@ -322,4 +320,26 @@
             }
         }
     </script>
+
+<script>
+$(document).ready(function() {
+    // Replace with the actual employee ID
+    var employeeId = {{ $employee_id }};
+
+    $('#addNomineeButton').on('click', function() {
+        $.ajax({
+            url: '/master/employees/employee/' + employeeId + '/family-members',
+            type: 'GET',
+            success: function(data) {
+                var familyMemberSelect = $('#family_member_id');
+                familyMemberSelect.empty();
+                familyMemberSelect.append('<option value="">Select</option>');
+                $.each(data, function(index, item) {
+                    familyMemberSelect.append('<option value="' + item.id + '">' + item.name + '</option>');
+                });
+            }
+        });
+    });
+});
+</script>
 </div>

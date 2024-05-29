@@ -10,6 +10,8 @@ use App\Models\JobGiving;
 use App\Models\JobReceived;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\JobReallocationExport;
 
 class JobReallocationController extends Controller
 {
@@ -98,4 +100,9 @@ class JobReallocationController extends Controller
             ->with('error', 'Job Giving not found');
     }
 }
+
+ public function export(Request $request)
+    {
+        return Excel::download(new JobReallocationExport($request->all()), 'JobReallocationExportDatas_' . date('d-m-Y') . '.xlsx');
+    }
 }

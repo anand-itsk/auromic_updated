@@ -21,9 +21,7 @@ class ModelExport implements FromCollection,WithHeadings
     {
         return [
             'Id',
-            'R.M',
-            'R.M Type',
-            'R.M Stock',
+            'Raw Material',
             'Product Name',
             'Product Size',
             'Model Code',

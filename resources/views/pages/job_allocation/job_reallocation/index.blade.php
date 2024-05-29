@@ -318,7 +318,7 @@
                     {
                         text: 'Export All',
                         action: function(e, dt, node, config) {
-                            window.location.href = '/job_allocation/job_giving/export?' + $.param(dt.ajax
+                            window.location.href = '/job_allocation/job_reallocation/export?' + $.param(dt.ajax
                                 .params());
                         }
                     }

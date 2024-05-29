@@ -279,7 +279,10 @@
                                                             @php
                                                                 $corrs_address = $employee->addresses->where('address_type_id', 4)->first();
                                                                 $selected_country_id = $corrs_address->country_id ?? null;
-                                                                 
+                                                                $selected_state_id = $corrs_address->state_id ?? null;
+                                                                $selected_district_id  = $corrs_address->district_id  ?? null;
+                                                                 $stateDisabled = $selected_country_id ? '' : 'disabled';
+                                                               $districtDisabled = $selected_state_id ? '' : 'disabled';
                                                             @endphp
                                                             <div class="row m-2">
                                                                 <div class="d-flex" style="flex-wrap: inherit">
@@ -342,7 +345,13 @@
                                                                     <div class="col-sm-4 mb-4">
                                                                         <select class="form-control select2 w-100"
                                                                             name="corrs_state_id" id="corrs_state_id"
-                                                                            disabled>
+                                                                            {{ $stateDisabled }}>
+                                                                             @foreach ($states as $item)
+                                                                               <option value="{{ $item->id }}" {{ $item->id == $selected_state_id ? 'selected' : '' }}>
+            {{ $item->name }}
+        </option>  
+                                                                   
+                                                                            @endforeach
                                                                         </select>
                                                                         @error('corrs_state_id')
                                                                             <span class="error"
@@ -354,7 +363,13 @@
                                                                     <div class="col-sm-4">
                                                                         <select class="form-control select2 w-100"
                                                                             name="corrs_district_id"
-                                                                            id="corrs_district_id" disabled>
+                                                                            id="corrs_district_id" {{ $districtDisabled }}>
+                                                                             @foreach ($district as $item)
+                                                                               <option value="{{ $item->id }}" {{ $item->id == $selected_district_id ? 'selected' : '' }}>
+            {{ $item->name }}
+        </option>  
+                                                                   
+                                                                            @endforeach
                                                                         </select>
                                                                         @error('corrs_district_id')
                                                                             <span class="error"
@@ -1046,4 +1061,34 @@
             }
         });
     </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const countrySelect = document.getElementById('corrs_country_id');
+        const stateSelect = document.getElementById('corrs_state_id');
+        const districtSelect = document.getElementById('corrs_district_id');
+
+        countrySelect.addEventListener('change', function() {
+            if (this.value) {
+                stateSelect.removeAttribute('disabled');
+                // Optionally, add logic to populate states based on the selected country
+            } else {
+                stateSelect.setAttribute('disabled', 'disabled');
+                districtSelect.setAttribute('disabled', 'disabled');
+            }
+        });
+
+        stateSelect.addEventListener('change', function() {
+            if (this.value) {
+                districtSelect.removeAttribute('disabled');
+                // Optionally, add logic to populate districts based on the selected state
+            } else {
+                districtSelect.setAttribute('disabled', 'disabled');
+            }
+        });
+    });
+</script>
+
+
+
 @endsection

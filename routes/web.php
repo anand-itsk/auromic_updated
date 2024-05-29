@@ -511,6 +511,10 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/import', [EmployeeController::class, 'import'])->name('import');
             Route::get('/export', [EmployeeController::class, 'export']);
             Route::get('/printview/{id}', [EmployeeController::class, 'printView'])->name('printview');
+            // routes/web.php
+Route::get('/employee/{id}/family-members', [EmployeeController::class,'getFamilyMember'])->name('employee.family.members');
+
+
 
         });
     });
@@ -542,6 +546,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete/selected', [DirectJobReceivedController::class, 'deleteSelected']);
             Route::get('/get-model-details/{id}', [DirectJobReceivedController::class, 'getModelDetails'])->name('get-models');
             Route::get('/get-finishing-product-details/{id}', [DirectJobReceivedController::class, 'getFinishingProductDetails']);
+             Route::get('/export', [DirectJobReceivedController::class, 'export']);
         });
     });
 
@@ -599,6 +604,7 @@ Route::get('/getSubCompanies/{companyId}', [DeliveryChallanController::class, 'g
             Route::post('/store', [JobReceivedController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [JobReceivedController::class, 'edit'])->name('edit');
             Route::get('/show/{id}', [JobReceivedController::class, 'showDetails']);
+            Route::get('/export', [JobReceivedController::class, 'export']);
         });
         Route::prefix('/job_reallocation')->name('job_reallocation.')->group(function () {
             Route::get('/', [JobReallocationController::class, 'index'])->name('index');
@@ -606,6 +612,7 @@ Route::get('/getSubCompanies/{companyId}', [DeliveryChallanController::class, 'g
             Route::post('/store', [JobReallocationController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [JobReallocationController::class, 'edit'])->name('edit');
             Route::get('/cancel-job-giving/{id}', [JobReallocationController::class, 'cancelJobGiving'])->name('cancel_job_giving');
+            Route::get('/export', [JobReallocationController::class, 'export']);
         });
     });
 

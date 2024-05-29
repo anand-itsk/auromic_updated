@@ -20,10 +20,15 @@ class JobgivingExport implements FromCollection,WithHeadings
             'Id',
             'Employee Name',
             'Order Number',
+            'Product Model',
             'DC NO',
-             'Product Model',
              'Status',
              'quantity',
+             'Weight',
+             'excess',
+             'Shortage',
+             'Days',
+             'Date',
             'created_at',
             'updated_at'
         ];

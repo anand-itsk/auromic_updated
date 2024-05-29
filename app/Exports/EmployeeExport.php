@@ -32,6 +32,7 @@ class EmployeeExport implements FromCollection,WithHeadings
             'Marital Status',
             'STD Code',
             'Phone',
+            'Status',
             'Religion',
             'Caste',
             'Nationality',

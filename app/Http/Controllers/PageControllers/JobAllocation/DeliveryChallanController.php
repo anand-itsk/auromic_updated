@@ -52,7 +52,7 @@ class DeliveryChallanController extends Controller
         $company_types = CompanyType::all();
         $authorised_people = AuthorisedPerson::all();
         $order_details = OrderDetail::all();
-        $order_nos = OrderNo::all();
+       $order_nos = OrderNo::whereIn('id', OrderDetail::pluck('order_no_id'))->get();
         $productModels = ProductModel::with(['rawMaterial.rawMaterialType'])->get();
         $product_size = ProductSize::all();
         $product_color = ProductColor::all();

@@ -21,11 +21,14 @@ class DirectJobReportExport implements FromCollection,WithHeadings
         return [
             'Id',
             'Employee Name',
-             'Product Model',
+             'Finishing Product Model',
              'Product Size',
              'Product Color',
-             'quantity',
-             'Weight',
+             'Meter',
+             'Useage Meter',
+             'Clothes cutting',
+             'total Cutting Pieces',
+             'Total Quantity',
             'created_at',
             'updated_at'
         ];

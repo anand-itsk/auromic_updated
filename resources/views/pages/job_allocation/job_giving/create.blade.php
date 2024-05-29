@@ -196,7 +196,7 @@
                                             @enderror
                                         </div>
 
-                                        <label for="order_date" class="col-sm-1 col-form-label">Shortage</label>
+                                        <label for="order_date" class="col-sm-1.5 col-form-label">Shortage</label>
                                         <div class="col-sm-2 mb-4">
                                             <input class="form-control" type="text" name="shortage_weight"
                                                 id="shortage_weight" readonly>

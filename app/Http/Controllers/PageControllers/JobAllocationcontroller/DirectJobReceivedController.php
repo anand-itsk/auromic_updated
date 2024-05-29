@@ -13,6 +13,7 @@ use App\Models\DirectJobReceived;
 use App\Models\ProductModel;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
+use App\Exports\DirectJobReceivedExport;
 
 class DirectJobReceivedController extends Controller
 {
@@ -164,4 +165,9 @@ class DirectJobReceivedController extends Controller
 
         ]);
     }
+    public function export(Request $request)
+    {
+        return Excel::download(new DirectJobReceivedExport($request->all()), 'DirectJobReceivedDatas_' . date('d-m-Y') . '.xlsx');
+    }
+
 }

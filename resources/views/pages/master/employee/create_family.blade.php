@@ -21,6 +21,7 @@
         <tbody id="familyMembersTableBody">
         </tbody>
     </table>
+   
     {{-- Banking Info --}}
 
     {{-- Add Family Member --}}
@@ -364,4 +365,65 @@
             });
         });
     </script>
+    <script>
+        $(".next-step2").click(function(e) {
+            e.preventDefault();
+
+            var activeTab = $('.wizard .nav-tabs li.active');
+            var form = $(this).closest('form');
+            var formData = new FormData(form[0]);
+            var url = form.attr('action'); // Set form action attribute to the appropriate Laravel route.
+            console.log(url);
+            // AJAX submission to Laravel
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    // If save is successful, move to the next tab
+                    activeTab.next().removeClass('disabled');
+                    nextTab(activeTab);
+                },
+                error: function(response) {
+                    if (response.status === 422) { // Unprocessable Entity (Validation Error)
+                        let errors = response.responseJSON.errors;
+                        let firstInvalidInput = null;
+
+                        for (let key in errors) {
+                            if (errors.hasOwnProperty(key)) {
+                                let inputField = form.find('[name="' + key + '"]');
+                                let errorMessage = errors[key][0]; // First error message for this field
+
+                                // Append error message and add invalid input styling
+                                inputField.addClass('is-invalid').after(
+                                    '<span class="error-message text-danger">' + errorMessage +
+                                    '</span>');
+
+                                // Focus the first invalid input
+                                if (!firstInvalidInput) {
+                                    firstInvalidInput = inputField;
+                                }
+                            }
+                        }
+
+                        if (firstInvalidInput) {
+                            firstInvalidInput.focus();
+                        }
+                    } else {
+                        // Handle other types of errors
+                        console.log('An error occurred:', response.statusText);
+                    }
+                }
+            });
+        });
+    </script>
+    <script>
+    $(document).ready(function() {
+        $('#next-button-family').click(function() {
+            $('.employee-nominee-add').modal('show');
+        });
+    });
+</script>
 </div>

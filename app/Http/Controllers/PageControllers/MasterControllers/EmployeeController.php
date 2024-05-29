@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\AddressType;
 use App\Models\Caste;
+use App\Models\State;
+use App\Models\District;
 use App\Models\Company;
 use App\Models\CompanyType;
 use App\Models\Country;
@@ -22,7 +24,6 @@ use App\Models\Nationality;
 use App\Models\PaymentMode;
 use App\Models\Religion;
 use App\Models\ResigningReason;
-use App\Models\State;
 use App\Models\User;
 use App\Models\EmployeeHistory;
 use Illuminate\Http\Request;
@@ -693,6 +694,7 @@ class EmployeeController extends Controller
 
         $countries = Country::all();
         $states = State::all();
+        $district = District::all();
         $addressTypes = AddressType::all();
         $company_types = CompanyType::all();
         $religions = Religion::all();
@@ -709,6 +711,7 @@ class EmployeeController extends Controller
 
         return view('pages.master.employee.edit', [
             'employee' => $employee,
+            'employee_id' => $id,
             'company_types' => $company_types,
             'countries' => $countries,
             'states' => $states,
@@ -721,7 +724,8 @@ class EmployeeController extends Controller
             'esi_despensaries' => $esi_despensaries,
             'family_members' => $family_members,
             'resigning_reason' => $resigning_reason,
-            'photoPath' => $photoPath
+            'photoPath' => $photoPath,
+            'district'=>$district
         ]);
     }
     // Update
@@ -926,4 +930,9 @@ class EmployeeController extends Controller
     return view('pages.master.employee.printview', ['employee' => $employee]);
 }
 
+public function getFamilyMember($id)
+{
+    $family_members = EmployeeFamilyMemberDetail::where('employee_id', $id)->get();
+    return response()->json($family_members);
+}
 }

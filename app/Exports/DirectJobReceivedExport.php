@@ -6,12 +6,12 @@ use App\Models\DirectJobReceived;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class DirectJobReceivedReportExport implements FromCollection,WithHeadings
+class DirectJobReceivedExport implements FromCollection,WithHeadings
 {
     /**
     * @return \Illuminate\Support\Collection
     */
-     public function collection()
+   public function collection()
     {
          return DirectJobReceived::all();
     }

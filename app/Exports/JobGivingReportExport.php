@@ -15,16 +15,21 @@ class JobGivingReportExport implements FromCollection,WithHeadings
     {
          return JobGiving::all();
     }
-     public function headings(): array
+    public function headings(): array
     {
         return [
             'Id',
             'Employee Name',
             'Order Number',
+            'Product Model',
             'DC NO',
-             'Product Model',
              'Status',
              'quantity',
+             'Weight',
+             'excess',
+             'Shortage',
+             'Days',
+             'Date',
             'created_at',
             'updated_at'
         ];

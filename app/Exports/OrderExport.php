@@ -23,13 +23,16 @@ class OrderExport implements FromCollection,WithHeadings
             'Order_no',
             'Order_date',
             'Customer',
-            'Product_model',
             'Product_size',
+            'Product_model',
             'Product_color',
             'Quantity',
+            'Avaible Qty',
             'Delivery_date',
             'Order_status',
-            'Total_raw_material	',
+            'Total_raw_material',
+            'Weight Per Item',
+            'Avaible Weight',
             'created_at',
             'updated_at'
         ];

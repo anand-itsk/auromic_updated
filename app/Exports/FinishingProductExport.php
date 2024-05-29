@@ -23,7 +23,9 @@ class FinishingProductExport implements FromCollection,WithHeadings
             'Product Size',
             'Model Code',
             'Model Name',
-            'Wages of Product',
+            'meters one Product',
+            'Wages one Product',
+            'Cutting Charge',
             'Date',
             'created_at',
             'updated_at'

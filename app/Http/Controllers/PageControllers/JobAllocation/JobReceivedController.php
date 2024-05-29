@@ -7,6 +7,8 @@ use App\Models\JobGiving;
 use App\Models\JobReceived;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use App\Exports\JobReceivedExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class JobReceivedController extends Controller
 {
@@ -86,5 +88,10 @@ class JobReceivedController extends Controller
         // Fetch the job_received data
         $jobReceivedData = JobReceived::where('job_giving_id', $id)->latest()->first();
         return view('pages.job_allocation.job_received.edit', compact('Job_Giving', 'jobReceivedData', 'id'));
+    }
+
+       public function export(Request $request)
+    {
+        return Excel::download(new JobReceivedExport($request->all()), 'JobReceivedDatas_' . date('d-m-Y') . '.xlsx');
     }
 }
