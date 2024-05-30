@@ -116,7 +116,7 @@ class DirectJobGivingController extends Controller
         $direct_job_giving->product_size_id = $request->input('product_size_id');
         $direct_job_giving->product_color_id = $request->input('product_color_id');
         $direct_job_giving->meter = $request->input('meter');
-        $direct_job_giving->clothes_by_cutting = $request->input('finishing_product_models_id');
+        $direct_job_giving->clothes_by_cutting = $request->input('clothes_by_cutting');
         $direct_job_giving->total_cutting_pieces = $request->input('total_cutting_pices');
 
 

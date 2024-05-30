@@ -117,7 +117,7 @@
 </div>
  <label for="customer_code" class="col-sm-2 col-form-label mandatory">Is Clothes by Cutting?</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control" name="finishing_product_models_id" id="finishing_product_models_id">
+                                            <select class="form-control" name="clothes_by_cutting" id="clothes_by_cutting">
     <option value="0" {{ $direct_job_giving->finishing_product_models_id == 0 ? 'selected' : '' }}>No</option>
     <option value="1" {{ $direct_job_giving->finishing_product_models_id == 1 ? 'selected' : '' }}>Yes</option>
 </select>

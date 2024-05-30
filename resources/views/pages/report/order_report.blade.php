@@ -295,16 +295,17 @@ $(document).ready(function() {
         },
         columns: [
             { data: 'id', name: 'id' },
-            { data: 'order_no.customer_order_no', name: 'order_no.customer_order_no' },
-            { data: 'order_date', name: 'order_date' },
-            { data: 'customer.customer_name', name: 'customer.customer_name' },
-             { data: 'product_model.product.name', name: 'product_model.product.name' },
-            { data: 'product_model.model_name', name: 'product_model.model_name' },
-            { data: 'product_size.code', name: 'product_size.code' },
-            { data: 'product_color.name', name: 'product_color.name' },
-            { data: 'quantity', name: 'quantity' },
-            { data: 'available_quantity', name: 'available_quantity' },
-             { data: 'order_status.name', name: 'order_status.name' },
+            { data: 'order_no.customer_order_no', name: 'order_no.customer_order_no',render: function(data, type, row) { return data ? data : '-'; } },
+            
+            { data: 'order_date', name: 'order_date',render: function(data, type, row) { return data ? data : '-'; } },
+            { data: 'customer.customer_name', name: 'customer.customer_name',render: function(data, type, row) { return data ? data : '-'; } },
+             { data: 'product_model.product.name', name: 'product_model.product.name',render: function(data, type, row) { return data ? data : '-'; } },
+            { data: 'product_model.model_name', name: 'product_model.model_name',render: function(data, type, row) { return data ? data : '-'; }  },
+            { data: 'product_size.code', name: 'product_size.code' ,render: function(data, type, row) { return data ? data : '-'; } },
+            { data: 'product_color.name', name: 'product_color.name',render: function(data, type, row) { return data ? data : '-'; }  },
+            { data: 'quantity', name: 'quantity',render: function(data, type, row) { return data ? data : '-'; } },
+            { data: 'available_quantity', name: 'available_quantity',render: function(data, type, row) { return data ? data : '-'; } },
+             { data: 'order_status.name', name: 'order_status.name',render: function(data, type, row) { return data ? data : '-'; } },
             
             
             

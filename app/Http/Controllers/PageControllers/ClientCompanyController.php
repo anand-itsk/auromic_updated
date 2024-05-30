@@ -129,7 +129,7 @@ class ClientCompanyController extends Controller
             'company_name' => 'required|max:255',
             'name' => 'required',
              'photo' => 'nullable|image|max:200000',
-             'person_email' => 'email|unique:authorised_people',
+            
         ]);
 
         $input = $request->all();

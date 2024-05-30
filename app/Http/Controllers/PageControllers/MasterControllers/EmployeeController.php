@@ -841,11 +841,13 @@ class EmployeeController extends Controller
             'resigning_reason_id' => 'required|exists:resigning_reasons,id',
         ]);
 
-        if ($request->employee_status == "serve_notice_period") {
-            $status = "relieving";
-        } elseif ($request->employee_status == "relieved") {
-            $status = "relieved";
-        }
+       if ($request->employee_status == "serve_notice_period") {
+    $status = "relieving";
+} elseif ($request->employee_status == "relieved") {
+    $status = "relieved";
+} elseif ($request->employee_status == "terminated") {
+    $status = "terminated";
+} 
 
         // Find the employee by their ID
         $employee = Employee::findOrFail($request->employee_id);

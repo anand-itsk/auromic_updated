@@ -106,6 +106,7 @@ class OrderDetailController extends Controller
         $validatedData = $request->validate([
             'order_date' => 'required|date',
             'customer_id' => 'required|exists:customers,id',
+            
 
         ]);
 
