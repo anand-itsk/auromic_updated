@@ -851,7 +851,7 @@ class EmployeeController extends Controller
 
         // Find the employee by their ID
         $employee = Employee::findOrFail($request->employee_id);
-        // Update the resigning_date and resigning_reason_id fields in the Employee table
+       
         $employee->update([
             'status' => $status,
             'resigning_date' => $request->relieving_date,
