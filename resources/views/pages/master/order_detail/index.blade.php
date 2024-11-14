@@ -104,23 +104,21 @@
                                     </div><!-- /.modal-dialog -->
                                 </div>
                                 <div class="card-body">
-                                    <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap"
+                                    <table id="users-table" class="table table-striped table-bordered table-responsive nowrap"
                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Order No</th>
+                                                <th>Order Date</th>
                                                 <th>customer</th>
                                                 <th>Total Quantity</th>
                                                 <th>Available Quantity</th>
-                                                <th>Total R.M Weight</th>
-
-
+                                                <th>Wages of Product</th>
                                                 <th>Product Color</th>
-
+                                                 <th>Product Size</th>
                                                 <th>Order Status</th>
                                                 <th>Model Name</th>
-
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -191,7 +189,6 @@
     <!-- DataTables JS -->
     @include('links.js.datatable.datatable-js')
 
-
     <script>
         var table;
         $(document).ready(function() {
@@ -211,12 +208,20 @@
                         }
                     },
                     {
-                        data: 'customer.customer_name',
-                        name: 'customer.customer_name',
+                        data: 'order_date',
+                        name: 'order_date',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
                     },
+                    {
+                        data: 'order_no.customer_order_no',
+                        name: 'order_no.customer_order_no',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                    },
+                    
                     {
                         data: 'quantity',
                         name: 'quantity',
@@ -232,8 +237,8 @@
                         }
                     },
                     {
-                        data: 'total_raw_material',
-                        name: 'total_raw_material',
+                        data: 'product_model.wages_product',
+                        name: 'product_model.wages_product',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
@@ -242,6 +247,13 @@
                     {
                         data: 'product_color.name',
                         name: 'product_color.name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                    },
+                    {
+                        data: 'product_size.code',
+                        name: 'product_size.code',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
@@ -267,12 +279,13 @@
                         render: function(data, type, row) {
                             return `
                         <button onclick="edit(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
-                        <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
-                    
+                        
+
                        <button onclick="addOrder(${row.id})" class="icon-button common-color"><i class="fa fa-plus"></i></button>
 
 
                     `;
+                    // <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
                         }
 
                     },
@@ -291,7 +304,8 @@
                                 .params());
                         }
                     }
-                ]
+                ],
+               
                 
 
             });

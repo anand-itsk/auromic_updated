@@ -107,7 +107,7 @@
                                     </div><!-- /.modal-dialog -->
                                 </div>
                                 <div class="card-body">
-                                    <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap"
+                                    <table id="users-table" class="table table-striped table-bordered table-responsive nowrap"
                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
@@ -118,6 +118,11 @@
                                                 <th>DC Date</th>
                                                 <th>Quantity</th>
                                                 <th>Avl.Quantity</th>
+                                                <th>Model Code</th>
+                                                <th>Model Name</th>
+                                                <th>Product Color</th>
+                                                <th>Product Size</th>
+                                                 <th>Wages of product</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -246,6 +251,12 @@
                             return data ? data : '-';
                         }
                     },
+                     { data: 'orderDetails.productModel.model_code', name: 'orderDetails.productModel.model_code' },
+{ data: 'model_name', name: 'model_name' },
+{ data: 'product_color', name: 'product_color' },
+{ data: 'product_size', name: 'product_size' },
+{ data: 'wages_product', name: 'wages_product' },
+
 
                     {
                         data: null,

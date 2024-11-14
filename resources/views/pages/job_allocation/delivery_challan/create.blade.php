@@ -30,7 +30,7 @@
                     <div class="card m-b-30">
                         <div class="card-body">
                             <div class="m-b-30">
-                                <form action="{{ route('job_allocation.delivery_challan.store') }}" method="POST"
+                                <form action="{{route('job_allocation.delivery_challan.store')}}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group row">

@@ -192,61 +192,67 @@
 
 
     <script>
-        var table;
-        $(document).ready(function() {
-            table = $('#data-table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '{{ route('profile.masters.data') }}',
-                columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
-                        data: 'company_code',
-                        name: 'company_code',
-                        render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-                    },
-                    {
-                        data: 'company_name',
-                        name: 'company_name',
-                        render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-                    },
-                    
-                     {
-                        data: 'authorised_person_name',
-                        name: 'authorised_person_name',
-                        render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-                    },
-                    {
-                        data: 'authorised_person_email',
-                        name: 'authorised_person_email',
-                        render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-                    },
-                   
-                   
-                    {
-                        data: null,
-                        orderable: false,
-                        searchable: false,
-                        render: function(data, type, row) {
-                            return `
-                        <button onclick="edit(${row.id})" class="icon-button primary-color" title="Edit"><i class="fa fa-edit"></i></button>
-                        <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
-                        <button onclick="showDetails(${row.id})" class="icon-button common-color"><i class="fa fa-eye"></i></button>
-                    `;
-                        }
+var table;
+$(document).ready(function() {
+    table = $('#data-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{{ route('profile.masters.data') }}',
+        columns: [
+            {
+                data: 'id',
+                name: 'id',
+                 render: function(data, type, row, meta) {
+            return meta.row + 1;
+        }
+            },
+            {
+                data: 'company_code',
+                name: 'company_code',
+                render: function(data, type, row) {
+                    return data ? data : '-';
+                }
+            },
+            {
+                data: 'company_name',
+                name: 'company_name',
+                render: function(data, type, row) {
+                    return data ? data : '-';
+                }
+            },
+            {
+                data: 'authorised_person_name',
+                name: 'authorised_person_name',
+                render: function(data, type, row) {
+                    return data ? data : '-';
+                }
+            },
+            {
+                data: 'authorised_person_email',
+                name: 'authorised_person_email',
+                render: function(data, type, row) {
+                    return data ? data : '-';
+                }
+            },
+            {
+                data: null,
+                orderable: false,
+                searchable: false,
+                render: function(data, type, row) {
+                    // Use the first_company_id from the server response
+                    var deleteButton = row.id == row.first_company_id ? '' : `<button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>`;
 
-                    },
-                ],
+                    return `
+                    <button onclick="edit(${row.id})" class="icon-button primary-color" title="Edit"><i class="fa fa-edit"></i></button>
+                    ${deleteButton}
+                    <button onclick="showDetails(${row.id})" class="icon-button common-color"><i class="fa fa-eye"></i></button>
+                    `;
+                }
+            }
+        ],
+        order: [
+            [0, 'desc']
+        ],
                 order: [
                     [0, 'desc']
                 ],

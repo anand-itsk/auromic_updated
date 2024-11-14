@@ -88,9 +88,12 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label class="col-sm-2 col-form-label mandatory">Model <a class="shortcut_master"
-                                                href="{{ route('master.product_model.create') }}"
-                                                target="_blank">+</a></label>
+                                      <!-- Button to Open Modal -->
+ <label class="col-sm-2 col-form-label mandatory">Model <a class="shortcut_master"
+                                                href="{{ route('master.product_model.create') }}" target="_blank">+</a>
+                                        </label>
+
+
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_model" id="product_model"
                                                 disabled>
@@ -128,6 +131,13 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
+                                          <label for="raw_material_name" class="col-sm-2 col-form-label ">Stock</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="stock" id="stock" readonly>
+    @error('stock')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
                                         <label for="raw_material_weight_item" class="col-sm-2 col-form-label">R.M
                                             Weight/Item</label>
                                         <div class="col-sm-4 mb-4">
@@ -156,13 +166,14 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="wages_employee" class="col-sm-2 col-form-label mandatory">Quantity</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="quantity" id="quantity"required>
-                                            @error('quantity')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                        <label for="quantity" class="col-sm-2 col-form-label mandatory">Quantity</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="quantity" id="quantity" required>
+    <span id="quantity-error" style="color: red; display:none;">Quantity cannot exceed stock!</span>
+    @error('quantity')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
 
                                         <label class="col-sm-2 col-form-label mandatory">Delivery Date</label>
                                         <div class="col-sm-4 mb-4">
@@ -264,7 +275,7 @@
             var totalRawMaterial = rawMaterialWeightItem * quantity;
 
             // Update the total raw material input field with the calculated value
-            totalRawMaterialInput.value = isNaN(totalRawMaterial) ? '' : totalRawMaterial.toFixed();
+            totalRawMaterialInput.value = isNaN(totalRawMaterial) ? '' : totalRawMaterial.toFixed(2);
         });
     </script>
 
@@ -322,6 +333,7 @@
                         success: function(response) {
                             $('#product').val(response.product);
                             $('#raw_material_name').val(response.raw_material_name);
+                             $('#stock').val(response.stock);
                             $('#raw_material_type').val(response.raw_material_type);
                             $('#product_size_code').val(response.product_size_code);
                             $('#product_size_id').val(response.product_size_id);
@@ -336,6 +348,7 @@
                 } else {
                     $('#product').val('');
                     $('#raw_material_name').val('');
+                    $('#stock').val('');
                     $('#raw_material_type').val('');
                     $('#product_size_code').val('');
                     $('#product_size_id').val('');
@@ -343,6 +356,27 @@
                     $('#raw_material_weight_item').val('');
                 }
             });
+            $('#quantity').on('input', function() {
+            var quantity = parseFloat($(this).val());
+            var stock = parseFloat($('#stock').val());
+
+            if (quantity > stock) {
+                $('#quantity-error').show(); // Show error message
+            } else {
+                $('#quantity-error').hide(); // Hide error message
+            }
+        });
+
+        // Prevent form submission if quantity is greater than stock
+        $('form').on('submit', function(e) {
+            var quantity = parseFloat($('#quantity').val());
+            var stock = parseFloat($('#stock').val());
+
+            if (quantity > stock) {
+                e.preventDefault(); // Prevent form submission
+                $('#quantity-error').show(); // Show error message
+            }
+        });
         });
     </script>
 

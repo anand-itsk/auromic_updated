@@ -23,6 +23,8 @@
                     </div>
                 </div>
             </div>
+            <p class="text-right">{{ \Carbon\Carbon::now()->format('d/m/Y') }}</p>
+          
             <!-- end page title end breadcrumb -->
 
             <div class="row">
@@ -102,15 +104,14 @@
                                             @enderror
                                         </div>
 
-                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Req raw Material
-                                            weight/item</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="raw_material_weight_item"
-                                                id="model_code"required>
-                                            @error('raw_material_weight_item')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+<label for="customer_code" class="col-sm-2 col-form-label mandatory">Req raw Material weight/item</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="raw_material_weight_item" id="raw_material_weight_item" value="" required>
+    @error('raw_material_weight_item')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+
 
                                         <label for="wages_product" class="col-sm-2 col-form-label">Wages for 1
                                             product</label>
@@ -118,6 +119,15 @@
                                             <input class="form-control" type="text" name="wages_product"
                                                 id="wages_product" value="{{ old('wages_product', 0) }}">
                                             @error('wages_product')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        
+                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">Date
+                                            </label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="date" name="date" id="date"required>
+                                            @error('date')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -147,31 +157,28 @@
     </div>
 
 <script>
-   document.addEventListener('DOMContentLoaded', function () {
-      let modelField = document.getElementById('model_code');
-      let modelError = document.getElementById('model_codeError');
+    document.getElementById('raw_material_weight_item').addEventListener('input', function (e) {
+        let value = e.target.value;
 
-      modelField.addEventListener('input', function () {
-         let modelCode = this.value.trim();
-         modelError.textContent = ''; // Reset error message on each input change
+        // If the input starts with a '.', add '0' before it
+        if (value.startsWith('.')) {
+            value = '0' + value;
+        }
 
-         // Perform an AJAX request to check if the model code exists
-         $.ajax({
-            method: 'POST',
-            url: '{{ route("master.product_model.checkName") }}',
-            data: { model_code: modelCode, _token: '{{ csrf_token() }}' },
-            success: function (response) {
-               if (response.exists) {
-                  modelError.textContent = 'Model code already exists in the database!';
-               }
-            },
-            error: function (error) {
-               console.error(error);
-               modelError.textContent = 'Error occurred while checking the model code.';
-            }
-         });
-      });
-   });
+        // Format the input to have a maximum of 3 decimal places
+        if (value.includes('.')) {
+            let parts = value.split('.');
+            parts[1] = (parts[1] || '').substring(0, 3); // Limit to 3 decimal places
+            value = parts[0] + '.' + parts[1];
+        }
+
+        e.target.value = value;
+    });
+
+    document.getElementById('raw_material_weight_item').addEventListener('blur', function (e) {
+        let value = parseFloat(e.target.value).toFixed(3);
+        e.target.value = value;
+    });
 </script>
 
 

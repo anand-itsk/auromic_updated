@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\JobGivingReportExport;
+use App\Models\OrderNo;
+use App\Models\Product;
 
 class DailyGivenReportCompanyWiseController extends Controller
 {
@@ -17,7 +19,9 @@ class DailyGivenReportCompanyWiseController extends Controller
     {
         $companyType = CompanyType::all();
         $company = Company::all();
-        return view('pages.report.job_given_report', compact('companyType', 'company'));
+        $order_nos = OrderNo::all();
+        $product = Product::all();  
+        return view('pages.report.job_given_report', compact('companyType', 'company', 'order_nos', 'product'));
     }
 
         public function indexData(Request $request)
@@ -27,6 +31,8 @@ class DailyGivenReportCompanyWiseController extends Controller
             $status = $request->input('status');
             $fromDate = $request->input('from_date');
             $lastDate = $request->input('last_date');
+        $orderNoId = $request->input('orderNoId');
+        $product = $request->input('product'); 
 
             // Retrieve JobGiving data with eager loading
             $jobGivingQuery = JobGiving::with('employee', 'order_details', 'deliveryChellan', 'product_model.productSize');
@@ -53,6 +59,18 @@ class DailyGivenReportCompanyWiseController extends Controller
             if ($fromDate && $lastDate) {
                 $jobGivingQuery->whereBetween('created_at', [$fromDate, $lastDate]);
             }
+
+        if ($orderNoId) {
+            $jobGivingQuery->whereHas('order_details', function ($q) use ($orderNoId) {
+                $q->where('order_no_id', $orderNoId);
+            });
+        }
+
+        if ($product) {
+            $jobGivingQuery->whereHas('product_model', function ($q) use ($product) {
+                $q->where('product_id', $product);
+            });
+        }
 
             // Retrieve JobGiving data
             $jobGivingData = $jobGivingQuery->get();

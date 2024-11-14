@@ -64,6 +64,7 @@
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="account_number"
                                                 id="account_number" required>
+                                                 <span class="error" style="color: red;"></span>
                                             @error('account_number')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -186,5 +187,32 @@
     });
 });
 </script>    -->
+
+
  @include('links.js.select2.select2')
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#account_number').on('blur', function() {
+        var accountNumber = $(this).val();
+
+        if (accountNumber) {
+            $.ajax({
+                url: "{{ route('profile.bank_details.check.bank.account') }}",
+                type: 'GET',
+                data: { account_number: accountNumber },
+                success: function(response) {
+                    if (response.exists) {
+                        $('#account_number').next('.error').text('The bank account number already exists.');
+                        $('#account_number').focus(); // Focus on the input field if account number exists
+                    } else {
+                        $('#account_number').next('.error').text(''); // Clear the error message if account number does not exist
+                    }
+                }
+            });
+        }
+    });
+});
+</script>
+
 @endsection

@@ -15,6 +15,8 @@ use App\Models\Customer;
 use App\Models\Employee;
 use App\Exports\EmployeeExport;
 use App\Imports\EmployeeDataImport;
+use App\Models\AuthorisedPerson;
+use App\Models\CompanyHierarchy;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\EmployeeFamilyMemberDetail;
 use App\Models\EmployeeNominee;
@@ -26,6 +28,7 @@ use App\Models\Religion;
 use App\Models\ResigningReason;
 use App\Models\User;
 use App\Models\EmployeeHistory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
@@ -55,30 +58,140 @@ class EmployeeController extends Controller
             $existingEmployee = Employee::where('employee_code', $formattedEmployeeNumber)->exists();
         }
         $resigning_reason = ResigningReason::all();
-        return view('pages.master.employee.index', compact('formattedEmployeeNumber', 'resigning_reason'));
+
+        $companyType = CompanyType::all();
+        $company = Company::all();
+        $employees = Employee::all();
+        return view('pages.master.employee.index', compact('formattedEmployeeNumber', 'resigning_reason', 'companyType', 'company', 'employees'));
     }
 
 
     // Index DataTable
-    public function indexData()
+    public function indexData(Request $request)
     {
-     $employees = Employee::with(['company', 'company.companyType', 'company.companyHierarchy'])->get();
-    
-    // Transform the data if necessary
-    $data = $employees->map(function ($employee) {
-        return [
-             'id' => $employee->id,
-            'employee_code' => $employee->employee_code,
-            'employee_name' => $employee->employee_name,
-            'company_name' => $employee->company->company_name,
-            'company_type_name' => $employee->company->companyType->name,
-            'status' => $employee->status,
-        
-        ];
-    });
+        // dd($request->all());
+        $companyType = $request->input('company_type');
+        $joiningDate = $request->input('joining_date');
+        $company = $request->input('companies');
+        $employee = $request->input('employee');
+        $employeeCode = $request->input('employee_code');
+        $fromDate = $request->input('from_date');
+        $lastDate = $request->input('last_date');
+        $employeeStatus = $request->input('employee_status');
+        $dateFilter = $request->input('date_filter');
+        $ownCompany = $request->input('own_company');
 
-    return DataTables::of($data)->make(true);
+
+        $query = Employee::with(['company', 'addresses', 'familyMembers', 'resigningReason']);
+
+
+
+        if ($companyType) {
+            $query->whereHas('company', function ($q) use ($companyType) {
+                $q->where('company_type_id', $companyType);
+            });
+        }
+
+        if ($joiningDate) {
+            $query->whereDate('joining_date', $joiningDate);
+        }
+
+        if ($company) {
+            $query->whereIn('company_id', is_array($company) ? $company : [$company]);
+        }
+
+        if ($employee) {
+            $query->where('id', $employee);
+        }
+
+        if ($employeeCode) {
+            $query->where('employee_code', $employeeCode);
+        }
+        // dd($employeeCode);
+        if ($fromDate && $lastDate) {
+            $query->whereBetween('created_at', [$fromDate, $lastDate]);
+        }
+
+        // New condition to filter by employee status
+        if ($employeeStatus) {
+            $query->where('status', $employeeStatus);
+        }
+
+        if ($dateFilter) {
+            if ($dateFilter === 'today') {
+                $query->whereDate('created_at', Carbon::today());
+            } elseif ($dateFilter === 'this_month') {
+                $query->whereMonth('created_at', Carbon::now()->month)
+                    ->whereYear('created_at', Carbon::now()->year);
+            } elseif ($dateFilter === 'last_month') {
+                $query->whereMonth('created_at', Carbon::now()->subMonth()->month)
+                    ->whereYear('created_at', Carbon::now()->subMonth()->year);
+            }
+        }
+        if ($ownCompany) {
+            $query->where(
+                'own_company',
+                $ownCompany
+            );
+        }
+
+
+                $workingEmployees = (clone $query)->where('status', 'working')->get();
+
+                // Get employees with other statuses
+                $otherEmployees = (clone $query)->where('status', '!=', 'working')->get();
+                $employees = $workingEmployees->merge($otherEmployees);
+       
+        
+          $data = $employees->map(function ($employee) {
+            $companyType = $employee->company->companyType->id ?? null;
+            $masterCompany = $clientCompany = null;
+
+            // Determine the companies based on the company type
+            if ($companyType == 2) {
+                $masterCompanyName = $employee->company->company_name;
+            } elseif ($companyType == 3) {
+                $clientCompanyId = $employee->company->id;
+                $masterCompanyId = CompanyHierarchy::where('company_id', $clientCompanyId)->value('parent_company_id');
+                $masterCompany = Company::find($masterCompanyId);
+            } elseif ($companyType == 4) {
+                $subClientId = $employee->company->id;
+                $clientCompanyId = CompanyHierarchy::where('company_id', $subClientId)->value('parent_company_id');
+                $clientCompany = Company::find($clientCompanyId);
+                $masterCompanyId = CompanyHierarchy::where('company_id', $clientCompanyId)->value('parent_company_id');
+                $masterCompany = Company::find($masterCompanyId);
+            }
+
+            // Safely return transformed employee data
+            return [
+                'id' => $employee->id,
+                'master_company' => $companyType === 2 ? $employee->company->company_name : ($masterCompany->company_name ?? '-'),
+                'client_company' => $companyType === 3 ? $employee->company->company_name : ($clientCompany->company_name ?? '-'),
+                'sub_client_company' => $companyType === 4 ? $employee->company->company_name : '-',
+                'employee_code' => $employee->employee_code,
+                'employee_name' => $employee->employee_name,
+                'company_name' => $employee->company->company_name,
+                'company_type_name' => $employee->company->companyType->id,
+                'faorhus_name' => $employee->faorhus_name,
+                'resigning_date' => $employee->resigning_date ? \Carbon\Carbon::parse($employee->resigning_date)->format('d/m/Y') : '-',
+                'joining_date' => $employee->joining_date ? \Carbon\Carbon::parse($employee->joining_date)->format('d/m/Y') : '-',
+                'mobile' => $employee->mobile,
+                'dob' => $employee->dob ? \Carbon\Carbon::parse($employee->dob)->format('d/m/Y') : '-',
+                'pf_no' => optional($employee->pfInfo)->pf_no ?? '-',
+                'esi_no' => optional($employee->esiInfo)->esi_no ?? '-',
+                'village' => optional($employee->addresses)->village_area ?? '-',
+                'status' => $employee->status,
+                'own_company' => $employee->own_company,
+                'created_at' => $employee->created_at->format('d/m/Y'),
+            ];
+        });
+
+
+
+        // Return data for DataTables with 'working' employees first
+        return DataTables::of($data)->make(true);
     }
+
 
     // Show Family Member table
     public function getFamilyMembers(Request $request)
@@ -122,6 +235,7 @@ class EmployeeController extends Controller
 
         $familyDetails = $familyMember->update([
             'name' => $request->name,
+            'aadhar_no' => $request->aadhar_no,
             'relation_with_emp' => $request->relation_with_emp,
             'dob' => $request->dob,
             'is_residing' => $request->is_residing,
@@ -189,6 +303,7 @@ class EmployeeController extends Controller
         $local_offices = LocalOffice::all();
         $esi_despensaries = EsiDispensary::all();
         $family_members = EmployeeFamilyMemberDetail::all();
+        $client_companies = Company::where('company_type_id', '3')->get();
 
         return view('pages.master.employee.create', [
             'company_types' => $company_types,
@@ -201,16 +316,18 @@ class EmployeeController extends Controller
             'payment_modes' => $payment_modes,
             'local_offices' => $local_offices,
             'esi_despensaries' => $esi_despensaries,
-            'family_members' => $family_members
+            'family_members' => $family_members,
+            'client_companies' => $client_companies
         ]);
     }
+
 
     // Store Personal Data
     public function storePersonal(Request $request, $id)
     {
         // dd($request->same_as_permanent_address);
         $rules = [
-            'employee_code' => 'required',
+            'employee_code' => 'required|unique:employees,employee_code',
             'employee_name' => 'required',
             'dob'   => 'required',
             'joining_date' => 'required'
@@ -232,12 +349,17 @@ class EmployeeController extends Controller
             $employee->photo = $filename;
         }
 
+        $companyId = $request->client_company_id
+            ?? $request->sub_client_company_id
+            ?? $request->master_company;
 
         // Store data
         $employee->update([
-            'company_id' => $request->company_id,
+            // 'company_id' => $request->master_company ? $request->master_company : ($request->client_company_id ? $request->client_company_id :$request->sub_client_company_id) ,
+            'company_id' => $companyId,
             'employee_code' => $request->employee_code,
             'employee_name' => $request->employee_name,
+            'own_company' => $request->own_company,
             'dob' => $request->dob,
             'gender' => $request->gender,
             'blood_group' => $request->blood_group,
@@ -505,6 +627,7 @@ class EmployeeController extends Controller
             'dob' => $request->dob,
             'is_residing' => $request->is_residing ?? "0",
             'remark' => $request->remark,
+            'aadhar_no' => $request->aadhar_no
         ]);
 
         // Check if the finance detail already has an office address
@@ -528,7 +651,8 @@ class EmployeeController extends Controller
 
         // Return success response
         return response()->json([
-            'success' => true, 'message' => 'Step 3 completed successfully.',
+            'success' => true,
+            'message' => 'Step 3 completed successfully.',
             'emp_id' => $employee->id
         ]);
     }
@@ -552,7 +676,8 @@ class EmployeeController extends Controller
 
         // Return success response
         return response()->json([
-            'success' => true, 'message' => 'Step 3 completed successfully.',
+            'success' => true,
+            'message' => 'Step 3 completed successfully.',
             'emp_id' => $employee->id
         ]);
     }
@@ -669,15 +794,29 @@ class EmployeeController extends Controller
     // Store Date
     public function store(Request $request)
     {
+        $validator =   Validator::make($request->all(), [
+            'employee_code' => 'required|unique:employees,employee_code',
+            'employee_name' => 'required',
+            'dob'   => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->messages()
+            ]);
+        }
 
         $auth_id = auth()->id();
         $validatedData = $request->validate([
             'employee_code' => 'required|max:255',
             'employee_name' => 'required|max:255',
-            'dob' => 'required'
+            'dob' => 'required',
+            // 'company_id'=>'required'
         ]);
 
         $input = $request->all();
+        $input['company_id'] = 1;
         $employee = new Employee();
         $employee = $employee->create($input);
 
@@ -707,6 +846,35 @@ class EmployeeController extends Controller
         // dd($family_members);
         $resigning_reason = ResigningReason::all();
         $photoPath = $employee->photo ?? null;
+        $master_companies = Company::where('company_type_id', '2')->get();
+        $client_companies = Company::where('company_type_id', '3')->get();
+        $subclient_companies = Company::where('company_type_id', '4')->get();
+
+
+        // Initialize variables for selected company data
+        $selectedMasterCompany = $selectedClientCompany = null;
+
+        // Determine master, client, and sub-client based on company type
+        switch ($employee->company->companyType->id ?? null) {
+            case 2:
+                // Master company type
+                $selectedMasterCompany = $employee->company->id;
+                break;
+
+            case 3:
+                // Client company type, find its master company
+                $selectedClientCompany = $employee->company->id;
+                $selectedMasterCompany = CompanyHierarchy::where('company_id', $selectedClientCompany)->value('parent_company_id');
+                break;
+
+            case 4:
+                // Sub-client company type, find its client and master company
+                $subClientCompanyId = $employee->company->id;
+                $selectedClientCompany = CompanyHierarchy::where('company_id', $subClientCompanyId)->value('parent_company_id');
+                $selectedMasterCompany = CompanyHierarchy::where('company_id', $selectedClientCompany)->value('parent_company_id');
+                break;
+        }
+
 
 
         return view('pages.master.employee.edit', [
@@ -725,7 +893,13 @@ class EmployeeController extends Controller
             'family_members' => $family_members,
             'resigning_reason' => $resigning_reason,
             'photoPath' => $photoPath,
-            'district'=>$district
+            'district' => $district,
+            'client_companies' => $client_companies,
+            'subclient_companies' => $subclient_companies,
+            'master_companies' => $master_companies,
+            'selectedMasterCompany' => $selectedMasterCompany,
+            'selectedClientCompany' => $selectedClientCompany,
+            'selectedSubClientCompany' => $subClientCompanyId ?? null,
         ]);
     }
     // Update
@@ -841,17 +1015,17 @@ class EmployeeController extends Controller
             'resigning_reason_id' => 'required|exists:resigning_reasons,id',
         ]);
 
-       if ($request->employee_status == "serve_notice_period") {
-    $status = "relieving";
-} elseif ($request->employee_status == "relieved") {
-    $status = "relieved";
-} elseif ($request->employee_status == "terminated") {
-    $status = "terminated";
-} 
+        if ($request->employee_status == "serve_notice_period") {
+            $status = "relieving";
+        } elseif ($request->employee_status == "relieved") {
+            $status = "relieved";
+        } elseif ($request->employee_status == "terminated") {
+            $status = "terminated";
+        }
 
         // Find the employee by their ID
         $employee = Employee::findOrFail($request->employee_id);
-       
+
         $employee->update([
             'status' => $status,
             'resigning_date' => $request->relieving_date,
@@ -927,14 +1101,63 @@ class EmployeeController extends Controller
 
 
     public function printView($id)
-{
-    $employee = Employee::findOrFail($id);
-    return view('pages.master.employee.printview', ['employee' => $employee]);
-}
+    {
+        $employee = Employee::findOrFail($id);
+        return view('pages.master.employee.printview', ['employee' => $employee]);
+    }
 
-public function getFamilyMember($id)
-{
-    $family_members = EmployeeFamilyMemberDetail::where('employee_id', $id)->get();
-    return response()->json($family_members);
-}
+    public function getFamilyMember($id)
+    {
+        $family_members = EmployeeFamilyMemberDetail::where('employee_id', $id)->get();
+        return response()->json($family_members);
+    }
+    public function getSubClients(Request $request)
+    {
+        // Fetch sub-client companies based on the parent_company_id
+        $subClients = Company::join('company_hierarchies', 'companies.id', '=', 'company_hierarchies.company_id')
+            ->where('company_hierarchies.parent_company_id', $request->client_company_id)
+            ->get(['companies.*']); // You can specify fields if needed
+
+        // Return the response as JSON
+        return response()->json($subClients);
+    }
+    public function getAuthorisedPerson($company_id)
+    {
+        $authorisedPerson = AuthorisedPerson::where('company_id', $company_id)->first();
+
+        if ($authorisedPerson) {
+            return response()->json([
+                'name' => $authorisedPerson->name,
+            ]);
+        } else {
+            return response()->json([
+                'name' => '',
+            ]);
+        }
+    }
+    public function getClientCompanies(Request $request)
+    {
+        $masterCompanyId = $request->master_company_id;
+
+        // Fetch client companies based on the selected master company
+        $clientCompanies = Company::whereHas('hierarchy', function ($query) use ($masterCompanyId) {
+            $query->where('parent_company_id', $masterCompanyId);
+        })->where('company_type_id', 2) // Client company type
+            ->get();
+
+        return response()->json($clientCompanies);
+    }
+
+    public function getSubClientCompanies(Request $request)
+    {
+        $clientCompanyId = $request->client_company_id;
+
+        // Fetch sub-client companies based on the selected client company
+        $subClientCompanies = Company::whereHas('hierarchy', function ($query) use ($clientCompanyId) {
+            $query->where('parent_company_id', $clientCompanyId);
+        })->where('company_type_id', 3) // Sub-client company type
+            ->get();
+
+        return response()->json($subClientCompanies);
+    }
 }

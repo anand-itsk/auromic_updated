@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\EmployeeReportExport;
+use App\Models\CompanyHierarchy;
 
 class EmployeeReportController extends Controller
 {
@@ -17,7 +18,8 @@ class EmployeeReportController extends Controller
     {
         $companyType = CompanyType::all();
         $company = Company::all();
-        return view ('pages.report.employee_report',compact('companyType','company'));
+        $employees = Employee::all();
+        return view ('pages.report.employee_report',compact('companyType','company', 'employees'));
 
     }
 public function indexData(Request $request)
@@ -28,8 +30,10 @@ public function indexData(Request $request)
     // Get the joining date filter value from the request
     $joiningDate = $request->input('joining_date');
 
-
      $company = $request->input('companies');
+        $employee = $request->input('employee');
+        $fromDate = $request->input('from_date');
+        $lastDate = $request->input('last_date');
     // Query employees with relationships
     $query = Employee::with('company', 'addresses', 'familyMembers', 'resigningReason');
 
@@ -51,11 +55,71 @@ public function indexData(Request $request)
     $query->whereIn('company_id', $companies);
 }
 
+        if ($employee) {
+            $query->where('id', $employee);
+        }
+
+
+        // dd($employee);
+        if ($fromDate && $lastDate) {
+            $query->whereBetween('created_at', [$fromDate, $lastDate]);
+        }
+
     // Get employees data
     $employees = $query->get();
 
-    // Return the data using DataTables
-    return DataTables::of($employees)->make(true);
+        $data = $employees->map(function ($employee) {
+            $companyType = $employee->company->companyType->id ?? null;
+            $masterCompany = $clientCompany = null;
+
+            switch ($companyType) {
+                case 2:
+                    // Master company type
+                    $masterCompanyName = $employee->company->company_name;
+                    break;
+
+                case 3:
+                    // Client company type, find its master company
+                    $clientCompanyId = $employee->company->id;
+                    $masterCompanyId = CompanyHierarchy::where('company_id', $clientCompanyId)->value('parent_company_id');
+                    $masterCompany = Company::find($masterCompanyId);
+                    break;
+
+                case 4:
+                    // Sub-client company type, find its client and master company
+                    $subClientId = $employee->company->id;
+                    $clientCompanyId = CompanyHierarchy::where('company_id', $subClientId)->value('parent_company_id');
+                    $clientCompany = Company::find($clientCompanyId);
+                    $masterCompanyId = CompanyHierarchy::where('company_id', $clientCompanyId)->value('parent_company_id');
+                    $masterCompany = Company::find($masterCompanyId);
+                    break;
+            }
+
+            return [
+                'id' => $employee->id,
+                'master_company' => $companyType === 2 ? $employee->company->company_name : ($masterCompany->company_name ?? '-'),
+                'client_company' => $companyType === 3 ? $employee->company->company_name : ($clientCompany->company_name ?? '-'),
+                'sub_client_company' => $companyType === 4 ? $employee->company->company_name : '-',
+                'employee_code' => $employee->employee_code,
+                'employee_name' => $employee->employee_name,
+                'company_name' => $employee->company->company_name,
+                'company_type_name' => $employee->company->companyType->id,
+                'faorhus_name' => $employee->faorhus_name,
+                'resigning_date' => $employee->resigning_date,
+                'joining_date' => $employee->joining_date,
+                'mobile' => $employee->mobile,
+                'dob' => $employee->dob,
+                'faorhus_name' => $employee->faorhus_name,
+                'pf_no' => optional($employee->pfInfo)->pf_no ?? '-',
+                'esi_no' => optional($employee->esiInfo)->pf_no ?? '-',
+                'village' => optional($employee->addresses)->village_area ?? '-',
+                'parent_company_id' => optional($employee->company->companyHierarchy)->parent_company_id,
+                'status' => $employee->status,
+            ];
+        });
+
+        return DataTables::of($data)->make(true);
+
 }
 
  public function export(Request $request)

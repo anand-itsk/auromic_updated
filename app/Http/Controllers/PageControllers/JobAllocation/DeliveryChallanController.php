@@ -5,6 +5,7 @@ namespace App\Http\Controllers\PageControllers\JobAllocation;
 use App\Http\Controllers\Controller;
 use App\Models\AuthorisedPerson;
 use App\Exports\DeliveryChallanExport;
+use App\Imports\DeliveryChallanImport;
 use App\Models\Company;
 use App\Models\Customer;
 use App\Models\CompanyType;
@@ -30,7 +31,8 @@ class DeliveryChallanController extends Controller
     // Index DataTable
     public function indexData()
     {
-        $delivery_challans = DeliveryChallan::with('company','subCompany', 'order_details', 'productSize', 'productColor')->get();
+        $delivery_challans = DeliveryChallan::with('company','subCompany', 'order_details', 'productSize', 'productColor', 'orderDetails.productModel')->get();
+        dd($delivery_challans);
         return DataTables::of($delivery_challans)->make(true);
     }
     // Create Page
@@ -144,14 +146,20 @@ class DeliveryChallanController extends Controller
             'dc_number' => 'required',
             'dc_date' => 'required',
             'order_id' => 'required',
-            'quantity' => 'required', // Ensure quantity is present in the request
+            'quantity' => 'required',
             'weight' => 'required',
         ]);
 
         $input = $request->all();
 
-        // Retrieve the order detail
-        $orderDetail = OrderDetail::findOrFail($input['order_id']);
+        // Retrieve the order detail (change get() to first())
+        $orderDetail = OrderDetail::where('order_no_id', $input['order_id'])->first();
+
+        // Check if the order detail exists
+        if (!$orderDetail) {
+            return redirect()->route('job_allocation.delivery_challan.index')
+            ->with('error', 'Order detail not found for this order ID');
+        }
 
         // Calculate total delivered quantity for the order
         $totalDeliveredQuantity = DeliveryChallan::where('order_id', $input['order_id'])->sum('quantity');
@@ -163,7 +171,7 @@ class DeliveryChallanController extends Controller
         if ($input['quantity'] > $availableQuantity) {
             // If the input quantity is greater than the available quantity, show an error message
             return redirect()->route('job_allocation.delivery_challan.index')
-                ->with('error', 'No available quantity for this order');
+            ->with('error', 'No available quantity for this order');
         }
 
         // Create and save the delivery challan
@@ -174,11 +182,11 @@ class DeliveryChallanController extends Controller
         $delivery_challan->order_id = $input['order_id'];
         $delivery_challan->dc_date = $input['dc_date'];
         $delivery_challan->quantity = $input['quantity'];
-        $delivery_challan->available_quantity = $input['quantity'];
+        $delivery_challan->available_quantity = $input['quantity']; // This may need to be adjusted based on your business logic
         $delivery_challan->weight = $input['weight'];
-        $delivery_challan->excess = $input['excess_weight'];
-        $delivery_challan->shortage = $input['shortage_weight'];
-        
+        $delivery_challan->excess = isset($input['excess_weight']) ? $input['excess_weight'] : 0;
+        $delivery_challan->shortage = isset($input['shortage_weight']) ? $input['shortage_weight'] : 0;
+
         $delivery_challan->save();
 
         // Update available quantity in order details
@@ -187,8 +195,9 @@ class DeliveryChallanController extends Controller
 
         // Set success message for display
         return redirect()->route('job_allocation.delivery_challan.index')
-            ->with('success', 'Order Allocation created successfully');
+        ->with('success', 'Order Allocation created successfully');
     }
+
 
 
 
@@ -247,6 +256,10 @@ $subCompanyName = $companyHierarchy ? $companyHierarchy->company->company_name :
         $delivery_challan->dc_no = $input['dc_number'];
         $delivery_challan->dc_date = $input['dc_date'];
         $delivery_challan->quantity = $input['quantity'];
+        $delivery_challan->weight = $input['weight'];
+        $delivery_challan->excess = isset($input['excess_weight']) ? $input['excess_weight'] : 0;
+        $delivery_challan->shortage = isset($input['shortage_weight']) ? $input['shortage_weight'] : 0;
+
         $delivery_challan->save();
 
         // Update available quantity in order details

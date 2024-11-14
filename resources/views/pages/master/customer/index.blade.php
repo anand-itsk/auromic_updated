@@ -117,6 +117,8 @@
                                                 <th>ID</th>
                                                 <th>Customer Code</th>
                                                 <th>Customer Name</th>
+                                                <th>Email</th>
+                                                <th>Mobile</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -197,7 +199,10 @@
                 ajax: '{{ route('master.customers.data') }}',
                 columns: [{
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        render: function(data, type, row, meta) {
+            return meta.row + 1;
+        }
                     },
                     {
                         data: 'customer_code',
@@ -209,6 +214,20 @@
                     {
                         data: 'customer_name',
                         name: 'customer_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                    },
+                    {
+                        data: 'eamil',
+                        name: 'email',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                    },
+                    {
+                        data: 'mobile',
+                        name: 'mobile',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }

@@ -5,6 +5,8 @@
 @section('content')
     @include('links.css.datatable.datatable-css')
     @include('links.css.table.custom-css')
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <div class="wrapper">
         <div class="container-fluid">
             @if (session('success'))
@@ -46,7 +48,7 @@
                             Company Type
                            </label>
                            <div class="col-sm-2 mb-2">
-                              <select class="form-control select2" name="company_type" id="company_type">
+                              <select class="form-control 3" name="company_type" id="company_type">
                                  <option value="">Select Type</option>
                                   @foreach($companyType as $type)
             <option value="{{ $type->id }}">{{ $type->name }}</option>
@@ -88,7 +90,7 @@
                               @enderror
                            </div>
                            
-                <!-- <label for="customer_code" class="col-sm-2 col-form-label ">
+                <label for="customer_code" class="col-sm-2 col-form-label ">
                             Order No
                            </label>
                            <div class="col-sm-2 mb-2">
@@ -102,7 +104,22 @@
                               @error('order_id')
                               <span class="error" style="color: red;">{{ $message }}</span>
                               @enderror
-                           </div> -->
+                           </div> 
+                           <label for="customer_code" class="col-sm-2 col-form-label ">
+                            Product 
+                           </label>
+                           <div class="col-sm-2 mb-2">
+                              <select class="form-control select2" name="product" id="product">
+                                 <option value="">Select Type</option>
+                                  @foreach($product as $type)
+                   <option value="{{ $type->id }}">{{ $type->name }}</option>
+                         @endforeach
+                                 
+                              </select>
+                              @error('order_id')
+                              <span class="error" style="color: red;">{{ $message }}</span>
+                              @enderror
+                           </div> 
                           <label for="customer_code" class="col-sm-2 col-form-label ">
                            From Date
                            </label>
@@ -290,6 +307,8 @@ $(document).ready(function() {
                  d.from_date = $('#from_date').val();
                  d.last_date = $('#last_date').val();
                  d.orderNoId = $('#order_id').val();
+                    d.product = $('#product').val();  // New filter
+      
             }
             
         },
@@ -324,11 +343,7 @@ $(document).ready(function() {
 
     var title = "";
 
-    // Check if Company Type is selected and append to the title
-    // var companyType = $('#company_type').val();
-    // if (companyType) {
-    //     title += " Company Type: " + $('#company_type option:selected').text();
-    // }
+ 
 
     // Check if Company is selected and append to the title
     var company = $('#companies').val();
@@ -336,17 +351,7 @@ $(document).ready(function() {
         title +=  $('#companies option:selected').text();
     }
 
-    // Check if From Date is selected and append to the title
-    // var fromDate = $('#from_date').val();
-    // if (fromDate) {
-    //     title += " From Date: " + fromDate;
-    // }
-
-    // Check if Last Date is selected and append to the title
-    // var lastDate = $('#last_date').val();
-    // if (lastDate) {
-    //     title += "Last Date: " + lastDate;
-    // }
+  
 
     // Set the constructed title to the <h1> element in the print view
    var h1Element = $(win.document.body).find('h1');
@@ -433,6 +438,13 @@ $(win.document.body).find('table.dataTable').css('border-collapse', 'collapse');
         table.ajax.reload();
     });
 
+    $('#product').on('change', function() {
+    table.ajax.reload();
+});
+
+
+
+
    
 });
 
@@ -444,6 +456,8 @@ function updateSelectedFilters() {
   var customer = $('#customer option:selected').text();
   var fromDate = $('#from_date').val();
   var lastDate = $('#last_date').val();
+  var product = $('#product option:selected').text();  // New filter
+var orderNoId = $('#order_id option:selected').text(); 
   
   // Construct the string with selected filter values
   selectedFilters += 'Company Type: ' + companyType + ', ';
@@ -451,6 +465,9 @@ function updateSelectedFilters() {
   selectedFilters += 'Customer: ' + customer + ', ';
   selectedFilters += 'From Date: ' + fromDate + ', ';
   selectedFilters += 'Last Date: ' + lastDate;
+   selectedFilters += 'Product: ' + product + ', '; // New filter
+selectedFilters += 'Order No: ' + orderNoId;  // New filter
+
   
   // Update the HTML content with selected filter values
   $('#selectedFilters').text(selectedFilters);
@@ -519,30 +536,52 @@ function updateSelectedFilters() {
             return `${day}-${month}-${year} ${strTime}`;
         }
     </script>
-        <script>
-        
-    document.addEventListener("DOMContentLoaded", function () {
-        var companyTypeSelect = document.getElementById('company_type');
-        var companiesSelect = document.getElementById('companies');
+    <script>
+    $(document).ready(function() {
+        // Initialize Select2 on both dropdowns
+        $('#company_type, #companies').select2({
+            placeholder: "Select an option",
+            allowClear: true
+        });
 
-        companyTypeSelect.addEventListener('change', function () {
-            var selectedTypeId = this.value;
+        // Company Type select change event
+        $('#company_type').on('change', function() {
+            var selectedTypeId = $(this).val(); // Get the selected company type
 
-            // Reset options
-            companiesSelect.innerHTML = '<option value="">Select Company</option>';
+            // Reset the companies dropdown
+            var $companiesSelect = $('#companies');
+            $companiesSelect.empty().append('<option value="">Select Company</option>'); // Reset options
 
-            // Filter and populate options based on selected type
-            var companies = @json($company);
-            companies.forEach(function (company) {
+            // Filter and append companies based on selected company type
+            var companies = @json($company); // Get all companies
+            companies.forEach(function(company) {
                 if (company.company_type_id == selectedTypeId) {
-                    var option = document.createElement('option');
-                    option.value = company.id;
-                    option.textContent = company.company_name;
-                    companiesSelect.appendChild(option);
+                    var option = new Option(company.company_name, company.id);
+                    $companiesSelect.append(option);
                 }
             });
+
+            // Re-initialize Select2 after appending new options
+            $companiesSelect.trigger('change');
         });
     });
+</script>
+<script>
+    $(document).ready(function() {
+        // Initialize Select2 on the customer dropdown
+        $('#customer').select2({
+            placeholder: "Select Customer",
+            allowClear: true
+        });
+         $('#order_id').select2({
+            placeholder: "Select Order",
+            allowClear: true
+        });
+         $('#product').select2({
+            placeholder: "Select Product",
+            allowClear: true
+        });
+    });
+</script>
 
-    </script>
 @endsection

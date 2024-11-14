@@ -2,14 +2,22 @@
 
 namespace App\Http\Controllers\PageControllers;
 
+use App\Exports\CompanyExport;
 use App\Http\Controllers\Controller;
+use App\Imports\CompanyDataImport;
+use App\Models\Address;
+use App\Models\AuthorisedPerson;
 use App\Models\BankDetail;
 use App\Models\Company;
 use App\Models\CompanyBankDetail;
 use App\Models\CompanyBankDetails;
+use App\Models\CompanyRegistrationDetails;
+use App\Models\Country;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Services\RazorpayIFSCService;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CompanyBankDetailController extends Controller
 {
@@ -38,27 +46,49 @@ class CompanyBankDetailController extends Controller
         // dd($companies);
         return view('pages.profile.company_bank.create', ['companies' => $companies]);
     }
+    public function checkBankAccount(Request $request)
+    {
+        $accountNumber = $request->query('account_number');
+
+        $exists = BankDetail::where('account_number', $accountNumber)->exists();
+
+        return response()->json(['exists' => $exists]);
+    }
+
     // Store Date
     public function store(Request $request)
     {
         $auth_id = auth()->id();
+
+        // Validate request data
         $validatedData = $request->validate([
             'company_id' => 'required|string|max:255',
             'bank_name' => 'required|string|max:255',
             'account_number' => 'required|string|max:255',
         ]);
+
+        // Check if the bank account number already exists
+        $existingBankAccount = BankDetail::where('account_number', $request->account_number)->first();
+
+        if ($existingBankAccount) {
+            return redirect()->back()
+            ->withErrors(['account_number' => 'The bank account number already exists.'])
+            ->withInput();
+        }
+
+        // Store new bank detail
         $input = $request->all();
-        $bank_detail = new BankDetail();
+        $bank_detail = BankDetail::create($input);
 
-        $bank_detail = $bank_detail->create($input);
-
+        // Attach the bank detail to the company
         $company = Company::find($input['company_id']);
         $company->bankDetail()->attach($bank_detail->id);
 
-
+        // Redirect with success message
         return redirect()->route('profile.bank_details.index')
-            ->with('success', 'Bank Details created successfully');
+        ->with('success', 'Bank Details created successfully');
     }
+
     // Edit
     public function edit(Address $address, $id)
     {
@@ -155,15 +185,7 @@ class CompanyBankDetailController extends Controller
     // Show
     public function showDetails($id)
     {
-//        $company_bank_details = CompanyBankDetail::get();
-//        return $company_bank_details;
-
-//        if($company_bank_details->company_id === $id)
-
-// {
-    
-
-// }       
+      
 $company = Company::with('addresses', 'companyRegistrationDetail', 'authorisedPerson')->findOrFail($id);
          $bank_details = CompanyBankDetail::where('company_id', $id)->with('bankDetail')->get();
         $html = view('pages.profile.company_bank.show', compact('company','bank_details'))->render();
@@ -179,6 +201,29 @@ $company = Company::with('addresses', 'companyRegistrationDetail', 'authorisedPe
             ]
         ]);
     }
+
+    public function deleteBankDetail($id)
+    {
+        try {
+            // Find the CompanyBankDetail record
+            $companyBankDetail = CompanyBankDetail::findOrFail($id);
+
+            // Find the associated BankDetail record
+            $bankDetail = BankDetail::findOrFail($companyBankDetail->bank_detail_id);
+
+            // Delete the CompanyBankDetail record
+            $companyBankDetail->delete();
+
+            // Delete the associated BankDetail record
+            $bankDetail->delete();
+
+            return response()->json(['success' => 'Bank detail and associated data deleted successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to delete bank detail']);
+        }
+    }
+
+
 
   
     // Delete
@@ -234,4 +279,43 @@ $company = Company::with('addresses', 'companyRegistrationDetail', 'authorisedPe
 
         return response()->json($ifscData);
     }
+
+
+
+    public function editBank($id)
+    {
+        $companyBankDetail = CompanyBankDetail::with('bankDetail')->findOrFail($id);
+        $companies = Company::all(); // Fetching all companies
+        return view('pages.profile.company_bank.bank_edit', compact('companyBankDetail', 'companies'));
+    }
+
+    public function updateBank(Request $request, $id)
+    {
+        $request->validate([
+            'company_id' => 'required',
+            'bank_name' => 'required',
+            'account_number' => 'required',
+            'branch_code' => 'nullable',
+            'branch_name' => 'nullable',
+            'ifsc_code' => 'nullable',
+        ]);
+
+        $companyBankDetail = CompanyBankDetail::findOrFail($id);
+        $bankDetail = $companyBankDetail->bankDetail;
+
+        $companyBankDetail->company_id = $request->company_id;
+        $companyBankDetail->save();
+
+        // Update bank detail information
+        $bankDetail->bank_name = $request->bank_name;
+        $bankDetail->account_number = $request->account_number;
+        $bankDetail->branch_code = $request->branch_code;
+        $bankDetail->branch_name = $request->branch_name;
+        $bankDetail->ifsc_code = $request->ifsc_code;
+        $bankDetail->address = $request->address;
+        $bankDetail->save();
+
+        return redirect()->route('profile.bank_details.index')->with('success', 'Bank details updated successfully');
+    }
+
 }

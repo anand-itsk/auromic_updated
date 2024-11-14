@@ -115,6 +115,7 @@
                                                 <th>Model Name</th>
                                                 <th>Meter One Prodcut</th>
                                                 <th>Cutting Charge</th>
+                                                <th>Wages of product</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -236,6 +237,14 @@
                     {
                         data: 'cutting_charge',
                         name: 'cutting_charge',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                    },
+
+                     {
+                        data: 'wages_one_product',
+                        name: 'wages_one_product',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }

@@ -47,9 +47,15 @@ use App\Http\Controllers\PageControllers\JobAllocation\DeliveryChallanController
 use App\Http\Controllers\PageControllers\JobAllocation\JobGivingController;
 use App\Http\Controllers\PageControllers\JobAllocation\JobReallocationController;
 use App\Http\Controllers\PageControllers\JobAllocation\JobReceivedController;
+use App\Http\Controllers\PageControllers\Report\JobReallocationController as ReportJobReallocationController;
+use App\Http\Controllers\PageControllers\Report\JobReallocationReportController;
+use App\Http\Controllers\PageControllers\Report\OutStandingReport;
+use App\Http\Controllers\PageControllers\Report\TotalWagesReport;
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -370,6 +376,11 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/import', [CompanyBankDetailController::class, 'import'])->name('import');
             Route::get('/export', [CompanyBankDetailController::class, 'export']);
             Route::post('/get-ifsc-code', [CompanyBankDetailController::class, 'getIFSC'])->name('get-ifsc-code');
+            Route::delete('/company-bank-detail/{id}', [CompanyBankDetailController::class, 'deleteBankDetail'])->name('company.bank.delete');
+            Route::get('/check-bank-account', [CompanyBankDetailController::class, 'checkBankAccount'])->name('check.bank.account');
+            Route::get('/bank_details/{id}/edit', [CompanyBankDetailController::class, 'editBank'])->name('bank.edit');
+            Route::post('/bank_details/{id}/update', [CompanyBankDetailController::class, 'updateBank'])->name('bank.update');
+
         });
     });
 
@@ -407,6 +418,10 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/import', [ProductModelController::class, 'import'])->name('import');
             Route::get('/export', [ProductModelController::class, 'export']);
             Route::post('/check-name', [ProductModelController::class, 'checkName'])->name('checkName');
+            Route::get('/product-model/{id}', [ProductModelController::class, 'getProductModel']);
+            Route::post('/product-model/update', [ProductModelController::class, 'priceUpdate'])->name('product-model.update');
+            Route::get('/product-model-history/{id}', [ProductModelController::class, 'getProductModelHistory']);
+
         });
 
         Route::prefix('/incentives')->name('incentives.')->group(function () {
@@ -472,6 +487,8 @@ Route::middleware(['auth'])->group(function () {
 
             Route::get('/', [EmployeeController::class, 'index'])->name('index');
             Route::get('/data', [EmployeeController::class, 'indexData'])->name('data');
+    
+            Route::post('/check-employee-code', [EmployeeController::class, 'checkEmployeeCode'])->name('check.employee.code');
 
             Route::get('/create', [EmployeeController::class, 'create'])->name('create');
             Route::post('/store', [EmployeeController::class, 'store'])->name('store');
@@ -513,6 +530,11 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/printview/{id}', [EmployeeController::class, 'printView'])->name('printview');
             // routes/web.php
 Route::get('/employee/{id}/family-members', [EmployeeController::class,'getFamilyMember'])->name('employee.family.members');
+
+            Route::get('/get-client-companies', [EmployeeController::class, 'getClientCompanies'])->name('getClientCompanies');
+            Route::get('/get-sub-client-companies', [EmployeeController::class, 'getSubClientCompanies'])->name('getSubClientCompanies');
+            
+
 
 
 
@@ -635,6 +657,25 @@ Route::get('/getSubCompanies/{companyId}', [DeliveryChallanController::class, 'g
             Route::get('/export', [JobReceivedReportController::class, 'export']);
         });
 
+        Route::prefix('/job_allocation_report')->name('job_allocation_report.')->group(function () {
+            Route::get('/', [JobReallocationReportController::class, 'index'])->name('index');
+            Route::get('/data', [JobReallocationReportController::class, 'indexData'])->name('data');
+            Route::get('/export', [JobReallocationReportController::class, 'export']);
+        });
+
+        Route::prefix('/outstanding_report')->name('outstanding_report.')->group(function () {
+            Route::get('/', [OutStandingReport::class, 'index'])->name('index');
+            Route::get('/data', [OutStandingReport::class, 'indexData'])->name('data');
+            Route::get('/export', [OutStandingReport::class, 'export']);
+        });
+
+        Route::prefix('/total_wages')->name('total_wages.')->group(function () {
+            Route::get('/', [TotalWagesReport::class, 'index'])->name('index');
+            Route::get('/data', [TotalWagesReport::class, 'indexData'])->name('data');
+            Route::get('/export', [TotalWagesReport::class, 'export']);
+        });
+
+
         Route::prefix('/order_report')->name('order_report.')->group(function () {
             Route::get('/', [OrderReportController::class, 'index'])->name('index');
             Route::get('/data', [OrderReportController::class, 'indexData'])->name('data');
@@ -660,6 +701,12 @@ Route::get('/getSubCompanies/{companyId}', [DeliveryChallanController::class, 'g
     Route::get('/get-states/{countryId}', [AddressController::class, 'getStates'])->name('get-states');
     Route::get('/get-districts/{stateId}', [AddressController::class, 'getDistricts'])->name('get-districts');
     Route::get('/get-companies/{companyTypeId}', [EmployeeController::class, 'getCompanies'])->name('get-companies');
+    Route::get('/get-sub-clients', [EmployeeController::class, 'getSubClients'])->name('get.sub.clients');
+    Route::get('/get-authorised-person/{company}', [EmployeeController::class, 'getAuthorisedPerson']);
+
+
+    
+
 });
 
 //Reoptimized class loader:

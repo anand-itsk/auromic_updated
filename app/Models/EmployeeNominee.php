@@ -25,4 +25,9 @@ class EmployeeNominee extends Model
     {
         return $this->belongsTo(EmployeeFamilyMemberDetail::class, 'family_member_id');
     }
+
+    public function religion()
+    {
+        return $this->belongsTo(Religion::class, 'religion_id');
+    }
 }

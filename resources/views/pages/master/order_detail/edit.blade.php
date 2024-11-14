@@ -89,6 +89,7 @@
                                                         data-raw-material-id="{{ $productModel->raw_material_id }}"
                                                         data-raw-material-type="{{ $productModel->rawMaterial->rawMaterialType->name ?? '' }}"
                                                         data-raw-material-name="{{ $productModel->rawMaterial->name }}"
+                                                        data-stock="{{ $productModel->rawMaterial->stock ?? '' }}"
                                                         @if ($order_details->product_model_id == $productModel->id) selected @endif>
                                                         {{ $productModel->model_name }}-{{ $productModel->model_code }}
                                                     </option>
@@ -118,17 +119,23 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="raw_material_weight_item" class="col-sm-2 col-form-label">R.M
-                                            Weight/Item</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="raw_material_weight_item"
-                                                id="raw_material_weight_item"
-                                                value="{{ $order_details->productModel->raw_material_weight_item ??''}}"
-                                                readonly>
-                                            @error('raw_material_weight_item')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+
+                                         <label for="raw_material_name" class="col-sm-2 col-form-label ">Stock</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="stock" id="stock" readonly>
+    @error('stock')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
+                                        <label for="raw_material_weight_item" class="col-sm-2 col-form-label">R.M Weight/Item</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="raw_material_weight_item"
+           id="raw_material_weight_item"
+           value="{{ $order_details->productModel->raw_material_weight_item ?? '' }}" readonly>
+    @error('raw_material_weight_item')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
                                         <label for="wages_employee" class="col-sm-2 col-form-label">Wages of
                                             Employee</label>
                                         <div class="col-sm-4 mb-4">
@@ -150,14 +157,15 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="wages_employee" class="col-sm-2 col-form-label ">Quantity</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="quantity"
-                                                id="quantity"value="{{ $order_details->quantity }}">
-                                            @error('wages_employee')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                        <label for="quantity" class="col-sm-2 col-form-label">Quantity</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="quantity"
+           id="quantity" value="{{ $order_details->quantity }}">
+            <span id="quantity-error" style="color: red; display:none;">Quantity cannot exceed stock!</span>
+    @error('quantity')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
                                         <label class="col-sm-2 col-form-label">Delivery Date</label>
                                         <div class="col-sm-4 mb-4">
                                             <input type="date" class="form-control" name="delivery_date"
@@ -211,14 +219,14 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="customer_code" class="col-sm-2 col-form-label ">Total R.M Weight</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="total_raw_material"
-                                                id="model_code" value="{{ $order_details->total_raw_material }}">
-                                            @error('total_raw_material')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                        <label for="customer_code" class="col-sm-2 col-form-label">Total R.M Weight</label>
+<div class="col-sm-4 mb-4">
+    <input class="form-control" type="text" name="total_raw_material"
+           id="total_raw_material" value="{{ $order_details->total_raw_material }}" disabled>
+    @error('total_raw_material')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
                                         <div class="form-group">
                                             <div class="d-flex justify-content-evenly">
                                                 <button type="submit" class="btn btn-primary waves-effect waves-light">
@@ -255,27 +263,69 @@
         });
     </script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const productModelSelect = document.getElementById('product_model');
-            const rawMaterialWeightItemInput = document.getElementById('raw_material_weight_item');
-            const wagesEmployeeInput = document.getElementById('wages_employee');
-            const rawMaterialTypeInput = document.getElementById('raw_material_type');
-            const rawMaterialNameInput = document.getElementById('raw_material_name');
+       document.addEventListener("DOMContentLoaded", function() {
+    const productModelSelect = document.getElementById('product_model');
+    const rawMaterialWeightItemInput = document.getElementById('raw_material_weight_item');
+    const wagesEmployeeInput = document.getElementById('wages_employee');
+    const rawMaterialTypeInput = document.getElementById('raw_material_type');
+    const rawMaterialNameInput = document.getElementById('raw_material_name');
+    const stockInput = document.getElementById('stock');
+    const quantityInput = document.getElementById('quantity');
+    const quantityError = document.getElementById('quantity-error');
 
+    // Function to check quantity against stock
+    function checkQuantity() {
+        const quantity = parseFloat(quantityInput.value) || 0;
+        const stock = parseFloat(stockInput.value) || 0;
 
-            productModelSelect.addEventListener('change', function() {
-                const selectedOption = productModelSelect.options[productModelSelect.selectedIndex];
-                const rawMaterialWeight = selectedOption.dataset.weight;
-                const wagesEmployee = selectedOption.dataset.wage;
-                const rawMaterialType = selectedOption.dataset.rawMaterialType;
-                const rawMaterialName = selectedOption.dataset.rawMaterialName;
+        if (quantity > stock) {
+            quantityError.style.display = 'inline'; // Show error message
+        } else {
+            quantityError.style.display = 'none'; // Hide error message
+        }
+    }
 
-                rawMaterialWeightItemInput.value = rawMaterialWeight;
-                wagesEmployeeInput.value = wagesEmployee;
-                rawMaterialTypeInput.value = rawMaterialType;
-                rawMaterialNameInput.value = rawMaterialName;
-            });
-        });
+    // Trigger change event to populate fields on page load
+    if (productModelSelect.value) {
+        const selectedOption = productModelSelect.options[productModelSelect.selectedIndex];
+        const rawMaterialWeight = selectedOption.dataset.weight;
+        const wagesEmployee = selectedOption.dataset.wage;
+        const rawMaterialType = selectedOption.dataset.rawMaterialType;
+        const rawMaterialName = selectedOption.dataset.rawMaterialName;
+        const stock = selectedOption.dataset.stock;
+
+        rawMaterialWeightItemInput.value = rawMaterialWeight;
+        wagesEmployeeInput.value = wagesEmployee;
+        rawMaterialTypeInput.value = rawMaterialType;
+        rawMaterialNameInput.value = rawMaterialName;
+        stockInput.value = stock;
+
+        // Validate quantity on page load
+        checkQuantity();
+    }
+
+    productModelSelect.addEventListener('change', function() {
+        const selectedOption = productModelSelect.options[productModelSelect.selectedIndex];
+        const rawMaterialWeight = selectedOption.dataset.weight;
+        const wagesEmployee = selectedOption.dataset.wage;
+        const rawMaterialType = selectedOption.dataset.rawMaterialType;
+        const rawMaterialName = selectedOption.dataset.rawMaterialName;
+        const stock = selectedOption.dataset.stock;
+
+        rawMaterialWeightItemInput.value = rawMaterialWeight;
+        wagesEmployeeInput.value = wagesEmployee;
+        rawMaterialTypeInput.value = rawMaterialType;
+        rawMaterialNameInput.value = rawMaterialName;
+        stockInput.value = stock;
+
+        // Validate quantity after model selection
+        checkQuantity();
+    });
+
+    // Add input event listener to the quantity input
+    quantityInput.addEventListener('input', checkQuantity);
+});
+
     </script>
     <script>
         $(document).ready(function() {
@@ -319,6 +369,16 @@
             });
         });
     </script>
+
+<script>
+    document.getElementById('quantity').addEventListener('input', function () {
+        var quantity = parseFloat(this.value) || 0;
+        var rawMaterialWeightPerItem = parseFloat(document.getElementById('raw_material_weight_item').value) || 0;
+        var totalRawMaterialWeight = (quantity * rawMaterialWeightPerItem).toFixed(2);
+        document.getElementById('total_raw_material').value = totalRawMaterialWeight;
+    });
+</script>
+
 
     
     @include('links.js.select2.select2')

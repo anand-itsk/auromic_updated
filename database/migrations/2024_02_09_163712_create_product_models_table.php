@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('raw_material_id')->nullable();
             $table->unsignedBigInteger('product_id');
+            $table->date('date');
             $table->unsignedBigInteger('product_size_id')->nullable();
             $table->string('model_code')->unique();
             $table->string('model_name');

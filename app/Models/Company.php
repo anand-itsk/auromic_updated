@@ -19,6 +19,7 @@ class Company extends Model
         'business_nature',
         'company_email',
         'website',
+        'commission_percentage',
         'status',
         'created_by',
         'updated_by',
@@ -75,5 +76,16 @@ class Company extends Model
 {
     return $this->hasMany(CompanyBankDetail::class, 'company_id');
 }
+
+    public function hierarchy()
+    {
+        return $this->hasOne(CompanyHierarchy::class, 'company_id');
+    }
+
+
+    public function parentCompany()
+    {
+        return $this->companyHierarchy()->with('parentCompany');
+    }
    
 }

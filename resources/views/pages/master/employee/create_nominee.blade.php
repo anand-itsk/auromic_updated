@@ -44,7 +44,7 @@
                                         @csrf
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Select Family Member</label>
+                                            <label class="col-sm-2 col-form-label mandatory">Select Family Member</label>
                                             <div class="col-sm-4 mb-4">
                                                <select class="form-control select2" name="family_member_id" id="family_member_id">
         <option value="">Select</option>
@@ -341,5 +341,40 @@ $(document).ready(function() {
         });
     });
 });
+</script>
+
+<script>
+    document.querySelector('.next-step4').addEventListener('click', function(e) {
+    let valid = true;
+
+    // Family member validation
+    const familyMemberSelect = document.getElementById('family_member_id');
+    const familyMemberError = document.querySelector('#family_member_id + .error');
+    
+    if (familyMemberSelect.value === '') {
+        valid = false;
+        if (!familyMemberError) {
+            // Create and display an error message if not already present
+            const errorMessage = document.createElement('span');
+            errorMessage.className = 'error';
+            errorMessage.style.color = 'red';
+            errorMessage.textContent = 'Family member selection is required';
+            familyMemberSelect.parentElement.appendChild(errorMessage);
+        }
+    } else {
+        // Remove any previous error message if the selection is valid
+        if (familyMemberError) {
+            familyMemberError.textContent = '';
+        }
+    }
+
+    if (!valid) {
+        e.preventDefault(); // Prevent further action if validation fails
+    } else {
+        alert('Form is valid. Proceeding...');
+        // Optionally, you can proceed with form submission or further AJAX handling
+    }
+});
+
 </script>
 </div>

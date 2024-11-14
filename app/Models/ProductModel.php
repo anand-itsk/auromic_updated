@@ -17,6 +17,7 @@ class ProductModel extends Model
          'model_name ',
          'raw_material_weight_item ',
          'wages_product ',
+        'date'
     ];
 
     public function rawMaterial()

@@ -11,8 +11,9 @@ class DeliveryChallan extends Model
     protected $fillable = [
         'company_id',
          'sub_company_id',
-        'dc_id',
+        'dc_no',
         'order_id',
+        'dc_date',
         'quantity',
         'weight',
         'available_quantity',
@@ -46,4 +47,7 @@ class DeliveryChallan extends Model
     {
         return $this->belongsTo(CompanyHierarchy::class, 'sub_company_id', 'company_id');
     }
+
+
+    
 }

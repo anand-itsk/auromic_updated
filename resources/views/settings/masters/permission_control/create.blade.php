@@ -37,7 +37,7 @@
                                                 <div class="col-md-12">
                                                         <div class="mb-3">
                                                             <label for="name" class="form-label mandatory">Premission Group</label>
-                                                           <select class="form-control" name="permission_group_id">
+                                                           <select class="form-control select2" name="permission_group_id">
                                                     <option value="">Select</option>
                                                     @foreach ($permission_group as $item)
                                                     <option value="{{ $item->id }}">{{ $item->name }}</option>

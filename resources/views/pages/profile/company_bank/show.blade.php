@@ -10,6 +10,7 @@
             <th>Branch Code</th>
             <th>Branch Name</th>
             <th>IFSC Code</th>
+            <th>Action</th>
         </tr>
         </thead>
        <tbody>
@@ -30,7 +31,15 @@
                 <td>{{ $bank_detail->bankDetail->branch_code }}</td>
                 <td>{{ $bank_detail->bankDetail->branch_name }}</td>
                 <td>{{ $bank_detail->bankDetail->ifsc_code }}</td>
-                <!-- <td>{{ $bank_detail->bankDetail->created_at}}</td> -->
+              
+                <td>
+                     <button class="icon-button" onclick="window.location.href='{{ route('profile.bank_details.bank.edit', $bank_detail->id) }}'">
+    <i class="fa fa-edit"></i>
+</button>
+
+
+                    <button class="icon-button delete-bank" data-id="{{ $bank_detail->id }}"><i class="fa fa-trash"></i></button>
+</td>
             </tr>
         @endforeach
     @endif
@@ -45,5 +54,33 @@
 
     
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+    $(document).on('click', '.delete-bank', function() {
+        var bankId = $(this).data('id');
+        var token = $('meta[name="csrf-token"]').attr('content'); // Assuming you have CSRF token in meta tag
+
+        if (confirm('Are you sure you want to delete this bank detail?')) {
+            $.ajax({
+                url: '/profile/bank_details/company-bank-detail/' + bankId,
+                type: 'DELETE',
+                data: {
+                    "_token": token,
+                },
+                success: function(response) {
+                    if (response.success) {
+                        alert(response.success);
+                        location.reload(); // Refresh the page or remove the row dynamically
+                    } else {
+                        alert(response.error);
+                    }
+                }
+            });
+        }
+    });
+</script>
+
 
 

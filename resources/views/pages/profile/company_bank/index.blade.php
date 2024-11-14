@@ -176,7 +176,10 @@
                 ajax: '{{ route('profile.bank_details.data') }}',
                 columns: [{
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                         render: function(data, type, row, meta) {
+            return meta.row + 1;
+        }
                     },
 
                     {
@@ -297,6 +300,10 @@
 
                     console.log(formattedCreatedAt);
                     $('#detailsModal').modal('show');
+                     $('#detailsModal').on('hidden.bs.modal', function () {
+        sessionStorage.setItem('modalShown', 'true');
+        location.reload();
+    });
                 }
             });
         }

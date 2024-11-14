@@ -17,6 +17,15 @@ class CompanyBankDetail extends Model
     {
         return $this->belongsTo(BankDetail::class, 'bank_detail_id', 'id');
     }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($companyBankDetail) {
+            // Delete the associated BankDetail
+            $companyBankDetail->bankDetail->delete();
+        });
+    }
 
 
 }

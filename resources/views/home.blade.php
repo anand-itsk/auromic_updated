@@ -23,6 +23,7 @@
 
                     <div class="row">
                         <div class="col-lg-3 mt-2">
+                            <a href="{{route('master.order_detail.index')}}">
                             <div class="card">
                                 <div class="card-body d-flex justify-content-between align-items-center">
                                     <div>
@@ -34,22 +35,28 @@
                                     </div>
                                 </div>
                             </div>
+                            </a>
                         </div>
                         <div class="col-lg-3 mt-2">
+                            <a  href="{{route('profile.masters.index')}}">
                             <div class="card">
                                 <div class="card-body d-flex justify-content-between align-items-center">
+                                    
                                     <div>
                                         <h4 class="fs-19 mt-0">Master Company</h4>
                                         <h4 class="cost-text m-0">{{ $master_company_count }}</h4>
 
                                     </div>
+                                   
                                     <div class="card-rigth-icon  card-box2-pink">
                                         <i class="dripicons-briefcase"></i>
                                     </div>
                                 </div>
                             </div>
+                        </a>
                         </div>
                         <div class="col-lg-3 mt-2">
+                            <a href="{{route('profile.clients.index')}}">
                             <div class="card">
                                 <div class="card-body d-flex justify-content-between align-items-center">
                                     <div>
@@ -61,8 +68,10 @@
                                     </div>
                                 </div>
                             </div>
+                            </a>
                         </div>
                         <div class="col-lg-3 mt-2">
+                            <a href="{{route('profile.sub_clients.index')}}">
                             <div class="card">
                                 <div class="card-body d-flex justify-content-between align-items-center">
                                     <div>
@@ -74,6 +83,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </a>
                         </div>
                     </div>
                 </div>

@@ -33,6 +33,7 @@ class Employee extends Model
         'confirm_date',
         'resigning_date',
         'resigning_reason_id',
+        'own_company'
     ];
 
     public function company()
@@ -48,6 +49,11 @@ class Employee extends Model
 {
     return $this->hasOne(Address::class)->where('address_type_id', 4);
 }
+    public function villageAddressTypeThree()
+    {
+        return $this->hasOne(Address::class)->where('address_type_id', 3);
+    }
+
 
     public function identityProof()
     {
@@ -86,7 +92,7 @@ class Employee extends Model
 
     public function religion()
     {
-        return $this->belongsTo(Religion::class);
+        return $this->belongsTo(Religion::class, 'religion_id');
     }
 
     public function caste()
@@ -110,5 +116,26 @@ public function parentCompany()
         return $this->belongsTo(CompanyHierarchy::class, 'company_id', 'company_id')
                     ->select('parent_company_id');
     }
+
+
+
+    public function masterCompany()
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'id')
+            ->where('company_type_id', 2); // 2 for Master Company
+    }
+
+    public function clientCompany()
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'id')
+            ->where('company_type_id', 3); // 3 for Client Company
+    }
+
+    public function subClientCompany()
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'id')
+            ->where('company_type_id', 4); // 4 for Sub Client Company
+    }
+
 
 }

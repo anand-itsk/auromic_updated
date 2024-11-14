@@ -16,6 +16,7 @@ class EmployeeFamilyMemberDetail extends Model
         'dob',
         'is_residing',
         'remark',
+        'aadhar_no'
     ];
 
     public function addresses()

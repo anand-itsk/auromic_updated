@@ -11,6 +11,7 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Aadhar No</th>
                 <th>Relation With Employee</th>
                 <th>DOB</th>
                 <th>Is Residing</th>
@@ -21,7 +22,15 @@
         <tbody id="familyMembersTableBody">
         </tbody>
     </table>
-   
+
+    <ul class="list-inline pull-right mt-0">
+           
+            <li>
+                {{-- <a href="" id="nomini-next">Next</a> --}}
+                <button class="btn icon-button btn-primary"  type="button"  id="nomini-next">Next</button>
+            </li>
+        </ul>
+
     {{-- Banking Info --}}
 
     {{-- Add Family Member --}}
@@ -48,15 +57,25 @@
 
 
                                     <div class="form-group row">
-                                        <label for="name" class="col-sm-2 col-form-label">Name</label>
+                                        <label for="name" class="col-sm-2 col-form-label mandatory">Name</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control mandatory" type="text" name="name"
+                                            <input class="form-control " type="text" name="name"
                                                 id="name">
+                                                <span id="name-error" class="error" style="color: red;"></span>
                                             @error('name')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
 
+                                        <label for="name" class="col-sm-2 col-form-label mandatory">Aadhar Number</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control " type="text" name="aadhar_no"
+                                                id="aadhar_no" maxlength="12" oninput="validateAadhar(this)">
+                                                 <span id="aadhar-error" class="error" style="color: red;"></span>
+                                            @error('aadhar_no')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                         <label for="relation_with_emp" class="col-sm-2 col-form-label">Relation
                                             with employee</label>
                                         <div class="col-sm-4 mb-4">
@@ -184,6 +203,16 @@
     </div>
 
     <script>
+
+$('#nomini-next').click(function(e){
+            e.preventDefault();
+ 
+            var activeTab = $('.wizard .nav-tabs li.active');
+
+activeTab.next().removeClass('disabled');
+                    nextTab(activeTab);
+});
+
         $("#next-step3").click(function(e) {
             e.preventDefault();
 
@@ -202,6 +231,7 @@
                     $('.employe-family-add').modal('hide');
                     familyMemberTable(response
                         .emp_id);
+                      
 
                 },
                 error: function(response) {
@@ -254,6 +284,7 @@
                             var row = `<tr>
                         <td>${index + 1}</td>
                         <td>${item.name}</td>
+                        <td>${item.aadhar_no}</td>
                         <td>${item.relation_with_emp}</td>
                         <td>${item.dob}</td>
                         <td>${residing}</td>
@@ -285,6 +316,7 @@
                 success: function(data) {
                     // Populate modal fields with fetched data
                     $('#name').val(data.name);
+                    $('#aadhar_no').val(data.aadhar_no);
                     $('#relation_with_emp').val(data.relation_with_emp);
                     console.log();
                     $('#family_address').html(data.addresses[0].address);
@@ -420,10 +452,63 @@
         });
     </script>
     <script>
-    $(document).ready(function() {
-        $('#next-button-family').click(function() {
-            $('.employee-nominee-add').modal('show');
+        $(document).ready(function() {
+            $('#next-button-family').click(function() {
+                $('.employee-nominee-add').modal('show');
+            });
         });
-    });
+    </script>
+
+<script>
+
+   document.getElementById('next-step3').addEventListener('click', function(e) {
+    let valid = true;
+
+    // Name validation
+    const nameInput = document.getElementById('name');
+    const nameError = document.getElementById('name-error');
+    if (nameInput.value.trim() === '') {
+        valid = false;
+        nameError.textContent = 'Name is required';
+    } else {
+        nameError.textContent = '';
+    }
+
+    // Aadhar Number validation
+    const aadharInput = document.getElementById('aadhar_no');
+    const aadharError = document.getElementById('aadhar-error');
+    if (aadharInput.value.trim() === '') {
+        valid = false;
+        aadharError.textContent = 'Aadhar number is required';
+    } else if (aadharInput.value.length !== 12 || isNaN(aadharInput.value)) {
+        valid = false;
+        aadharError.textContent = 'Aadhar number must be 12 digits long';
+    } else {
+        aadharError.textContent = '';
+    }
+
+    // Prevent further action if the form is invalid
+    if (!valid) {
+        e.preventDefault(); // Stops the button from proceeding if validation fails
+    } else {
+        // Optionally, you could trigger a form submit here if the fields are valid
+        // document.querySelector('form').submit();
+        alert('Form is valid. Proceeding to save...');
+    }
+});
+
+    function validateAadhar(input) {
+        const aadharError = document.getElementById('aadhar-error');
+
+        // Only allow numbers in the input
+        input.value = input.value.replace(/[^0-9]/g, '');
+
+        // If input length is less than or more than 12, show error
+        if (input.value.length > 0 && input.value.length !== 12) {
+            aadharError.textContent = 'Aadhar number must be exactly 12 digits.';
+        } else {
+            aadharError.textContent = ''; // Clear the error if the input is valid
+        }
+    }
 </script>
 </div>

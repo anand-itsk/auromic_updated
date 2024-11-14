@@ -35,6 +35,26 @@
                                     enctype="multipart/form-data">
                                     @csrf
                                     <h5 class="text-primary">Company Info</h5>
+                                    <div class="row">
+ <label class="col-sm-2 col-form-label mandatory">Client Companies</label>
+                                    <div class="col-sm-4 mb-4">
+                                        <select class="form-control select2" name="client_company" id="client_company"
+                                            required>
+                                            <option value="">Select</option>
+                                            @foreach ($master_companies as $master_company)
+                                                <option value="{{ $master_company->id }}"
+                                                    {{ $parent_company_id == $master_company->id ? 'selected' : '' }}>
+                                                    {{ $master_company->company_name }} -
+                                                    {{ optional($master_company->authorisedPerson)->name ?? 'No Authorised Person' }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('master_company')
+                                            <span class="error" style="color: red;">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    </div>
+                                   
                                     <div class="form-group row">
                                         <label for="company_code" class="col-sm-2 col-form-label mandatory">Company
                                             Code</label>
@@ -62,7 +82,8 @@
                                         @php
                                             $officeAddress = $company->addresses->where('address_type_id', 2)->first();
                                         @endphp
-                                        <label for="office_address" class="col-sm-2 col-form-label">Office Address</label>
+                                        <label for="office_address" class="col-sm-2 col-form-label">Office
+                                            Address</label>
                                         <div class="col-sm-10 mb-4">
                                             <textarea class="form-control" name="office_address" id="office_address" cols="10" rows="3">{{ $officeAddress->address ?? '' }}</textarea>
                                             @error('office_address')
@@ -121,7 +142,8 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="starting_date" class="col-sm-2 col-form-label">Starting Date</label>
+                                        <label for="starting_date" class="col-sm-2 col-form-label">Starting
+                                            Date</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="date" name="starting_date"
                                                 id="starting_date" value="{{ $company->starting_date }}">
@@ -207,7 +229,8 @@
                                             @enderror
                                         </div>
 
-                                        <label for="factory_act_no" class="col-sm-2 col-form-label">Factory Act No</label>
+                                        <label for="factory_act_no" class="col-sm-2 col-form-label">Factory Act
+                                            No</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="factory_act_no"
                                                 value="{{ $company->companyRegistrationDetail->factory_act_no ?? '' }}"
@@ -296,25 +319,27 @@
                                             @enderror
                                         </div>
 
-                                        <label for="faorhus_name" class="col-sm-2 col-form-label">Profile Image</label>
-<div class="col-sm-4 mb-4">
-    <input type="file" name="photo" id="imageInput">
-    @error('photo')
-        <span class="error" style="color: red;">{{ $message }}</span>
-    @enderror
-    <br>
-    
-    @if (!empty($company->authorisedPerson->photo))
-                                            <h6 style="font-weight: bold;">Current Image:</h6>
-                                            <img src="{{ asset('storage/' . $company->authorisedPerson->photo) }}"
-                                                alt="Current Image" style="max-width: 100px; max-height: 100px;">
-   @else
-    <img src="{{ asset('assets/images/no-profile.png') }}" alt="No Profile Image" style="max-width: 50px; max-height: 50px;">
-@endif
-    
-    <h6 style="font-weight: bold;">Change Image:</h6>
-    <div id="imagePreviewContainer"></div>
-</div>
+                                        <label for="faorhus_name" class="col-sm-2 col-form-label">Profile
+                                            Image</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input type="file" name="photo" id="imageInput">
+                                            @error('photo')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                            <br>
+
+                                            @if (!empty($company->authorisedPerson->photo))
+                                                <h6 style="font-weight: bold;">Current Image:</h6>
+                                                <img src="{{ asset('storage/' . $company->authorisedPerson->photo) }}"
+                                                    alt="Current Image" style="max-width: 100px; max-height: 100px;">
+                                            @else
+                                                <img src="{{ asset('assets/images/no-profile.png') }}"
+                                                    alt="No Profile Image" style="max-width: 50px; max-height: 50px;">
+                                            @endif
+
+                                            <h6 style="font-weight: bold;">Change Image:</h6>
+                                            <div id="imagePreviewContainer"></div>
+                                        </div>
                                         <label for="gender" class="col-sm-2 col-form-label">Gender</label>
                                         <div class="col-sm-2 mb-4">
                                             <select class="form-control" name="gender" id="gender">
@@ -453,7 +478,7 @@
                                             <button type="submit" class="btn btn-primary waves-effect waves-light">
                                                 Submit
                                             </button>
-                                            <a href="{{ route('profile.masters.index') }}"
+                                            <a href="{{ route('profile.sub_clients.index') }}"
                                                 class="btn btn-secondary waves-effect m-l-5">
                                                 Cancel
                                             </a>

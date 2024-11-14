@@ -49,8 +49,8 @@
                                         <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab"><span
                                                 class="round-tab">4</span> <i>Nominee
 
-                                                
-                                                </i></a>
+
+                                            </i></a>
                                     </li>
                                 </ul>
                             </div>
@@ -83,39 +83,118 @@
                                                                 <div class="col-md-10">
                                                                     <div class="form-group row w-100 mb-0">
 
-                                                                        <label for="company_type_id"
-                                                                            class="col-sm-2 col-form-label">Company
-                                                                            Type</label>
+                                                                        <label for="master_company"
+                                                                            class="col-sm-2 col-form-label">Master
+                                                                            Company</label>
                                                                         <div class="col-sm-4 mb-4">
-
                                                                             <select class="form-control select2 w-100"
-                                                                                name="company_type_id" id="company_type_id">
+                                                                                name="master_company" id="master_company">
                                                                                 <option value="">Select</option>
-                                                                                @foreach ($company_types as $item)
+                                                                                @foreach ($master_companies as $item)
                                                                                     <option value="{{ $item->id }}"
-                                                                                        {{ $employee->company && $employee->company->company_type_id == $item->id ? 'selected' : '' }}>
-                                                                                        {{ $item->name }}</option>
+                                                                                        {{ $item->id == $selectedMasterCompany ? 'selected' : '' }}>
+                                                                                        {{ $item->company_name }}
+                                                                                        @if ($item->authorisedPerson)
+                                                                                            /
+                                                                                            {{ $item->authorisedPerson->name }}
+                                                                                        @else
+                                                                                            / No Authorised Person
+                                                                                        @endif
+                                                                                    </option>
                                                                                 @endforeach
                                                                             </select>
-                                                                            @error('company_type_id')
+                                                                            @error('master_company')
+                                                                                <span class="error"
+                                                                                    style="color: red;">{{ $message }}</span>
+                                                                            @enderror
+                                                                        </div>
+
+                                                                        <label for="client_company_id"
+                                                                            class="col-sm-2 col-form-label">Client
+                                                                            Company</label>
+                                                                        <div class="col-sm-4 mb-4">
+                                                                            <select class="form-control select2 w-100"
+                                                                                name="client_company_id"
+                                                                                id="client_company_id">
+                                                                                <option value="">Select</option>
+                                                                                @foreach ($client_companies as $client_company)
+                                                                                    <option
+                                                                                        value="{{ $client_company->id }}"
+                                                                                        {{ $client_company->id == $selectedClientCompany ? 'selected' : '' }}>
+                                                                                        {{ $client_company->company_name }}
+                                                                                        @if ($client_company->authorisedPerson)
+                                                                                            /
+                                                                                            {{ $client_company->authorisedPerson->name }}
+                                                                                        @else
+                                                                                            / No Authorised Person
+                                                                                        @endif
+                                                                                    </option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                            @error('client_company_id')
+                                                                                <span class="error"
+                                                                                    style="color: red;">{{ $message }}</span>
+                                                                            @enderror
+                                                                        </div>
+
+                                                                        <label for="sub_client_company_id"
+                                                                            class="col-sm-2 col-form-label">Sub Client
+                                                                            Company</label>
+                                                                        <div class="col-sm-4 mb-4">
+                                                                            <select class="form-control select2 w-100"
+                                                                                name="sub_client_company_id"
+                                                                                id="sub_client_company_id">
+                                                                                <option value="">Select</option>
+                                                                                @foreach ($subclient_companies as $subclient_company)
+                                                                                    <option
+                                                                                        value="{{ $subclient_company->id }}"
+                                                                                        {{ $subclient_company->id == $selectedSubClientCompany ? 'selected' : '' }}>
+                                                                                        {{ $subclient_company->company_name }}
+                                                                                        @if ($subclient_company->authorisedPerson)
+                                                                                            /
+                                                                                            {{ $subclient_company->authorisedPerson->name }}
+                                                                                        @else
+                                                                                            / No Authorised Person
+                                                                                        @endif
+                                                                                    </option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                            @error('sub_client_company_id')
                                                                                 <span class="error"
                                                                                     style="color: red;">{{ $message }}</span>
                                                                             @enderror
                                                                         </div>
 
 
-                                                                        <label for="company_type_id"
-                                                                            class="col-sm-2 col-form-label">Companies</label>
+                                                                        {{-- <label for="company_type_id"
+                                                                            class="col-sm-2 col-form-label">Proprietor
+                                                                            Name</label>
                                                                         <div class="col-sm-4 mb-4">
 
-                                                                            <select class="form-control select2 w-100"
-                                                                                name="company_id" id="company_id" disabled>
-                                                                            </select>
-                                                                            @error('company_id')
+                                                                            <input type="text" class="form-control"
+                                                                                name="subclient_proprietor_name"
+                                                                                id="subclient_proprietor_name"
+                                                                                value="{{ $subclient_company->authorisedPerson->name }}">
+                                                                            @error('master_proprietor_name')
                                                                                 <span class="error"
                                                                                     style="color: red;">{{ $message }}</span>
                                                                             @enderror
+                                                                        </div> --}}
+<label for="employee_code"
+                                                                            class="col-sm-2 col-form-label mandatory">Own Employee
+                                                                            </label>
+                                                                        <div class="col-sm-4">
+
+                                                                           <select class="form-control" name="own_company" id="own_company" readonly>
+    <option value="yes" {{ $employee->own_company == 'yes' ? 'selected' : '' }}>Yes</option>
+    <option value="no" {{ $employee->own_company == 'no' ? 'selected' : '' }}>No</option>
+</select>
+
+                                                                            <span class="error-message text-danger"></span>
                                                                         </div>
+
+
+
 
                                                                         <label for="employee_code"
                                                                             class="col-sm-2 col-form-label mandatory">Employee
@@ -123,8 +202,9 @@
                                                                         <div class="col-sm-4">
 
                                                                             <input class="form-control" type="text"
-                                                                                value="{{ $employee->employee_code }}" readonly
-                                                                                name="employee_code" id="employee_code">
+                                                                                value="{{ $employee->employee_code }}"
+                                                                                readonly name="employee_code"
+                                                                                id="employee_code">
                                                                             <span class="error-message text-danger"></span>
                                                                         </div>
 
@@ -189,7 +269,9 @@
                                                             {{-- Permanent Address --}}
                                                             <div class="row mx-2 mt-0">
                                                                 @php
-                                                                    $officeAddress = $employee->addresses->where('address_type_id', 3)->first();
+                                                                    $officeAddress = $employee->addresses
+                                                                        ->where('address_type_id', 3)
+                                                                        ->first();
                                                                 @endphp
                                                                 {{-- {{ dd($officeAddress->district_id) }} --}}
                                                                 <h5 class="text-primary w-100 mt-0">Permanent Address</h5>
@@ -277,12 +359,18 @@
                                                             <hr />
                                                             {{-- Correspondence Address --}}
                                                             @php
-                                                                $corrs_address = $employee->addresses->where('address_type_id', 4)->first();
-                                                                $selected_country_id = $corrs_address->country_id ?? null;
+                                                                $corrs_address = $employee->addresses
+                                                                    ->where('address_type_id', 4)
+                                                                    ->first();
+                                                                $selected_country_id =
+                                                                    $corrs_address->country_id ?? null;
                                                                 $selected_state_id = $corrs_address->state_id ?? null;
-                                                                $selected_district_id  = $corrs_address->district_id  ?? null;
-                                                                 $stateDisabled = $selected_country_id ? '' : 'disabled';
-                                                               $districtDisabled = $selected_state_id ? '' : 'disabled';
+                                                                $selected_district_id =
+                                                                    $corrs_address->district_id ?? null;
+                                                                $stateDisabled = $selected_country_id ? '' : 'disabled';
+                                                                $districtDisabled = $selected_state_id
+                                                                    ? ''
+                                                                    : 'disabled';
                                                             @endphp
                                                             <div class="row m-2">
                                                                 <div class="d-flex" style="flex-wrap: inherit">
@@ -317,7 +405,8 @@
                                                                         class="col-sm-2 col-form-label">Village/Area</label>
                                                                     <div class="col-sm-4 mb-4">
                                                                         <input class="form-control" type="text"
-                                                                            name="corrs_area" id="corrs_area" value="{{ $corrs_address->village_area ?? '' }}">
+                                                                            name="corrs_area" id="corrs_area"
+                                                                            value="{{ $corrs_address->village_area ?? '' }}">
 
                                                                         @error('corrs_area')
                                                                             <span class="error"
@@ -330,9 +419,10 @@
                                                                         <select class="form-control select2"
                                                                             name="corrs_country_id" id="corrs_country_id">
                                                                             @foreach ($countries as $item)
-                                                                               <option value="{{ $item->id }}" {{ $item->id == $selected_country_id ? 'selected' : '' }}>
-            {{ $item->name }}
-        </option>
+                                                                                <option value="{{ $item->id }}"
+                                                                                    {{ $item->id == $selected_country_id ? 'selected' : '' }}>
+                                                                                    {{ $item->name }}
+                                                                                </option>
                                                                             @endforeach
                                                                         </select>
                                                                         @error('corrs_country_id')
@@ -346,11 +436,11 @@
                                                                         <select class="form-control select2 w-100"
                                                                             name="corrs_state_id" id="corrs_state_id"
                                                                             {{ $stateDisabled }}>
-                                                                             @foreach ($states as $item)
-                                                                               <option value="{{ $item->id }}" {{ $item->id == $selected_state_id ? 'selected' : '' }}>
-            {{ $item->name }}
-        </option>  
-                                                                   
+                                                                            @foreach ($states as $item)
+                                                                                <option value="{{ $item->id }}"
+                                                                                    {{ $item->id == $selected_state_id ? 'selected' : '' }}>
+                                                                                    {{ $item->name }}
+                                                                                </option>
                                                                             @endforeach
                                                                         </select>
                                                                         @error('corrs_state_id')
@@ -363,12 +453,13 @@
                                                                     <div class="col-sm-4">
                                                                         <select class="form-control select2 w-100"
                                                                             name="corrs_district_id"
-                                                                            id="corrs_district_id" {{ $districtDisabled }}>
-                                                                             @foreach ($district as $item)
-                                                                               <option value="{{ $item->id }}" {{ $item->id == $selected_district_id ? 'selected' : '' }}>
-            {{ $item->name }}
-        </option>  
-                                                                   
+                                                                            id="corrs_district_id"
+                                                                            {{ $districtDisabled }}>
+                                                                            @foreach ($district as $item)
+                                                                                <option value="{{ $item->id }}"
+                                                                                    {{ $item->id == $selected_district_id ? 'selected' : '' }}>
+                                                                                    {{ $item->name }}
+                                                                                </option>
                                                                             @endforeach
                                                                         </select>
                                                                         @error('corrs_district_id')
@@ -381,7 +472,8 @@
                                                                         class="col-sm-2 col-form-label">Pincode</label>
                                                                     <div class="col-sm-4">
                                                                         <input class="form-control" type="text"
-                                                                            name="corrs_pincode" id="corrs_pincode" value="{{ $corrs_address->pincode ?? '' }}">
+                                                                            name="corrs_pincode" id="corrs_pincode"
+                                                                            value="{{ $corrs_address->pincode ?? '' }}">
                                                                         @error('corrs_pincode')
                                                                             <span class="error"
                                                                                 style="color: red;">{{ $message }}</span>
@@ -459,7 +551,8 @@
                                                                         @enderror
                                                                     </div>
                                                                     <label for="aadhar_number"
-                                                                        class="col-sm-2 col-form-label">Aadhar Number</label>
+                                                                        class="col-sm-2 col-form-label">Aadhar
+                                                                        Number</label>
                                                                     <div class="col-sm-4">
                                                                         <input class="form-control" type="text"
                                                                             value="{{ $employee->identityProof->aadhar_number ?? '' }}"
@@ -469,14 +562,20 @@
                                                                                 style="color: red;">{{ $message }}</span>
                                                                         @enderror
                                                                     </div>
-                                                                    
-                                                                    <label for="aadhar_name" class="col-sm-2 mt-4 col-form-label">Aadhar Name</label>
-<div class="col-sm-4 mt-4"> <!-- Added mt-4 class here -->
-    <input class="form-control" type="text" value="{{ $employee->identityProof->aadhar_name ?? '' }}" name="aadhar_name" id="aadhar_name">
-    @error('aadhar_name')
-        <span class="error" style="color: red;">{{ $message }}</span>
-    @enderror
-</div>
+
+                                                                    <label for="aadhar_name"
+                                                                        class="col-sm-2 mt-4 col-form-label">Aadhar
+                                                                        Name</label>
+                                                                    <div class="col-sm-4 mt-4">
+                                                                        <!-- Added mt-4 class here -->
+                                                                        <input class="form-control" type="text"
+                                                                            value="{{ $employee->identityProof->aadhar_name ?? '' }}"
+                                                                            name="aadhar_name" id="aadhar_name">
+                                                                        @error('aadhar_name')
+                                                                            <span class="error"
+                                                                                style="color: red;">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
@@ -647,8 +746,8 @@
                                                                     </div>
                                                                     <div class="col-sm-3 mb-4">
                                                                         <input class="form-control" type="text"
-                                                                            value="{{ $employee->phone }}" name="phone"
-                                                                            id="phone">
+                                                                            value="{{ $employee->phone }}"
+                                                                            name="phone" id="phone">
                                                                         @error('phone')
                                                                             <span class="error"
                                                                                 style="color: red;">{{ $message }}</span>
@@ -657,7 +756,8 @@
 
                                                                     <label class="col-sm-2 col-form-label">Religion
                                                                         <a class="shortcut_master"
-                                                href="{{ route('common.religions.create') }}" target="_blank">+</a>
+                                                                            href="{{ route('common.religions.create') }}"
+                                                                            target="_blank">+</a>
                                                                     </label>
                                                                     <div class="col-sm-4 mb-4">
                                                                         <select class="form-control select2"
@@ -675,8 +775,9 @@
                                                                     </div>
 
                                                                     <label class="col-sm-2 col-form-label">Caste
-                                                                             <a class="shortcut_master"
-                                                href="{{ route('common.castes.create') }}" target="_blank">+</a>
+                                                                        <a class="shortcut_master"
+                                                                            href="{{ route('common.castes.create') }}"
+                                                                            target="_blank">+</a>
                                                                     </label>
                                                                     <div class="col-sm-4 mb-4">
                                                                         <select class="form-control select2"
@@ -693,10 +794,10 @@
                                                                         @enderror
                                                                     </div>
 
-                                                                    <label
-                                                                        class="col-sm-2 col-form-label">Nationality
+                                                                    <label class="col-sm-2 col-form-label">Nationality
                                                                         <a class="shortcut_master"
-                                                href="{{ route('common.nationalities.create') }}" target="_blank">+</a>
+                                                                            href="{{ route('common.nationalities.create') }}"
+                                                                            target="_blank">+</a>
                                                                     </label>
                                                                     <div class="col-sm-4 mb-4">
                                                                         <select class="form-control select2"
@@ -719,13 +820,14 @@
                                                                     <div class="col-sm-4 mb-4">
                                                                         <input class="form-control" type="date"
                                                                             value="{{ $employee->joining_date }}"
-                                                                            name="joining_date" id="joining_date" required>
+                                                                            name="joining_date" id="joining_date"
+                                                                            required>
                                                                         @error('joining_date')
                                                                             <span class="error"
                                                                                 style="color: red;">{{ $message }}</span>
                                                                         @enderror
                                                                     </div>
-                                                                   
+
                                                                     <label for="prob_period"
                                                                         class="col-sm-2 col-form-label">Prob Period in
                                                                         Month</label>
@@ -754,7 +856,7 @@
 
                                                                     <label for="resigning_date"
                                                                         class="col-sm-2 col-form-label">Resigning Date
-                                                                        </label>
+                                                                    </label>
                                                                     <div class="col-sm-4">
                                                                         <input class="form-control" type="date"
                                                                             value="{{ $employee->resigning_date }}"
@@ -767,7 +869,8 @@
 
                                                                     <label class="col-sm-2 col-form-label">Select with
                                                                         reason<a class="shortcut_master"
-                                                href="{{ route('specified.resigning_reasons.create') }}" target="_blank">+</a>
+                                                                            href="{{ route('specified.resigning_reasons.create') }}"
+                                                                            target="_blank">+</a>
                                                                     </label>
                                                                     <div class="col-sm-4">
                                                                         <select class="form-control select2"
@@ -790,8 +893,11 @@
                                                             <ul class="list-inline pull-right">
                                                                 <li><button type="button"
                                                                         class="default-btn next-step mt-0 text-white"
-                                                                        data-url="{{ route('master.employees.store.personal', $employee->id) }}">Continue
+                                                                        data-url="{{ route('master.employees.store.personal', $employee->id) }}">Save
+                                                                        & Continue
                                                                         to next step</button></li>
+
+
                                                             </ul>
                                                         </form>
                                                     </div>
@@ -1063,32 +1169,166 @@
     </script>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const countrySelect = document.getElementById('corrs_country_id');
-        const stateSelect = document.getElementById('corrs_state_id');
-        const districtSelect = document.getElementById('corrs_district_id');
+        document.addEventListener('DOMContentLoaded', function() {
+            const countrySelect = document.getElementById('corrs_country_id');
+            const stateSelect = document.getElementById('corrs_state_id');
+            const districtSelect = document.getElementById('corrs_district_id');
 
-        countrySelect.addEventListener('change', function() {
-            if (this.value) {
-                stateSelect.removeAttribute('disabled');
-                // Optionally, add logic to populate states based on the selected country
-            } else {
-                stateSelect.setAttribute('disabled', 'disabled');
-                districtSelect.setAttribute('disabled', 'disabled');
-            }
+            countrySelect.addEventListener('change', function() {
+                if (this.value) {
+                    stateSelect.removeAttribute('disabled');
+                    // Optionally, add logic to populate states based on the selected country
+                } else {
+                    stateSelect.setAttribute('disabled', 'disabled');
+                    districtSelect.setAttribute('disabled', 'disabled');
+                }
+            });
+
+            stateSelect.addEventListener('change', function() {
+                if (this.value) {
+                    districtSelect.removeAttribute('disabled');
+                    // Optionally, add logic to populate districts based on the selected state
+                } else {
+                    districtSelect.setAttribute('disabled', 'disabled');
+                }
+            });
         });
+    </script>
+    {{-- 
+    <script>
+        $(document).ready(function() {
+            // Handle client company dropdown change event
+            $('#client_company_id').on('change', function() {
+                var client_company_id = $(this).val();
+                var subClientDropdown = $('#sub_client_company_id');
 
-        stateSelect.addEventListener('change', function() {
-            if (this.value) {
-                districtSelect.removeAttribute('disabled');
-                // Optionally, add logic to populate districts based on the selected state
-            } else {
-                districtSelect.setAttribute('disabled', 'disabled');
-            }
+                // Disable the sub-client dropdown initially
+                subClientDropdown.prop('disabled', true).html('<option value="">Select</option>');
+
+                // Check if a client company is selected
+                if (client_company_id) {
+                    // Fetch the sub-client companies via AJAX
+                    $.ajax({
+                        url: "{{ route('get.sub.clients') }}", // Make sure this route is defined in web.php
+                        type: 'GET',
+                        data: {
+                            client_company_id: client_company_id
+                        },
+                        success: function(response) {
+                            if (response.length > 0) {
+                                subClientDropdown.prop('disabled', false);
+                                // Populate the sub-client dropdown
+                                $.each(response, function(index, company) {
+                                    subClientDropdown.append('<option value="' + company
+                                        .id + '">' + company.company_name +
+                                        '</option>');
+                                });
+                            }
+                        }
+                    });
+                }
+            });
         });
-    });
-</script>
+    </script> --}}
 
+    <script>
+        function getAuthorisedPersonName(companyId, inputFieldId) {
+            if (companyId) {
+                $.ajax({
+                    url: '/get-authorised-person/' + companyId,
+                    type: 'GET',
+                    success: function(response) {
+                        $('#' + inputFieldId).val(response.name);
+                    },
+                    error: function() {
+                        alert('Error fetching Authorised Person details.');
+                    }
+                });
+            } else {
+                $('#' + inputFieldId).val('');
+            }
+        }
+    </script>
+
+
+    <script>
+        function clearOtherDropdowns(selectedId) {
+            // Get all dropdowns
+            const masterCompany = document.getElementById('master_company');
+            const clientCompany = document.getElementById('client_company_id');
+            const subClientCompany = document.getElementById('sub_client_company_id');
+
+            // Clear the others depending on which was selected
+            if (selectedId === 'master_company') {
+                clientCompany.value = '';
+                subClientCompany.value = '';
+            } else if (selectedId === 'client_company_id') {
+                masterCompany.value = '';
+                subClientCompany.value = '';
+            } else if (selectedId === 'sub_client_company_id') {
+                masterCompany.value = '';
+                clientCompany.value = '';
+            }
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            // When a master company is selected, fetch client companies
+            $('#master_company').change(function() {
+                let masterCompanyId = $(this).val();
+                if (masterCompanyId) {
+                    $.ajax({
+                        url: '{{ route('master.employees.getClientCompanies') }}',
+                        method: 'GET',
+                        data: {
+                            master_company_id: masterCompanyId
+                        },
+                        success: function(response) {
+                            // Clear and append new client companies
+                            $('#client_company_id').empty().append(
+                                '<option value="">Select</option>');
+                            $.each(response, function(index, company) {
+                                $('#client_company_id').append(new Option(company
+                                    .company_name, company.id));
+                            });
+
+                            // Reset sub-client company dropdown
+                            $('#sub_client_company_id').empty().append(
+                                '<option value="">Select</option>');
+                        }
+                    });
+                } else {
+                    $('#client_company_id').empty().append('<option value="">Select</option>');
+                    $('#sub_client_company_id').empty().append('<option value="">Select</option>');
+                }
+            });
+
+            // When a client company is selected, fetch sub-client companies
+            $('#client_company_id').change(function() {
+                let clientCompanyId = $(this).val();
+                if (clientCompanyId) {
+                    $.ajax({
+                        url: '{{ route('master.employees.getSubClientCompanies') }}',
+                        method: 'GET',
+                        data: {
+                            client_company_id: clientCompanyId
+                        },
+                        success: function(response) {
+                            // Clear and append new sub-client companies
+                            $('#sub_client_company_id').empty().append(
+                                '<option value="">Select</option>');
+                            $.each(response, function(index, company) {
+                                $('#sub_client_company_id').append(new Option(company
+                                    .company_name, company.id));
+                            });
+                        }
+                    });
+                } else {
+                    $('#sub_client_company_id').empty().append('<option value="">Select</option>');
+                }
+            });
+        });
+    </script>
 
 
 @endsection

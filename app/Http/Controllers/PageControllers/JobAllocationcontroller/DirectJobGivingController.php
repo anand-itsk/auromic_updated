@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\PageControllers\JobAllocationcontroller;
+namespace App\Http\Controllers\PageControllers\JobAllocationController;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

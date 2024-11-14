@@ -109,6 +109,14 @@
                 <span class="error" style="color: red;">{{ $message }}</span>
             @enderror
         </div>
+         <label for="customer_code" class="col-sm-2 col-form-label mandatory">Date
+                                            </label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="date" name="date" id="date"required value="{{ $product_model->date }}">
+                                            @error('date')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
     </div>
 
     <div class="form-group">

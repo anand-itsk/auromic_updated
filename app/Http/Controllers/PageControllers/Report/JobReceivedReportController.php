@@ -11,6 +11,8 @@ use App\Models\Company;
 use Yajra\DataTables\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\JobReceivedReportExport;
+use App\Models\OrderNo;
+use App\Models\Product;
 
 class JobReceivedReportController extends Controller
 {
@@ -18,8 +20,10 @@ class JobReceivedReportController extends Controller
     {
         $companyType = CompanyType::all();
         $company = Company::all();
+        $order_nos = OrderNo::all();
+        $product = Product::all(); 
         
-        return view('pages.report.job_received_report', compact('companyType', 'company'));
+        return view('pages.report.job_received_report', compact('companyType', 'company', 'order_nos', 'product'));
     }
 
 public function indexData(Request $request)
@@ -30,6 +34,8 @@ public function indexData(Request $request)
     $company = $request->input('companies');
     $incentiveStatus = $request->input('incentive_status');
     $received_date = $request->input('received_date');
+        $orderNoId = $request->input('orderNoId');
+        $product = $request->input('product'); 
 
 
     // Retrieve JobReceived data with eager loading
@@ -63,7 +69,19 @@ public function indexData(Request $request)
         $jobReceivedData->where('receving_date', $received_date);
     }
 
-    
+        if ($orderNoId) {
+            $jobReceivedData->whereHas('jobGiving.order_details', function ($q) use ($orderNoId) {
+                $q->where('order_id', $orderNoId);
+            });
+        }
+
+        // Apply product filter
+        if ($product) {
+            $jobReceivedData->whereHas('jobGiving.product_model', function ($q) use ($product) {
+                $q->where('product_id', $product);
+            });
+        }
+
 
     // Get the filtered data
     $jobReceivedData = $jobReceivedData->get();

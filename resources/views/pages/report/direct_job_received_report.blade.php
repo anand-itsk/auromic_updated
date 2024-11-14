@@ -5,6 +5,9 @@
 @section('content')
     @include('links.css.datatable.datatable-css')
     @include('links.css.table.custom-css')
+
+      <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <div class="wrapper">
         <div class="container-fluid">
             @if (session('success'))
@@ -534,5 +537,28 @@ function updateSelectedFilters() {
             return `${day}-${month}-${year} ${strTime}`;
         }
     </script>
+
+
+<script>
+    $(document).ready(function() {
+        // Initialize Select2 on the customer dropdown
+     
+         $('#employee_id').select2({
+            placeholder: "Select Employee",
+            allowClear: true
+        });
+         $('#finishing_product_model_id').select2({
+            placeholder: "Select Finish Product",
+            allowClear: true
+        });
+        
+
+         $('#incentive_status').select2({
+            placeholder: "Select Incentive Status",
+            allowClear: true
+        });
+        
+    });
+</script>
 
 @endsection

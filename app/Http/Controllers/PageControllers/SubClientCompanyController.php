@@ -29,14 +29,14 @@ class SubClientCompanyController extends Controller
     public function indexData()
     {
         // Eager load the roles relationship
-         $company = Company::with('authorisedPerson')->where('company_type_id', 4)->get();
+       $company = Company::with('authorisedPerson')->where('company_type_id', 4)->get();
     
     return DataTables::of($company)
         ->addColumn('authorised_person_name', function($company) {
             return $company->authorisedPerson->name ?? '-';
         })
         ->addColumn('authorised_person_email', function($company) {
-            return $company->authorisedPerson->personal_email ?? '-';
+            return $company->authorisedPerson->person_email ?? '-';
         })
         ->make(true);
     }
@@ -60,7 +60,7 @@ class SubClientCompanyController extends Controller
             'company_name' => 'required|max:255',
             'name' => 'required',
            'photo' => 'nullable|image|max:200000',
-           'person_email' => 'email|unique:authorised_people',
+        //    'person_email' => 'email|unique:authorised_people',
         ]);
         $input = $request->all();
         if ($request->hasFile('photo')) {
@@ -136,16 +136,24 @@ class SubClientCompanyController extends Controller
     // Edit
     public function edit(Address $address, $id)
     {
-        // dd($address);
         $user = User::with('roles')->find($id);
         $company = Company::with('addresses')->find($id);
         $countries = Country::all();
-        // dd($customer);
-        return view('pages.profile.sub_client_company.edit', compact('company', 'user', 'countries', 'address'));
+        $master_companies = Company::with('authorisedPerson')
+        ->where('company_type_id', 3)
+        ->get();
+
+        // Retrieve the parent company ID from CompanyHierarchy for the given company ID
+        $companyHierarchy = CompanyHierarchy::where('company_id', $id)->first();
+        $parent_company_id = $companyHierarchy ? $companyHierarchy->parent_company_id : null;
+
+        return view('pages.profile.sub_client_company.edit', compact('company', 'user', 'countries', 'address', 'master_companies', 'parent_company_id'));
     }
+
     // Update
     public function update(Request $request, $id)
     {
+        // dd($request);
         $auth_id = auth()->id();
 
         $validatedData = $request->validate([
@@ -164,13 +172,32 @@ class SubClientCompanyController extends Controller
         $company->company_name = $input['company_name'];
         $company->std_code = $input['std_code'];
         $company->phone = $input['phone'];
-       $company->company_email = $input['company_email'];
+        $company->company_email = $input['company_email'];
         $company->starting_date = $input['starting_date'];
         $company->business_nature = $input['business_nature'];
         $company->website = $input['website'];
         $company->updated_by = $auth_id;
 
         $company->save();
+
+        $company_id = $company->id;
+        // dd($company_id);
+        $change_parent_company = $input['client_company'];
+       
+        $companyHierarchy = CompanyHierarchy::where('company_id', $company_id)->first();
+
+        if ($companyHierarchy) {
+            // Update the parent_company_id with the new value
+            $companyHierarchy->parent_company_id = $change_parent_company;
+            $companyHierarchy->save();
+        } else {
+            // Optionally handle cases where the specified company_id does not exist
+            // For example, create a new record if needed
+            $companyHierarchy = CompanyHierarchy::create([
+                'company_id' => $company_id,
+                'parent_company_id' => $change_parent_company,
+            ]);
+        }
         $company_registration_details = CompanyRegistrationDetails::firstOrNew(['company_id' => $company->id]);
         // dd($company_registration_details);
 

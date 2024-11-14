@@ -356,6 +356,18 @@
                             @endcan
                             @can('Direct Job Giving Report')
                                 <li>
+                                    <a href="{{ route('report.job_allocation_report.index') }}">Job Reallocation
+                                        Report</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('report.outstanding_report.index') }}">Given Outstanding Report
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('report.total_wages.index') }}">Total Wages
+                                        Report</a>
+                                </li>
+                                <li>
                                     <a href="{{ route('report.direct_job_giving_report.index') }}">Direct Job Given
                                         Report</a>
                                 </li>
@@ -366,6 +378,8 @@
                                         Report</a>
                                 </li>
                             @endcan
+
+
 
                         </ul>
                     </li>

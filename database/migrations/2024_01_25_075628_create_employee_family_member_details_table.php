@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('employee_id');
             $table->string('name');
+            $table->string('aadhar_no');
             $table->string('relation_with_emp')->nullable();
             $table->date('dob')->nullable();
             $table->boolean('is_residing')->default(0);

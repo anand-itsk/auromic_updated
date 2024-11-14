@@ -1064,7 +1064,7 @@
                                                             <td>{{ $nominees->familyMember->name }}</td>
                                                             <td>{{ $nominees->gratuity_sharing }}</td>
                                                             <td>{{ $nominees->marital_status }}</td>
-                                                            <td>{{ $nominees->religion_id }}</td>
+                                                            <td>{{ $nominees->religion->name }}</td>
                                                             <td>{{ $nominees->faorhus_name }}</td>
                                                             <td>{{ $nominees->guardian_name }}</td>
                                                             <td>{{ $nominees->guardian_address }}</td>
