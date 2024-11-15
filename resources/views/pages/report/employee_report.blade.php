@@ -6,7 +6,7 @@
     @include('links.css.datatable.datatable-css')
     @include('links.css.table.custom-css')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <div class="wrapper">
         <div class="container-fluid">
@@ -42,6 +42,56 @@
                     <div class="card mb-2">
                         <div class="card-body">
                             <div class="form-group row mb-0">
+                                {{-- date Starts --}}
+                                <div class="form-group col-sm-4 mb-2 d-flex align-item-center"
+                                    style="position: relative;top:8px">
+
+                                    <div class="">
+                                        <label class="mx-0"><input type="radio" name="date_filter" value="today">
+                                            Today</label>
+                                        <label class="ml-4"><input type="radio" name="date_filter" value="this_month">
+                                            This
+                                            Month</label>
+                                        <label class="ml-4"><input type="radio" name="date_filter" value="last_month">
+                                            Last
+                                            Month</label>
+                                    </div>
+                                </div>
+                                {{-- date Ends --}}
+                                {{-- From Starts --}}
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    From Date
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <input type="date" class="form-control" name="from_date" id="from_date">
+                                    @error('from_date')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- From Ends --}}
+
+
+                                {{-- Last Start --}}
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    To Date
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <input type="date" class="form-control" name="last_date" id="last_date">
+                                    @error('last_date')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- Last Ends --}}
+
+
+                            </div>
+
+
+
+
+
+
+                            <div class="form-group row mb-0">
                                 <label for="customer_code" class="col-sm-2 col-form-label ">
                                     Company Type
                                 </label>
@@ -73,21 +123,39 @@
                                     @enderror
                                 </div>
 
- <label for="customer_code" class="col-sm-2 col-form-label ">
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
                                     Employee
                                 </label>
+
                                 <div class="col-sm-2 mb-2">
                                     <select class="form-control select2" name="employee" id="employee">
                                         <option value="">Select Employee</option>
                                         @foreach ($employees as $employee)
-            <option value="{{ $employee->id }}">{{ $employee->employee_name }}</option>
-        @endforeach
+                                            <option value="{{ $employee->id }}">{{ $employee->employee_name }}</option>
+                                        @endforeach
                                     </select>
                                     @error('Companies')
                                         <span class="error" style="color: red;">{{ $message }}</span>
                                     @enderror
                                 </div>
 
+
+                                {{-- Employee Starts --}}
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Employee Code
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="employee_code" id="employee_code">
+                                        <option value="">Select Employee</option>
+                                        @foreach ($employees as $employee)
+                                            <option value="{{ $employee->id }}">{{ $employee->employee_code }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('Companies')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- Employee Ends --}}
                                 <label for="customer_code" class="col-sm-2 col-form-label ">
                                     Joining Date
                                 </label>
@@ -98,7 +166,7 @@
                                     @enderror
                                 </div>
 
-                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                {{-- <label for="customer_code" class="col-sm-2 col-form-label ">
                                     From Date
                                 </label>
                                 <div class="col-sm-2 mb-2">
@@ -106,9 +174,9 @@
                                     @error('from_date')
                                         <span class="error" style="color: red;">{{ $message }}</span>
                                     @enderror
-                                </div>
+                                </div> --}}
 
-                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                {{-- <label for="customer_code" class="col-sm-2 col-form-label ">
                                     Last Date
                                 </label>
                                 <div class="col-sm-2 mb-2">
@@ -116,23 +184,21 @@
                                     @error('last_date')
                                         <span class="error" style="color: red;">{{ $message }}</span>
                                     @enderror
-                                </div>
+                                </div> --}}
 
 
                                 <!-- <label for="customer_code" class="col-sm-2 col-form-label ">
-                               Gender
-                               </label>
-                               <div class="col-sm-2 mb-2">
-                                  <select class="form-control select2" name="gender" id="gender">
-                                     <option value="">Select Gender</option>
-                                     
-                                  </select>
-                                  @error('gender')
+                                                                                                                                                                                                       Gender
+                                                                                                                                                                                                       </label>
+                                                                                                                                                                                                       <div class="col-sm-2 mb-2">
+                                                                                                                                                                                                          <select class="form-control select2" name="gender" id="gender">
+                                                                                                                                                                                                             <option value="">Select Gender</option>
+
+                                                                                                                                                                                                          </select>
+                                                                                                                                                                                                          @error('gender')
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
-                               </div> -->
-
-
+                                                                                                                                                                                                       </div> -->
                             </div>
                         </div>
                     </div>
@@ -195,21 +261,22 @@
                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <th>ID</th>
-                                                <th>M.Company</th>
-                                                <th>C.Company</th>
-                                                <th>SC.Company</th>
-                                                <th>Employee Code</th>
-                                                <th>Employee Name</th>
-                                                <th>Father/Hus Name</th>
-                                                <th>DOJ</th>
-                                                <th>DOR</th>
-                                                <th>DOB</th>
-                                                <th>Village</th>
-                                                <th>PF</th>
-                                                <th>ESI</th>
-                                                <th>Mobile Number</th>
-                                                <th>Status</th>
-                                                
+                                            <th>M.Company</th>
+                                            <th>C.Company</th>
+                                            <th>SC.Company</th>
+                                            <th>Own Company</th>
+                                            <th>Employee Code</th>
+                                            <th>Employee Name</th>
+                                            <th>Father/Hus Name</th>
+                                            <th>DOJ</th>
+                                            <th>DOR</th>
+                                            <th>DOB</th>
+                                            <th>Village</th>
+                                            <th>PF</th>
+                                            <th>ESI</th>
+                                            <th>Mobile Number</th>
+                                            <th>Status</th>
+
                                         </thead>
                                         <tbody>
                                         </tbody>
@@ -293,23 +360,29 @@
                 ajax: {
                     url: '{{ route('report.employee_report.data') }}',
                     data: function(d) {
+                        console.log(d);
+
                         // Add additional parameters here if needed
                         d.company_type = $('#company_type').val();
                         d.joining_date = $('#joining_date').val();
                         d.companies = $('#companies').val();
-                        d.employee = $('#employee').val();  // New employee filter
-            d.from_date = $('#from_date').val(); // New from date filter
-            d.last_date = $('#last_date').val();
+                        d.employee = $('#employee').val();
+                        d.employee_code = $('#employee_code').val(),
+                            d.from_date = $('#from_date').val();
+                        d.last_date = $('#last_date').val();
+                        d.employee_status = $('#employee_status').val();
+                        d.date_filter = $('input[name="date_filter"]:checked').val();
+                        d.own_company = $('#own_company').val();
                     }
                 },
                 columns: [{
                         data: 'id',
                         name: 'id',
                         render: function(data, type, row, meta) {
-                            console.log('data.......', data);
-                            console.log('type.......', type);
-                            console.log('row.......', row);
-                            console.log('name.......', name);
+                            // console.log('data.......', data);
+                            // console.log('type.......', type);
+                            // console.log('row.......', row);
+                            // console.log('name.......', name);
 
                             return meta.row + 1;
                         }
@@ -465,7 +538,7 @@
 
 
                             var reportName =
-                            "Employee Report"; // Change this to the desired report name
+                                "Employee Report"; // Change this to the desired report name
                             var reportElement = $('<h2>').css({
                                 'text-align': 'center',
                                 'font-weight': 'bold',
@@ -519,48 +592,72 @@
                 // Reload DataTable with updated parameters
                 table.ajax.reload();
             });
-             $('#employee').on('change', function() {
-    table.ajax.reload();
-});
+            $('#employee').on('change', function() {
+                table.ajax.reload();
+            });
 
-// Event listener for from date
-$('#from_date').on('change', function() {
-    table.ajax.reload();
-});
+            $('#employee_code').on('change', function() {
+                table.ajax.reload();
+            });
 
-// Event listener for last date
-$('#last_date').on('change', function() {
-    table.ajax.reload();
-});
+            // Event listener for from date
+            $('#from_date').on('change', function() {
+                table.ajax.reload();
+            });
+
+            // Event listener for last date
+            $('#last_date').on('change', function() {
+                table.ajax.reload();
+            });
+            $('#employee_status').on('change', function() {
+                table.ajax.reload();
+            });
+
+            $('input[name="date_filter"]').on('change', function() {
+                // Reload DataTable with new filter
+                table.ajax.reload();
+            });
+            $('#own_company').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
+
 
         });
 
-                function updateSelectedFilters() {
-    var selectedFilters = '';
-    var companyType = $('#company_type option:selected').text();
-    var companies = $('#companies option:selected').text();
-    var joiningDate = $('#joining_date').val();
-    var employee = $('#employee option:selected').text();
-    var fromDate = $('#from_date').val();
-    var lastDate = $('#last_date').val();
+        function updateSelectedFilters() {
+            var selectedFilters = '';
+            var companyType = $('#company_type option:selected').text();
+            var companies = $('#companies option:selected').text();
+            var joiningDate = $('#joining_date').val();
+            var employee = $('#employee option:selected').text();
+            var employee_code = $('#employee_code option:selected').text();
+            var fromDate = $('#from_date').val();
+            var lastDate = $('#last_date').val();
+            var employeeStatus = $('#employee_status option:selected').text();
+            var ownCompany = $('#own_company option:selected').text(); // Get selected own company filter
 
-    selectedFilters += 'Company Type: ' + companyType + ', ';
-    selectedFilters += 'Companies: ' + companies + ', ';
-    selectedFilters += 'Joining Date: ' + joiningDate + ', ';
-    selectedFilters += 'Employee: ' + employee + ', ';
-    selectedFilters += 'From Date: ' + fromDate + ', ';
-    selectedFilters += 'Last Date: ' + lastDate;
+            selectedFilters += 'Company Type: ' + companyType + ', ';
+            selectedFilters += 'Companies: ' + companies + ', ';
+            selectedFilters += 'Joining Date: ' + joiningDate + ', ';
+            selectedFilters += 'Employee: ' + employee + ', ';
+            selectedFilters += 'Employee Code: ' + employee_code + ', ';
+            selectedFilters += 'From Date: ' + fromDate + ', ';
+            selectedFilters += 'Last Date: ' + lastDate + ', ';
+            selectedFilters += 'Employee Status: ' + employeeStatus + ', ';
+            selectedFilters += 'Own Company: ' + ownCompany; // Add own company filter to the selected filters
 
-    $('#selectedFilters').text(selectedFilters);
-}
+            $('#selectedFilters').text(selectedFilters);
+        }
+
         function edit(id) {
-            console.log("inside");
+            // console.log("inside");
             // Redirect to the user edit page or open a modal for editing
             window.location.href = '/job_allocation/delivery_challan/edit/' + id;
         }
 
         function deleteCustomer(id) {
-            console.log("inside")
+            // console.log("inside")
             // Send an AJAX request to delete the user
             if (confirm('Are you sure you want to delete this Delivery challan?')) {
                 $.ajax({
@@ -593,7 +690,7 @@ $('#last_date').on('change', function() {
                     $('#created_at').html(formattedCreatedAt);
                     $('#updated_at').html(formattedUpdatedAt);
 
-                    console.log(formattedCreatedAt);
+                    // console.log(formattedCreatedAt);
                     $('#detailsModal').modal('show');
                 }
             });
@@ -614,34 +711,45 @@ $('#last_date').on('change', function() {
             return `${day}-${month}-${year} ${strTime}`;
         }
     </script>
+
+
     <script>
-    $(document).ready(function() {
-        // Initialize Select2 on both dropdowns
-        $('#company_type, #companies').select2({
-            placeholder: "Select an option",
-            allowClear: true
-        });
-
-        // Company Type select change event
-        $('#company_type').on('change', function() {
-            var selectedTypeId = $(this).val(); // Get the selected company type
-
-            // Reset the companies dropdown
-            var $companiesSelect = $('#companies');
-            $companiesSelect.empty().append('<option value="">Select Company</option>'); // Reset options
-
-            // Filter and append companies based on selected company type
-            var companies = @json($company); // Get all companies
-            companies.forEach(function(company) {
-                if (company.company_type_id == selectedTypeId) {
-                    var option = new Option(company.company_name, company.id);
-                    $companiesSelect.append(option);
-                }
+        $(document).ready(function() {
+            // Initialize Select2 on both dropdowns
+            $('#company_type, #companies').select2({
+                placeholder: "Select an option",
+                allowClear: true
             });
 
-            // Re-initialize Select2 after appending new options
-            $companiesSelect.trigger('change');
+            // Company Type select change event
+            $('#company_type').on('change', function() {
+                var selectedTypeId = $(this).val(); // Get the selected company type
+
+                // Reset the companies dropdown
+                var $companiesSelect = $('#companies');
+                $companiesSelect.empty().append(
+                    '<option value="">Select Company</option>'); // Reset options
+
+                // Filter and append companies based on selected company type
+                var companies = @json($company); // Get all companies
+                companies.forEach(function(company) {
+                    if (company.company_type_id == selectedTypeId) {
+                        var option = new Option(company.company_name, company.id);
+                        $companiesSelect.append(option);
+                    }
+                });
+
+                // Re-initialize Select2 after appending new options
+                $companiesSelect.trigger('change');
+            });
         });
-    });
-</script>
+    </script>
+    <script>
+        document.querySelectorAll('input[name="date_filter"]').forEach(function(element) {
+            element.addEventListener('change', function() {
+                document.getElementById('filterForm').submit(); // Submit the form on selection
+            });
+        });
+    </script>
+
 @endsection
