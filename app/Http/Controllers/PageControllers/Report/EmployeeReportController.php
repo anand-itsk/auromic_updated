@@ -11,49 +11,75 @@ use Yajra\DataTables\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\EmployeeReportExport;
 use App\Models\CompanyHierarchy;
+use App\Models\ResigningReason;
 
 class EmployeeReportController extends Controller
 {
-     public function index()
+    public function index()
     {
+        // $companyType = CompanyType::all();
+        // $company = Company::all();
+        // $employees = Employee::all();
+
+
+        $latestEmployeenumber = Employee::latest()->first();
+        if ($latestEmployeenumber) {
+            $employeeNumber = (int)substr($latestEmployeenumber->employee_code, 2); // Extract the numeric part
+            $employeeNumber++;
+        } else {
+            $employeeNumber = 1;
+        }
+
+        // Format the employee number with leading zeros
+        $formattedEmployeeNumber = 'EMP' . str_pad($employeeNumber, STR_PAD_LEFT);
+
+        $existingEmployee = Employee::where('employee_code', $formattedEmployeeNumber)->exists();
+
+        // If the generated code already exists, generate a new one
+        while ($existingEmployee) {
+            $employeeNumber++;
+            $formattedEmployeeNumber = 'EMP' . str_pad($employeeNumber, STR_PAD_LEFT);
+            $existingEmployee = Employee::where('employee_code', $formattedEmployeeNumber)->exists();
+        }
+        $resigning_reason = ResigningReason::all();
+
         $companyType = CompanyType::all();
         $company = Company::all();
         $employees = Employee::all();
-        return view ('pages.report.employee_report',compact('companyType','company', 'employees'));
-
+        return view('pages.master.employee.index', compact('formattedEmployeeNumber', 'resigning_reason', 'companyType', 'company', 'employees'));
     }
-public function indexData(Request $request)
-{
-    // Get the company type filter value from the request
-    $companyType = $request->input('company_type');
+    public function indexData(Request $request)
+    {
+        // Get the company type filter value from the request
+        $companyType = $request->input('company_type');
 
-    // Get the joining date filter value from the request
-    $joiningDate = $request->input('joining_date');
+        // Get the joining date filter value from the request
+        $joiningDate = $request->input('joining_date');
 
-     $company = $request->input('companies');
+        $company = $request->input('companies');
         $employee = $request->input('employee');
         $fromDate = $request->input('from_date');
         $lastDate = $request->input('last_date');
-    // Query employees with relationships
-    $query = Employee::with('company', 'addresses', 'familyMembers', 'resigningReason');
+        // Query employees with relationships
+        $query = Employee::with('company', 'addresses', 'familyMembers', 'resigningReason');
 
-    // Apply company type filter if provided
-    if ($companyType) {
-        $query->whereHas('company', function ($q) use ($companyType) {
-            $q->where('company_type_id', $companyType);
-        });
-    }
+        // Apply company type filter if provided
+        if ($companyType) {
+            $query->whereHas('company', function ($q) use ($companyType) {
+                $q->where('company_type_id', $companyType);
+            });
+        }
 
-    // Apply joining date filter if provided
-    if ($joiningDate) {
-        $query->whereDate('joining_date', $joiningDate);
-    }
+        // Apply joining date filter if provided
+        if ($joiningDate) {
+            $query->whereDate('joining_date', $joiningDate);
+        }
 
-    if ($company) {
-    // Convert $company to an array if it's not already one
-    $companies = is_array($company) ? $company : [$company];
-    $query->whereIn('company_id', $companies);
-}
+        if ($company) {
+            // Convert $company to an array if it's not already one
+            $companies = is_array($company) ? $company : [$company];
+            $query->whereIn('company_id', $companies);
+        }
 
         if ($employee) {
             $query->where('id', $employee);
@@ -65,8 +91,8 @@ public function indexData(Request $request)
             $query->whereBetween('created_at', [$fromDate, $lastDate]);
         }
 
-    // Get employees data
-    $employees = $query->get();
+        // Get employees data
+        $employees = $query->get();
 
         $data = $employees->map(function ($employee) {
             $companyType = $employee->company->companyType->id ?? null;
@@ -119,12 +145,10 @@ public function indexData(Request $request)
         });
 
         return DataTables::of($data)->make(true);
+    }
 
-}
-
- public function export(Request $request)
+    public function export(Request $request)
     {
         return Excel::download(new EmployeeReportExport($request->all()), 'EmployeeReportDatas_' . date('d-m-Y') . '.xlsx');
     }
-
 }
