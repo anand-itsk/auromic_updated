@@ -15,6 +15,7 @@ use App\Models\ProductColor;
 use App\Models\DeliveryChallan;
 use App\Models\OrderDetail;
 use App\Models\CompanyHierarchy;
+use App\Models\JobGiving;
 use App\Models\OrderNo;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -31,10 +32,39 @@ class DeliveryChallanController extends Controller
     // Index DataTable
     public function indexData()
     {
-        $delivery_challans = DeliveryChallan::with('company','subCompany', 'order_details', 'productSize', 'productColor', 'orderDetails.productModel')->get();
-        dd($delivery_challans);
-        return DataTables::of($delivery_challans)->make(true);
+        $delivery_challans = DeliveryChallan::with([
+            'company',
+            'subCompany',
+            'order_details',
+            'orderDetails.productModel',
+            'productSize',
+            'productColor',
+            'orderDetails.productModel.product'
+        ])->get();
+
+        return DataTables::of($delivery_challans)
+        ->addColumn('order_number', function ($deliveryChallan) {
+            return $deliveryChallan->order_details->customer_order_no ?? '-'; // Add order number here
+        })
+        ->addColumn('model_code', function ($deliveryChallan) {
+            return $deliveryChallan->orderDetails->productModel->model_code ?? '-';
+        })
+        ->addColumn('model_name', function ($deliveryChallan) {
+            return $deliveryChallan->orderDetails->productModel->product->name ?? '-';
+        })
+        ->addColumn('product_color', function ($deliveryChallan) {
+            return $deliveryChallan->orderDetails->productColor->name ?? '-';
+        })
+        ->addColumn('product_size', function ($deliveryChallan) {
+            return $deliveryChallan->orderDetails->productSize->name ?? '-';
+        })
+        ->addColumn('wages_product', function ($deliveryChallan) {
+            return $deliveryChallan->orderDetails->productModel->wages_product ?? '-';
+        })
+        ->make(true);
     }
+
+
     // Create Page
     public function create()
     {
@@ -289,9 +319,25 @@ $subCompanyName = $companyHierarchy ? $companyHierarchy->company->company_name :
     {
         $delivery_challan = DeliveryChallan::find($id);
 
+        // Check if there are any JobGiving records associated with this dc_id
+        $jobGivingRecords = JobGiving::where('dc_id', $id)->exists();
+
+        if ($jobGivingRecords) {
+            // Return an error message if dc_id is associated with JobGiving records
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Cannot delete this Delivery Challan as it is associated with existing Job Giving records.'
+            ]);
+        }
+
+        // Delete the Delivery Challan if no associated JobGiving records
         $delivery_challan->delete();
 
-        return redirect()->route('job_allocation.delivery_challan.index')->with('success', 'Order Allocation Deleted successfully!');
+        // Return a success message
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Delivery Challan deleted successfully!'
+        ]);
     }
 
     public function export(Request $request)

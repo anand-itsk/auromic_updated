@@ -27,10 +27,18 @@ class JobReallocationController extends Controller
         $data = $Job_Giving->map(function ($job_giving) {
         return [
             'id' => $job_giving->id,
-            'employee_name' => $job_giving->employee->employee_name ?? null,
-            'customer_order_no' => $job_giving->order_details->orderNo->customer_order_no ?? null,
-            'dc_no' => $job_giving->delivery_chellan->dc_no ?? null,
-            'status' => $job_giving->status ?? null,
+                'company_name' => $job_giving->employee->company->company_name ?? null,
+                'employee_code' => $job_giving->employee->employee_code ?? null,
+                'employee_name' => $job_giving->employee->employee_name ?? null,
+                'customer_order_no' => $job_giving->order_details->orderNo->customer_order_no ?? null,
+                'dc_no' => $job_giving->deliveryChellan->dc_no ?? null,
+                'model_code' => $job_giving->product_model->model_code ?? null,
+                'model_name' => $job_giving->product_model->model_name ?? null,
+                'product_size' => $job_giving->product_model->productSize->code ?? null,
+                'product_color' => $job_giving->order_details->productColor->code ?? null,
+                'quantity' => $job_giving->quantity ?? null,
+                'given_date' => $job_giving->created_at->format('d/m/Y') ?? null,
+                'status' => $job_giving->status ?? null,
         ];
     });
         return DataTables::of($data)->make(true);

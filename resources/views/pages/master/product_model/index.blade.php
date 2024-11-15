@@ -241,7 +241,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title mt-0">Update</h5>
+                <h5 class="modal-title mt-0">History</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -251,7 +251,8 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th scope="col">Product Model ID</th>
+                            <th scope="col">Model Code</th>
+                            <th scope="col">Model Name</th>
                             <th scope="col">Wages Product</th>
                             <th scope="col">Date</th>
                         </tr>
@@ -278,8 +279,14 @@
                 serverSide: true,
                 ajax: '{{ route('master.product_model.data') }}',
                 columns: [{
+
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        render: function(data, type, row, meta) {
+
+
+                            return meta.row + 1;
+                        }
                     },
                     {
                         data: 'product.name',
@@ -500,7 +507,7 @@
             });
         }
 
-         function openModal1(id) {
+        function openModal1(id) {
     // Show the modal
     $('#updateModal1').modal('show');
 
@@ -517,9 +524,10 @@
                 // Loop through the response data and add rows to the table
                 response.data.forEach(function(item) {
                     var row = `<tr>
-                        <td>${item.product_model_id}</td>
-                        <td>${item.wages_product}</td>
-                        <td>${item.date}</td>
+                        <td>${item.model_code}</td>  <!-- Display model_code -->
+                        <td>${item.model_name}</td>  <!-- Display model_name -->
+                        <td>${item.wages_product}</td>  <!-- Display wages_product -->
+                        <td>${item.formatted_created_at}</td>  <!-- Display formatted created_at -->
                     </tr>`;
                     tableBody.append(row);
                 });

@@ -15,6 +15,7 @@ class JobGiving extends Model
         'status',
         'product_model_id',
         'quantity',
+        'pending_quantity',
         'weight',
         'excess',
         'shortage',

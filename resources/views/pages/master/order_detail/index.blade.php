@@ -197,8 +197,14 @@
                 serverSide: true,
                 ajax: '{{ route('master.order_detail.data') }}',
                 columns: [{
+
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        render: function(data, type, row, meta) {
+
+
+                            return meta.row + 1;
+                        }
                     },
                     {
                         data: 'order_no.last_order_number',

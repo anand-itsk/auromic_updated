@@ -216,6 +216,16 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
+                                        <label for="customer_code" class="col-sm-2 col-form-label">
+                                            Balance Quantity
+                                        </label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input type="text" class="form-control" name="balance_quantity"
+                                                id="balance_quantity" readonly value="{{ $Job_Giving->pending_quantity ?? '' }}">
+                                            @error('balance_quantity')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
 
                                         <label for="customer_code" class="col-sm-2 col-form-label">
                                             Received Quantity
@@ -444,10 +454,11 @@
                 var dValue = parseFloat($("#conveyance").val()) || 0;
                 var wages = $('#wages').val();
                 var totalQuantity = $('#total_quantity').val();
+                var balanceQuantity = $('#balance_quantity').val();
 
                 var total = (aValue * wages) + dValue + bValue - cValue;
                 var net = (aValue * wages);
-                var pendingQuantity = totalQuantity - aValue;
+                var pendingQuantity = balanceQuantity - aValue;
                 $("#pending_quantity").val(pendingQuantity); // You can adjust the precision as needed
                 $("#total_amount").val(total.toFixed(2)); // You can adjust the precision as needed
                 $("#net_amount").val(net.toFixed(2)); // You can adjust the precision as needed

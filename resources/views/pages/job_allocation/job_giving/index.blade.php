@@ -39,17 +39,17 @@
                         <div class="col-12">
                             <div class="card m-b-30">
                                 <div class="d-flex justify-content-between p-2 bd-highlight">
-                                     @error('file')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
+                                    @error('file')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
                                     <div>
                                         <button id="deleteButton" class="icon-button delete-color"
                                             title="Delete Selected Record"><i class="fa fa-user-times"></i></button>
                                     </div>
                                     <div>
                                         <!-- <button type="button" class="icon-button common-color" data-toggle="modal"
-                                            data-target=".bs-example-modal-center" title="Job Giving"><i
-                                                class="fa fa-upload"></i></button> -->
+                                                    data-target=".bs-example-modal-center" title="Job Giving"><i
+                                                        class="fa fa-upload"></i></button> -->
 
                                         <a href="{{ route('job_allocation.job_giving.create') }}"
                                             class="icon-link common-color" title="Create Job Giving">
@@ -74,8 +74,8 @@
                                                     <div class="col-12">
                                                         <div class="card m-b-30">
                                                             <div class="card-body">
-                                                                <form action=""
-                                                                    method="POST" enctype="multipart/form-data">
+                                                                <form action="" method="POST"
+                                                                    enctype="multipart/form-data">
                                                                     @csrf
                                                                     <input type="file" name="file" required>
                                                                     <button type="submit"
@@ -104,16 +104,22 @@
                                     </div><!-- /.modal-dialog -->
                                 </div>
                                 <div class="card-body">
-                                    <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap"
+                                    <table id="users-table" class="table table-striped table-bordered table-responsive nowrap"
                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
+                                                <th>Company name</th>
+                                                <th>Employee Code</th>
                                                 <th>Employee Name</th>
+                                                <th>Model Code</th>
+                                                <th>Model Name</th>
+                                                <th>Product Size</th>
+                                                <th>Product Color</th>
+                                                <th>Quantity</th>
+                                                <th>Given Date</th>
                                                 <th>Order ID</th>
                                                 <th>DC NO</th>
-                                                <th>Model</th>
-                                                <th>Quantity</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -194,8 +200,30 @@
                 serverSide: true,
                 ajax: '{{ route('job_allocation.job_giving.data') }}',
                 columns: [{
+
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        render: function(data, type, row, meta) {
+
+
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        data: 'company_name',
+                        name: 'company_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+
+                    },
+                    {
+                        data: 'employee_code',
+                        name: 'employee_code',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+
                     },
                     {
                         data: 'employee_name',
@@ -203,7 +231,54 @@
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
-                        
+
+                    },
+                    {
+                        data: 'model_code',
+                        name: 'model_code',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+
+                    },
+                    {
+                        data: 'model_name',
+                        name: 'model_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+
+                    },
+                    {
+                        data: 'product_size',
+                        name: 'product_size',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+
+                    },
+                    {
+                        data: 'product_color',
+                        name: 'product_color',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+
+                    },
+                    {
+                        data: 'quantity',
+                        name: 'quantity',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+
+                    },
+                    {
+                        data: 'given_date',
+                        name: 'given_date',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
 
                     {
@@ -219,24 +294,10 @@
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
-                        
+
                     },
-                    {
-                        data: 'model_name',
-                        name: 'model_name',
-                        render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-                        
-                    },
-                    {
-                        data: 'quantity',
-                        name: 'quantity',
-                        render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-                        
-                    },
+
+
                     {
                         data: 'status',
                         name: 'status',
@@ -244,7 +305,7 @@
                             return data ? data : '-';
                         }
                     },
-
+                    
                     {
                         data: null,
                         orderable: false,
@@ -269,7 +330,8 @@
                     {
                         text: 'Export All',
                         action: function(e, dt, node, config) {
-                            window.location.href = '/job_allocation/job_giving/export?' + $.param(dt.ajax
+                            window.location.href = '/job_allocation/job_giving/export?' + $.param(dt
+                                .ajax
                                 .params());
                         }
                     }

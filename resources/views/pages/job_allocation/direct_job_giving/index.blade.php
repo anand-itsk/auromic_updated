@@ -184,9 +184,14 @@ $(document).ready(function() {
         ajax: '{{ route('job_allocation.direct_job_giving.data') }}',
         columns: [{
 
-                data: 'id',
-                name: 'id'
-            },
+                        data: 'id',
+                        name: 'id',
+                        render: function(data, type, row, meta) {
+
+
+                            return meta.row + 1;
+                        }
+                    },
             {
                 data: 'employee.employee_name',
                 name: 'employee.employee_name',

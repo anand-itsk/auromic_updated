@@ -93,12 +93,20 @@
                                     </div><!-- /.modal-dialog -->
                                 </div>
                                 <div class="card-body">
-                                    <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap"
+                                    <table id="users-table" class="table table-striped table-bordered table-responsive nowrap"
                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
+                                               <th>ID</th>
+                                                <th>Company name</th>
+                                                <th>Employee Code</th>
                                                 <th>Employee Name</th>
+                                                <th>Model Code</th>
+                                                <th>Model Name</th>
+                                                <th>Product Size</th>
+                                                <th>Product Color</th>
+                                                <th>Quantity</th>
+                                                <th>Given Date</th>
                                                 <th>Order ID</th>
                                                 <th>DC NO</th>
                                                 <th>Status</th>
@@ -261,12 +269,82 @@
                 serverSide: true,
                 ajax: '{{ route('job_allocation.job_received.data') }}',
                 columns: [{
+
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        render: function(data, type, row, meta) {
+
+
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        data: 'company_name',
+                        name: 'company_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+
+                    },
+                    {
+                        data: 'employee_code',
+                        name: 'employee_code',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+
                     },
                     {
                         data: 'employee_name',
                         name: 'employee_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+
+                    },
+                    {
+                        data: 'model_code',
+                        name: 'model_code',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+
+                    },
+                    {
+                        data: 'model_name',
+                        name: 'model_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+
+                    },
+                    {
+                        data: 'product_size',
+                        name: 'product_size',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+
+                    },
+                    {
+                        data: 'product_color',
+                        name: 'product_color',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+
+                    },
+                    {
+                        data: 'quantity',
+                        name: 'quantity',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+
+                    },
+                    {
+                        data: 'given_date',
+                        name: 'given_date',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
@@ -285,7 +363,10 @@
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
+
                     },
+
+
                     {
                         data: 'status',
                         name: 'status',
@@ -293,6 +374,7 @@
                             return data ? data : '-';
                         }
                     },
+                    
 
                     {
                         data: null,
