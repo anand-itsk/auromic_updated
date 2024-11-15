@@ -195,11 +195,21 @@ class ProductModelController extends Controller
     }
 
 
-
     public function getProductModelHistory($id)
     {
-        // Fetch ProductModelHistory data based on the product_model_id
-        $history = ProductModelHistory::where('product_model_id', $id)->get();
+        // Fetch ProductModelHistory data and join with the product_models table to get model_code and model_name
+        $history = ProductModelHistory::where('product_model_id', $id)
+            ->join('product_models', 'product_models.id', '=', 'product_model_histories.product_model_id')
+            ->select('product_model_histories.*', 'product_models.model_code', 'product_models.model_name')
+            ->get();
+
+        // Format created_at as 'd/m/Y H:i' (day/month/year hour:minute)
+        foreach ($history as $item) {
+            // Format the created_at as 'd/m/Y h:i A' where:
+            // d = day, m = month, Y = year, h = hour (12-hour format), i = minutes, A = AM/PM
+            $item->formatted_created_at = \Carbon\Carbon::parse($item->created_at)->format('d/m/Y h:i A');
+        }
+
 
         // Return the data as JSON response
         if ($history->isEmpty()) {
@@ -208,6 +218,7 @@ class ProductModelController extends Controller
 
         return response()->json(['success' => true, 'data' => $history]);
     }
+
 
 
 }

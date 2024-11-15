@@ -1238,52 +1238,51 @@
         });
     </script>
 
-    <script>
-        $(document).ready(function() {
-            $('#employeeForm').on('submit', function(e) {
-                e.preventDefault(); // Prevent the default form submission
+   <script>
+    $(document).ready(function() {
+        $('#employeeForm').on('submit', function(e) {
+            e.preventDefault(); // Prevent the default form submission
 
-                // Disable the submit button to prevent multiple submissions
-                $('button[type="submit"]').prop('disabled', true).text('Submitting...');
+            // Disable the submit button to prevent multiple submissions
+            $('button[type="submit"]').prop('disabled', true).text('Submitting...');
 
-                $.ajax({
-                    url: $(this).attr('action'),
-                    method: 'POST',
-                    data: new FormData(this),
-                    processData: false, // Don't process the data
-                    contentType: false, // Let jQuery handle the content type
-                    success: function(res) {
-                        // Handle success
-
-
-                        if (res.errors) {
-
-                            console.log('res.errors.................', res.errors);
-                            if (res.errors.employee_code) {
-                                $('#employee_code_err').text(res.errors.employee_code[0]);
-                                $('#employee_code_err').removeClass('d-none');
-                            }
-                        } else if (res.success) {
-                            // Display success message
-                            alert('Employee created successfully!');
-                            // Optionally reset the form here
-                            $('#employeeForm')[0].reset();
-                        } else {
-                            // Handle validation errors or any other errors
-                            alert('Error: ' + res.message);
+            $.ajax({
+                url: $(this).attr('action'),
+                method: 'POST',
+                data: new FormData(this),
+                processData: false, // Don't process the data
+                contentType: false, // Let jQuery handle the content type
+                success: function(res) {
+                    // Handle success
+                    if (res.errors) {
+                        console.log('res.errors.................', res.errors);
+                        if (res.errors.employee_code) {
+                            $('#employee_code_err').text(res.errors.employee_code[0]);
+                            $('#employee_code_err').removeClass('d-none');
                         }
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle AJAX error
-                        alert('Something went wrong. Please try again.');
-                    },
-                    complete: function() {
-                        // Re-enable the submit button
-                        $('button[type="submit"]').prop('disabled', false).text('Create');
+                    } else if (res.success) {
+                        // Display success message
+                        alert('Employee created successfully!');
+
+                        // Redirect to the edit page
+                        window.location.href = res.redirect_url;
+                    } else {
+                        // Handle validation errors or any other errors
+                        alert('Error: ' + res.message);
                     }
-                });
+                },
+                error: function(xhr, status, error) {
+                    // Handle AJAX error
+                    alert('Something went wrong. Please try again.');
+                },
+                complete: function() {
+                    // Re-enable the submit button
+                    $('button[type="submit"]').prop('disabled', false).text('Create');
+                }
             });
         });
-    </script>
+    });
+</script>
+
 
 @endsection

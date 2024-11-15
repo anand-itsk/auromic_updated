@@ -5,25 +5,32 @@
 @section('content')
     @include('links.css.datatable.datatable-css')
     @include('links.css.table.custom-css')
+    <!-- Toastr CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+
+<!-- Toastr JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <div class="wrapper">
         <div class="container-fluid">
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    {{ session('success') }}
-                </div>
-            @endif
+           @if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
 
-            @if (session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    {{ session('error') }}
-                </div>
-            @endif
+@if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
+
             <div class="row">
                 <div class="col-sm-12">
                     <div class="page-title-box">
@@ -202,8 +209,14 @@
                 serverSide: true,
                 ajax: '{{ route('job_allocation.delivery_challan.data') }}',
                 columns: [{
+
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        render: function(data, type, row, meta) {
+
+
+                            return meta.row + 1;
+                        }
                     },
                     {
                         data: 'company.company_name',
@@ -215,8 +228,8 @@
                 
 
                     {
-                        data: 'order_details.customer_order_no',
-                        name: 'order_details.customer_order_no',
+                        data: 'order_number',
+                        name: 'order_number',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
@@ -251,12 +264,12 @@
                             return data ? data : '-';
                         }
                     },
-                     { data: 'orderDetails.productModel.model_code', name: 'orderDetails.productModel.model_code' },
-{ data: 'model_name', name: 'model_name' },
-{ data: 'product_color', name: 'product_color' },
-{ data: 'product_size', name: 'product_size' },
-{ data: 'wages_product', name: 'wages_product' },
-
+                    { data: 'model_code', name: 'model_code', render: function(data) { return data ? data : '-'; } },
+            { data: 'model_name', name: 'model_name', render: function(data) { return data ? data : '-'; } },
+            { data: 'product_color', name: 'product_color', render: function(data) { return data ? data : '-'; } },
+            { data: 'product_size', name: 'product_size', render: function(data) { return data ? data : '-'; } },
+            { data: 'wages_product', name: 'wages_product', render: function(data) { return data ? data : '-'; } },
+                    
 
                     {
                         data: null,
@@ -327,22 +340,28 @@
             window.location.href = '/job_allocation/delivery_challan/edit/' + id;
         }
 
-        function deleteCustomer(id) {
-            console.log("inside")
-            // Send an AJAX request to delete the user
-            if (confirm('Are you sure you want to delete this Delivery challan?')) {
-                $.ajax({
-                    url: '/job_allocation/delivery_challan/delete/' + id,
-                    type: 'get',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                    },
-                    success: function(result) {
-                        table.ajax.reload(); // Reload the DataTable
-                    }
-                });
+      function deleteCustomer(id) {
+    if (confirm('Are you sure you want to delete this Delivery Challan?')) {
+        $.ajax({
+            url: '/job_allocation/delivery_challan/delete/' + id,
+            type: 'get',
+            data: {
+                _token: '{{ csrf_token() }}',
+            },
+            success: function(result) {
+                if (result.status === 'success') {
+                    toastr.success(result.message);  // Show success toast
+                    table.ajax.reload(); 
+                } else {
+                    toastr.error(result.message);  // Show error toast
+                }
+            },
+            error: function() {
+                toastr.error('An error occurred while attempting to delete the Delivery Challan.');
             }
-        }
+        });
+    }
+}
 
         function showDetails(userId) {
             // Fetch user details using AJAX
@@ -382,4 +401,13 @@
             return `${day}-${month}-${year} ${strTime}`;
         }
     </script>
+    <script>
+    toastr.options = {
+        "closeButton": true,
+        "progressBar": true,
+        "positionClass": "toast-top-right",  // Position of the toast
+        "timeOut": "3000"  // Duration in milliseconds
+    };
+</script>
+
 @endsection

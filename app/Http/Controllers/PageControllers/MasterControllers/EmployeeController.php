@@ -327,7 +327,7 @@ class EmployeeController extends Controller
     {
         // dd($request->same_as_permanent_address);
         $rules = [
-            'employee_code' => 'required|unique:employees,employee_code',
+            'employee_code' => 'required',
             'employee_name' => 'required',
             'dob'   => 'required',
             'joining_date' => 'required'
@@ -794,10 +794,10 @@ class EmployeeController extends Controller
     // Store Date
     public function store(Request $request)
     {
-        $validator =   Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'employee_code' => 'required|unique:employees,employee_code',
             'employee_name' => 'required',
-            'dob'   => 'required',
+            'dob' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -808,22 +808,20 @@ class EmployeeController extends Controller
         }
 
         $auth_id = auth()->id();
-        $validatedData = $request->validate([
-            'employee_code' => 'required|max:255',
-            'employee_name' => 'required|max:255',
-            'dob' => 'required',
-            // 'company_id'=>'required'
-        ]);
 
         $input = $request->all();
         $input['company_id'] = 1;
+
         $employee = new Employee();
         $employee = $employee->create($input);
 
-
-        return redirect()->route('master.employees.edit', ['id' => $employee->id])
-            ->with('success', 'Employee created successfully');
+        // Send back the success response with redirect URL
+        return response()->json([
+            'success' => true,
+            'redirect_url' => route('master.employees.edit', ['id' => $employee->id])
+        ]);
     }
+
     // Edit
     public function edit(Address $address, $id)
     {

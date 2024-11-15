@@ -14,4 +14,9 @@ class ProductModelHistory extends Model
         'wages_product ',
         'date'
     ];
+
+    public function productModel()
+    {
+        return $this->belongsTo(ProductModel::class);
+    }
 }
