@@ -81,13 +81,13 @@ class JobReceivedController extends Controller
 
         // Update the pending_quantity in the JobGiving table
         $jobGivingId = $input['job_giving_id'];
-        $receivedQuantity = $input['received_quantity'];
+        $pendingQuantity = $input['pending_quantity'];
 
         // Retrieve the JobGiving record and update its pending_quantity
         $jobGiving = JobGiving::find($jobGivingId);
         if ($jobGiving) {
             // Store the received_quantity in pending_quantity
-            $jobGiving->pending_quantity = $receivedQuantity; // Decrease the pending_quantity by the received quantity
+            $jobGiving->pending_quantity = $pendingQuantity; // Decrease the pending_quantity by the received quantity
             $jobGiving->save();
         }
 

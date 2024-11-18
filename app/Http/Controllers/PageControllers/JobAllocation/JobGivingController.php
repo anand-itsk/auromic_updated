@@ -13,6 +13,7 @@ use App\Models\OrderNo;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Exports\JobgivingExport;
+use App\Imports\JobGivingImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class JobGivingController extends Controller

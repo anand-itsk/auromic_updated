@@ -103,6 +103,15 @@
     <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
 </div>
+ <label for="product_size" class="col-sm-2 col-form-label">Total Received Quantity</label>
+<div class="col-sm-4 mb-4">
+   
+    <input class="form-control" type="text" name="total_quantity" id="total_quantity" readonly value="{{ $direct_job_giving->total_quantity?? '' }}">
+
+    @error('product_size')
+    <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+</div>
 <label for="customer_code" class="col-sm-2 col-form-label">Product Color</label>
 <div class="col-sm-4 mb-4">
     <select class="form-control select2" name="product_color_id" id="product_color_id">

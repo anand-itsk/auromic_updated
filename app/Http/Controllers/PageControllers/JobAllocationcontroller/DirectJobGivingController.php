@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\DirectJobGiving;
 use App\Exports\DirectJobGivingExport;
+use App\Imports\DirectJobGivingImport;
 use App\Models\ProductModel;
 use App\Models\FinishingProductModel;
 use App\Models\ProductSize;
@@ -26,6 +27,7 @@ class DirectJobGivingController extends Controller
     {
 
         $direct_job_giving = DirectJobGiving::with(['employee', 'finishingProduct', 'productSize', 'productColor'])->get();
+        // dd($direct_job_giving);
         return DataTables::of($direct_job_giving)->make(true);
     }
 
@@ -50,6 +52,7 @@ class DirectJobGivingController extends Controller
 
             'product_name' => $finishingProduct->product->name,
             'product_size' => $finishingProduct->productSize->code,
+            'product_size_id' => $finishingProduct->productSize->id,
             'meters_one_product' => $finishingProduct->meters_one_product,
 
         ]);
@@ -113,7 +116,7 @@ class DirectJobGivingController extends Controller
         $direct_job_giving =  DirectJobGiving::find($id);
         $direct_job_giving->employee_id = $request->input('employee_id');
         $direct_job_giving->finishing_product_models_id = $request->input('finishing_product_models_id');
-        $direct_job_giving->product_size_id = $request->input('product_size_id');
+        $direct_job_giving->product_size_id = $request->input('product_size');
         $direct_job_giving->product_color_id = $request->input('product_color_id');
         $direct_job_giving->meter = $request->input('meter');
         $direct_job_giving->clothes_by_cutting = $request->input('clothes_by_cutting');
