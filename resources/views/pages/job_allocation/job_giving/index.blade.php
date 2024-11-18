@@ -48,8 +48,8 @@
                                     </div>
                                     <div>
                                         <!-- <button type="button" class="icon-button common-color" data-toggle="modal"
-                                                    data-target=".bs-example-modal-center" title="Job Giving"><i
-                                                        class="fa fa-upload"></i></button> -->
+                                                            data-target=".bs-example-modal-center" title="Job Giving"><i
+                                                                class="fa fa-upload"></i></button> -->
 
                                         <a href="{{ route('job_allocation.job_giving.create') }}"
                                             class="icon-link common-color" title="Create Job Giving">
@@ -104,7 +104,8 @@
                                     </div><!-- /.modal-dialog -->
                                 </div>
                                 <div class="card-body">
-                                    <table id="users-table" class="table table-striped table-bordered table-responsive nowrap"
+                                    <table id="users-table"
+                                        class="table table-striped table-bordered table-responsive nowrap"
                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
@@ -305,7 +306,7 @@
                             return data ? data : '-';
                         }
                     },
-                    
+
                     {
                         data: null,
                         orderable: false,
@@ -314,7 +315,7 @@
                             return `
                         <button onclick="edit(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
                         <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
-                       
+
                     `;
                         }
 
