@@ -141,8 +141,8 @@ class EmployeeController extends Controller
                 // Get employees with other statuses
                 $otherEmployees = (clone $query)->where('status', '!=', 'working')->get();
                 $employees = $workingEmployees->merge($otherEmployees);
-       
-        
+
+
           $data = $employees->map(function ($employee) {
             $companyType = $employee->company->companyType->id ?? null;
             $masterCompany = $clientCompany = null;
@@ -711,7 +711,7 @@ class EmployeeController extends Controller
 
     public function updateNominee(Request $request, $id)
     {
-        // dd($request);   
+        // dd($request);
         $request->validate([
             'family_member_id' => 'required',
         ]);
@@ -738,7 +738,7 @@ class EmployeeController extends Controller
         //     $address = $familyMember->addresses()->where('address_type_id', 4)->first();
         // } else {
         //     $address = new Address();
-        //     $address->address_type_id = 4; 
+        //     $address->address_type_id = 4;
         // }
 
         // Update or set office address details for finance detail
