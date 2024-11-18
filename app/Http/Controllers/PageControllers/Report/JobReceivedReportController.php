@@ -41,6 +41,8 @@ public function indexData(Request $request)
     // Retrieve JobReceived data with eager loading
     $jobReceivedData = JobReceived::with(['jobGiving.employee', 'jobGiving.deliveryChellan.company','jobGiving.product_model','jobGiving.order_details']);
 
+    // dd($jobReceivedData);
+
  if ($companyType) {
             $jobReceivedData->whereHas('jobGiving.deliveryChellan.company', function ($q) use ($companyType) {
                 $q->where('company_type_id', $companyType);

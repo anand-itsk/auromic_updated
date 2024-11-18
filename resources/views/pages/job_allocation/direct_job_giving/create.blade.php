@@ -125,7 +125,7 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-
+ <input class="form-control" type="hidden" name="product_size_id" id="product_size_id">
                                         <label for="meter_for_one_product" class="col-sm-2 col-form-label">Meter for one
                                             product</label>
                                         <div class="col-sm-4 mb-4">
@@ -261,6 +261,7 @@
 
                             $('#product_name').val(data.product_name);
                             $('#product_size').val(data.product_size);
+                             $('#product_size_id').val(data.product_size_id);
                             $('#meter_for_one_product').val(data.meters_one_product);
 
                         }

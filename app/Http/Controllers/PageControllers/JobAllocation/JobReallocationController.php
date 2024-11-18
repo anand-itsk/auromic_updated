@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\JobReallocationExport;
+use App\Models\DeliveryChallan;
+use Illuminate\Support\Facades\DB;
 
 class JobReallocationController extends Controller
 {
@@ -46,53 +48,82 @@ class JobReallocationController extends Controller
     // store
     public function store(Request $request)
     {
-        // Retrieve all input data
-        $input = $request->all();
+        // dd($request);
+        $validated = $request->validate([
+            'job_giving_id' => 'required|exists:job_givings,id',
+            'employee_id' => 'required|exists:employees,id',
+            'receiving_date' => 'required|date',
+            'quantity' => 'required|numeric|min:1',
+            'available_quantity' => 'required|numeric|min:1',
+            'company_id' => 'required|exists:companies,id',
+        ]);
 
-        // Create a new JobAllocationHistory instance and set the data
-        $jobReceived = new JobAllocationHistory();
-        $jobReceived->job_giving_id = $input['job_giving_id'];
-        $jobReceived->employee_id = $input['employee_id'];
-        $jobReceived->receving_date = $input['receiving_date'];
-        $jobReceived->quantity = $input['quantity'];
+        DB::beginTransaction();
+        try {
+            // Fetch job giving data
+            $jobGivingData = JobGiving::find($validated['job_giving_id']);
+            if (!$jobGivingData) {
+                return redirect()->route('job_allocation.job_reallocation.index')
+                ->with('error', 'Invalid Job Giving ID');
+            }
 
-        // Check if the quantity exceeds the available balance quantity
-        $balanceQuantity = $input['available_quantity'];
-        if ($jobReceived->quantity > $balanceQuantity) {
+            // Check if quantity exceeds balance
+            if ($validated['quantity'] > $validated['available_quantity']) {
+                return redirect()->route('job_allocation.job_reallocation.index')
+                ->with('error', 'No available quantity for this order');
+            }
+
+            // Save JobAllocationHistory
+            $jobReceived = new JobAllocationHistory();
+            $jobReceived->job_giving_id = $validated['job_giving_id'];
+            $jobReceived->employee_id = $validated['employee_id'];
+            $jobReceived->receving_date = $validated['receiving_date'];
+            $jobReceived->quantity = $validated['quantity'];
+            $jobReceived->save();
+            
+            $newPendingQuantity = $jobGivingData->pending_quantity - $validated['quantity'];
+
+            // dd($newPendingQuantity);
+            // Save new JobGiving
+            $newJobGiving = new JobGiving();
+            $newJobGiving->employee_id = $validated['employee_id'];
+            $newJobGiving->order_id = $jobGivingData->order_id;
+            $newJobGiving->product_model_id = $jobGivingData->product_model_id;
+            $newJobGiving->dc_id = $jobGivingData->dc_id;
+            $newJobGiving->weight = $jobGivingData->weight;
+            $newJobGiving->excess = $jobGivingData->excess;
+            $newJobGiving->shortage = $jobGivingData->shortage;
+            $newJobGiving->days = $jobGivingData->days;
+            $newJobGiving->quantity = $jobGivingData->quantity;
+            $newJobGiving->pending_quantity = $newPendingQuantity;
+            $newJobGiving->save();
+
+            // Save new DeliveryChallan
+            $deliveryChallan = DeliveryChallan::find($jobGivingData->dc_id);
+            if ($deliveryChallan) {
+                $newDeliveryChallan = $deliveryChallan->replicate();
+                $newDeliveryChallan->company_id = $validated['company_id'];
+                $newDeliveryChallan->save();
+            }
+
+            // Save to JobReceived with complete_quantity
+            $jobReceivedEntry = new JobReceived();
+            $jobReceivedEntry->job_giving_id = $validated['job_giving_id'];
+            $jobReceivedEntry->receving_date = $validated['receiving_date'];
+            $jobReceivedEntry->complete_quantity = $validated['quantity'];
+            $jobReceivedEntry->total_amount = $validated['total_amount'];
+            $jobReceivedEntry->net_amount = $validated['total_amount']; 
+            $jobReceivedEntry->save();
+
+
+            DB::commit();
             return redirect()->route('job_allocation.job_reallocation.index')
-            ->with('error', 'No available quantity for this order');
-        }
-
-        // Retrieve data from JobGiving using the job_giving_id
-        $jobGivingData = JobGiving::find($input['job_giving_id']);
-
-        if (!$jobGivingData) {
+            ->with('success', 'Job Reallocation Created and Linked Successfully');
+        } catch (\Exception $e) {
+            DB::rollback();
             return redirect()->route('job_allocation.job_reallocation.index')
-            ->with('error', 'Invalid Job Giving ID');
+            ->with('error', 'An error occurred: ' . $e->getMessage());
         }
-
-        // Create a new JobGiving record and set additional data from the retrieved job_giving data
-        $newJobGiving = new JobGiving();
-        $newJobGiving->employee_id = $input['employee_id'];
-        $newJobGiving->order_id = $jobGivingData->order_id;
-        $newJobGiving->product_model_id = $jobGivingData->product_model_id; // Retrieved from JobGiving
-        $newJobGiving->dc_id = $jobGivingData->dc_id;       // Retrieved from JobGiving
-        $newJobGiving->weight = $jobGivingData->weight;          // Set from input
-        $newJobGiving->excess = $jobGivingData->excess;           // Set from input
-        $newJobGiving->shortage = $jobGivingData->shortage;       // Set from input
-        $newJobGiving->days = $jobGivingData->days;
-        $newJobGiving->quantity = $input['quantity'];      // Set from input
-
-        // Save the new JobGiving record
-        $newJobGiving->save();
-
-        // Optionally, link this new job_giving_id to the JobAllocationHistory if needed
-        $jobReceived->job_giving_id = $newJobGiving->id; // Linking the new job_giving_id
-        $jobReceived->save(); // Update the JobAllocationHistory with the new job_giving_id
-
-        // Redirect back with success message
-        return redirect()->route('job_allocation.job_reallocation.index')
-        ->with('success', 'Job Reallocation Created and Linked Successfully');
     }
 
 
@@ -111,8 +142,10 @@ class JobReallocationController extends Controller
                 $query->with('companyType');
                  }])->get();
 
-        // dd($JobGiving);
-        return view('pages.job_allocation.job_reallocation.edit', compact('Job_Giving','jobReceivedData','id','employee'));
+        $completeQuantitySum = intval(JobReceived::where('job_giving_id', $id)
+        ->sum('complete_quantity'));
+        // dd($completeQuantitySum);
+        return view('pages.job_allocation.job_reallocation.edit', compact('Job_Giving','jobReceivedData','id','employee', 'completeQuantitySum'));
     }
 
     public function cancelJobGiving($id)

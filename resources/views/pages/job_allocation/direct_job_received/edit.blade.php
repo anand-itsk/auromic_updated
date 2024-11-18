@@ -180,10 +180,19 @@
                                             @enderror
                                         </div>
 
+                                        <label for="order_date" class="col-sm-2 col-form-label">Total Received Quantity</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="total_quantity" id="total_quantity"
+                                                readonly value="{{ $direct_job_giving->total_quantity ?? '-' }}">
+                                            @error('meter')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
                                     </div>
                                     <hr>
                                     <div class="form-group row">
-                                        <label for="order_date" class="col-sm-2 col-form-label ">Receiving
+                                        <label for="order_date" class="col-sm-2 col-form-label mandatory ">Receiving
                                             Date</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="date" name="receiving_date"
@@ -193,7 +202,7 @@
                                             @enderror
                                         </div>
 
-                                        <label for="order_date" class="col-sm-2 col-form-label ">Receiving
+                                        <label for="order_date" class="col-sm-2 col-form-label mandatory">Receiving
                                             Quantity</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="received_quantity"
@@ -203,17 +212,17 @@
                                             @enderror
                                         </div>
 
-                                        <label for="cutting_charges" class="col-sm-2 col-form-label ">Cutting
+                                        <label for="cutting_charges" class="col-sm-2 col-form-label mandatory">Cutting
                                             Charges</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="cutting_charges"
-                                                id="cutting_charges" required="">
+                                                id="cutting_charges" required="" value="{{ $direct_job_giving->finishingProduct->cutting_charge ?? '' }}">
                                             @error('cutting_charges')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
 
-                                        <label for="usage_meters" class="col-sm-2 col-form-label ">Usage Meters</label>
+                                        <label for="usage_meters" class="col-sm-2 col-form-label mandatory ">Usage Meters</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="usage_meters"
                                                 id="usage_meters" required="">
@@ -222,7 +231,7 @@
                                             @enderror
                                         </div>
 
-                                        <label for="wastage_meters" class="col-sm-2 col-form-label ">Wastage
+                                        <label for="wastage_meters" class="col-sm-2 col-form-label mandatory ">Wastage
                                             Meters</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="wastage_meters"

@@ -89,13 +89,17 @@
                                     style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Employee</th>
-                                            <th>finishing Product Model</th>
-                                            <th>Product Color</th>
-                                             <th>Meter</th>
-                                            
-                                            <th>Action</th>
+                                             <th>ID</th>
+                                                <th>Employee Code</th>
+                                                <th>Employee Name</th>
+                                                <th>FP Model Code</th>
+                                                <th>FP Model Name</th>
+                                                <th>Product Size</th>
+                                                <th>Product Color</th>
+                                                <th>Meter</th>
+                                                <th>Given Date</th>
+                                                <th>Cutting</th>
+                                                <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -284,36 +288,81 @@ $(document).ready(function() {
                             return meta.row + 1;
                         }
                     },
-             {
-                data: 'employee.employee_name',
-                name: 'employee.employee_name',
-                render: function(data, type, row) {
+                    {
+                        data: 'employee.employee_code',
+                        name: 'employee.employee_code',
+                        render: function(data, type, row) {
                             return data ? data : '-';
                         }
-            },
-              {
-                data: 'finishing_product.model_code',
-                name: 'finishing_product.model_code',
-                 render: function(data, type, row) {
+                    },
+                    {
+                        data: 'employee.employee_name',
+                        name: 'employee.employee_name',
+                        render: function(data, type, row) {
                             return data ? data : '-';
                         }
-            },
-            
-            {
-                data: 'product_color.name',
-                name: 'product_color.name',
-                render: function(data, type, row) {
+                    },
+                    {
+                        data: 'finishing_product.model_code',
+                        name: 'finishing_product.model_code',
+                        render: function(data, type, row) {
                             return data ? data : '-';
                         }
-            },
-            {
-                data: 'meter',
-                name: 'meter',
-                render: function(data, type, row) {
+                    },
+
+                    {
+                        data: 'finishing_product.model_name',
+                        name: 'finishing_product.model_name',
+                        render: function(data, type, row) {
                             return data ? data : '-';
                         }
-            },
-           
+                    },
+
+                    {
+                        data: 'product_size.code',
+                        name: 'product_size.code',
+
+                    },
+                    {
+                        data: 'product_color.code',
+                        name: 'product_color.code',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                    },
+                    {
+                        data: 'meter',
+                        name: 'meter',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                    },
+                    {
+                        data: 'created_at',
+                        name: 'created_at',
+                        render: function(data, type, row) {
+                            if (data) {
+                                // Convert to d/m/Y format
+                                const date = new Date(data);
+                                const day = String(date.getDate()).padStart(2, '0');
+                                const month = String(date.getMonth() + 1).padStart(2,
+                                '0'); // Months are zero-based
+                                const year = date.getFullYear();
+                                return `${day}/${month}/${year}`;
+                            }
+                            return '-';
+                        }
+                    },
+                    {
+                        data: 'clothes_by_cutting',
+                        name: 'clothes_by_cutting',
+                        render: function(data, type, row) {
+                            // Convert 0/1 to No/Yes
+                            return data == 1 ? 'Yes' : 'No';
+                        }
+                    },
+
+
            
             {
                 data: null,

@@ -221,7 +221,8 @@
                                         </label>
                                         <div class="col-sm-4 mb-4">
                                             <input type="text" class="form-control" name="balance_quantity"
-                                                id="balance_quantity" readonly value="{{ $Job_Giving->pending_quantity ?? '' }}">
+                                                id="balance_quantity" readonly
+                                                value="{{ $Job_Giving->pending_quantity ?? '' }}">
                                             @error('balance_quantity')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -281,7 +282,7 @@
                                                 id="Incentive_status">
                                                 <option value="No">No</option>
                                                 <option value="Yes">Yes</option>
-                                                
+
                                             </select>
                                             @error('Incentive_status')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
@@ -335,7 +336,8 @@
                                             Incentive
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <input type="text" class="form-control" name="incentive" id="incentive" disabled>
+                                            <input type="text" class="form-control" name="incentive" id="incentive"
+                                                disabled>
                                             @error('incentive')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -458,7 +460,19 @@
 
                 var total = (aValue * wages) + dValue + bValue - cValue;
                 var net = (aValue * wages);
-                var pendingQuantity = balanceQuantity - aValue;
+
+                if (balanceQuantity !== "") { // Check if balanceQuantity is not empty
+                    pendingQuantity = balanceQuantity - aValue;
+                } else {
+                    pendingQuantity = totalQuantity - aValue;
+                }
+
+
+
+
+
+
+
                 $("#pending_quantity").val(pendingQuantity); // You can adjust the precision as needed
                 $("#total_amount").val(total.toFixed(2)); // You can adjust the precision as needed
                 $("#net_amount").val(net.toFixed(2)); // You can adjust the precision as needed
@@ -474,21 +488,21 @@
         });
     </script>
     <script>
-$(document).ready(function(){
-    $('#Incentive_status').change(function(){
-        // console.log("Option changed");
-        var beforeDaysInput = $('#before_days');
-        var incentiveInput = $('#incentive');
+        $(document).ready(function() {
+            $('#Incentive_status').change(function() {
+                // console.log("Option changed");
+                var beforeDaysInput = $('#before_days');
+                var incentiveInput = $('#incentive');
 
-        if($(this).val() === 'No'){
-            beforeDaysInput.prop('disabled', true);
-            incentiveInput.prop('disabled', true);
-        } else {
-            beforeDaysInput.prop('disabled', false);
-            incentiveInput.prop('disabled', false);
-        }
-    });
-});
-</script>
+                if ($(this).val() === 'No') {
+                    beforeDaysInput.prop('disabled', true);
+                    incentiveInput.prop('disabled', true);
+                } else {
+                    beforeDaysInput.prop('disabled', false);
+                    incentiveInput.prop('disabled', false);
+                }
+            });
+        });
+    </script>
 
 @endsection
