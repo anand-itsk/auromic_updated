@@ -9,6 +9,7 @@ use App\Models\Employee;
 use App\Models\JobAllocationHistory;
 use App\Models\OrderNo;
 use App\Models\Product;
+use Carbon\Carbon;
 use Yajra\DataTables\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
@@ -19,8 +20,8 @@ class JobReallocationReportController extends Controller
     {
         $employee = Employee::all();
         $order_nos = OrderNo::all();
-        $product = Product::all(); 
-        
+        $product = Product::all();
+
 
         return view('pages.report.job_reallocation_report', compact('employee', 'order_nos', 'product'));
     }
@@ -31,7 +32,25 @@ class JobReallocationReportController extends Controller
 
         $orderNoId = $request->input('orderNoId');  // Retrieve order_id from request
         $productId = $request->input('product');   // Retrieve product_id from request
+        $fromDate = $request->input('from_date');
+        $lastDate = $request->input('last_date');
+        $dateFilter = $request->input('date_filter');
 
+
+        if ($dateFilter) {
+            if ($dateFilter === 'today') {
+                $query->whereDate('created_at', Carbon::today());
+            } elseif ($dateFilter === 'this_month') {
+                $query->whereMonth('created_at', Carbon::now()->month)
+                    ->whereYear('created_at', Carbon::now()->year);
+            } elseif ($dateFilter === 'last_month') {
+                $query->whereMonth('created_at', Carbon::now()->subMonth()->month)
+                    ->whereYear('created_at', Carbon::now()->subMonth()->year);
+            }
+        }
+        if ($fromDate && $lastDate) {
+            $query->whereBetween('receving_date', [$fromDate, $lastDate]);
+        }
         // Apply filter for employee
         if ($request->employee) {
             $query->whereHas('jobGiving.employee', function ($q) use ($request) {
@@ -58,18 +77,35 @@ class JobReallocationReportController extends Controller
             });
         }
 
-        // Return filtered data to DataTables
-        return DataTables::of($query)
-            ->addColumn('job_giving_name', function ($row) {
-                return $row->jobGiving ? $row->jobGiving->product_model->name : '-';
-            })
-            ->addColumn('employee_name', function ($row) {
-                return $row->jobGiving && $row->jobGiving->employee ? $row->jobGiving->employee->employee_name : '-';
-            })
-            ->make(true);
+
+        // Get the filtered data
+        $jobReallocationReport = $query->get();
+
+
+        // Prepare data for DataTables
+        $data = $jobReallocationReport->map(function ($job_received) {
+            return [
+                'id' => $job_received->id,
+                'company_name' => $job_received->jobGiving->employee->company->company_name ?? null,
+                'employee_code' => $job_received->jobGiving->employee->employee_code ?? null,
+                'employee_name' => $job_received->jobGiving->employee->employee_name ?? null,
+                'model_name' => $job_received->jobGiving->product_model->model_name,
+                'size' => $job_received->jobGiving->product_model->productSize->code,
+                'color' => $job_received->jobGiving->order_details->productColor->name,
+                // 'received_qty' => $job_received->complete_quantity,
+
+                // 'given_date' => $job_received->jobGiving->created_at->format('d/m/Y') ?? null,
+                'given_qty' => $job_received->quantity,
+                'total_amount' => $job_received->jobReceived->total_amount,
+                'receving_date' => $job_received->receving_date,
+                'incentive_fee' => $job_received->incentive_fee,
+            ];
+        });
+
+        // Convert the collection to an array
+        $dataArray = $data->toArray();
+
+        // Return data for DataTables
+        return DataTables::of($dataArray)->make(true);
     }
-
-
-
-
 }

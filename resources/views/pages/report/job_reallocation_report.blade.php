@@ -6,7 +6,7 @@
     @include('links.css.datatable.datatable-css')
     @include('links.css.table.custom-css')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <div class="wrapper">
         <div class="container-fluid">
             @if (session('success'))
@@ -18,7 +18,7 @@
                 </div>
             @endif
 
-             @if (session('error'))
+            @if (session('error'))
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -38,83 +38,125 @@
                         </div>
                         <h4 class="page-title">Job Reallocation Report</h4>
                     </div>
-                       <div class="card mb-2">
-                           <div class="card-body">
-                <div class="form-group row mb-0">
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <div class="form-group row mb-0">
 
-                <label for="customer_code" class="col-sm-2 col-form-label ">
-                            Employee
-                           </label>
-                           <div class="col-sm-2 mb-2">
-                              <select class="form-control select2" name="employee" id="employee">
-                                 <option value="">Select Type</option>
-                                  @foreach($employee as $type)
-            <option value="{{ $type->id }}">{{ $type->employee_name }}</option>
-        @endforeach
-                                 
-                              </select>
-                              @error('company_type')
-                              <span class="error" style="color: red;">{{ $message }}</span>
-                              @enderror
-                           </div>
-                            
-                                
-                               
-                           
-                                        <label for="customer_code" class="col-sm-2 col-form-label">
-                                            Received Date
-                                        </label>
-                                        <div class="col-sm-2 mb-2">
-                                            <input type="date" class="form-control"name="received_date" id="received_date">
-                                            @error('received_date')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
 
-                                           <label for="customer_code" class="col-sm-2 col-form-label ">
-                            Order No
-                           </label>
-                           <div class="col-sm-2 mb-2">
-                              <select class="form-control select2" name="order_id" id="order_id">
-                                 <option value="">Select Type</option>
-                                  @foreach($order_nos as $type)
-                   <option value="{{ $type->id }}">{{ $type->customer_order_no }}</option>
-                         @endforeach
-                                 
-                              </select>
-                              @error('order_id')
-                              <span class="error" style="color: red;">{{ $message }}</span>
-                              @enderror
-                           </div> 
-                           <label for="customer_code" class="col-sm-2 col-form-label ">
-                            Product 
-                           </label>
-                           <div class="col-sm-2 mb-2">
-                              <select class="form-control select2" name="product" id="product">
-                                 <option value="">Select Type</option>
-                                  @foreach($product as $type)
-                   <option value="{{ $type->id }}">{{ $type->name }}</option>
-                         @endforeach
-                                 
-                              </select>
-                              @error('order_id')
-                              <span class="error" style="color: red;">{{ $message }}</span>
-                              @enderror
-                           </div>
-                         
+                                {{-- date Starts --}}
+                                <div class="form-group col-sm-4 mb-2 d-flex align-item-center"
+                                    style="position: relative;top:8px">
 
-                           
-                           
-</div>
-</div>
-</div>
+                                    <div class="">
+                                        <label class="mx-0"><input type="radio" name="date_filter" value="today">
+                                            Today</label>
+                                        <label class="ml-4"><input type="radio" name="date_filter" value="this_month">
+                                            This
+                                            Month</label>
+                                        <label class="ml-4"><input type="radio" name="date_filter" value="last_month">
+                                            Last
+                                            Month</label>
+                                    </div>
+                                </div>
+                                {{-- date Ends --}}
+
+                                {{-- From Starts --}}
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    From Date
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <input type="date" class="form-control" name="from_date" id="from_date">
+                                    @error('company_type_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- From Ends --}}
+
+                                {{-- Last Start --}}
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    To Date
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <input type="date" class="form-control" name="last_date" id="last_date">
+                                    @error('company_type_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- Last Ends --}}
+
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Employee
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="employee" id="employee">
+                                        <option value="">Select Type</option>
+                                        @foreach ($employee as $type)
+                                            <option value="{{ $type->id }}">{{ $type->employee_name }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @error('company_type')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+
+
+
+                                <label for="customer_code" class="col-sm-2 col-form-label">
+                                    Received Date
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <input type="date" class="form-control"name="received_date" id="received_date">
+                                    @error('received_date')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Order No
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="order_id" id="order_id">
+                                        <option value="">Select Type</option>
+                                        @foreach ($order_nos as $type)
+                                            <option value="{{ $type->id }}">{{ $type->customer_order_no }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @error('order_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Product
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="product" id="product">
+                                        <option value="">Select Type</option>
+                                        @foreach ($product as $type)
+                                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @error('order_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="card m-b-30">
                                 <div class="d-flex justify-content-between p-2 bd-highlight">
-                                   
-                                
-                                    
+
+
+
                                 </div>
                                 {{-- Import Modal --}}
                                 <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog"
@@ -133,8 +175,8 @@
                                                     <div class="col-12">
                                                         <div class="card m-b-30">
                                                             <div class="card-body">
-                                                                <form action=""
-                                                                    method="POST" enctype="multipart/form-data">
+                                                                <form action="" method="POST"
+                                                                    enctype="multipart/form-data">
                                                                     @csrf
                                                                     <input type="file" name="file" required>
                                                                     <button type="submit"
@@ -153,8 +195,7 @@
                                                     .xlsx or .csv)</p>
                                                 <p class="text-muted font-14">To upload sample document, it
                                                     must have concern fields.
-                                                    <a href=""
-                                                        download>Click
+                                                    <a href="" download>Click
                                                         to download sample document</a>
                                                 </p>
 
@@ -163,18 +204,22 @@
                                     </div><!-- /.modal-dialog -->
                                 </div>
                                 <div class="card-body">
-                                    <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap"
+                                    <table id="users-table"
+                                        class="table table-striped table-bordered dt-responsive nowrap"
                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Job Giving</th>
-                                                 <th>Employee Name</th>
-                                                 <th>Recevied Date</th>
-                                                 <th>Quantity</th>
-                                                  
-                                               
-                                                        
+                                                <th>Company name</th>
+                                                <th>Employee code</th>
+                                                <th>Employee Name</th>
+                                                <th>Model Name</th>
+                                                <th>Size</th>
+                                                <th>Color</th>
+                                                {{-- <th>Job Giving</th> --}}
+                                                <th>Total Amount</th>
+                                                <th>Recevied Date</th>
+                                                <th>Quantity</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -246,34 +291,44 @@
 
 
     <script>
-            
         $(document).ready(function() {
-           var table;
-    
+            var table;
+
             table = $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
-                    ajax: {
-            url: '{{ route('report.job_allocation_report.data') }}',
-           data: function(d) {
-                d.employee = $('#employee').val();
-                d.received_date = $('#received_date').val();
-                 d.orderNoId = $('#order_id').val();
-                    d.product = $('#product').val(); 
-            }
-            
-        },
+                ajax: {
+                    url: '{{ route('report.job_allocation_report.data') }}',
+                    data: function(d) {
+                        d.employee = $('#employee').val();
+                        d.received_date = $('#received_date').val();
+                        d.orderNoId = $('#order_id').val();
+                        d.product = $('#product').val();
+                        d.from_date = $('#from_date').val();
+                        d.last_date = $('#last_date').val();
+                        d.date_filter = $('input[name="date_filter"]:checked').val();
+                    }
+
+                },
                 columns: [{
                         data: 'id',
                         name: 'id'
                     },
                     {
-                        data: 'job_giving_id',
-                        name: 'job_giving_id',
+                        data: 'company_name',
+                        name: 'company_name',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
-                        
+
+                    },
+                    {
+                        data: 'employee_code',
+                        name: 'employee_code',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+
                     },
                     {
                         data: 'employee_name',
@@ -281,7 +336,48 @@
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
-                        
+
+                    },
+
+                    {
+                        data: 'model_name',
+                        name: 'model_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+
+                    },
+                    {
+                        data: 'size',
+                        name: 'size',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+
+                    },
+                    {
+                        data: 'color',
+                        name: 'color',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+
+                    },
+                    // {
+                    //     data: 'job_giving_id',
+                    //     name: 'job_giving_id',
+                    //     render: function(data, type, row) {
+                    //         return data ? data : '-';
+                    //     }
+
+                    // },
+                    {
+                        data: 'total_amount',
+                        name: 'total_amount',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+
                     },
                     {
                         data: 'receving_date',
@@ -289,17 +385,18 @@
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
-                        
+
                     },
-                     {
-                        data: 'quantity',
-                        name: 'quantity',
+
+                    {
+                        data: 'given_qty',
+                        name: 'given_qty',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
-                        
+
                     },
-                
+
                 ],
                 order: [
                     [0, 'desc']
@@ -308,71 +405,75 @@
                 dom: 'lBfrtip',
                 buttons: [
                     'excel',
-                                        {
-        extend: 'print',
-        text: 'Print',
-        customize: function(win) {
-    // Initialize an empty title string
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        customize: function(win) {
+                            // Initialize an empty title string
 
 
-    var title = "";
-
-   
- $('#employee').on('change', function() {
-        table.ajax.reload();
-    });
-
-    // Trigger DataTable reload when received_date is selected
-    $('#received_date').on('change', function() {
-        table.ajax.reload();
-    });
-
-    // Set the constructed title to the <h1> element in the print view
-   var h1Element = $(win.document.body).find('h1');
-            h1Element.text(title);
-
-            // Decrease font size of company name in print view
-            h1Element.css('font-size', '18px');
-
-             var currentDate = new Date().toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'numeric',
-        day: 'numeric'
-    });
-    var dateElement = $('<div>').css({
-        'position': 'absolute',
-        'top': '20px',
-        'right': '20px',
-        'font-weight': 'bold',
-        'font-size': '16px'
-    }).text(currentDate);
-    $(win.document.body).append(dateElement);
+                            var title = "";
 
 
-     var reportName = "Job Received Report"; // Change this to the desired report name
-    var reportElement = $('<h2>').css({
-        'text-align': 'center',
-        'font-weight': 'bold',
-        'font-size': '24px',
-        'margin-top': '30px'
-    }).text(reportName);
-    $(win.document.body).prepend(reportElement);
-  
-               
+                            $('#employee').on('change', function() {
+                                table.ajax.reload();
+                            });
 
-$(win.document.body).find('table.dataTable').css('border-collapse', 'collapse');
-            $(win.document.body).find('table.dataTable th, table.dataTable td').css('text-align', 'center');
-    
-    $(win.document.head).append('<style>@page {size: landscape; }</style>');
+                            // Trigger DataTable reload when received_date is selected
+                            $('#received_date').on('change', function() {
+                                table.ajax.reload();
+                            });
 
-    // Add other customization as needed
-    $(win.document.body).find('table').addClass('compact');
-}
+                            // Set the constructed title to the <h1> element in the print view
+                            var h1Element = $(win.document.body).find('h1');
+                            h1Element.text(title);
+
+                            // Decrease font size of company name in print view
+                            h1Element.css('font-size', '18px');
+
+                            var currentDate = new Date().toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'numeric',
+                                day: 'numeric'
+                            });
+                            var dateElement = $('<div>').css({
+                                'position': 'absolute',
+                                'top': '20px',
+                                'right': '20px',
+                                'font-weight': 'bold',
+                                'font-size': '16px'
+                            }).text(currentDate);
+                            $(win.document.body).append(dateElement);
+
+
+                            var reportName =
+                                "Job Received Report"; // Change this to the desired report name
+                            var reportElement = $('<h2>').css({
+                                'text-align': 'center',
+                                'font-weight': 'bold',
+                                'font-size': '24px',
+                                'margin-top': '30px'
+                            }).text(reportName);
+                            $(win.document.body).prepend(reportElement);
+
+
+
+                            $(win.document.body).find('table.dataTable').css('border-collapse',
+                                'collapse');
+                            $(win.document.body).find('table.dataTable th, table.dataTable td').css(
+                                'text-align', 'center');
+
+                            $(win.document.head).append('<style>@page {size: landscape; }</style>');
+
+                            // Add other customization as needed
+                            $(win.document.body).find('table').addClass('compact');
+                        }
                     },
                     {
                         text: 'Export All',
                         action: function(e, dt, node, config) {
-                            window.location.href = '/report/job_received_report/export?' + $.param(dt.ajax
+                            window.location.href = '/report/job_received_report/export?' + $.param(
+                                dt.ajax
                                 .params());
                         }
                     }
@@ -380,30 +481,41 @@ $(win.document.body).find('table.dataTable').css('border-collapse', 'collapse');
 
             });
 
-    
-
-  
- $('#employee').on('change', function() {
-        // Reload DataTable with updated parameters
-        table.ajax.reload();
-    });
 
 
-    $('#received_date').on('change', function() {
-        // Reload DataTable with updated parameters
-        table.ajax.reload();
-    });
 
-     $('#order_id').on('change', function() {
-        // Reload DataTable with updated parameters
-        table.ajax.reload();
-    });
-
-    $('#product').on('change', function() {
-    table.ajax.reload();
-});
+            $('#employee').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
 
 
+            $('#received_date').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
+
+            $('#order_id').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
+
+            $('#product').on('change', function() {
+                table.ajax.reload();
+            });
+
+            $('#from_date').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
+            $('#last_date').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
+            $('input[name="date_filter"]').on('change', function() {
+                // Reload DataTable with new filter
+                table.ajax.reload();
+            });
 
 
             $('#deleteButton').click(function() {
@@ -433,31 +545,33 @@ $(win.document.body).find('table.dataTable').css('border-collapse', 'collapse');
                 }
             });
         });
-        
 
-function updateSelectedFilters() {
-  var selectedFilters = '';
- 
-  var employee = $('#employee option:selected').text();
 
-  var receivedDate = $('#received_date').val();
-  var product = $('#product option:selected').text();  // New filter
-var orderNoId = $('#order_id option:selected').text(); 
-  
-  
- 
-  selectedFilters += 'Employee: ' + employee + ', ';
- 
-  selectedFilters += 'Received Date: ' + receivedDate + ', ';
+        function updateSelectedFilters() {
+            var selectedFilters = '';
 
-  selectedFilters += 'Order No: ' + orderNo + ', ';
-    selectedFilters += 'Product: ' + product;
-  
-  
-  // Update the HTML content with selected filter values
-  $('#selectedFilters').text(selectedFilters);
-  
-}
+            var employee = $('#employee option:selected').text();
+
+            var receivedDate = $('#received_date').val();
+            var product = $('#product option:selected').text(); // New filter
+            var orderNoId = $('#order_id option:selected').text();
+            var fromDate = $('#from_date').val();
+            var lastDate = $('#last_date').val();
+
+
+            selectedFilters += 'Employee: ' + employee + ', ';
+
+            selectedFilters += 'Received Date: ' + receivedDate + ', ';
+
+            selectedFilters += 'Order No: ' + orderNo + ', ';
+            selectedFilters += 'Product: ' + product;
+            selectedFilters += 'From Date: ' + fromDate + ', ';
+            selectedFilters += 'Last Date: ' + lastDate;
+
+            // Update the HTML content with selected filter values
+            $('#selectedFilters').text(selectedFilters);
+
+        }
 
         function edit(id) {
             console.log("inside");
@@ -522,27 +636,27 @@ var orderNoId = $('#order_id option:selected').text();
     </script>
 
 
-<script>
-    $(document).ready(function() {
-        // Initialize Select2 on the customer dropdown
-     
-         $('#employee').select2({
-            placeholder: "Select Employee",
-            allowClear: true
-        });
-         $('#product').select2({
-            placeholder: "Select Product",
-            allowClear: true
-        });
-       
-          $('#order_id').select2({
-            placeholder: "Select Order",
-            allowClear: true
-        });
-        
-    });
-</script>
+    <script>
+        $(document).ready(function() {
+            // Initialize Select2 on the customer dropdown
 
-           
-    
+            $('#employee').select2({
+                placeholder: "Select Employee",
+                allowClear: true
+            });
+            $('#product').select2({
+                placeholder: "Select Product",
+                allowClear: true
+            });
+
+            $('#order_id').select2({
+                placeholder: "Select Order",
+                allowClear: true
+            });
+
+        });
+    </script>
+
+
+
 @endsection
