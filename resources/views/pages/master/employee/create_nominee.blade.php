@@ -69,7 +69,7 @@
                                             <label for="marital_status" class="col-sm-2 col-form-label">Marital
                                                 Status</label>
                                             <div class="col-sm-4 mb-4">
-                                                <select name="marital_status" id="marital_status" class="form-control">
+                                                <select name="marital_status" id="marital_status" class="form-control select2">
                                                     <option value="">Select</option>
                                                     <option value="single">Single</option>
                                                     <option value="married">Married</option>

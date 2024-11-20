@@ -22,7 +22,6 @@ class JobReceivedController extends Controller
     {
         $Job_Giving = JobGiving::with('employee', 'order_details', 'deliveryChellan', 'jobReceived')->get();
         $job_received = JobReceived::get();
-
          $data = $Job_Giving->map(function ($job_giving) {
         return [
                 'id' => $job_giving->id,

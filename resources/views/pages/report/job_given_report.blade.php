@@ -121,14 +121,14 @@
 
 
                                 <!-- <label for="customer_code" class="col-sm-2 col-form-label ">
-                                                                                                   Date
-                                                                                                   </label>
-                                                                                                   <div class="col-sm-2 mb-2">
-                                                                                                    <input type="date" class="form-control" name="date" id="">
-                                                                                                      @error('company_type_id')
+                                                                                                       Date
+                                                                                                       </label>
+                                                                                                       <div class="col-sm-2 mb-2">
+                                                                                                        <input type="date" class="form-control" name="date" id="">
+                                                                                                          @error('company_type_id')
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
-                                                                                                   </div> -->
+                                                                                                       </div> -->
 
                                 <label for="customer_code" class="col-sm-2 col-form-label ">
                                     Order No

@@ -131,7 +131,7 @@
                                 </div>
 
                                 <label for="customer_code" class="col-sm-2 col-form-label ">
-                                    Order No
+                                    Customer Order No
                                 </label>
                                 <div class="col-sm-2 mb-2">
                                     <select class="form-control select2" name="order_id" id="order_id">
@@ -160,7 +160,21 @@
                                         <span class="error" style="color: red;">{{ $message }}</span>
                                     @enderror
                                 </div>
+<label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Order No
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="order_no" id="order_no">
+                                        <option value="">Select Type</option>
+                                        @foreach ($order_nos as $type)
+                                            <option value="{{ $type->id }}">{{ $type->last_order_number }}</option>
+                                        @endforeach
 
+                                    </select>
+                                    @error('order_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
 
 
                                 {{-- Order Status Starts --}}
@@ -712,6 +726,7 @@
             });
         });
     </script>
+ 
     <script>
         $(document).ready(function() {
             // Initialize Select2 on the customer dropdown
@@ -720,13 +735,23 @@
                 allowClear: true
             });
             $('#order_id').select2({
-                placeholder: "Select Order",
+                placeholder: "Select Customer Order_no",
                 allowClear: true
             });
             $('#product').select2({
                 placeholder: "Select Product",
                 allowClear: true
             });
+
+            $('#order_status').select2({
+                placeholder: "Select Order Status",
+                allowClear: true
+            });
+             $('#order_no').select2({
+                placeholder: "Select Order No",
+                allowClear: true
+            });
+            
         });
     </script>
 

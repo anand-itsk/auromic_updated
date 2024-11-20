@@ -47,6 +47,7 @@ use App\Http\Controllers\PageControllers\JobAllocation\DeliveryChallanController
 use App\Http\Controllers\PageControllers\JobAllocation\JobGivingController;
 use App\Http\Controllers\PageControllers\JobAllocation\JobReallocationController;
 use App\Http\Controllers\PageControllers\JobAllocation\JobReceivedController;
+use App\Http\Controllers\PageControllers\JobAllocationController\DirectJobReceivedWithoutGiving;
 use App\Http\Controllers\PageControllers\Report\JobReallocationController as ReportJobReallocationController;
 use App\Http\Controllers\PageControllers\Report\JobReallocationReportController;
 use App\Http\Controllers\PageControllers\Report\OutStandingReport;
@@ -569,6 +570,22 @@ Route::get('/employee/{id}/family-members', [EmployeeController::class,'getFamil
             Route::get('/get-model-details/{id}', [DirectJobReceivedController::class, 'getModelDetails'])->name('get-models');
             Route::get('/get-finishing-product-details/{id}', [DirectJobReceivedController::class, 'getFinishingProductDetails']);
              Route::get('/export', [DirectJobReceivedController::class, 'export']);
+        });
+
+        Route::prefix('/direct_job_wc_giving')->name('direct_job_wc_giving.')->group(function () {
+            Route::get('/', [DirectJobReceivedWithoutGiving::class, 'index'])->name('index');
+            Route::get('/data', [DirectJobReceivedWithoutGiving::class, 'indexData'])->name('data');
+            Route::get('/create', [DirectJobReceivedWithoutGiving::class, 'create'])->name('create');
+            Route::post('/store', [DirectJobReceivedWithoutGiving::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [DirectJobReceivedWithoutGiving::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [DirectJobReceivedWithoutGiving::class, 'update'])->name('update');
+            Route::get('/delete/{id}',  [DirectJobReceivedWithoutGiving::class, 'destroy'])->name('delete');
+            Route::post('/delete/selected', [DirectJobReceivedWithoutGiving::class, 'deleteSelected']);
+            Route::get('/get-model-details/{id}', [DirectJobReceivedWithoutGiving::class, 'getModelDetails'])->name('get-models');
+            Route::post('/import', [DirectJobReceivedWithoutGiving::class, 'import'])->name('import');
+            Route::get('/export', [DirectJobReceivedWithoutGiving::class, 'export']);
+            Route::get('/get-finishing-product-details/{id}', [DirectJobReceivedWithoutGiving::class, 'getFinishingProductDetails']);
+            Route::get('/getProductSize', [DirectJobReceivedWithoutGiving::class, 'getProductSize']);
         });
     });
 

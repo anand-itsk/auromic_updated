@@ -107,7 +107,7 @@
 
                                         <label class="col-sm-2 col-form-label">Country</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control" name="family_country_id"
+                                            <select class="form-control select2" name="family_country_id"
                                                 id="family_country_id">
                                                 @foreach ($countries as $item)
                                                     <option value="{{ $item->id }}">
@@ -122,7 +122,7 @@
 
                                         <label class="col-sm-2 col-form-label">State</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control w-100" name="family_state_id"
+                                            <select class="form-control select2 w-100" name="family_state_id"
                                                 id="family_state_id" disabled>
                                             </select>
                                             @error('family_state_id')
@@ -132,7 +132,7 @@
 
                                         <label class="col-sm-2 col-form-label">District</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control w-100" name="family_district_id"
+                                            <select class="form-control select2 w-100" name="family_district_id"
                                                 id="family_district_id" disabled>
                                             </select>
                                             @error('family_district_id')

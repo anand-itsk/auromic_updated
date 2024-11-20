@@ -37,6 +37,7 @@ class OrderReportController extends Controller
         $fromDate = $request->input('from_date');
         $lastDate = $request->input('last_date');
         $orderNoId = $request->input('orderNoId');
+        $order_no = $request->input('order_no');
         $product = $request->input('product');
         $dateFilter = $request->input('date_filter');
         $order_status = $request->input('order_status');
@@ -93,6 +94,10 @@ class OrderReportController extends Controller
         // Filter by order number
         if ($orderNoId) {
             $order_details->where('order_no_id', $orderNoId);
+        }
+
+        if ($order_no) {
+            $order_details->where('order_no_id', $order_no);
         }
 
         // Filter by product

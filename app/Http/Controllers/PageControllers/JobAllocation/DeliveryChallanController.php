@@ -17,6 +17,7 @@ use App\Models\OrderDetail;
 use App\Models\CompanyHierarchy;
 use App\Models\JobGiving;
 use App\Models\OrderNo;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
@@ -27,24 +28,113 @@ class DeliveryChallanController extends Controller
     // Index Page
     public function index()
     {
-        return view('pages.job_allocation.delivery_challan.index');
+
+        $companyType = CompanyType::all();
+        $company = Company::all();
+        $order_nos = OrderNo::all();
+        $delivery_challan = DeliveryChallan::all();
+        $product_model = ProductModel::all();
+        $product_color = ProductColor::all();
+        $product_size =  ProductSize::all();
+        return view('pages.job_allocation.delivery_challan.index',compact('companyType','company', 'order_nos', 'delivery_challan', 'product_model', 'product_size','product_color'));
     }
     // Index DataTable
-    public function indexData()
+    public function indexData(Request $request)
     {
+        $companyType = $request->input('company_type');
+        $company = $request->input('companies');
+        $customer_order_no = $request->input('customer_order_no');
+        $dc_no = $request->input('dc_no');
+        $product_model = $request->input('product_model');
+        $product_color = $request->input('product_color');
+        $product_size = $request->input('product_size');
+        $fromDate = $request->input('from_date');
+        $lastDate = $request->input('last_date');
+        $dateFilter = $request->input('date_filter');
+
         $delivery_challans = DeliveryChallan::with([
-            'company',
-            'subCompany',
-            'order_details',
-            'orderDetails.productModel',
-            'productSize',
-            'productColor',
-            'orderDetails.productModel.product'
-        ])->get();
+                'company',
+                'subCompany',
+                'order_details',
+                'orderDetails.productModel',
+                'productSize',
+                'productColor',
+                'orderDetails.productModel.product'
+            ]);
+
+        // Date filter
+        if ($dateFilter) {
+            if ($dateFilter === 'today'
+            ) {
+                $delivery_challans->whereDate('created_at', Carbon::today());
+            } elseif ($dateFilter === 'this_month') {
+                $delivery_challans->whereMonth('created_at', Carbon::now()->month)
+                ->whereYear('created_at', Carbon::now()->year);
+            } elseif ($dateFilter === 'last_month') {
+                $delivery_challans->whereMonth('created_at', Carbon::now()->subMonth()->month)
+                ->whereYear('created_at', Carbon::now()->subMonth()->year);
+            }
+        }
+
+        // Company type filter
+        if ($companyType) {
+            $delivery_challans->whereHas('company', function ($q) use ($companyType) {
+                $q->where('company_type_id', $companyType);
+            });
+        }
+
+        // Company filter
+        if ($company) {
+            $companies = is_array($company) ? $company : [$company];
+            $delivery_challans->whereHas('company', function ($q) use ($companies) {
+                $q->whereIn('id', $companies);
+            });
+        }
+
+        // Customer order number filter
+        if ($customer_order_no) {
+            $delivery_challans->whereHas('order_details', function ($q) use ($customer_order_no) {
+                $q->where('customer_order_no', 'like', '%' . $customer_order_no . '%');
+            });
+        }
+
+        // DC number filter
+        if ($dc_no) {
+            $delivery_challans->where('dc_no', 'like', '%' . $dc_no . '%');
+        }
+
+        // Product model filter
+        if ($product_model) {
+            $delivery_challans->whereHas('orderDetails.productModel', function ($q) use ($product_model) {
+                $q->where('id', $product_model);
+            });
+        }
+
+        // Product color filter
+        if ($product_color) {
+            $delivery_challans->whereHas('orderDetails.productColor', function ($q) use ($product_color) {
+                $q->where('id', $product_color);
+            });
+        }
+
+        // Product size filter
+        if ($product_size) {
+            $delivery_challans->whereHas('orderDetails.productSize', function ($q) use ($product_size) {
+                $q->where('id', $product_size);
+            });
+        }
+
+        // Date range filter
+        if ($fromDate && $lastDate) {
+            $delivery_challans->whereBetween('dc_date', [$fromDate, $lastDate]);
+        }
 
         return DataTables::of($delivery_challans)
         ->addColumn('order_number', function ($deliveryChallan) {
-            return $deliveryChallan->order_details->customer_order_no ?? '-'; // Add order number here
+            return $deliveryChallan->order_details->customer_order_no ?? '-';
+        })
+        ->addColumn('dc_no', function ($deliveryChallan) {
+            return $deliveryChallan->dc_no ?? '-';
         })
         ->addColumn('model_code', function ($deliveryChallan) {
             return $deliveryChallan->orderDetails->productModel->model_code ?? '-';
@@ -61,9 +151,12 @@ class DeliveryChallanController extends Controller
         ->addColumn('wages_product', function ($deliveryChallan) {
             return $deliveryChallan->orderDetails->productModel->wages_product ?? '-';
         })
+        ->addColumn('can_delete', function ($deliveryChallan) {
+            // Check if the dc_id exists in the job_giving table
+            return !JobGiving::where('dc_id', $deliveryChallan->id)->exists();
+        })
         ->make(true);
     }
-
 
     // Create Page
     public function create()

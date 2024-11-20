@@ -156,7 +156,7 @@
                                         <label for="business_nature" class="col-sm-2 col-form-label">Business
                                             Nature</label>
                                         <div class="col-sm-2 mb-4">
-                                            <select class="form-control" name="business_nature" id="business_nature"
+                                            <select class="form-control select2" name="business_nature" id="business_nature"
                                                 onchange="showTextBox()">
                                                 <option value="{{ $company->business_nature }}">
                                                     {{ $company->business_nature }}</option>
@@ -347,7 +347,7 @@
 
                                         <label for="gender" class="col-sm-2 col-form-label">Gender</label>
                                         <div class="col-sm-2 mb-4">
-                                            <select class="form-control" name="gender" id="gender">
+                                            <select class="form-control select2" name="gender" id="gender">
                                                 <option value="{{ $company->authorisedPerson->gender ?? '' }}">
                                                     {{ $company->authorisedPerson->gender ?? '' }}</option>
                                                 <option value="male">Male</option>
@@ -426,7 +426,7 @@
                                     <div class="form-group row">
                                         <label for="blood_group" class="col-sm-2 col-form-label">Blood Group</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control" name="blood_group" id="blood_group">
+                                            <select class="form-control select2" name="blood_group" id="blood_group">
                                                 <option value="{{ $company->authorisedPerson->blood_group ?? '' }}">
                                                     {{ $company->authorisedPerson->blood_group ?? '' }}</option>
                                                 <option value="A+">A+</option>
