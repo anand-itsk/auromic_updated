@@ -36,7 +36,7 @@
                                     <div class="form-group row">
 <label class="col-sm-2 col-form-label">Finishing Product Model</label>
 <div class="col-sm-4 mb-4">
-    <select class="form-control" name="finishing_product_models_id" id="finishing_product_models_id">
+    <select class="form-control select2" name="finishing_product_models_id" id="finishing_product_models_id">
         <option value="">Select Finishing Model</option>
         @foreach ($finishingProduct as $finishingProducts)
             <option value="{{ $finishingProducts->id }}">{{ $finishingProducts->model_code}}/{{ $finishingProducts->model_name}}</option>

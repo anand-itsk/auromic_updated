@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\ProductSize;
 use App\Models\ProductModel;
 use App\Models\ProductModelHistory;
+use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 
@@ -18,16 +19,57 @@ class ProductModelController extends Controller
 {
     public function index()
     {
-        return view('pages.master.product_model.index');
+        $product = Product::all();
+        $product_model = ProductModel::all();
+        $product_size = ProductSize::all();
+        return view('pages.master.product_model.index',compact('product','product_model','product_size'));
     }
 
-    public function indexData()
+    public function indexData(Request $request)
     {
-        // Eager load the roles relationship
-        $product_model = ProductModel::with(['rawMaterial.rawMaterialType', 'product', 'productSize'])->get();
-        // dd($product_model[0]->rawMaterial->rawMaterialType);
-        return DataTables::of($product_model)->make(true);
+        $fromDate = $request->input('from_date');
+        $lastDate = $request->input('last_date');
+        $product = $request->input('product');
+        $product_model = $request->input('product_model');
+        $product_size = $request->input('product_size');
+        $dateFilter = $request->input('date_filter');
+
+        // Start building the query
+        $query = ProductModel::with(['rawMaterial.rawMaterialType', 'product', 'productSize']);
+
+        // Apply date filter
+        if ($dateFilter) {
+            if ($dateFilter === 'today') {
+                $query->whereDate('created_at', Carbon::today());
+            } elseif ($dateFilter === 'this_month') {
+                $query->whereMonth('created_at', Carbon::now()->month)
+                    ->whereYear('created_at', Carbon::now()->year);
+            } elseif ($dateFilter === 'last_month') {
+                $query->whereMonth('created_at', Carbon::now()->subMonth()->month)
+                    ->whereYear('created_at', Carbon::now()->subMonth()->year);
+            }
+        }
+
+        // Filter by date range
+        if ($fromDate && $lastDate) {
+            $query->whereBetween('date', [$fromDate, $lastDate]);
+        }
+
+        // Filter by product ID
+        if ($product) {
+            $query->where('product_id', $product);
+        }
+        if ($product_model) {
+            $query->where('id', $product_model);
+        }
+        if ($product_size) {
+            $query->where('product_size_id', $product_size);
+        }
+
+        // Execute the query and return the DataTables response
+        return DataTables::of($query)->make(true);
     }
+
 
     public function create()
     {

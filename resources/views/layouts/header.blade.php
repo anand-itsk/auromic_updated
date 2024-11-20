@@ -327,6 +327,11 @@
                                     <a href="{{ route('job_allocation.direct_job_received.index') }}">Direct Job
                                         Received</a>
                                 </li>
+
+                                 <li>
+                                    <a href="{{ route('job_allocation.direct_job_wc_giving.index') }}">Direct Job
+                                        Received without giving</a>
+                                </li>
                             @endcan
                         </ul>
                     </li>

@@ -1,12 +1,10 @@
 @extends('layouts.app')
 <!-- DataTables CSS -->
-@section('title', 'Customer')
+@section('title', 'Direct Job Giving')
 
 @section('content')
     @include('links.css.datatable.datatable-css')
     @include('links.css.table.custom-css')
-     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <div class="wrapper">
         <div class="container-fluid">
             @if (session('success'))
@@ -17,12 +15,6 @@
                     {{ session('success') }}
                 </div>
             @endif
-            <div class="alert alert-success alert-dismissible fade show" role="alert" style="display:none;">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    <strong></strong> Customer deleted successfully.
-</div>
             <div class="row">
                 <div class="col-sm-12">
                     <div class="page-title-box">
@@ -30,126 +22,30 @@
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="#">Auromics</a></li>
                                 <li class="breadcrumb-item"><a href="#">Master</a></li>
-                                <li class="breadcrumb-item active">Customers</li>
+                                <li class="breadcrumb-item active">Direct Job Received Without Giving</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Customers</h4>
-                    </div>
-
-                    <div class="card mb-2">
-                        <div class="card-body">
-                            <div class="form-group row mb-0">
-
-                                {{-- date Starts --}}
-                                <div class="form-group col-sm-4 mb-2 d-flex align-item-center"
-                                    style="position: relative;top:8px">
-
-                                    <div class="">
-                                        <label class="mx-0"><input type="radio" name="date_filter" value="today">
-                                            Today</label>
-                                        <label class="ml-4"><input type="radio" name="date_filter" value="this_month">
-                                            This
-                                            Month</label>
-                                        <label class="ml-4"><input type="radio" name="date_filter" value="last_month">
-                                            Last
-                                            Month</label>
-                                    </div>
-                                </div>
-                                {{-- date Ends --}}
-                                {{-- From Date starts --}}
-                                <label for="customer_code" class="col-sm-2 col-form-label ">
-                                    From Date
-                                </label>
-                                <div class="col-sm-2 mb-2">
-                                    <input type="date" class="form-control" name="from_date" id="from_date">
-                                    @error('from_date')
-                                        <span class="error" style="color: red;">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                {{-- From Date Ends --}}
-                                {{-- To Date Starts --}}
-                                <label for="customer_code" class="col-sm-2 col-form-label ">
-                                    To Date
-                                </label>
-                                <div class="col-sm-2 mb-2">
-                                    <input type="date" class="form-control" name="last_date" id="last_date">
-                                    @error('last_date')
-                                        <span class="error" style="color: red;">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                {{-- To Date Ends --}}
-
-
-
-                        
-
-                                <label for="customer_code" class="col-sm-2 col-form-label ">
-                                    Customer Name
-                                </label>
-                                <div class="col-sm-2 mb-2">
-                                    <select class="form-control select2" name="customer" id="customer">
-                                        <option value="">Select Type</option>
-                                        @foreach ($customer as $type)
-                                            <option value="{{ $type->id }}">{{ $type->customer_name }}</option>
-                                        @endforeach
-
-                                    </select>
-                                    @error('customer')
-                                        <span class="error" style="color: red;">{{ $message }}</span>
-                                    @enderror
-                                </div>
-
-                                <label for="customer_code" class="col-sm-2 col-form-label ">
-                                    Customer Code
-                                </label>
-                                <div class="col-sm-2 mb-2">
-                                    <select class="form-control select2" name="customer_code" id="customer_code">
-                                        <option value="">Select Type</option>
-                                        @foreach ($customer as $type)
-                                            <option value="{{ $type->id }}">{{ $type->customer_code }}</option>
-                                        @endforeach
-
-                                    </select>
-                                    @error('customer')
-                                        <span class="error" style="color: red;">{{ $message }}</span>
-                                    @enderror
-                                </div>
-
-                         
-                                {{-- Order Status Ends --}}
-
-
-                            </div>
-                        </div>
+                        <h4 class="page-title">Direct Job Received Without Giving</h4>
                     </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="card m-b-30">
                                 <div class="d-flex justify-content-between p-2 bd-highlight">
-                                    {{-- <div>
-                                    <button id="deleteButton" class="icon-button delete-color"
-                                        title="Delete Selected Record"><i class="fa fa-user-times"></i></button>
-                                </div> --}}
-                                 @error('file')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                    <div>
-                                        <button id="deleteButton" style="display: none;"
-                                            class="icon-button text-white bg-danger rounded fs-14"
-                                            title="Delete Selected Record">
-                                            Delete Selected Record</button>
-                                    </div>
-                                    <div>
-                                        <button type="button" class="icon-button common-color bg-secondary rounded"
-                                            data-toggle="modal" data-target=".bs-example-modal-center"
-                                            title="Import file"><i class="fa fa-upload text-white"></i></button>
 
-                                        <button class="icon-button  bg-primary rounded">
-                                            <a href="{{ route('master.customers.create') }}"
-                                                class="icon-link common-color text-white" title="Create Customer">
-                                                <i class="fa fa-user-plus"></i>
-                                            </a>
-                                        </button>
+                                    <div>
+                                        <button id="deleteButton" class="icon-button delete-color"
+                                            title="Delete Selected Record"><i class="fa fa-user-times"></i></button>
+                                    </div>
+
+                                    <div>
+                                        <!-- <button type="button" class="icon-button common-color" data-toggle="modal"
+                                                data-target=".bs-example-modal-center" title="Import file"><i
+                                                    class="fa fa-upload"></i></button> -->
+
+                                        <a href="{{ route('job_allocation.direct_job_wc_giving.create') }}"
+                                            class="icon-link common-color" title="Create Direct job Giving">
+                                            <i class="fa fa-user-plus"></i>
+                                        </a>
                                     </div>
                                 </div>
                                 {{-- Import Modal --}}
@@ -169,7 +65,8 @@
                                                     <div class="col-12">
                                                         <div class="card m-b-30">
                                                             <div class="card-body">
-                                                                <form action="{{ route('master.customers.import') }}"
+                                                                <form
+                                                                    action="{{ route('job_allocation.direct_job_wc_giving.import') }}"
                                                                     method="POST" enctype="multipart/form-data">
                                                                     @csrf
                                                                     <input type="file" name="file" required>
@@ -189,7 +86,7 @@
                                                     .xlsx or .csv)</p>
                                                 <p class="text-muted font-14">To upload sample document, it
                                                     must have concern fields.
-                                                    <a href="{{ asset('assets/sample_excels/customer_import.xlsx') }}"
+                                                    <a href="{{ asset('assets/sample_excels/direct_job_wc_giving_import.xlsx') }}"
                                                         download>Click
                                                         to download sample document</a>
                                                 </p>
@@ -204,10 +101,15 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Customer Code</th>
-                                                <th>Customer Name</th>
-                                                <th>Email</th>
-                                                <th>Mobile</th>
+                                                <th>Employee Code</th>
+                                                <th>Employee Name</th>
+                                                <th>FP Model Code</th>
+                                                <th>FP Model Name</th>
+                                                <th>Product Size</th>
+                                                <th>Meter</th>
+                                                <th>Wages</th>
+                                                <th>Received Qty</th>
+                                                <th>Date</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -226,13 +128,13 @@
                 aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <div class="modal-header py-3">
-                            <h5 class="modal-title  text-primary mt-0" id="detailsModalLabel">Customer Details</h5>
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="detailsModalLabel">Customer Details</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body pt-0">
+                        <div class="modal-body">
                             <div id="detailsContent">
                                 <!-- Content loaded via AJAX -->
                             </div>
@@ -285,54 +187,82 @@
             table = $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: {
-                    url: '{{ route('master.customers.data') }}',
-                    data: function(d) {
-
-                        console.log(d);
-                        d.customer = $('#customer').val();
-                        d.customer_code = $('#customer_code').val();
-                        d.from_date = $('#from_date').val();
-                        d.last_date = $('#last_date').val();
-                        d.date_filter = $('input[name="date_filter"]:checked').val();
-                    }
-
-                },
+                ajax: '{{ route('job_allocation.direct_job_wc_giving.data') }}',
                 columns: [{
+
                         data: 'id',
                         name: 'id',
                         render: function(data, type, row, meta) {
-            return meta.row + 1;
-        }
+
+
+                            return meta.row + 1;
+                        }
                     },
                     {
-                        data: 'customer_code',
-                        name: 'customer_code',
+                        data: 'employee_code',
+                        name: 'employee_code',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
                     },
                     {
-                        data: 'customer_name',
-                        name: 'customer_name',
+                        data: 'employee_name',
+                        name: 'employee_name',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
                     },
                     {
-                        data: 'eamil',
-                        name: 'email',
+                        data: 'model_code',
+                        name: 'model_code',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                    },
+
+                    {
+                        data: 'model_name',
+                        name: 'model_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                    },
+
+                    {
+                        data: 'product_size',
+                        name: 'product_size',
+
+                    },
+                    
+                    {
+                        data: 'meter',
+                        name: 'meter',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
                     },
                     {
-                        data: 'mobile',
-                        name: 'mobile',
+                        data: 'wages',
+                        name: 'wages',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
                     },
+                    {
+                        data: 'received_quantity',
+                        name: 'received_quantity',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                    },
+                    {
+                        data: 'receving_date',
+                        name: 'receving_date',
+                        render: function(data, type, row) {
+                         return data ? data : '-';
+                        }
+                    },
+                    
                     {
                         data: null,
                         orderable: false,
@@ -341,7 +271,7 @@
                             return `
                         <button onclick="edit(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
                         <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
-                        <button onclick="showDetails(${row.id})" class="icon-button common-color"><i class="fa fa-eye"></i></button>
+                       
                     `;
                         }
 
@@ -357,75 +287,14 @@
                     {
                         text: 'Export All',
                         action: function(e, dt, node, config) {
-                            window.location.href = '/master/customers/export?' + $.param(dt.ajax
-                                .params());
+                            window.location.href = '/job_allocation/direct_job_giving/export?' + $
+                                .param(dt.ajax
+                                    .params());
                         }
                     }
                 ]
 
             });
-
-             $('#customer').on('change', function() {
-                // Reload DataTable with updated parameters
-                table.ajax.reload();
-            });
-
-             $('#customer_code').on('change', function() {
-                // Reload DataTable with updated parameters
-                table.ajax.reload();
-            });
-
-            $('#from_date').on('change', function() {
-                // Reload DataTable with updated parameters
-                table.ajax.reload();
-            });
-            $('#last_date').on('change', function() {
-                // Reload DataTable with updated parameters
-                table.ajax.reload();
-            });
-
-            $('input[name="date_filter"]').on('change', function() {
-                // Reload DataTable with new filter
-                table.ajax.reload();
-            });
-
-
-            // Listen for row selection event
-            $('#users-table').on('select.dt deselect.dt', function() {
-                var selectedRows = table.rows({
-                    selected: true
-                }).count();
-
-                if (selectedRows > 0) {
-                    $('#deleteButton').show(); // Show delete button if rows are selected
-                } else {
-                    $('#deleteButton').hide(); // Hide delete button if no rows are selected
-                }
-            });
-
-
- function updateSelectedFilters() {
-            var selectedFilters = '';
-            // Get selected values from filter elements
-            var customer = $('#customer option:selected').text();
-            var customerCode = $('#customer_code option:selected').text();
-            var fromDate = $('#from_date').val();
-            var lastDate = $('#last_date').val();
-       
-
-            
-            selectedFilters += 'Customer: ' + customer + ', ';
-            selectedFilters += 'Customer Code: ' + customerCode + ', ';
-            selectedFilters += 'From Date: ' + fromDate + ', ';
-            selectedFilters += 'Last Date: ' + lastDate;
-           
-
-
-            // Update the HTML content with selected filter values
-            $('#selectedFilters').text(selectedFilters);
-
-        }
-
 
 
 
@@ -442,7 +311,7 @@
                 if (confirm("Are you sure you want to delete these rows?")) {
                     // Send AJAX request to delete the selected rows
                     $.ajax({
-                        url: '/master/customers/delete/selected',
+                        url: '/job_allocation/direct_job_giving/delete/selected',
                         type: 'POST',
                         data: {
                             ids: ids,
@@ -460,45 +329,30 @@
         function edit(id) {
             console.log("inside");
             // Redirect to the user edit page or open a modal for editing
-            window.location.href = '/master/customers/edit/' + id;
+            window.location.href = '/job_allocation/direct_job_wc_giving/edit/' + id;
         }
 
-    
-
-
-function deleteCustomer(id) {
-    console.log("inside")
-    // Send an AJAX request to delete the user
-    if (confirm('Are you sure you want to delete this Customer?')) {
-        $.ajax({
-            url: '/master/customers/delete/' + id,
-            type: 'DELETE',
-            data: {
-                _token: '{{ csrf_token() }}',
-            },
-            success: function(result) {
-                // Show success message
-                $('.alert-success').show();
-
-                // Hide success message after 5 seconds
-                setTimeout(function(){
-                    $('.alert-success').alert('close');
-                }, 5000);
-
-                // Reload the DataTable after success message is shown
-                table.ajax.reload(); // Reload the DataTable
+        function deleteCustomer(id) {
+            console.log("inside")
+            // Send an AJAX request to delete the user
+            if (confirm('Are you sure you want to delete this Direct job giving?')) {
+                $.ajax({
+                    url: '/job_allocation/direct_job_giving/delete/' + id,
+                    type: 'get',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                    },
+                    success: function(result) {
+                        table.ajax.reload(); // Reload the DataTable
+                    }
+                });
             }
-        });
-    }
-}
-
-
-
+        }
 
         function showDetails(userId) {
             // Fetch user details using AJAX
             $.ajax({
-                url: '/master/customers/show/' + userId,
+                url: '/master/incentives/show/' + userId,
                 type: 'GET',
                 success: function(response) {
 
@@ -532,29 +386,5 @@ function deleteCustomer(id) {
 
             return `${day}-${month}-${year} ${strTime}`;
         }
-    </script>
-
-     <script>
-        $(document).ready(function() {
-            // Initialize Select2 on the customer dropdown
-            $('#customer').select2({
-                placeholder: "Select Customer",
-                allowClear: true
-            });
-            $('#customer_code').select2({
-                placeholder: "Select Customer Code",
-                allowClear: true
-            });
-          
-            
-        });
-    </script>
-
-    <script>
-        document.querySelectorAll('input[name="date_filter"]').forEach(function(element) {
-            element.addEventListener('change', function() {
-                document.getElementById('filterForm').submit(); // Submit the form on selection
-            });
-        });
     </script>
 @endsection

@@ -5,6 +5,8 @@
 @section('content')
     @include('links.css.datatable.datatable-css')
     @include('links.css.table.custom-css')
+     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <div class="wrapper">
         <div class="container-fluid">
             @if (session('success'))
@@ -27,6 +29,170 @@
                         </div>
                         <h4 class="page-title">Order Detail</h4>
                     </div>
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <div class="form-group row mb-0">
+
+                                {{-- date Starts --}}
+                                <div class="form-group col-sm-4 mb-2 d-flex align-item-center"
+                                    style="position: relative;top:8px">
+
+                                    <div class="">
+                                        <label class="mx-0"><input type="radio" name="date_filter" value="today">
+                                            Today</label>
+                                        <label class="ml-4"><input type="radio" name="date_filter" value="this_month">
+                                            This
+                                            Month</label>
+                                        <label class="ml-4"><input type="radio" name="date_filter" value="last_month">
+                                            Last
+                                            Month</label>
+                                    </div>
+                                </div>
+                                {{-- date Ends --}}
+                                {{-- From Date starts --}}
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    From Date
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <input type="date" class="form-control" name="from_date" id="from_date">
+                                    @error('from_date')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- From Date Ends --}}
+                                {{-- To Date Starts --}}
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    To Date
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <input type="date" class="form-control" name="last_date" id="last_date">
+                                    @error('last_date')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- To Date Ends --}}
+
+
+
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Company Type
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control 3" name="company_type" id="company_type">
+                                        <option value="">Select Type</option>
+                                        @foreach ($companyType as $type)
+                                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @error('company_type')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Companies
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="companies" id="companies" disabled>
+                                        <option value="">Select Company</option>
+                                        @foreach ($company as $c)
+                                            <option value="{{ $c->id }}" data-type-id="{{ $c->company_type_id }}">
+                                                {{ $c->company_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('Companies')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Customer
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="customer" id="customer">
+                                        <option value="">Select Type</option>
+                                        @foreach ($customer as $type)
+                                            <option value="{{ $type->id }}">{{ $type->customer_name }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @error('customer')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                   Customer Order No
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="order_id" id="order_id">
+                                        <option value="">Select Type</option>
+                                        @foreach ($order_nos as $type)
+                                            <option value="{{ $type->id }}">{{ $type->customer_order_no }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @error('order_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Product
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="product" id="product">
+                                        <option value="">Select Type</option>
+                                        @foreach ($product as $type)
+                                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @error('order_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+
+                                 <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Order No
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="order_no" id="order_no">
+                                        <option value="">Select Type</option>
+                                        @foreach ($order_nos as $type)
+                                            <option value="{{ $type->id }}">{{ $type->last_order_number }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @error('order_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+
+
+
+                                {{-- Order Status Starts --}}
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Order Status
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="order_status" id="order_status">
+                                        <option value="">Select Type</option>
+                                        @foreach ($order_status as $type)
+                                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('order_status')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- Order Status Ends --}}
+
+
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="card m-b-30">
@@ -46,8 +212,8 @@
                                     </div>
                                     <div>
                                         <!-- <button type="button" class="icon-button common-color bg-secondary rounded"
-                                                        data-toggle="modal" data-target=".bs-example-modal-center"
-                                                        title="Import file"><i class="fa fa-upload text-white"></i></button> -->
+                                                            data-toggle="modal" data-target=".bs-example-modal-center"
+                                                            title="Import file"><i class="fa fa-upload text-white"></i></button> -->
 
                                         <button class="icon-button  bg-primary rounded">
                                             <a href="{{ route('master.order_detail.create') }}"
@@ -104,19 +270,20 @@
                                     </div><!-- /.modal-dialog -->
                                 </div>
                                 <div class="card-body">
-                                    <table id="users-table" class="table table-striped table-bordered table-responsive nowrap"
+                                    <table id="users-table"
+                                        class="table table-striped table-bordered table-responsive nowrap"
                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Order No</th>
                                                 <th>Order Date</th>
-                                                <th>customer</th>
+                                                <th>customer Code</th>
                                                 <th>Total Quantity</th>
                                                 <th>Available Quantity</th>
                                                 <th>Wages of Product</th>
                                                 <th>Product Color</th>
-                                                 <th>Product Size</th>
+                                                <th>Product Size</th>
                                                 <th>Order Status</th>
                                                 <th>Model Name</th>
                                                 <th>Action</th>
@@ -195,7 +362,26 @@
             table = $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('master.order_detail.data') }}',
+                ajax: {
+                    url: '{{ route('master.order_detail.data') }}',
+                    data: function(d) {
+
+                        console.log(d);
+
+                        // Add additional parameters here if needed
+                        d.company_type = $('#company_type').val();
+                        d.companies = $('#companies').val();
+                        d.customer = $('#customer').val();
+                        d.order_status = $('#order_status').val();
+                        d.from_date = $('#from_date').val();
+                        d.last_date = $('#last_date').val();
+                        d.orderNoId = $('#order_id').val();
+                         d.order_no = $('#order_no').val();
+                        d.product = $('#product').val(); // New filter
+                        d.date_filter = $('input[name="date_filter"]:checked').val();
+                    }
+
+                },
                 columns: [{
 
                         data: 'id',
@@ -227,7 +413,7 @@
                             return data ? data : '-';
                         }
                     },
-                    
+
                     {
                         data: 'quantity',
                         name: 'quantity',
@@ -291,7 +477,7 @@
 
 
                     `;
-                    // <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
+                            // <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
                         }
 
                     },
@@ -311,51 +497,136 @@
                         }
                     }
                 ],
-               
-                
-
             });
 
-
-            // Listen for row selection event
-            $('#users-table').on('select.dt deselect.dt', function() {
-                var selectedRows = table.rows({
-                    selected: true
-                }).count();
-
-                if (selectedRows > 0) {
-                    $('#deleteButton').show(); // Show delete button if rows are selected
+            $('#company_type').on('change', function() {
+                var selectedCompanyType = $(this).val();
+                if (selectedCompanyType) {
+                    $('#companies').prop('disabled', false);
                 } else {
-                    $('#deleteButton').hide(); // Hide delete button if no rows are selected
+                    $('#companies').prop('disabled', true).val('');
                 }
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
             });
-            $('#deleteButton').click(function() {
-                var ids = $.map(table.rows('.selected').data(), function(item) {
-                    return item.id;
-                });
-
-                if (ids.length === 0) {
-                    alert('No rows selected!');
-                    return;
-                }
-
-                if (confirm("Are you sure you want to delete these rows?")) {
-                    // Send AJAX request to delete the selected rows
-                    $.ajax({
-                        url: '/master/order_detail/delete/selected',
-                        type: 'POST',
-                        data: {
-                            ids: ids,
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function(response) {
-                            // Handle response here
-                            table.ajax.reload(); // Reload the DataTable
-                        }
-                    });
-                }
+            $('#companies').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
             });
+
+
+            $('#customer').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
+
+            $('#from_date').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
+            $('#last_date').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
+            $('#order_id').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
+
+            $('#product').on('change', function() {
+                table.ajax.reload();
+            });
+
+
+            $('#order_status').on('change', function() {
+                table.ajax.reload();
+            });
+
+             $('#order_no').on('change', function() {
+                table.ajax.reload();
+            });
+
+
+            $('input[name="date_filter"]').on('change', function() {
+                // Reload DataTable with new filter
+                table.ajax.reload();
+            });
+
+
+
+
+
         });
+
+        function updateSelectedFilters() {
+            var selectedFilters = '';
+            // Get selected values from filter elements
+            var companyType = $('#company_type option:selected').text();
+            var companies = $('#companies option:selected').text();
+            var customer = $('#customer option:selected').text();
+            var fromDate = $('#from_date').val();
+            var lastDate = $('#last_date').val();
+            var product = $('#product option:selected').text(); // New filter
+            var orderNoId = $('#order_id option:selected').text();
+
+             var orderNo = $('#order_no option:selected').text();
+
+            // Construct the string with selected filter values
+            selectedFilters += 'Company Type: ' + companyType + ', ';
+            selectedFilters += 'Companies: ' + companies + ', ';
+            selectedFilters += 'Customer: ' + customer + ', ';
+            selectedFilters += 'From Date: ' + fromDate + ', ';
+            selectedFilters += 'Last Date: ' + lastDate;
+            selectedFilters += 'Product: ' + product + ', '; // New filter
+            selectedFilters += 'Order No: ' + orderNoId; // New filter
+             selectedFilters += 'Order : ' + orderNo;
+
+
+            // Update the HTML content with selected filter values
+            $('#selectedFilters').text(selectedFilters);
+
+        }
+
+
+        // Listen for row selection event
+        $('#users-table').on('select.dt deselect.dt', function() {
+            var selectedRows = table.rows({
+                selected: true
+            }).count();
+
+            if (selectedRows > 0) {
+                $('#deleteButton').show(); // Show delete button if rows are selected
+            } else {
+                $('#deleteButton').hide(); // Hide delete button if no rows are selected
+            }
+        });
+        $('#deleteButton').click(function() {
+        var ids = $.map(table.rows('.selected').data(), function(item) {
+            return item.id;
+        });
+
+        if (ids.length === 0) {
+            alert('No rows selected!');
+            return;
+        }
+
+        if (confirm("Are you sure you want to delete these rows?")) {
+            // Send AJAX request to delete the selected rows
+            $.ajax({
+                url: '/master/order_detail/delete/selected',
+                type: 'POST',
+                data: {
+                    ids: ids,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    // Handle response here
+                    table.ajax.reload(); // Reload the DataTable
+                }
+            });
+        }
+        });
+        
 
         function redirectToCreatePage(rowId, orderNo) {
             window.location.href = '/master/order_detail/create?rowId=' + rowId + '&orderNo=' + encodeURIComponent(orderNo);
@@ -437,5 +708,73 @@
 
         // Populate the input field with the retrieved orderNo value
         document.getElementById('order_no').value = orderNo;
+    </script>
+
+    <script>
+        document.querySelectorAll('input[name="date_filter"]').forEach(function(element) {
+            element.addEventListener('change', function() {
+                document.getElementById('filterForm').submit(); // Submit the form on selection
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Initialize Select2 on both dropdowns
+            $('#company_type, #companies').select2({
+                placeholder: "Select an option",
+                allowClear: true
+            });
+
+            // Company Type select change event
+            $('#company_type').on('change', function() {
+                var selectedTypeId = $(this).val(); // Get the selected company type
+
+                // Reset the companies dropdown
+                var $companiesSelect = $('#companies');
+                $companiesSelect.empty().append(
+                    '<option value="">Select Company</option>'); // Reset options
+
+                // Filter and append companies based on selected company type
+                var companies = @json($company); // Get all companies
+                companies.forEach(function(company) {
+                    if (company.company_type_id == selectedTypeId) {
+                        var option = new Option(company.company_name, company.id);
+                        $companiesSelect.append(option);
+                    }
+                });
+
+                // Re-initialize Select2 after appending new options
+                $companiesSelect.trigger('change');
+            });
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            // Initialize Select2 on the customer dropdown
+            $('#customer').select2({
+                placeholder: "Select Customer",
+                allowClear: true
+            });
+            $('#order_id').select2({
+                placeholder: "Select Customer Order_no",
+                allowClear: true
+            });
+            $('#product').select2({
+                placeholder: "Select Product",
+                allowClear: true
+            });
+
+            $('#order_status').select2({
+                placeholder: "Select Order Status",
+                allowClear: true
+            });
+             $('#order_no').select2({
+                placeholder: "Select Order No",
+                allowClear: true
+            });
+            
+        });
     </script>
 @endsection

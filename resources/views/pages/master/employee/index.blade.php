@@ -1284,5 +1284,26 @@
     });
 </script>
 
+  <script>
+        $(document).ready(function() {
+            // Initialize Select2 on the customer dropdown
+            $('#employee_code').select2({
+                placeholder: "Select Employee Code",
+                allowClear: true
+            });
+            $('#employee').select2({
+                placeholder: "Select Employee Name",
+                allowClear: true
+            });
+            $('#own_company').select2({
+                placeholder: "Select Own Company",
+                allowClear: true
+            });
+             $('#employee_status').select2({
+                placeholder: "Select Employee Status",
+                allowClear: true
+            });
+        });
+    </script>
 
 @endsection

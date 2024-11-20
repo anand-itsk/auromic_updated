@@ -5,6 +5,8 @@
 @section('content')
     @include('links.css.datatable.datatable-css')
     @include('links.css.table.custom-css')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <div class="wrapper">
         <div class="container-fluid">
             @if (session('success'))
@@ -33,6 +35,107 @@
                         </div>
                         <h4 class="page-title">Product Model</h4>
                     </div>
+
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <div class="form-group row mb-0">
+
+                                {{-- date Starts --}}
+                                <div class="form-group col-sm-4 mb-2 d-flex align-item-center"
+                                    style="position: relative;top:8px">
+
+                                    <div class="">
+                                        <label class="mx-0"><input type="radio" name="date_filter" value="today">
+                                            Today</label>
+                                        <label class="ml-4"><input type="radio" name="date_filter" value="this_month">
+                                            This
+                                            Month</label>
+                                        <label class="ml-4"><input type="radio" name="date_filter" value="last_month">
+                                            Last
+                                            Month</label>
+                                    </div>
+                                </div>
+                                {{-- date Ends --}}
+                                {{-- From Date starts --}}
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    From Date
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <input type="date" class="form-control" name="from_date" id="from_date">
+                                    @error('from_date')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- From Date Ends --}}
+                                {{-- To Date Starts --}}
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    To Date
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <input type="date" class="form-control" name="last_date" id="last_date">
+                                    @error('last_date')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- To Date Ends --}}
+
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Product
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="product" id="product">
+                                        <option value="">Select Type</option>
+                                        @foreach ($product as $type)
+                                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @error('order_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Model Code
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="product_model" id="product_model">
+                                        <option value="">Select Model code</option>
+                                        @foreach ($product_model as $item)
+                                            <option value="{{ $item->id }}">{{ $item->model_code }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @error('order_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+
+                                 <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Product size
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="product_size" id="product_size">
+                                        <option value="">Select Size</option>
+                                        @foreach ($product_size as $item)
+                                            <option value="{{ $item->id }}">{{ $item->code }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @error('order_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="card m-b-30">
@@ -53,8 +156,8 @@
                                     </div>
                                     <div>
                                         <!-- <button type="button" class="icon-button common-color bg-secondary rounded"
-                                                            data-toggle="modal" data-target=".bs-example-modal-center"
-                                                            title="Import file"><i class="fa fa-upload  text-white"></i></button> -->
+                                                                data-toggle="modal" data-target=".bs-example-modal-center"
+                                                                title="Import file"><i class="fa fa-upload  text-white"></i></button> -->
 
                                         <button class="icon-button  bg-primary rounded">
                                             <a href="{{ route('master.product_model.create') }}"
@@ -237,34 +340,34 @@
 
     {{-- table show --}}
     <div class="modal fade price-create-modal-center" id="updateModal1" tabindex="-1" role="dialog"
-     aria-labelledby="updateModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title mt-0">History</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body pb-0">
-                <!-- Table inside the modal body -->
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">Model Code</th>
-                            <th scope="col">Model Name</th>
-                            <th scope="col">Wages Product</th>
-                            <th scope="col">Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Data will be injected here via JavaScript -->
-                    </tbody>
-                </table>
+        aria-labelledby="updateModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0">History</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pb-0">
+                    <!-- Table inside the modal body -->
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Model Code</th>
+                                <th scope="col">Model Name</th>
+                                <th scope="col">Wages Product</th>
+                                <th scope="col">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be injected here via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
     {{--  --}}
     <!-- DataTables JS -->
@@ -277,7 +380,21 @@
             table = $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('master.product_model.data') }}',
+                ajax: {
+                    url: '{{ route('master.product_model.data') }}',
+                    data: function(d) {
+
+                        console.log(d);
+                        d.from_date = $('#from_date').val();
+                        d.last_date = $('#last_date').val();
+                        d.product = $('#product').val(); // New filter
+                        d.product_model = $('#product_model').val(); // New filter
+                        d.product_size = $('#product_size').val(); // New filter
+                        d.date_filter = $('input[name="date_filter"]:checked').val();
+                    }
+
+                },
+
                 columns: [{
 
                         data: 'id',
@@ -388,6 +505,57 @@
 
             });
 
+            $('#from_date').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
+            $('#last_date').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
+            $('#order_id').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
+
+            $('#product').on('change', function() {
+                table.ajax.reload();
+            });
+
+             $('#product_model').on('change', function() {
+                table.ajax.reload();
+            });
+             $('#product_size').on('change', function() {
+                table.ajax.reload();
+            });
+             $('input[name="date_filter"]').on('change', function() {
+                // Reload DataTable with new filter
+                table.ajax.reload();
+            });
+
+            function updateSelectedFilters() {
+                var selectedFilters = '';
+                var fromDate = $('#from_date').val();
+                var lastDate = $('#last_date').val();
+                var product = $('#product option:selected').text();
+                var productModel = $('#product_model option:selected').text();
+                var productSize = $('#product_size option:selected').text();
+
+
+                // Construct the string with selected filter values
+
+                selectedFilters += 'From Date: ' + fromDate + ', ';
+                selectedFilters += 'Last Date: ' + lastDate;
+                selectedFilters += 'Product: ' + product + ', '; 
+                 selectedFilters += 'Product Model: ' + productModel + ', '; 
+                  selectedFilters += 'Product Size: ' + productSize + ', '; 
+
+
+
+                // Update the HTML content with selected filter values
+                $('#selectedFilters').text(selectedFilters);
+
+            }
             // Listen for row selection event
             $('#users-table').on('select.dt deselect.dt', function() {
                 var selectedRows = table.rows({
@@ -497,7 +665,7 @@
                 success: function(response) {
                     // Populate the input fields with data
                     $('#id').val(response.id);
-              
+
                     $('#wages_product').val(response.wages_product);
                     $('#date').val(response.date);
                 },
@@ -508,38 +676,48 @@
         }
 
         function openModal1(id) {
-    // Show the modal
-    $('#updateModal1').modal('show');
+            // Show the modal
+            $('#updateModal1').modal('show');
 
-    // Fetch product model history data using AJAX
-    $.ajax({
-        url: '/master/product_model/product-model-history/' + id,  // Adjust the URL to your route
-        type: 'GET',
-        success: function(response) {
-            if (response.success) {
-                // Update the table with the fetched data
-                var tableBody = $('#updateModal1 .modal-body table tbody');
-                tableBody.empty(); // Clear any existing rows
+            // Fetch product model history data using AJAX
+            $.ajax({
+                url: '/master/product_model/product-model-history/' + id, // Adjust the URL to your route
+                type: 'GET',
+                success: function(response) {
+                    // Update the table with the fetched data
+                    var tableBody = $('#updateModal1 .modal-body table tbody');
+                    tableBody.empty(); // Clear any existing rows
 
-                // Loop through the response data and add rows to the table
-                response.data.forEach(function(item) {
-                    var row = `<tr>
+                    if (response.success && response.data.length > 0) {
+                        // Loop through the response data and add rows to the table
+                        response.data.forEach(function(item) {
+                            var row = `<tr>
                         <td>${item.model_code}</td>  <!-- Display model_code -->
                         <td>${item.model_name}</td>  <!-- Display model_name -->
                         <td>${item.wages_product}</td>  <!-- Display wages_product -->
                         <td>${item.formatted_created_at}</td>  <!-- Display formatted created_at -->
                     </tr>`;
-                    tableBody.append(row);
-                });
-            } else {
-                alert('No data found for the selected product model.');
-            }
-        },
-        error: function() {
-            alert('Error fetching data');
+                            tableBody.append(row);
+                        });
+                    } else {
+                        // Show "no data found" message in the table
+                        var noDataRow = `<tr>
+                    <td colspan="4" class="text-center">No data found for the selected product model.</td>
+                </tr>`;
+                        tableBody.append(noDataRow);
+                    }
+                },
+                error: function() {
+                    // Handle AJAX error
+                    var tableBody = $('#updateModal1 .modal-body table tbody');
+                    tableBody.empty(); // Clear any existing rows
+                    var errorRow = `<tr>
+                <td colspan="4" class="text-center">Error fetching data. Please try again later.</td>
+            </tr>`;
+                    tableBody.append(errorRow);
+                }
+            });
         }
-    });
-}
 
 
 
@@ -591,5 +769,30 @@
 
             return `${day}-${month}-${year} ${strTime}`;
         }
+    </script>
+ <script>
+        document.querySelectorAll('input[name="date_filter"]').forEach(function(element) {
+            element.addEventListener('change', function() {
+                document.getElementById('filterForm').submit(); // Submit the form on selection
+            });
+        });
+    </script>
+     <script>
+        $(document).ready(function() {
+            // Initialize Select2 on the customer dropdown
+            $('#product').select2({
+                placeholder: "Select Product",
+                allowClear: true
+            });
+            $('#product_model').select2({
+                placeholder: "Select Product Model",
+                allowClear: true
+            });
+            $('#product_size').select2({
+                placeholder: "Select Product Size",
+                allowClear: true
+            });
+            
+        });
     </script>
 @endsection

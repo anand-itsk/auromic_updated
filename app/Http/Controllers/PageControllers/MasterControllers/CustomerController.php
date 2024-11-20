@@ -11,6 +11,7 @@ use App\Models\Country;
 use App\Models\Customer;
 use App\Models\State;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
@@ -20,17 +21,55 @@ class CustomerController extends Controller
     // Index Page
     public function index()
     {
-        return view('pages.master.customer.index');
+        $customer = Customer::all();
+        return view('pages.master.customer.index',compact('customer'));
     }
 
- 
+
     // Index DataTable
-    public function indexData()
+    public function indexData(Request $request)
     {
-        // Eager load the roles relationship
+        $customer = $request->input('customer');
+        $customer_code = $request->input('customer_code');
+        $fromDate = $request->input('from_date');
+        $lastDate = $request->input('last_date');
+        $dateFilter = $request->input('date_filter');
+
+        // Start building the query
         $company = Customer::query();
+
+        // Filter by customer
+        if ($customer) {
+            $company->where('id', $customer);
+        }
+
+        // Filter by customer code
+        if ($customer_code) {
+            $company->where('id', $customer_code); // Assuming 'customer_code' is the correct column
+        }
+
+        // Apply date filters
+        if ($dateFilter) {
+            if ($dateFilter === 'today') {
+                $company->whereDate('created_at', Carbon::today());
+            } elseif ($dateFilter === 'this_month') {
+                $company->whereMonth('created_at', Carbon::now()->month)
+                ->whereYear('created_at', Carbon::now()->year);
+            } elseif ($dateFilter === 'last_month') {
+                $company->whereMonth('created_at', Carbon::now()->subMonth()->month)
+                ->whereYear('created_at', Carbon::now()->subMonth()->year);
+            }
+        }
+
+        // Filter by date range
+        if ($fromDate && $lastDate) {
+            $company->whereBetween('created_at', [$fromDate, $lastDate]);
+        }
+
+        // Return the data using DataTables
         return DataTables::of($company)->make(true);
     }
+
     // Create Page
     public function create()
     {

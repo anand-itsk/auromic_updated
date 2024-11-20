@@ -14,6 +14,9 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Exports\JobgivingExport;
 use App\Imports\JobGivingImport;
+use App\Models\CompanyType;
+use App\Models\Product;
+use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 
 class JobGivingController extends Controller
@@ -22,17 +25,92 @@ class JobGivingController extends Controller
     // Index Page
     public function index()
     {
-        return view('pages.job_allocation.job_giving.index');
+
+        $companyType = CompanyType::all();
+        $company = Company::all();
+        $order_nos = OrderNo::all();
+        $product = Product::all();
+        return view('pages.job_allocation.job_giving.index',compact('companyType', 'company', 'order_nos', 'product'));
     }
     // Index DataTable
-    public function indexData()
+    public function indexData(Request $request)
     {
-        $Job_Giving = JobGiving::with('employee.company', 'order_details.orderNo', 'deliveryChellan', 'product_model')->get();
-        // dd($Job_Giving);
-        $data = $Job_Giving->map(function ($job_giving) {
+        $companyType = $request->input('company_type');
+        $company = $request->input('companies');
+        $status = $request->input('status');
+        $fromDate = $request->input('from_date');
+        $lastDate = $request->input('last_date');
+        $orderNoId = $request->input('orderNoId');
+        $product = $request->input('product');
+        $dateFilter = $request->input('date_filter');
+
+        // Base query
+        $jobGivingQuery = JobGiving::with([
+            'employee.company',
+            'order_details.orderNo',
+            'order_details.productColor',
+            'deliveryChellan',
+            'product_model.productSize',
+        ]);
+
+        // Date filter
+        if ($dateFilter) {
+            if ($dateFilter === 'today'
+            ) {
+                $jobGivingQuery->whereDate('created_at', Carbon::today());
+            } elseif ($dateFilter === 'this_month') {
+                $jobGivingQuery->whereMonth('created_at', Carbon::now()->month)
+                ->whereYear('created_at', Carbon::now()->year);
+            } elseif ($dateFilter === 'last_month') {
+                $jobGivingQuery->whereMonth('created_at', Carbon::now()->subMonth()->month)
+                ->whereYear('created_at', Carbon::now()->subMonth()->year);
+            }
+        }
+
+        // Company type filter
+        if ($companyType) {
+            $jobGivingQuery->whereHas('deliveryChellan.company', function ($q) use ($companyType) {
+                $q->where('company_type_id', $companyType);
+            });
+        }
+
+        // Company filter
+        if ($company) {
+            $companies = is_array($company) ? $company : [$company];
+            $jobGivingQuery->whereHas('deliveryChellan.company', function ($q) use ($companies) {
+                $q->whereIn('company_id', $companies);
+            });
+        }
+
+        // Status filter
+        if ($status) {
+            $jobGivingQuery->where('status', $status);
+        }
+
+        // Date range filter
+        if ($fromDate && $lastDate) {
+            $jobGivingQuery->whereBetween('created_at', [$fromDate, $lastDate]);
+        }
+
+        // Order number filter
+        if ($orderNoId) {
+            $jobGivingQuery->whereHas('order_details', function ($q) use ($orderNoId) {
+                $q->where('order_no_id', $orderNoId);
+            });
+        }
+
+        // Product filter
+        if ($product) {
+            $jobGivingQuery->whereHas('product_model', function ($q) use ($product) {
+                $q->where('product_id', $product);
+            });
+        }
+
+        // Transforming data
+        $data = $jobGivingQuery->get()->map(function ($job_giving) {
             return [
                 'id' => $job_giving->id,
-                'company_name'=> $job_giving->employee->company->company_name ?? null,
+                'company_name' => $job_giving->employee->company->company_name ?? null,
                 'employee_code' => $job_giving->employee->employee_code ?? null,
                 'employee_name' => $job_giving->employee->employee_name ?? null,
                 'customer_order_no' => $job_giving->order_details->orderNo->customer_order_no ?? null,
@@ -42,14 +120,14 @@ class JobGivingController extends Controller
                 'product_size' => $job_giving->product_model->productSize->code ?? null,
                 'product_color' => $job_giving->order_details->productColor->code ?? null,
                 'quantity' => $job_giving->quantity ?? null,
-                'given_date' => $job_giving->created_at->format('d/m/Y') ?? null,
+                'given_date' => $job_giving->created_at ? $job_giving->created_at->format('d/m/Y') : null,
                 'status' => $job_giving->status ?? null,
             ];
         });
 
-
         return DataTables::of($data)->make(true);
     }
+
     // Create Page
     public function create(Request $request)
     {

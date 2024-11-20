@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Exports\OrderExport;
 use App\Imports\ModelDataImport;
+use App\Models\Company;
+use App\Models\CompanyType;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\ProductModel;
@@ -15,6 +17,7 @@ use App\Models\OrderStatus;
 use App\Models\OrderDetail;
 use App\Models\OrderNo;
 use App\Models\RawMaterial;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
@@ -23,12 +26,94 @@ class OrderDetailController extends Controller
 {
     public function index()
     {
-        return view('pages.master.order_detail.index');
+        $companyType = CompanyType::all();
+        $company = Company::all();
+        $customer = Customer::all();
+        $order_nos = OrderNo::all();
+        $product = Product::all();
+        $order_status = OrderStatus::all();
+   
+        return view('pages.master.order_detail.index',compact('companyType', 'company', 'customer', 'order_nos', 'product', 'order_status'));
     }
-    public function indexData()
+    public function indexData(Request $request)
     {
         // Eager load the related models
-        $order_details = OrderDetail::with('orderNo', 'productSize', 'productColor', 'orderStatus', 'productModel', 'customer')->get();
+        $companyType = $request->input('company_type');
+        $company = $request->input('companies');
+        $customer = $request->input('customer');
+        $fromDate = $request->input('from_date');
+        $lastDate = $request->input('last_date');
+        $orderNoId = $request->input('orderNoId');
+        $order_no = $request->input('order_no');
+        $product = $request->input('product');
+        $dateFilter = $request->input('date_filter');
+        $order_status = $request->input('order_status');
+        $order_details = OrderDetail::with('orderNo', 'productSize', 'productColor', 'orderStatus', 'productModel.product', 'customer');
+        // $order_details = OrderDetail::with('orderNo', 'productSize', 'productColor', 'orderStatus', 'productModel', 'customer')->get();
+        if ($order_status) {
+            $order_details->where('order_status_id', $order_status);
+        }
+
+        // Filter by company type
+        if ($companyType) {
+            $order_details->whereHas('deliveryChallans.company', function ($q) use ($companyType) {
+                $q->where('company_type_id', $companyType);
+            });
+        }
+
+
+        // Filter by company
+        if ($company) {
+            $companies = is_array($company) ? $company : [$company];
+            $order_details->whereHas('deliveryChallans.company', function ($q) use ($companies) {
+                $q->whereIn('company_id', $companies);
+            });
+        }
+
+        // Filter by customer
+        if ($customer) {
+            $order_details->where('customer_id', $customer);
+        }
+
+
+        if ($dateFilter) {
+            if ($dateFilter === 'today') {
+                $order_details->whereDate('created_at', Carbon::today());
+            } elseif ($dateFilter === 'this_month') {
+                $order_details->whereMonth('created_at', Carbon::now()->month)
+                ->whereYear('created_at', Carbon::now()->year);
+            } elseif ($dateFilter === 'last_month') {
+                $order_details->whereMonth('created_at', Carbon::now()->subMonth()->month)
+                ->whereYear('created_at', Carbon::now()->subMonth()->year);
+            }
+        }
+        // Filter by date range
+        if ($fromDate && $lastDate) {
+            $order_details->whereBetween('order_date', [$fromDate, $lastDate]);
+        }
+        // Filter by order number
+        if ($orderNoId) {
+            $order_details->where('order_no_id', $orderNoId);
+        }
+
+        if ($order_no) {
+            $order_details->where('order_no_id', $order_no);
+        }
+      
+        // Filter by product
+        if ($product) {
+            $order_details->whereHas('productModel.product', function ($q) use ($product) {
+                $q->where('id', $product);
+            });
+        }
+
+
+        // Filter by product
+        if ($product) {
+            $order_details->whereHas('productModel.product', function ($q) use ($product) {
+                $q->where('id', $product);
+            });
+        }
 
         return DataTables::of($order_details)->make(true);
     }

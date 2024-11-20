@@ -4,6 +4,8 @@
 @section('content')
     @include('links.css.datatable.datatable-css')
     @include('links.css.table.custom-css')
+     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <div class="wrapper">
         <div class="container-fluid">
             @if (session('success'))
@@ -25,6 +27,106 @@
                             </ol>
                         </div>
                         <h4 class="page-title">Finishing Product</h4>
+                    </div>
+
+                       <div class="card mb-2">
+                        <div class="card-body">
+                            <div class="form-group row mb-0">
+
+                                {{-- date Starts --}}
+                                <div class="form-group col-sm-4 mb-2 d-flex align-item-center"
+                                    style="position: relative;top:8px">
+
+                                    <div class="">
+                                        <label class="mx-0"><input type="radio" name="date_filter" value="today">
+                                            Today</label>
+                                        <label class="ml-4"><input type="radio" name="date_filter" value="this_month">
+                                            This
+                                            Month</label>
+                                        <label class="ml-4"><input type="radio" name="date_filter" value="last_month">
+                                            Last
+                                            Month</label>
+                                    </div>
+                                </div>
+                                {{-- date Ends --}}
+                                {{-- From Date starts --}}
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    From Date
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <input type="date" class="form-control" name="from_date" id="from_date">
+                                    @error('from_date')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- From Date Ends --}}
+                                {{-- To Date Starts --}}
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    To Date
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <input type="date" class="form-control" name="last_date" id="last_date">
+                                    @error('last_date')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- To Date Ends --}}
+
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Product
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="product" id="product">
+                                        <option value="">Select Type</option>
+                                        @foreach ($product as $type)
+                                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @error('order_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                   Finishing Product Model
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="finishing_product_model" id="finishing_product_model">
+                                        <option value="">Select Model code</option>
+                                        @foreach ($finishing_product as $item)
+                                            <option value="{{ $item->id }}">{{ $item->model_code }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @error('order_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+
+                                 <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Product size
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="product_size" id="product_size">
+                                        <option value="">Select Size</option>
+                                        @foreach ($product_size as $item)
+                                            <option value="{{ $item->id }}">{{ $item->code }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('order_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+
+
+
+
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
@@ -193,7 +295,18 @@
             table = $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('master.finishing_product.data') }}',
+                   ajax: {
+                    url: '{{ route('master.finishing_product.data') }}',
+                    data: function(d) {
+                        console.log(d);
+                        d.from_date = $('#from_date').val();
+                        d.last_date = $('#last_date').val();
+                        d.product = $('#product').val(); // New filter
+                        d.finishing_product_model = $('#finishing_product_model').val(); // New filter
+                        d.product_size = $('#product_size').val(); // New filter
+                      d.date_filter = $('input[name="date_filter"]:checked').val();
+                    }
+                },
                 columns: [{
 
                         data: 'id',
@@ -286,7 +399,54 @@
 
             });
 
+            $('#from_date').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
+            $('#last_date').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
+           
+            $('#product').on('change', function() {
+                table.ajax.reload();
+            });
 
+             $('#finishing_product_model').on('change', function() {
+                table.ajax.reload();
+            });
+             $('#product_size').on('change', function() {
+                table.ajax.reload();
+            });
+             $('input[name="date_filter"]').on('change', function() {
+                // Reload DataTable with new filter
+                table.ajax.reload();
+            });
+
+
+                   function updateSelectedFilters() {
+                var selectedFilters = '';
+                var fromDate = $('#from_date').val();
+                var lastDate = $('#last_date').val();
+                var product = $('#product option:selected').text();
+                var finishingProductModel = $('#finishing_product_model option:selected').text();
+                var productSize = $('#product_size option:selected').text();
+
+
+                // Construct the string with selected filter values
+
+                selectedFilters += 'From Date: ' + fromDate + ', ';
+                selectedFilters += 'Last Date: ' + lastDate;
+                selectedFilters += 'Product: ' + product + ', '; 
+                 selectedFilters += 'Finishing Product Model: ' + finishingProductModel + ', '; 
+                  selectedFilters += 'Product Size: ' + productSize + ', '; 
+
+
+
+                // Update the HTML content with selected filter values
+                $('#selectedFilters').text(selectedFilters);
+
+            }
             // Listen for row selection event
             $('#users-table').on('select.dt deselect.dt', function() {
                 var selectedRows = table.rows({
@@ -387,5 +547,31 @@
 
             return `${day}-${month}-${year} ${strTime}`;
         }
+    </script>
+
+         <script>
+        $(document).ready(function() {
+            // Initialize Select2 on the customer dropdown
+            $('#product').select2({
+                placeholder: "Select Product",
+                allowClear: true
+            });
+            $('#finishing_product_model').select2({
+                placeholder: "Select Product Model",
+                allowClear: true
+            });
+            $('#product_size').select2({
+                placeholder: "Select Product Size",
+                allowClear: true
+            });
+            
+        });
+    </script>
+     <script>
+        document.querySelectorAll('input[name="date_filter"]').forEach(function(element) {
+            element.addEventListener('change', function() {
+                document.getElementById('filterForm').submit(); // Submit the form on selection
+            });
+        });
     </script>
 @endsection

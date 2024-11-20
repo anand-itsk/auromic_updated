@@ -5,6 +5,8 @@
 @section('content')
     @include('links.css.datatable.datatable-css')
     @include('links.css.table.custom-css')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <div class="wrapper">
         <div class="container-fluid">
             @if (session('success'))
@@ -35,6 +37,149 @@
                         </div>
                         <h4 class="page-title">Job Giving</h4>
                     </div>
+
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <div class="form-group row mb-0">
+
+
+                                {{-- date Starts --}}
+                                <div class="form-group col-sm-4 mb-2 d-flex align-item-center"
+                                    style="position: relative;top:8px">
+
+                                    <div class="">
+                                        <label class="mx-0"><input type="radio" name="date_filter" value="today">
+                                            Today</label>
+                                        <label class="ml-4"><input type="radio" name="date_filter" value="this_month">
+                                            This
+                                            Month</label>
+                                        <label class="ml-4"><input type="radio" name="date_filter" value="last_month">
+                                            Last
+                                            Month</label>
+                                    </div>
+                                </div>
+                                {{-- date Ends --}}
+
+
+                                {{-- From Starts --}}
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    From Date
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <input type="date" class="form-control" name="from_date" id="from_date">
+                                    @error('company_type_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- From Ends --}}
+
+
+                                {{-- Last Start --}}
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    To Date
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <input type="date" class="form-control" name="last_date" id="last_date">
+                                    @error('company_type_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- Last Ends --}}
+
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Company Type
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="company_type" id="company_type">
+                                        <option value="">Select Type</option>
+                                        @foreach ($companyType as $type)
+                                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @error('company_type')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Companies
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="companies" id="companies" disabled>
+                                        <option value="">Select Company</option>
+                                        @foreach ($company as $c)
+                                            <option value="{{ $c->id }}" data-type-id="{{ $c->company_type_id }}">
+                                                {{ $c->company_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('Companies')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+
+
+
+                                <!-- <label for="customer_code" class="col-sm-2 col-form-label ">
+                                                                                                           Date
+                                                                                                           </label>
+                                                                                                           <div class="col-sm-2 mb-2">
+                                                                                                            <input type="date" class="form-control" name="date" id="">
+                                                                                                              @error('company_type_id')
+        <span class="error" style="color: red;">{{ $message }}</span>
+    @enderror
+                                                                                                           </div> -->
+
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Order No
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="order_id" id="order_id">
+                                        <option value="">Select Type</option>
+                                        @foreach ($order_nos as $type)
+                                            <option value="{{ $type->id }}">{{ $type->customer_order_no }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @error('order_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Product
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="product" id="product">
+                                        <option value="">Select Type</option>
+                                        @foreach ($product as $type)
+                                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @error('order_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Status
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="status" id="statuses">
+                                        <option value="">Select Status</option>
+                                        <option value="Incomplete">Incomplete</option>
+                                        <option value="Complete">Complete</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="cancelled">Cancelled</option>
+                                    </select>
+                                    @error('status')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="card m-b-30">
@@ -48,8 +193,8 @@
                                     </div>
                                     <div>
                                         <!-- <button type="button" class="icon-button common-color" data-toggle="modal"
-                                                            data-target=".bs-example-modal-center" title="Job Giving"><i
-                                                                class="fa fa-upload"></i></button> -->
+                                                                data-target=".bs-example-modal-center" title="Job Giving"><i
+                                                                    class="fa fa-upload"></i></button> -->
 
                                         <a href="{{ route('job_allocation.job_giving.create') }}"
                                             class="icon-link common-color" title="Create Job Giving">
@@ -199,7 +344,20 @@
             table = $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('job_allocation.job_giving.data') }}',
+                ajax: {
+                    url: '{{ route('job_allocation.job_giving.data') }}',
+                    data: function(d) {
+                        // Add additional parameters here if needed
+                        d.company_type = $('#company_type').val();
+                        d.companies = $('#companies').val();
+                        d.status = $('#statuses').val();
+                        d.from_date = $('#from_date').val();
+                        d.last_date = $('#last_date').val();
+                        d.orderNoId = $('#order_id').val();
+                        d.product = $('#product').val();
+                        d.date_filter = $('input[name="date_filter"]:checked').val();
+                    }
+                },
                 columns: [{
 
                         data: 'id',
@@ -342,6 +500,74 @@
 
 
 
+            // Event listener for company type dropdown
+            $('#company_type').on('change', function() {
+                var selectedCompanyType = $(this).val();
+                if (selectedCompanyType) {
+                    $('#companies').prop('disabled', false);
+                } else {
+                    $('#companies').prop('disabled', true).val('');
+                }
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
+            $('#companies').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
+
+            $('#statuses').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
+
+            $('#from_date').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
+            $('#last_date').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
+
+            $('#order_id').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
+
+            $('#product').on('change', function() {
+                table.ajax.reload();
+            });
+            $('input[name="date_filter"]').on('change', function() {
+                // Reload DataTable with new filter
+                table.ajax.reload();
+            });
+
+            function updateSelectedFilters() {
+                var selectedFilters = '';
+                // Get selected values from filter elements
+                var companyType = $('#company_type option:selected').text();
+                var companies = $('#companies option:selected').text();
+                var status = $('#statuses option:selected').text();
+                var fromDate = $('#from_date').val();
+                var lastDate = $('#last_date').val();
+                var product = $('#product option:selected').text(); // New filter
+                var orderNoId = $('#order_id option:selected').text();
+
+                // Construct the string with selected filter values
+                selectedFilters += 'Company Type: ' + companyType + ', ';
+                selectedFilters += 'Companies: ' + companies + ', ';
+                selectedFilters += 'Status: ' + status + ', ';
+                selectedFilters += 'From Date: ' + fromDate + ', ';
+                selectedFilters += 'Last Date: ' + lastDate;
+                selectedFilters += 'Order No: ' + orderNo + ', ';
+                selectedFilters += 'Product: ' + product;
+
+                // Update the HTML content with selected filter values
+                $('#selectedFilters').text(selectedFilters);
+
+            }
+
             $('#deleteButton').click(function() {
                 var ids = $.map(table.rows('.selected').data(), function(item) {
                     return item.id;
@@ -431,4 +657,68 @@
             return `${day}-${month}-${year} ${strTime}`;
         }
     </script>
+
+    <script>
+        $(document).ready(function() {
+            // Initialize Select2 on both dropdowns
+            $('#company_type, #companies').select2({
+                placeholder: "Select an option",
+                allowClear: true
+            });
+
+            // Company Type select change event
+            $('#company_type').on('change', function() {
+                var selectedTypeId = $(this).val(); // Get the selected company type
+
+                // Reset the companies dropdown
+                var $companiesSelect = $('#companies');
+                $companiesSelect.empty().append(
+                    '<option value="">Select Company</option>'); // Reset options
+
+                // Filter and append companies based on selected company type
+                var companies = @json($company); // Get all companies
+                companies.forEach(function(company) {
+                    if (company.company_type_id == selectedTypeId) {
+                        var option = new Option(company.company_name, company.id);
+                        $companiesSelect.append(option);
+                    }
+                });
+
+                // Re-initialize Select2 after appending new options
+                $companiesSelect.trigger('change');
+            });
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            // Initialize Select2 on the customer dropdown
+
+            $('#order_id').select2({
+                placeholder: "Select Order",
+                allowClear: true
+            });
+            $('#product').select2({
+                placeholder: "Select Product",
+                allowClear: true
+            });
+            $('#statuses').select2({
+                placeholder: "Select Status",
+                allowClear: true
+            });
+        });
+    </script>
+
+    <script>
+        document.querySelectorAll('input[name="date_filter"]').forEach(function(element) {
+            element.addEventListener('change', function() {
+                document.getElementById('filterForm').submit(); // Submit the form on selection
+            });
+        });
+    </script>
+
+
+
+
 @endsection
