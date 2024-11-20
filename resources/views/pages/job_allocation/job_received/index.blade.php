@@ -32,11 +32,11 @@
                             <div class="card m-b-30">
                                 <div class="d-flex justify-content-between p-2 bd-highlight">
                                     <div>
-                                        
+
                                     </div>
                                     <div>
-                                       
-                                        
+
+
                                     </div>
                                 </div>
                                 {{-- Import Modal --}}
@@ -86,7 +86,8 @@
                                     </div><!-- /.modal-dialog -->
                                 </div>
                                 <div class="card-body">
-                                    <table id="users-table" class="table table-striped table-bordered table-responsive nowrap"
+                                    <table id="users-table"
+                                        class="table table-striped table-bordered table-responsive nowrap"
                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
@@ -136,36 +137,36 @@
 
                         <!-- <div class="modal-footer">
 
-                            <div class="row w-100">
-                                <div class="col-md-10">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <span class="font-weight-bold mr-2">Created By</span>
-                                            <span id="created_by"></span>
+                                <div class="row w-100">
+                                    <div class="col-md-10">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <span class="font-weight-bold mr-2">Created By</span>
+                                                <span id="created_by"></span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <span class="font-weight-bold mr-2">Created at</span>
+                                                <span id="created_at"></span>
+                                            </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <span class="font-weight-bold mr-2">Created at</span>
-                                            <span id="created_at"></span>
+                                        <div class="row">
+                                            <div class="col-md-6 ">
+                                                <span class="font-weight-bold mr-2">Updated By</span>
+                                                <span id="updated_by"></span>
+                                            </div>
+                                            <div class="col-md-6 ">
+                                                <span class="font-weight-bold mr-2">Updated at</span>
+                                                <span id="updated_at"></span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6 ">
-                                            <span class="font-weight-bold mr-2">Updated By</span>
-                                            <span id="updated_by"></span>
-                                        </div>
-                                        <div class="col-md-6 ">
-                                            <span class="font-weight-bold mr-2">Updated at</span>
-                                            <span id="updated_at"></span>
-                                        </div>
-                                    </div>
 
-                                </div>
-                                <div class="col-md-2">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
+                                    </div>
                                 </div>
-                            </div>
-                        </div> -->
+                            </div> -->
                     </div>
                 </div>
             </div>
@@ -399,7 +400,7 @@
                             return data ? data : '-';
                         }
                     },
-                    
+
                     {
                         data: null,
                         orderable: false,
@@ -407,8 +408,8 @@
                         render: function(data, type, row) {
                             return `
                         <button onclick="edit(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
-                        
-                        
+
+
                     `;
                         }
 
@@ -424,7 +425,8 @@
                     {
                         text: 'Export All',
                         action: function(e, dt, node, config) {
-                            window.location.href = '/job_allocation/job_received/export?' + $.param(dt.ajax
+                            window.location.href = '/job_allocation/job_received/export?' + $.param(
+                                dt.ajax
                                 .params());
                         }
                     }
@@ -462,10 +464,10 @@
             });
         });
 
-       
+
         function edit(id) {
             console.log("inside");
-      
+
             // Redirect to the user edit page or open a modal for editing
             window.location.href = '/job_allocation/job_received/edit/' + id;
         }
@@ -492,14 +494,14 @@
         function showDetails(id) {
             // Fetch user details using AJAX
             $.ajax({
-                url: '/job_allocation/job_received/show/'+ id,
+                url: '/job_allocation/job_received/show/' + id,
                 type: 'GET',
                 success: function(response) {
 
                     console.log(response);
-                    
+
                     $('#detailsContent').html(response.html);
-                    
+
 
                     // console.log(formattedCreatedAt);
                     $('#detailsModal').modal('show');

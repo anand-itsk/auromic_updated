@@ -9,7 +9,7 @@ class JobAllocationHistory extends Model
 {
     use HasFactory;
 
-     protected $fillable=[
+    protected $fillable = [
         'job_giving_id',
         'employee_id ',
         'receving_date',
@@ -22,6 +22,8 @@ class JobAllocationHistory extends Model
         return $this->belongsTo(JobGiving::class, 'job_giving_id');
     }
 
-
-
+    public function jobReceived()
+    {
+        return $this->belongsTo(JobReceived::class, 'job_giving_id');
+    }
 }
