@@ -113,13 +113,10 @@
                                     Order Counts
                                     <span class="badge badge-primary badge-pill">{{ $order_count }}</span>
                                 </li>
+                                
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Job Giving without DC
-                                    <span class="badge badge-primary badge-pill">{{ $jobGivingCountWithoutDcId }}</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Job Giving with DC
-                                    <span class="badge badge-primary badge-pill">{{ $jobGivingCountWithDcId }}</span>
+                                    Job Giving 
+                                    <span class="badge badge-primary badge-pill">{{$jobGivingCount}}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Job Received

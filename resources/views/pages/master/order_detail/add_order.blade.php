@@ -4,6 +4,8 @@
 @section('content')
     <!-- Add Select2 CSS -->
     @include('links.css.select2.select2')
+    @include('modals')
+    @include('modals_script')
     <div class="wrapper">
         <div class="container-fluid">
             <!-- Page-Title -->
@@ -30,7 +32,7 @@
                         <div class="card-body">
                             <div class="m-b-30">
                                 <form
-                                    action="{{ route('master.order_detail.store_New_order', $order_details->order_no_id) }}"
+                                    id="orderAddForm" action="{{ route('master.order_detail.store_New_order', $order_details->order_no_id) }}"
                                     method="POST">
                                     @csrf
 
@@ -63,11 +65,14 @@
                                             <input class="form-control"  type="hidden" name="customer_id" id="" value="{{ $order_details->customer->id }}">
                                             
                                        
-                                          <label class="col-sm-2 col-form-label mandatory">Product <a class="shortcut_master"
-                                                href="{{ route('product-models.products.create') }}" target="_blank">+</a>
+                                          <label class="col-sm-2 col-form-label mandatory">Product 
+                                           <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#product">
+                                                +
+                                            </button>
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="product" id="product">
+                                            <select class="form-control products select2" name="product" id="productss">
                                                 <option value="">Select Product</option>
                                                 @foreach ($products as $product)
                                                     <option value="{{ $product->id }}">{{ $product->name }}</option>
@@ -77,8 +82,12 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label class="col-sm-2 col-form-label mandatory">Model <a class="shortcut_master"
-                                                href="{{ route('master.product_model.create') }}" target="_blank">+</a>
+                                        <label class="col-sm-2 col-form-label mandatory">Model 
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#product_models">
+                                                +
+                                            </button>
+
                                         </label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_model" id="product_model" disabled>
@@ -118,7 +127,7 @@
                                         </div>
                                          <label for="raw_material_name" class="col-sm-2 col-form-label ">Stock</label>
 <div class="col-sm-4 mb-4">
-    <input class="form-control" type="text" name="stock" id="stock" readonly>
+    <input class="form-control" type="text" name="stock" id="stocks" readonly>
     @error('stock')
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
@@ -127,7 +136,7 @@
                                             Weight/Item</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="raw_material_weight_item"
-                                                id="raw_material_weight_item" readonly>
+                                                id="raw_material_weight_items" readonly>
                                             @error('raw_material_weight_item')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -145,7 +154,7 @@
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="product_size_code"
                                                 id="product_size_code" readonly>
-                                            <input class="form-control" type="hidden" name="product_size_id"
+                                            <input class="form-control product_size_id" type="text" name="product_size_id"
                                                 id="product_size_id" readonly>
                                             @error('product_size')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
@@ -194,12 +203,12 @@
     @enderror
                                                 </div> -->
                                          <label class="col-sm-2 col-form-label mandatory">Product Color
-                                            <a class="shortcut_master"
-                                                href="{{ route('product-models.product_colors.create') }}"
-                                                target="_blank">+</a>
+                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#product_color">
+                            +
+                        </button>
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="product_color_id"
+                                            <select class="form-control product_color_id select2" name="product_color_id"
                                                 id="product_color_id">
                                                 <option value="">Select Product Color</option>
                                                 @foreach ($product_color as $item)
@@ -222,7 +231,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="d-flex justify-content-evenly">
-                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                            <button type="submit" class="btn btn-primary submit-form waves-effect waves-light">
                                                 Submit
                                             </button>
                                             <a href="{{ route('master.order_detail.create') }}"
@@ -337,7 +346,7 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('#product').change(function() {
+            $('#productss').change(function() {
                 $('#product_model').prop('disabled', $(this).val() == '');
             });
         });
@@ -345,7 +354,7 @@
 
     <script>
         // Get the input fields
-        var rawMaterialWeightItemInput = document.getElementById('raw_material_weight_item');
+        var rawMaterialWeightItemInput = document.getElementById('raw_material_weight_items');
         var quantityInput = document.getElementById('quantity');
         var totalRawMaterialInput = document.getElementById('total_raw_material');
 
@@ -371,7 +380,7 @@
 
     <script>
     $(document).ready(function() {
-        $('#product').change(function() {
+        $('#productss').change(function() {
             var productId = $(this).val();
             $('#product_model').prop('disabled', productId == '');
             // Clear existing options
@@ -413,12 +422,12 @@
                         success: function(response) {
                             $('#product').val(response.product);
                             $('#raw_material_name').val(response.raw_material_name);
-                             $('#stock').val(response.stock);
+                             $('#stocks').val(response.stock);
                             $('#raw_material_type').val(response.raw_material_type);
                             $('#product_size_code').val(response.product_size_code);
-                            $('#product_size_id').val(response.product_size_id);
+                            $('.product_size_id').val(response.product_size_id);
                             $('#wages_employee').val(response.wages_product);
-                            $('#raw_material_weight_item').val(response
+                            $('#raw_material_weight_items').val(response
                                 .raw_material_weight_item);
                         },
                         error: function(xhr, status, error) {
@@ -428,17 +437,17 @@
                 } else {
                     $('#product').val('');
                     $('#raw_material_name').val('');
-                     $('#stock').val('');
+                     $('#stocks').val('');
                     $('#raw_material_type').val('');
                     $('#product_size_code').val('');
-                    $('#product_size_id').val('');
+                    $('.product_size_id').val('');
                     $('#wages_employee').val('');
-                    $('#raw_material_weight_item').val('');
+                    $('#raw_material_weight_items').val('');
                 }
             });
              $('#quantity').on('input', function() {
             var quantity = parseFloat($(this).val());
-            var stock = parseFloat($('#stock').val());
+            var stock = parseFloat($('#stocks').val());
 
             if (quantity > stock) {
                 $('#quantity-error').show(); // Show error message
@@ -450,7 +459,7 @@
         // Prevent form submission if quantity is greater than stock
         $('form').on('submit', function(e) {
             var quantity = parseFloat($('#quantity').val());
-            var stock = parseFloat($('#stock').val());
+            var stock = parseFloat($('#stocks').val());
 
             if (quantity > stock) {
                 e.preventDefault(); // Prevent form submission

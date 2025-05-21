@@ -136,6 +136,20 @@
                                             @enderror
                                         </div>
 
+                                         <label for="meters_one_product" class="col-sm-2 col-form-label">Cutting Charge
+                                            </label>
+                                        <div class="col-sm-4 mb-4">
+
+                                            <input class="form-control" type="text" name="meters_one_product"
+                                                id="meters_one_product" readonly
+                                                value="{{ $direct_job_giving->finishingProduct->cutting_charge ?? '' }}">
+
+                                            @error('meters_one_product')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+
                                         <label for="customer_code" class="col-sm-2 col-form-label">Product Color</label>
                                         <div class="col-sm-4 mb-4">
                                             <select class="form-control select2" name="product_color_id"
@@ -171,7 +185,7 @@
                                             @enderror
                                         </div>
 
-                                        <label for="order_date" class="col-sm-2 col-form-label">Cutting Pices</label>
+                                        <label for="order_date" class="col-sm-2 col-form-label">Total Cutting Charge</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="meter" id="meter"
                                                 readonly value="{{ $direct_job_giving->total_cutting_pieces ?? '-' }}">

@@ -49,6 +49,9 @@ class ReligionController extends Controller
        
    
         $religion->save();
+        if ($request->input('ajax_mode') === 'ajax') {
+            return response()->json(['success' => true, 'data' => $religion, 'message' => 'Religion added successfully!', 'religion' => $religion]);
+        }
 
         return redirect()->route('common.religions')->with('success', 'Religion added successfully!');
 

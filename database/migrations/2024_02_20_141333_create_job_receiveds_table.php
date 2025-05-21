@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('incentive_fee')->nullable();
             $table->string('total_amount')->nullable();
             $table->string('net_amount')->nullable();
+            $table->string('wages')->nullable();
             $table->enum('status', ['Pending', 'Incomplete', 'Complete'])->default('Pending');
             $table->date('receving_date');
             $table->string('complete_quantity')->nullable();

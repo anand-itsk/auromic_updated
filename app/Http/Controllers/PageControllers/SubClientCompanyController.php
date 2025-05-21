@@ -60,7 +60,7 @@ class SubClientCompanyController extends Controller
             'company_name' => 'required|max:255',
             'name' => 'required',
            'photo' => 'nullable|image|max:200000',
-        //    'person_email' => 'email|unique:authorised_people',
+           'person_email' => 'nullable|email|unique:authorised_people,person_email',
         ]);
         $input = $request->all();
         if ($request->hasFile('photo')) {
@@ -161,6 +161,7 @@ class SubClientCompanyController extends Controller
             'company_name' => 'required|max:255',
             'name' => 'required',
              'photo' => 'nullable|image|max:200000',
+            // 'person_email' => 'email|unique:authorised_people',
       
         ]);
 
@@ -218,6 +219,13 @@ class SubClientCompanyController extends Controller
         $company_registration_details->save();
 
         $authorised_person = AuthorisedPerson::firstOrNew(['company_id' => $company->id]);
+
+        if (!($authorised_person->person_email)) {
+            // dd('in');
+            $request->validate([
+               'person_email' => 'nullable|email|unique:authorised_people,person_email',
+           ]);
+        }
         $authorised_person->name = $input['name'];
         $authorised_person->faorhus_name = $input['faorhus_name'];
         $authorised_person->gender = $input['gender'];
@@ -298,16 +306,33 @@ class SubClientCompanyController extends Controller
         return response()->json(['status' => 'success']);
     }
     // Import Users
+    // public function import(Request $request)
+    // {
+    //     $request->validate([
+    //         'file' => 'required|file|mimes:xlsx,csv'
+    //     ]);
+    //     $company_type_id = 4;
+    //     Excel::import(new CompanyDataImport($company_type_id), request()->file('file'));
+
+    //     return redirect()->route('profile.sub_clients.index')->with('success', 'Data imported successfully');
+    // }
+
     public function import(Request $request)
     {
         $request->validate([
             'file' => 'required|file|mimes:xlsx,csv'
         ]);
-        $company_type_id = 4;
-        Excel::import(new CompanyDataImport($company_type_id), request()->file('file'));
 
-        return redirect()->route('profile.sub_clients.index')->with('success', 'Data imported successfully');
+        try {
+            $company_type_id = 4;
+            Excel::import(new CompanyDataImport($company_type_id), $request->file('file'));
+
+            return redirect()->route('profile.sub_clients.index')->with('success', 'Data imported successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('profile.sub_clients.index')->with('error', 'Data not imported');
+        }
     }
+
     // Import Users
     public function export(Request $request)
     {

@@ -177,7 +177,7 @@
 
                                         <label for="order_date" class="col-sm-2 col-form-label">Weight</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="weight" id="weight" required>
+                                            <input class="form-control" type="text" name="weight" id="weight" required oninput="preventDash(event)">
                                             <input class="form-control" type="hidden" name="weightPerItem"
                                                 id="weightPerItem">
                                             <input class="form-control" type="hidden" name="avaWeight" id="avaWeight">
@@ -723,5 +723,11 @@
             }
         });
     });
+</script>
+<script>
+    function preventDash(event) {
+        const input = event.target;
+        input.value = input.value.replace(/-/g, ''); // Remove any "-" symbol from the input value
+    }
 </script>
 @endsection

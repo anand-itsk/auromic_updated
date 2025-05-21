@@ -119,9 +119,10 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        {{-- </div> --}}
-                                        {{--  Addresses --}}
-                                        {{-- <div class="form-group row"> --}}
+                                        </div>
+                                        <hr>
+                                         <h4>Personal Info</h4>
+                                        <div class="form-group row">
 
                                         <label for="address" class="col-sm-2 col-form-label">Address</label>
                                         <div class="col-sm-4 mb-4">

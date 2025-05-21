@@ -46,7 +46,7 @@ class EmployeeReportController extends Controller
         $companyType = CompanyType::all();
         $company = Company::all();
         $employees = Employee::all();
-        return view('pages.master.employee.index', compact('formattedEmployeeNumber', 'resigning_reason', 'companyType', 'company', 'employees'));
+        return view('pages.report.employee_report', compact('formattedEmployeeNumber', 'resigning_reason', 'companyType', 'company', 'employees'));
     }
     public function indexData(Request $request)
     {
@@ -139,6 +139,7 @@ class EmployeeReportController extends Controller
                 'pf_no' => optional($employee->pfInfo)->pf_no ?? '-',
                 'esi_no' => optional($employee->esiInfo)->pf_no ?? '-',
                 'village' => optional($employee->addresses)->village_area ?? '-',
+                'own_company' => $employee->own_company,
                 'parent_company_id' => optional($employee->company->companyHierarchy)->parent_company_id,
                 'status' => $employee->status,
             ];

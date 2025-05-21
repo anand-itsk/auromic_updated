@@ -262,7 +262,8 @@
                                                 <th>Model Name</th>
                                                 <th>Product Size</th>
                                                 <th>Product Color</th>
-                                                <th>Quantity</th>
+                                                <th>Given Quantity</th>
+                                                <th>Pending Quantity</th>
                                                 <th>Given Date</th>
                                                 <th>Order ID</th>
                                                 <th>DC NO</th>
@@ -427,6 +428,14 @@
                     {
                         data: 'quantity',
                         name: 'quantity',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+
+                    },
+                        {
+                        data: 'pending_quantity',
+                        name: 'pending_quantity',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }

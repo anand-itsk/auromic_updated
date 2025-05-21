@@ -20,7 +20,8 @@ class JobGiving extends Model
         'excess',
         'shortage',
         'days',
-        'date'
+        'date',
+        'wages'
     ];
     public function employee()
     {

@@ -51,10 +51,10 @@ class Employee extends Model
 }
     public function villageAddressTypeThree()
     {
-        return $this->hasOne(Address::class)->where('address_type_id', 3);
+        return $this->hasOne(Address::class, 'addressable_id', 'id')
+            ->where('address_type_id', 3);
     }
-
-
+    
     public function identityProof()
     {
         return $this->hasOne(EmployeeIdentityProof::class);

@@ -4,7 +4,8 @@
 @section('content')
     <!-- Add Select2 CSS -->
     @include('links.css.select2.select2')
-
+    @include('modals')
+    @include('modals_script')
     <div class="wrapper">
         <div class="container-fluid">
             <!-- Page-Title -->
@@ -31,17 +32,19 @@
                     <div class="card m-b-30">
                         <div class="card-body">
                             <div class="m-b-30">
-                                <form action="{{ route('master.finishing_product.store') }}" method="POST"
+                                <form  id="finishingProductForm" action="{{ route('master.finishing_product.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group row">
 
                                         <label class="col-sm-2 col-form-label">Product
-                                            <a class="shortcut_master" href="{{ route('product-models.products.create') }}"
-                                                target="_blank">+</a>
+                                             <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#product">
+                                                +
+                                            </button>
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="product_id" id="product">
+                                            <select class="form-control products select2" name="product_id" id="product">
                                                 <option value="">Select Product</option>
                                                 @foreach ($products as $product)
                                                     <option value="{{ $product->id }}">{{ $product->name }}</option>
@@ -52,12 +55,13 @@
                                             @enderror
                                         </div>
                                         <label class="col-sm-2 col-form-label">Product Size
-                                            <a class="shortcut_master"
-                                                href="{{ route('product-models.product_sizes.create') }}"
-                                                target="_blank">+</a>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#product_size">
+                                                +
+                                            </button>
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="product_size_id"
+                                            <select class="form-control product_size_id select2" name="product_size_id"
                                                 id="product_size_id">
                                                 <option value="">Select Product size</option>
                                                 @foreach ($product_size as $item)
@@ -127,7 +131,7 @@
 
                                     <div class="form-group">
                                         <div class="d-flex justify-content-evenly">
-                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                            <button type="submit" class="btn btn-primary submit-form waves-effect waves-light">
                                                 Submit
                                             </button>
                                             <a href="{{ route('master.finishing_product.create') }}"

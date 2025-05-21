@@ -53,8 +53,8 @@
                 <label class="col-sm-2 col-form-label">Payment Mode</label>
                 <div class="col-sm-4 mb-4">
                     <select class="form-control select2" name="payment_mode_id" id="payment_mode_id">
-    
-                    @foreach ($payment_modes as $item)
+
+                        @foreach ($payment_modes as $item)
                             <option value="{{ $item->id }}"
                                 {{ $employee->financeDetail && $employee->financeDetail->payment_mode_id == $item->id ? 'selected' : '' }}>
                                 {{ $item->name }}
@@ -173,88 +173,97 @@
 
         <hr />
         {{-- PF Info --}}
-<div class="container">
-    <div class="row m-2">
-        <div class="col">
-            <h5 class="text-primary">PF Info</h5>
+        <div class="container">
+            <div class="row m-2">
+                <div class="col">
+                    <h5 class="text-primary">PF Info</h5>
+                </div>
+            </div>
+            <div class="row m-2">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="pf_applicable">PF Applicable</label>
+                        <select class="form-control" name="pf_applicable" id="pf_applicable">
+                            <option value="">Select</option>
+                            <option value="1" {{ isset($employee->pfInfo) && $employee->pfInfo->pf_applicable == 1 ? 'selected' : '' }}>Yes</option>
+                            <option value="0" {{ isset($employee->pfInfo) && $employee->pfInfo->pf_applicable == 0 ? 'selected' : '' }}>No</option>
+                        </select>
+                        @error('pf_applicable')
+                            <span class="error" style="color: red;">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    
+                    <div id="pf_fields" style="display:none;">
+
+                        <div class="form-group col-md-4">
+                            <label for="pf_no">PF No</label>
+                            <input class="form-control" type="text" name="pf_no" id="pf_no" 
+                            value="{{ $employee->pfInfo ? $employee->pfInfo->pf_no : '' }}">
+                     
+                            @error('pf_no')
+                                <span class="error" style="color: red;">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="pf_joining_date">PF Joining Date</label>
+                            <input class="form-control" type="date" name="pf_joining_date" id="pf_joining_date"
+                            value="{{ old('pf_joining_date', optional($employee->pfInfo)->pf_joining_date) }}">
+                            @error('pf_joining_date')
+                                <span class="error" style="color: red;">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="pf_last_date">PF Last Date</label>
+                            <input class="form-control" type="date" value="" name="pf_last_date"
+                                id="pf_last_date"  value="{{ old('pf_joining_date', optional($employee->pfInfo)->pf_last_date) }}">
+                            @error('pf_last_date')
+                                <span class="error" style="color: red;">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div id="remark_field" style="display:none;">
+                        <div class="form-group remark">
+                            <label for="remark">Remark</label>
+                            <textarea class="form-control" name="remark" id="remark" cols="65" rows="4">{{ $employee->pfInfo ? $employee->pfInfo->remark : '' }}</textarea>
+                            @error('remark')
+                                <span class="error" style="color: red;">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="pension_applicable">Pension Applicable</label>
+                        <select class="form-control" name="pension_applicable" id="pension_applicable">
+                            <option value="">Select</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                            <option value="1" {{ isset($employee->pfInfo) && $employee->pfInfo->pension_applicable == 1 ? 'selected' : '' }}>Yes</option>
+                            <option value="0" {{ isset($employee->pfInfo) && $employee->pfInfo->pension_applicable == 0 ? 'selected' : '' }}>No</option>
+                        </select>
+                        @error('pension_applicable')
+                            <span class="error" style="color: red;">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="pension_joining_date">Pension Joining Date</label>
+                        <input class="form-control" type="date" value="" name="pension_joining_date"
+                            id="pension_joining_date">
+                        @error('pension_joining_date')
+                            <span class="error" style="color: red;">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="uan_number">UAN Number</label>
+                        <input class="form-control" type="text"  value= "{{ $employee->pfInfo ? $employee->pfInfo->uan_number : '' }}" name="uan_number"
+                            id="uan_number">
+                        @error('uan_number')
+                            <span class="error" style="color: red;">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="row m-2">
-        <div class="col-sm-6">
-            <div class="form-group">
-                <label for="pf_applicable">PF Applicable</label>
-                <select class="form-control" name="pf_applicable" id="pf_applicable">
-                    <option value="">Select</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                </select>
-                @error('pf_applicable')
-                <span class="error" style="color: red;">{{ $message }}</span>
-                @enderror
-            </div>
-            <div id="pf_fields" style="display:none;">
-            
-                <div class="form-group col-md-4">
-                    <label for="pf_no">PF No</label>
-                    <input class="form-control" type="text" value="" name="pf_no" id="pf_no">
-                    @error('pf_no')
-                    <span class="error" style="color: red;">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="pf_joining_date">PF Joining Date</label>
-                    <input class="form-control" type="date" value="" name="pf_joining_date" id="pf_joining_date">
-                    @error('pf_joining_date')
-                    <span class="error" style="color: red;">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="pf_last_date">PF Last Date</label>
-                    <input class="form-control" type="date" value="" name="pf_last_date" id="pf_last_date">
-                    @error('pf_last_date')
-                    <span class="error" style="color: red;">{{ $message }}</span>
-                    @enderror
-                </div>
-            </div>
-            <div id="remark_field" style="display:none;">
-                <div class="form-group">
-                    <label for="remark">Remark</label>
-                    <textarea  class="form-control"  name="remark" id="remark" cols="65" rows="4"></textarea>
-                    @error('remark')
-                    <span class="error" style="color: red;">{{ $message }}</span>
-                    @enderror
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="form-group">
-                <label for="pension_applicable">Pension Applicable</label>
-                <select class="form-control" name="pension_applicable" id="pension_applicable">
-                    <option value="">Select</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                </select>
-                @error('pension_applicable')
-                <span class="error" style="color: red;">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="form-group">
-                <label for="pension_joining_date">Pension Joining Date</label>
-                <input class="form-control" type="date" value="" name="pension_joining_date" id="pension_joining_date">
-                @error('pension_joining_date')
-                <span class="error" style="color: red;">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="form-group">
-                <label for="uan_number">UAN Number</label>
-                <input class="form-control" type="text" value="" name="uan_number" id="uan_number">
-                @error('uan_number')
-                <span class="error" style="color: red;">{{ $message }}</span>
-                @enderror
-            </div>
-        </div>
-    </div>
-</div>
 
         <hr />
         {{-- ESI Info --}}
@@ -275,7 +284,7 @@
                         </option>
                     </select>
                     @error('esi_applicable')
-                        <span class="error" style="color: red;">{{$message}}</span>
+                        <span class="error" style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>
 
@@ -324,12 +333,15 @@
                     @enderror
                 </div>
 
-                <label class="col-sm-2 col-form-label">ESI Dispensary<a class="shortcut_master"
-                                                href="{{ route('specified.esi_dispensaries.create') }}" target="_blank">+</a>
+                <label class="col-sm-2 col-form-label">ESI Dispensary
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#esi_dispensary">
+                        +
+                    </button>
 
                 </label>
                 <div class="col-sm-4">
-                    <select class="form-control select2" name="esi_dispensary_id" id="esi_dispensary_id">
+                    <select class="form-control esi_dispensary_id select2" name="esi_dispensary_id" id="esi_dispensary_id">
                         @foreach ($esi_despensaries as $item)
                             <option value="{{ $item->id }}"
                                 {{ $employee->esiInfo && $employee->esiInfo->esi_dispensary_id == $item->id ? 'selected' : '' }}>
@@ -410,53 +422,121 @@
             });
         });
     </script>
-    
+
+    <script>
+        // Get references to the date input fields
+        var joiningDateInput = document.getElementById('pf_joining_date');
+        var lastDateInput = document.getElementById('pf_last_date');
+
+        // Add event listener to the joining date input field
+        joiningDateInput.addEventListener('change', function() {
+            // Get the selected date in the joining date field
+            var selectedDate = new Date(joiningDateInput.value);
+            // Set the minimum selectable date in the last date field to one day after the selected date
+            var minSelectableDate = new Date(selectedDate.getTime() + 24 * 60 * 60 * 1000);
+            lastDateInput.min = minSelectableDate.toISOString().split('T')[0];
+        });
+    </script>
+
+    <script>
+        // Get references to the date input fields
+        var joiningDateInput = document.getElementById('esi_joining_date');
+        var lastDateInput = document.getElementById('esi_last_date');
+
+        // Add event listener to the joining date input field
+        joiningDateInput.addEventListener('change', function() {
+            // Get the selected date in the joining date field
+            var selectedDate = new Date(joiningDateInput.value);
+            // Set the minimum selectable date in the last date field to one day after the selected date
+            var minSelectableDate = new Date(selectedDate.getTime() + 24 * 60 * 60 * 1000);
+            lastDateInput.min = minSelectableDate.toISOString().split('T')[0];
+        });
+    </script>
+
+    <script>
+        document.getElementById('pf_applicable').addEventListener('change', function() {
+            var pfFields = document.getElementById('pf_fields');
+            var remarkField = document.getElementById('remark_field');
+
+            if (this.value === '1') {
+                pfFields.style.display = 'flex';
+                remarkField.style.display = 'none';
+            } else if (this.value === '0') {
+                pfFields.style.display = 'none';
+                remarkField.style.display = 'flex';
+            } else {
+                pfFields.style.display = 'none';
+                remarkField.style.display = 'none';
+            }
+        });
+    </script>
+
 <script>
-    // Get references to the date input fields
-    var joiningDateInput = document.getElementById('pf_joining_date');
-    var lastDateInput = document.getElementById('pf_last_date');
-
-    // Add event listener to the joining date input field
-    joiningDateInput.addEventListener('change', function() {
-        // Get the selected date in the joining date field
-        var selectedDate = new Date(joiningDateInput.value);
-        // Set the minimum selectable date in the last date field to one day after the selected date
-        var minSelectableDate = new Date(selectedDate.getTime() + 24 * 60 * 60 * 1000);
-        lastDateInput.min = minSelectableDate.toISOString().split('T')[0];
-    });
-</script>
-
-<script>
-    // Get references to the date input fields
-    var joiningDateInput = document.getElementById('esi_joining_date');
-    var lastDateInput = document.getElementById('esi_last_date');
-
-    // Add event listener to the joining date input field
-    joiningDateInput.addEventListener('change', function() {
-        // Get the selected date in the joining date field
-        var selectedDate = new Date(joiningDateInput.value);
-        // Set the minimum selectable date in the last date field to one day after the selected date
-        var minSelectableDate = new Date(selectedDate.getTime() + 24 * 60 * 60 * 1000);
-        lastDateInput.min = minSelectableDate.toISOString().split('T')[0];
-    });
-</script>
-
-<script>
-    document.getElementById('pf_applicable').addEventListener('change', function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        var pfApplicable = document.getElementById('pf_applicable');
         var pfFields = document.getElementById('pf_fields');
         var remarkField = document.getElementById('remark_field');
-        
-        if (this.value === '1') {
-            pfFields.style.display = 'flex';
-            remarkField.style.display = 'none';
-        } else if (this.value === '0') {
-            pfFields.style.display = 'none';
-            remarkField.style.display = 'flex';
-        } else {
-            pfFields.style.display = 'none';
-            remarkField.style.display = 'none';
+
+        function toggleFields() {
+            if (pfApplicable.value === '1') {
+                pfFields.style.display = 'flex';
+            } else if (pfApplicable.value === '0') {
+                pfFields.style.display = 'none';
+                remarkField.style.display = 'flex';
+            } else {
+                pfFields.style.display = 'none';
+                remarkField.style.display = 'none';
+            }
         }
+
+        // Run on page load
+        toggleFields();
+
+        // Run on change
+        pfApplicable.addEventListener('change', toggleFields);
     });
 </script>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let pfNoInput = document.getElementById("pf_no");
+        let pfApplicableSelect = document.getElementById("pf_applicable");
+        let pfFields = document.getElementById("pf_fields");
+        let pfFields1 = document.querySelector(".remark"); 
+
+
+        // Function to check and update PF Applicable
+        function updatePfApplicable() {
+            if (pfNoInput.value.trim() !== "") {
+                pfApplicableSelect.value = "1"; // Set "Yes" if PF No is present
+                pfFields.style.display = "block";
+                pfFields1.style.display = "none";
+            } else {
+                pfApplicableSelect.value = "0"; // Set "No" if PF No is empty
+                pfFields.style.display = "none";
+              
+            }
+        }
+
+        // Run on page load
+        updatePfApplicable();
+
+        // Change event for manual update
+        pfApplicableSelect.addEventListener("change", function () {
+            if (this.value === "1") {
+                pfFields.style.display = "block";
+            } else {
+                pfFields.style.display = "none";
+                pfNoInput.value = ""; // Clear PF No if "No" is selected
+            }
+        });
+
+        // Change event for PF No input
+        pfNoInput.addEventListener("input", updatePfApplicable);
+    });
+</script>
+    
 
 </div>

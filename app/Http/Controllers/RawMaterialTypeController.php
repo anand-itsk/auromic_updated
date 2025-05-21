@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Exports\RawMaterialTypeExport;
+use App\Imports\RawMaterialTypeImport;
 use App\Models\RawMaterialType;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -97,5 +100,26 @@ class RawMaterialTypeController extends Controller
 
         RawMaterialType::destroy($ids);
         return response()->json(['status' => 'success']);
+    }
+
+    public function export(Request $request)
+    {
+        return Excel::download(new RawMaterialTypeExport($request->all()), 'RawMaterialTypeDatas_' . date('d-m-Y') . '.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+
+        // dd($request);
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,csv'
+        ]);
+
+        try {
+            Excel::import(new RawMaterialTypeImport, request()->file('file'));
+            return redirect()->route('product-models.raw_material_types')->with('success', 'Data imported successfully');
+        }  catch (\Exception $e) {
+            return redirect()->route('product-models.raw_material_types')->with('error', 'Data not imported.');
+        }
     }
 }

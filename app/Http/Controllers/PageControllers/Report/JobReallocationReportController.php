@@ -21,15 +21,17 @@ class JobReallocationReportController extends Controller
         $employee = Employee::all();
         $order_nos = OrderNo::all();
         $product = Product::all();
+        $companyType = CompanyType::all();
+        $company = Company::all();
 
-
-        return view('pages.report.job_reallocation_report', compact('employee', 'order_nos', 'product'));
+        return view('pages.report.job_reallocation_report', compact('employee', 'order_nos', 'product', 'companyType', 'company'));
     }
     public function indexData(Request $request)
     {
         // Start the query with JobAllocationHistory and join necessary relationships
-        $query = JobAllocationHistory::with(['jobGiving.employee', 'jobGiving.order_details', 'jobGiving.product_model']);
-
+        $query = JobAllocationHistory::with(['jobGiving.employee.company', 'jobGiving.order_details', 'jobGiving.product_model']);
+        $companyType = $request->input('company_type');
+        $company = $request->input('companies');
         $orderNoId = $request->input('orderNoId');  // Retrieve order_id from request
         $productId = $request->input('product');   // Retrieve product_id from request
         $fromDate = $request->input('from_date');
@@ -51,6 +53,21 @@ class JobReallocationReportController extends Controller
         if ($fromDate && $lastDate) {
             $query->whereBetween('receving_date', [$fromDate, $lastDate]);
         }
+
+        if ($companyType) {
+            $query->whereHas('jobGiving.employee.company', function ($q) use ($companyType) {
+                $q->where('company_type_id', $companyType);
+            });
+        }
+
+        if ($company) {
+            // Convert $company to an array if it's not already one
+            $companies = is_array($company) ? $company : [$company];
+            $query->whereHas('jobGiving.employee.company', function ($q) use ($companies) {
+                $q->whereIn('company_id', $companies);
+            });
+        }
+
         // Apply filter for employee
         if ($request->employee) {
             $query->whereHas('jobGiving.employee', function ($q) use ($request) {

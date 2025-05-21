@@ -5,9 +5,13 @@ namespace App\Http\Controllers\PageControllers\MasterControllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Exports\FinishingProductExport;
+use App\Imports\FinishingProductImport;
+use App\Models\Country;
 use App\Models\Product;
 use App\Models\ProductSize;
 use App\Models\FinishingProductModel;
+use App\Models\RawMaterial;
+use App\Models\RawMaterialType;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
@@ -73,7 +77,10 @@ class FinishingProductController extends Controller
     {
         $products = Product::all();
         $product_size = ProductSize::get();
-        return view('pages.master.finishing_product.create', compact('products', 'product_size'));
+        $raw_material = RawMaterial::all();
+        $raw_material_type = RawMaterialType::get();
+        $countries = Country::all();
+        return view('pages.master.finishing_product.create', compact('products', 'product_size', 'raw_material', 'raw_material_type','countries'));
     }
 
     public function store(Request $request)
@@ -164,8 +171,12 @@ class FinishingProductController extends Controller
             'file' => 'required|file|mimes:xlsx,csv'
         ]);
 
-        Excel::import(new FinishingProductImport, request()->file('file'));
-
-        return redirect()->route('master.finishing_product.index')->with('success', 'Data imported successfully');
+        try {
+            Excel::import(new FinishingProductImport, request()->file('file'));
+            return redirect()->route('master.finishing_product.index')->with('success', 'Data imported successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('master.finishing_product.index')->with('error', 'Data not imported.');
+        }
     }
+
 }

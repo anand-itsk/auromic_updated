@@ -12,7 +12,7 @@
                         <div class="btn-group float-right">
                             <ol class="breadcrumb hide-phone p-0 m-0">
                                 <li class="breadcrumb-item"><a href="#">Aurmics</a></li>
-                                <li class="breadcrumb-item"><a href="{{route('users')}}">Users</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('user-management.users')}}">Users</a></li>
                                 <li class="breadcrumb-item"><a href="#">Import</a></li>
                             </ol>
                         </div>
@@ -31,7 +31,7 @@
                             <p class="text-muted font-14">To upload sample document, it must have concern fields.
                                 Click to download sample document</p>
                             <div class="m-b-30">
-                                <form action="{{ route('import.users') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('user-management.import.users') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <input type="file" name="file" required>
                                     <button type="submit" class="btn btn-primary">Import</button>

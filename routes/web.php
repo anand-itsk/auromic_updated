@@ -111,7 +111,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/permission-update/{id}', [PermissionController::class, 'update'])->name('permission.update');
         Route::get('/permission-delete/{id}', [PermissionController::class, 'delete'])->name('permission.delete');
 
-     // permissionControl
+        // permissionControl
         Route::get('/permission_control', [PermissionControlController::class, 'index'])->name('permission_control');
         Route::get('permission_control/data', [PermissionControlController::class, 'indexData'])->name('permission_control.data');
         Route::get('/permission_control-create', [PermissionControlController::class, 'create'])->name('permission_control.create');
@@ -123,7 +123,7 @@ Route::middleware(['auth'])->group(function () {
 
         // permissionGroup
         Route::get('/permission_group', [PermissionGroupController::class, 'index'])->name('permission_group');
-         Route::get('permission_group/data', [PermissionGroupController::class, 'indexData'])->name('permission_group.data');
+        Route::get('permission_group/data', [PermissionGroupController::class, 'indexData'])->name('permission_group.data');
         Route::get('/permission_group-create', [PermissionGroupController::class, 'create'])->name('permission_group.create');
         Route::post('/permission_group-store', [PermissionGroupController::class, 'store'])->name('permission_group.store');
         Route::get('/permission_group-edit/{id}', [PermissionGroupController::class, 'edit'])->name('permission_group.edit');
@@ -245,7 +245,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/payment_mode-update/{id}', [PaymentModeController::class, 'update'])->name('payment_modes.update');
         Route::get('/payment_mode-delete/{id}', [PaymentModeController::class, 'delete'])->name('payment_modes.delete');
         Route::post('payment_mode/select-payment_mode-delete', [PaymentModeController::class, 'deleteSelected']);
-
     });
 
 
@@ -253,7 +252,7 @@ Route::middleware(['auth'])->group(function () {
 
         //Raw Material Type
 
-        Route::get('/raw_material_type', [RawMaterialTypeController::class, 'index'])->name('raw_material_types');
+    Route::get('/raw_material_type', [RawMaterialTypeController::class, 'index'])->name('raw_material_types');
         Route::get('raw_material_type/data', [RawMaterialTypeController::class, 'indexData'])->name('raw_material_types.data');
         Route::get('/raw_material_type/create', [RawMaterialTypeController::class, 'create'])->name('raw_material_types.create');
         Route::post('/raw_material_type/store', [RawMaterialTypeController::class, 'store'])->name('raw_material_types.store');
@@ -261,6 +260,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/raw_material_type/update/{id}', [RawMaterialTypeController::class, 'update'])->name('raw_material_types.update');
         Route::get('/raw_material_type/delete/{id}', [RawMaterialTypeController::class, 'delete'])->name('raw_material_types.delete');
         Route::post('raw_material_type/select-raw_material_type-delete', [RawMaterialTypeController::class, 'deleteSelected']);
+        Route::post('raw_material_type/import', [RawMaterialTypeController::class, 'import'])->name('raw_material_types.import');
+        Route::get('raw_material_type/export', [RawMaterialTypeController::class, 'export']);
 
         //Raw Material
         Route::get('/raw_materials', [RawMaterialController::class, 'index'])->name('raw_materials');
@@ -271,6 +272,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/raw_materials/update/{id}', [RawMaterialController::class, 'update'])->name('raw_materials.update');
         Route::get('/raw_materials/delete/{id}', [RawMaterialController::class, 'delete'])->name('raw_materials.delete');
         Route::post('raw_materials/select-raw_materials-delete', [RawMaterialController::class, 'deleteSelected']);
+        Route::post('raw_materials/import', [RawMaterialController::class, 'import'])->name('raw_materials.import');
+        Route::get('raw_materials/export', [RawMaterialController::class, 'export']);
 
         //Product
         Route::get('/products', [ProductController::class, 'index'])->name('products');
@@ -381,7 +384,6 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/check-bank-account', [CompanyBankDetailController::class, 'checkBankAccount'])->name('check.bank.account');
             Route::get('/bank_details/{id}/edit', [CompanyBankDetailController::class, 'editBank'])->name('bank.edit');
             Route::post('/bank_details/{id}/update', [CompanyBankDetailController::class, 'updateBank'])->name('bank.update');
-
         });
     });
 
@@ -401,6 +403,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete/selected', [CustomerController::class, 'deleteSelected']);
             Route::post('/import', [CustomerController::class, 'import'])->name('import');
             Route::get('/export', [CustomerController::class, 'export']);
+            Route::post('/check-name', [CustomerController::class, 'checkName'])->name('checkName');
         });
 
         Route::prefix('/product_model')->name('product_model.')->group(function () {
@@ -422,7 +425,6 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/product-model/{id}', [ProductModelController::class, 'getProductModel']);
             Route::post('/product-model/update', [ProductModelController::class, 'priceUpdate'])->name('product-model.update');
             Route::get('/product-model-history/{id}', [ProductModelController::class, 'getProductModelHistory']);
-
         });
 
         Route::prefix('/incentives')->name('incentives.')->group(function () {
@@ -488,7 +490,7 @@ Route::middleware(['auth'])->group(function () {
 
             Route::get('/', [EmployeeController::class, 'index'])->name('index');
             Route::get('/data', [EmployeeController::class, 'indexData'])->name('data');
-    
+
             Route::post('/check-employee-code', [EmployeeController::class, 'checkEmployeeCode'])->name('check.employee.code');
 
             Route::get('/create', [EmployeeController::class, 'create'])->name('create');
@@ -530,15 +532,10 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/export', [EmployeeController::class, 'export']);
             Route::get('/printview/{id}', [EmployeeController::class, 'printView'])->name('printview');
             // routes/web.php
-Route::get('/employee/{id}/family-members', [EmployeeController::class,'getFamilyMember'])->name('employee.family.members');
+            Route::get('/employee/{id}/family-members', [EmployeeController::class, 'getFamilyMember'])->name('employee.family.members');
 
             Route::get('/get-client-companies', [EmployeeController::class, 'getClientCompanies'])->name('getClientCompanies');
             Route::get('/get-sub-client-companies', [EmployeeController::class, 'getSubClientCompanies'])->name('getSubClientCompanies');
-            
-
-
-
-
         });
     });
     // Job Allocation
@@ -569,7 +566,7 @@ Route::get('/employee/{id}/family-members', [EmployeeController::class,'getFamil
             Route::post('/delete/selected', [DirectJobReceivedController::class, 'deleteSelected']);
             Route::get('/get-model-details/{id}', [DirectJobReceivedController::class, 'getModelDetails'])->name('get-models');
             Route::get('/get-finishing-product-details/{id}', [DirectJobReceivedController::class, 'getFinishingProductDetails']);
-             Route::get('/export', [DirectJobReceivedController::class, 'export']);
+            Route::get('/export', [DirectJobReceivedController::class, 'export']);
         });
 
         Route::prefix('/direct_job_wc_giving')->name('direct_job_wc_giving.')->group(function () {
@@ -610,11 +607,10 @@ Route::get('/employee/{id}/family-members', [EmployeeController::class,'getFamil
             Route::get('/export', [DeliveryChallanController::class, 'export']);
             Route::get('/get-product-model/{orderId}', [DeliveryChallanController::class, 'getProductModel']);
             Route::get('get-models-by-order-id', [DeliveryChallanController::class, 'getModelsByOrderId'])->name('getModelsByOrderId');
-            Route::get('/get-product-details', [DeliveryChallanController::class, 'getProductDetails']);
+            Route::get('/get-product-detail', [DeliveryChallanController::class, 'getProductDetail']);
             Route::get('/get-order-details', [DeliveryChallanController::class, 'getOrderDetails']);
             // routes/web.php
-Route::get('/getSubCompanies/{companyId}', [DeliveryChallanController::class, 'getSubCompanies']);
-
+            Route::get('/getSubCompanies/{companyId}', [DeliveryChallanController::class, 'getSubCompanies']);
         });
 
         Route::prefix('/job_giving')->name('job_giving.')->group(function () {
@@ -644,6 +640,8 @@ Route::get('/getSubCompanies/{companyId}', [DeliveryChallanController::class, 'g
             Route::get('/edit/{id}', [JobReceivedController::class, 'edit'])->name('edit');
             Route::get('/show/{id}', [JobReceivedController::class, 'showDetails']);
             Route::get('/export', [JobReceivedController::class, 'export']);
+            Route::get('/jobreceived/history/{id}', [JobReceivedController::class, 'getJobReceivedHistory']);
+            Route::post('/jobreceived/update', [JobReceivedController::class, 'update']);
         });
         Route::prefix('/job_reallocation')->name('job_reallocation.')->group(function () {
             Route::get('/', [JobReallocationController::class, 'index'])->name('index');
@@ -707,7 +705,6 @@ Route::get('/getSubCompanies/{companyId}', [DeliveryChallanController::class, 'g
             Route::get('/', [DirectJobReceivedReportController::class, 'index'])->name('index');
             Route::get('/data', [DirectJobReceivedReportController::class, 'indexData'])->name('data');
             Route::get('/export', [DirectJobReceivedReportController::class, 'export']);
-           
         });
     });
 
@@ -720,10 +717,6 @@ Route::get('/getSubCompanies/{companyId}', [DeliveryChallanController::class, 'g
     Route::get('/get-companies/{companyTypeId}', [EmployeeController::class, 'getCompanies'])->name('get-companies');
     Route::get('/get-sub-clients', [EmployeeController::class, 'getSubClients'])->name('get.sub.clients');
     Route::get('/get-authorised-person/{company}', [EmployeeController::class, 'getAuthorisedPerson']);
-
-
-    
-
 });
 
 //Reoptimized class loader:

@@ -50,6 +50,10 @@ class ResigningReasonsController extends Controller
    
         $resigning_reason->save();
 
+        if ($request->input('ajax_mode') === 'ajax') {
+            return response()->json(['success' => true, 'data' => $resigning_reason, 'message' => 'Resigning Reason added successfully!', 'resigning_reason' => $resigning_reason]);
+        }
+
         return redirect()->route('specified.resigning_reasons')->with('success', 'Resigning Reason added successfully!');
 
 

@@ -97,7 +97,7 @@ class CustomerController extends Controller
     {
         $auth_id = auth()->id();
         $validatedData = $request->validate([
-            'customer_code' => 'required|max:255',
+            'customer_code' => 'required|unique:customers,customer_code|max:255',
             'customer_name' => 'required|max:255',
             'std_code' => 'required_with:phone'
         ]);
@@ -145,9 +145,26 @@ class CustomerController extends Controller
             $address->pincode = $input['pincode'];
             $customer->addresses()->save($address);
         }
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Customer added successfully!',
+                'data' => $customer,
+            ]);
+        }
 
         return redirect()->route('master.customers.index')
             ->with('success', 'Customer created successfully');
+    }
+
+    public function checkName(Request $request)
+    {
+
+        $customer_code = $request->input('customer_code');
+
+        $exists = Customer::where('customer_code', $customer_code)->exists();
+
+        return response()->json(['exists' => $exists]);
     }
     // Edit
     public function edit(Address $address, $id)
@@ -252,11 +269,18 @@ class CustomerController extends Controller
         $request->validate([
             'file' => 'required|file|mimes:xlsx,csv'
         ]);
+        try {
 
         Excel::import(new CustomerDataImport, request()->file('file'));
 
         return redirect()->route('master.customers.index')->with('success', 'Data imported successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('master.customers.index')->with('error', 'Data not imported');
+        }
     }
+    
+
+   
     // Import Users
     public function export(Request $request)
     {

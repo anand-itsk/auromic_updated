@@ -5,8 +5,8 @@
 @section('content')
     @include('links.css.datatable.datatable-css')
     @include('links.css.table.custom-css')
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <div class="wrapper">
         <div class="container-fluid">
             @if (session('success'))
@@ -41,6 +41,47 @@
                     <div class="card mb-2">
                         <div class="card-body">
                             <div class="form-group row mb-0">
+                                <div class="form-group col-sm-4 mb-2 d-flex align-item-center"
+                                    style="position: relative;top:8px">
+
+                                    <div class="">
+                                        <label class="mx-0"><input type="radio" name="date_filter" value="today">
+                                            Today</label>
+                                        <label class="ml-4"><input type="radio" name="date_filter" value="this_month">
+                                            This
+                                            Month</label>
+                                        <label class="ml-4"><input type="radio" name="date_filter" value="last_month">
+                                            Last
+                                            Month</label>
+                                    </div>
+                                </div>
+                                {{-- date Ends --}}
+
+
+                                {{-- From Starts --}}
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    From Date
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <input type="date" class="form-control" name="from_date" id="from_date">
+                                    @error('company_type_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- From Ends --}}
+
+
+                                {{-- Last Start --}}
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    To Date
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <input type="date" class="form-control" name="last_date" id="last_date">
+                                    @error('company_type_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- Last Ends --}}
 
                                 <label for="customer_code" class="col-sm-2 col-form-label ">
                                     Employee
@@ -111,7 +152,7 @@
 
 
 
-                                <label for="customer_code" class="col-sm-2 col-form-label">
+                                {{-- <label for="customer_code" class="col-sm-2 col-form-label">
                                     Received Date
                                 </label>
                                 <div class="col-sm-2 mb-2">
@@ -119,7 +160,7 @@
                                     @error('received_date')
                                         <span class="error" style="color: red;">{{ $message }}</span>
                                     @enderror
-                                </div>
+                                </div> --}}
 
 
 
@@ -188,6 +229,7 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
+                                                <th>Company Name</th>
                                                 <th>Employee Code</th>
                                                 <th>Employee Name</th>
                                                 <th>Order No</th>
@@ -197,11 +239,14 @@
                                                 <th>Given Qty</th>
                                                 <th>Given Date</th>
                                                 <th>Received Qty</th>
+                                                <th>Pending Qty</th>
+                                                <th>Village</th>
                                                 <th>Received Date</th>
                                                 <th>Dec</th>
                                                 <th>Conv</th>
                                                 <th>INC</th>
                                                 <th>Weight</th>
+                                                <th>Signature</th>
 
 
 
@@ -290,12 +335,23 @@
                         d.client_company = $('#client_company').val();
                         d.sub_client_company = $('#sub_client_company').val();
                         d.received_date = $('#received_date').val();
+                        d.from_date = $('#from_date').val();
+                        d.last_date = $('#last_date').val();
+                        d.date_filter = $('input[name="date_filter"]:checked').val();
                     }
 
                 },
                 columns: [{
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        render: function(data, type, row, meta) {
+
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        data: 'company_name',
+                        name: 'company_name'
                     },
                     {
                         data: 'employee_code',
@@ -334,25 +390,57 @@
                         name: 'received_qty'
                     },
                     {
-                        data: 'received_date',
-                        name: 'received_date'
+                        data: 'pending_qty',
+                        name: 'pending_qty'
                     },
                     {
-                        data: 'deducation_fee',
-                        name: 'deducation_fee'
+                        data: 'village',
+                        name: 'village'
+                    },
+
+                    {
+                        data: '-',
+                        name: '-',
+                        render: function(data, type, row) {
+                            return data ? data : '';
+                        }
                     },
                     {
-                        data: 'conveyance_fee',
-                        name: 'conveyance_fee'
+                        data: '-',
+                        name: '-',
+                        render: function(data, type, row) {
+                            return data ? data : '';
+                        }
                     },
                     {
-                        data: 'incentive_fee',
-                        name: 'incentive_fee'
+                        data: '-',
+                        name: '-',
+                        render: function(data, type, row) {
+                            return data ? data : '';
+                        }
                     },
                     {
-                        data: 'current_weight',
-                        name: 'deducation_fee'
+                        data: '-',
+                        name: '-',
+                        render: function(data, type, row) {
+                            return data ? data : '';
+                        }
+                    },
+                    {
+                        data: '-',
+                        name: '-',
+                        render: function(data, type, row) {
+                            return data ? data : '';
+                        }
+                    },
+                    {
+                        data: '-',
+                        name: '-',
+                        render: function(data, type, row) {
+                            return data ? data : '';
+                        }
                     }
+
                 ],
                 order: [
                     [0, 'desc']
@@ -437,7 +525,21 @@
 
             });
 
+             $('#last_date').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
 
+            $('#form_date').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
+
+
+            $('input[name="date_filter"]').on('change', function() {
+                // Reload DataTable with new filter
+                table.ajax.reload();
+            });
 
 
             $('#employee').on('change', function() {
@@ -460,7 +562,7 @@
                 table.ajax.reload();
             });
 
-             $('#received_date').on('change', function() {
+            $('#received_date').on('change', function() {
                 table.ajax.reload();
             });
 
@@ -504,6 +606,8 @@
             var clientCompany = $('#client_company option:selected').text();
             var subClientCompany = $('#sub_client_company option:selected').text();
             var receivedDate = $('#received_date').val();
+            var fromDate = $('#from_date').val();
+            var lastDate = $('#last_date').val();
 
             selectedFilters += 'Employee: ' + employee + ', ';
             selectedFilters += 'Master Company: ' + masterCompany + ', ';
@@ -579,32 +683,38 @@
 
 
 
-<script>
-    $(document).ready(function() {
-        // Initialize Select2 on the customer dropdown
-     
-         $('#employee').select2({
-            placeholder: "Select Employee",
-            allowClear: true
-        });
-         $('#master_company').select2({
-            placeholder: "Select Master Company",
-            allowClear: true
-        });
-       
-          $('#client_company').select2({
-            placeholder: "Select Client Compant",
-            allowClear: true
-        });
+    <script>
+        $(document).ready(function() {
+            // Initialize Select2 on the customer dropdown
 
-          
-          $('#sub_client_company').select2({
-            placeholder: "Select SubClient Company",
-            allowClear: true
-        });
+            $('#employee').select2({
+                placeholder: "Select Employee",
+                allowClear: true
+            });
+            $('#master_company').select2({
+                placeholder: "Select Master Company",
+                allowClear: true
+            });
+
+            $('#client_company').select2({
+                placeholder: "Select Client Compant",
+                allowClear: true
+            });
 
 
-        
-    });
-</script>
+            $('#sub_client_company').select2({
+                placeholder: "Select SubClient Company",
+                allowClear: true
+            });
+
+        });
+    </script>
+
+    <script>
+        document.querySelectorAll('input[name="date_filter"]').forEach(function(element) {
+            element.addEventListener('change', function() {
+                document.getElementById('filterForm').submit(); // Submit the form on selection
+            });
+        });
+    </script>
 @endsection

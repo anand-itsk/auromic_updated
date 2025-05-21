@@ -357,7 +357,11 @@
                 },
                 columns: [{
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        render: function(data, type, row, meta) {
+                           
+                            return meta.row + 1;
+                        }
                     },
                     {
                         data: 'company_name',

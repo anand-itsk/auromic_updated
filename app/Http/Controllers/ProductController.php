@@ -41,12 +41,17 @@ class ProductController extends Controller
       $product = new Product;
       $product->name = $request->input('name');
       $product->code = $request->input('code');
-
-
       $product->save();
+
+      if ($request->input('ajax_mode') === 'ajax') {
+         return response()->json(['success' => true,'data' => $product, 'message' => 'Product added successfully!', 'product' => $product]);
+      }
 
       return redirect()->route('product-models.products')->with('success', 'Product added successfully!');
    }
+
+
+   
 
    public function edit($id)
    {

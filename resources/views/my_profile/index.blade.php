@@ -82,7 +82,7 @@
                             <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
                                 <div class="user-info">
                                     <span>USER ID</span>
-                                    <h5>{{ $user->id }}</h5>
+                                    <h5>{{ $user->name }}</h5>
                                 </div>
                             </div>
 

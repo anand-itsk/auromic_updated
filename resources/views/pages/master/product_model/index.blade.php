@@ -17,6 +17,16 @@
                     {{ session('success') }}
                 </div>
             @endif
+
+            
+             @if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{ session('error') }}
+    </div>
+@endif 
             <div class="alert alert-success alert-dismissible fade show" role="alert" style="display:none;">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -113,7 +123,7 @@
                                 </div>
 
 
-                                 <label for="customer_code" class="col-sm-2 col-form-label ">
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
                                     Product size
                                 </label>
                                 <div class="col-sm-2 mb-2">
@@ -155,9 +165,9 @@
                                             Delete Selected Record</button>
                                     </div>
                                     <div>
-                                        <!-- <button type="button" class="icon-button common-color bg-secondary rounded"
-                                                                data-toggle="modal" data-target=".bs-example-modal-center"
-                                                                title="Import file"><i class="fa fa-upload  text-white"></i></button> -->
+                                        <button type="button" class="icon-button common-color bg-secondary rounded"
+                                            data-toggle="modal" data-target=".bs-example-modal-center"
+                                            title="Import file"><i class="fa fa-upload  text-white"></i></button>
 
                                         <button class="icon-button  bg-primary rounded">
                                             <a href="{{ route('master.product_model.create') }}"
@@ -311,7 +321,7 @@
                 <div class="modal-body pb-0">
                     <form id="priceForm" method="POST">
                         @csrf
-                        <input type="text" name="id" id="id">
+                        <input type="hidden" name="id" id="id">
                         <div class="row">
                             <label for="wages_product" class="col-sm-12 col-form-label">Wages of Product</label>
                             <div class="col-sm-12 mb-4">
@@ -384,93 +394,141 @@
                     url: '{{ route('master.product_model.data') }}',
                     data: function(d) {
 
-                        console.log(d);
+                        // console.log(d);
                         d.from_date = $('#from_date').val();
                         d.last_date = $('#last_date').val();
-                        d.product = $('#product').val(); // New filter
-                        d.product_model = $('#product_model').val(); // New filter
-                        d.product_size = $('#product_size').val(); // New filter
+                        d.product = $('#product').val();
+                        d.product_model = $('#product_model').val();
+                        d.product_size = $('#product_size').val();
                         d.date_filter = $('input[name="date_filter"]:checked').val();
                     }
 
                 },
 
-                columns: [{
+                columns: [
+                    // {
 
-                        data: 'id',
-                        name: 'id',
-                        render: function(data, type, row, meta) {
-
-
-                            return meta.row + 1;
-                        }
-                    },
-                    {
-                        data: 'product.name',
-                        name: 'product.name',
-                        render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-                    },
-                    {
-                        data: 'model_code',
-                        name: 'model_code',
-                        render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-                    },
-                    {
-                        data: 'model_name',
-                        name: 'model_name',
-                        render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-                    },
-                    {
-                        data: 'product_size.code',
-                        name: 'product_size.code',
-                        render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-                    },
-                    {
-                        data: 'wages_product',
-                        name: 'wages_product',
-                        render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-                    },
-                    {
-                        data: 'raw_material.name',
-                        name: 'raw_material.name',
-                        render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-                    },
-                    {
-                        data: 'raw_material_weight_item',
-                        name: 'raw_material_weight_item',
-                        render: function(data, type, row) {
-                            return data ? data : '-';
-                        }
-                    },
+                    //     data: 'id',
+                    //     name: 'id',
+                    //     render: function(data, type, row, meta) {
 
 
-                    {
-                        data: 'date',
-                        name: 'date',
-                        render: function(data, type, row) {
-                            if (data) {
-                                // Create a new Date object and format it
-                                const date = new Date(data);
-                                const day = ('0' + date.getDate()).slice(-2);
-                                const month = ('0' + (date.getMonth() + 1)).slice(-2);
-                                const year = date.getFullYear();
-                                return `${day}/${month}/${year}`;
-                            }
-                            return '-';
-                        }
-                    },
+                    //         return meta.row + 1;
+                    //     }
+                    // },
+                    // {
+                    //     data: 'product.name',
+                    //     name: 'product.name',
+                    //     render: function(data, type, row) {
+                    //         return data ? data : '-';
+                    //     }
+                    // },
+                    // {
+                    //     data: 'model_code',
+                    //     name: 'model_code',
+                    //     render: function(data, type, row) {
+                    //         return data ? data : '-';
+                    //     }
+                    // },
+                    // {
+                    //     data: 'model_name',
+                    //     name: 'model_name',
+                    //     render: function(data, type, row) {
+                    //         return data ? data : '-';
+                    //     }
+                    // },
+                    // {
+                    //     data: 'product_size.code',
+                    //     name: 'product_size.code',
+                    //     render: function(data, type, row) {
+                    //         return data ? data : '-';
+                    //     }
+                    // },
+                    // {
+                    //     data: 'wages_product',
+                    //     name: 'wages_product',
+                    //     render: function(data, type, row) {
+                    //         return data ? data : '-';
+                    //     }
+                    // },
+                    // {
+                    //     data: 'raw_material.name',
+                    //     name: 'raw_material.name',
+                    //     render: function(data, type, row) {
+                    //         return data ? data : '-';
+                    //     }
+                    // },
+                    // {
+                    //     data: 'raw_material_weight_item',
+                    //     name: 'raw_material_weight_item',
+                    //     render: function(data, type, row) {
+                    //         return data ? data : '-';
+                    //     }
+                    // },
+
+
+                    // {
+                    //     data: 'date',
+                    //     name: 'date',
+                    //     render: function(data, type, row) {
+                    //         if (data) {
+                    //             // Create a new Date object and format it
+                    //             const date = new Date(data);
+                    //             const day = ('0' + date.getDate()).slice(-2);
+                    //             const month = ('0' + (date.getMonth() + 1)).slice(-2);
+                    //             const year = date.getFullYear();
+                    //             return `${day}/${month}/${year}`;
+                    //         }
+                    //         return '-';
+                    //     }
+                    // },
+
+
+                     {
+        data: 'id',
+        name: 'id',
+    },
+    {
+        data: 'product_name', // Alias from the query
+        name: 'products.name',
+        render: function(data, type, row) {
+            return data ? data : '-';
+        }
+    },
+    {
+        data: 'model_code',
+        name: 'model_code',
+    },
+    {
+        data: 'model_name',
+        name: 'model_name',
+    },
+    {
+        data: 'product_size_code', // Alias from the query
+        name: 'product_sizes.code',
+        render: function(data, type, row) {
+            return data ? data : '-';
+        }
+    },
+    {
+        data: 'wages_product',
+        name: 'wages_product',
+    },
+    {
+        data: 'raw_material_name', // Alias from the query
+        name: 'raw_materials.name',
+        render: function(data, type, row) {
+            return data ? data : '-';
+        }
+    },
+    {
+        data: 'raw_material_weight_item',
+        name: 'raw_material_weight_item',
+    },
+    {
+        data: 'date',
+        name: 'date',
+    },
                     {
                         data: null,
                         orderable: false,
@@ -522,13 +580,13 @@
                 table.ajax.reload();
             });
 
-             $('#product_model').on('change', function() {
+            $('#product_model').on('change', function() {
                 table.ajax.reload();
             });
-             $('#product_size').on('change', function() {
+            $('#product_size').on('change', function() {
                 table.ajax.reload();
             });
-             $('input[name="date_filter"]').on('change', function() {
+            $('input[name="date_filter"]').on('change', function() {
                 // Reload DataTable with new filter
                 table.ajax.reload();
             });
@@ -546,9 +604,9 @@
 
                 selectedFilters += 'From Date: ' + fromDate + ', ';
                 selectedFilters += 'Last Date: ' + lastDate;
-                selectedFilters += 'Product: ' + product + ', '; 
-                 selectedFilters += 'Product Model: ' + productModel + ', '; 
-                  selectedFilters += 'Product Size: ' + productSize + ', '; 
+                selectedFilters += 'Product: ' + product + ', ';
+                selectedFilters += 'Product Model: ' + productModel + ', ';
+                selectedFilters += 'Product Size: ' + productSize + ', ';
 
 
 
@@ -691,11 +749,12 @@
                     if (response.success && response.data.length > 0) {
                         // Loop through the response data and add rows to the table
                         response.data.forEach(function(item) {
+                            var formattedDate = formatTimestamp(item.date);
                             var row = `<tr>
                         <td>${item.model_code}</td>  <!-- Display model_code -->
                         <td>${item.model_name}</td>  <!-- Display model_name -->
                         <td>${item.wages_product}</td>  <!-- Display wages_product -->
-                        <td>${item.formatted_created_at}</td>  <!-- Display formatted created_at -->
+                        <td>${formattedDate }</td> 
                     </tr>`;
                             tableBody.append(row);
                         });
@@ -770,14 +829,14 @@
             return `${day}-${month}-${year} ${strTime}`;
         }
     </script>
- <script>
+    <script>
         document.querySelectorAll('input[name="date_filter"]').forEach(function(element) {
             element.addEventListener('change', function() {
                 document.getElementById('filterForm').submit(); // Submit the form on selection
             });
         });
     </script>
-     <script>
+    <script>
         $(document).ready(function() {
             // Initialize Select2 on the customer dropdown
             $('#product').select2({
@@ -792,7 +851,7 @@
                 placeholder: "Select Product Size",
                 allowClear: true
             });
-            
+
         });
     </script>
 @endsection

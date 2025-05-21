@@ -15,6 +15,15 @@
                     {{ session('success') }}
                 </div>
             @endif
+
+            @if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{ session('error') }}
+    </div>
+@endif
             <div class="alert alert-success alert-dismissible fade show" role="alert" style="display:none;">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -239,15 +248,17 @@ $(document).ready(function() {
                 orderable: false,
                 searchable: false,
                 render: function(data, type, row) {
-                    // Use the first_company_id from the server response
-                    var deleteButton = row.id == row.first_company_id ? '' : `<button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>`;
+    // Check if row.id is in the parentCompanyIds array
+    var deleteButton = row.parentCompanyIds.includes(row.id) ? '' : 
+        `<button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>`;
 
-                    return `
-                    <button onclick="edit(${row.id})" class="icon-button primary-color" title="Edit"><i class="fa fa-edit"></i></button>
-                    ${deleteButton}
-                    <button onclick="showDetails(${row.id})" class="icon-button common-color"><i class="fa fa-eye"></i></button>
-                    `;
-                }
+    return `
+        <button onclick="edit(${row.id})" class="icon-button primary-color" title="Edit"><i class="fa fa-edit"></i></button>
+        ${deleteButton}
+        <button onclick="showDetails(${row.id})" class="icon-button common-color"><i class="fa fa-eye"></i></button>
+    `;
+}
+
             }
         ],
         order: [

@@ -36,7 +36,7 @@ class JobReceivedReportController extends Controller
         $incentiveStatus = $request->input('incentive_status');
         $received_date = $request->input('received_date');
         $orderNoId = $request->input('orderNoId');
-        $product = $request->input('product');
+        $product = $request->input('product');  
         $fromDate = $request->input('from_date');
         $lastDate = $request->input('last_date');
         $dateFilter = $request->input('date_filter');

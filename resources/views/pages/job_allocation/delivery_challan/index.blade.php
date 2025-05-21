@@ -222,8 +222,8 @@
                                     @enderror
                                     <div>
                                         <!-- <button type="button" class="icon-button common-color" data-toggle="modal"
-                                                                data-target=".bs-example-modal-center" title=" Delivery challan"><i
-                                                                    class="fa fa-upload"></i></button> -->
+                                                                    data-target=".bs-example-modal-center" title=" Delivery challan"><i
+                                                                        class="fa fa-upload"></i></button> -->
 
                                         <a href="{{ route('job_allocation.delivery_challan.create') }}"
                                             class="icon-link common-color" title="Create Delivery challan">
@@ -285,7 +285,7 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Company ID</th>
+                                                <th>Company Name</th>
                                                 <th>Order Number</th>
                                                 <th>DC NO</th>
                                                 <th>DC Date</th>
@@ -554,7 +554,7 @@
                 table.ajax.reload();
             });
 
-             $('#product_model').on('change', function() {
+            $('#product_model').on('change', function() {
                 // Reload DataTable with updated parameters
                 table.ajax.reload();
             });
@@ -562,14 +562,17 @@
             $('#dc_no').on('change', function() {
                 // Reload DataTable with updated parameters
                 table.ajax.reload();
+                
             });
 
             $('#from_date, #last_date').on('change', function() {
                 table.ajax.reload();
+                 table.draw();
             });
 
             $('input[name="date_filter"]').on('change', function() {
                 table.ajax.reload();
+                 table.draw();
             });
 
 
@@ -746,7 +749,7 @@
     </script>
 
 
-<script>
+    <script>
         $(document).ready(function() {
             // Initialize Select2 on the customer dropdown
             $('#customer_order_no').select2({
@@ -766,11 +769,11 @@
                 placeholder: "Select Product Size",
                 allowClear: true
             });
-             $('#product_color').select2({
+            $('#product_color').select2({
                 placeholder: "Select Product color",
                 allowClear: true
             });
-            
+
         });
     </script>
 

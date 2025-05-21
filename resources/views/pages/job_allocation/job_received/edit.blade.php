@@ -6,6 +6,14 @@
     @include('links.css.select2.select2')
     <div class="wrapper">
         <div class="container-fluid">
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ session('error') }}
+                </div>
+            @endif
             <!-- Page-Title -->
             <div class="row">
                 <div class="col-sm-12">
@@ -136,7 +144,6 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-
                                         <label for="total_weight" class="col-sm-2 col-form-label">
                                             Total Weight
                                         </label>
@@ -147,8 +154,6 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-
-
                                         <label for="customer_code" class="col-sm-2 col-form-label">
                                             Product Size
                                         </label>
@@ -182,8 +187,16 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-
-
+                                        <label for="customer_code" class="col-sm-2 col-form-label">
+                                            Complete Quantity
+                                        </label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input type="text" class="form-control" name="complete_quantity"
+                                                id="complete_quantity" readonly value="{{ $completeQuantitySum ?? '' }}">
+                                            @error('employee_id')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                         <label for="customer_code" class="col-sm-2 col-form-label mandatory">
                                             Receiving Date
                                         </label>
@@ -249,8 +262,6 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-
-
                                         <label for="customer_code" class="col-sm-2 col-form-label">
                                             Status
                                         </label>
@@ -454,39 +465,37 @@
                 var bValue = parseFloat($("#incentive").val()) || 0;
                 var cValue = parseFloat($("#deduction").val()) || 0;
                 var dValue = parseFloat($("#conveyance").val()) || 0;
-                var wages = $('#wages').val();
-                var totalQuantity = $('#total_quantity').val();
-                var balanceQuantity = $('#balance_quantity').val();
+                var wages = parseFloat($('#wages').val()) || 0;
+                var totalQuantity = parseFloat($('#total_quantity').val()) || 0;
+                var completeQuantity = parseFloat($('#complete_quantity').val()) || 0;
+                var balanceQuantity = parseFloat($('#balance_quantity').val()) || 0;
 
+                // Calculate total and net amounts
                 var total = (aValue * wages) + dValue + bValue - cValue;
                 var net = (aValue * wages);
 
-                if (balanceQuantity !== "") { // Check if balanceQuantity is not empty
+                // Calculate pending quantity
+                var pendingQuantity;
+                if (totalQuantity === completeQuantity) {
+                    // If total_quantity and complete_quantity are equal, pending_quantity is 0
+                    pendingQuantity = 0;
+                } else if (balanceQuantity > 0) {
                     pendingQuantity = balanceQuantity - aValue;
                 } else {
                     pendingQuantity = totalQuantity - aValue;
                 }
 
-
-
-
-
-
-
-                $("#pending_quantity").val(pendingQuantity); // You can adjust the precision as needed
-                $("#total_amount").val(total.toFixed(2)); // You can adjust the precision as needed
-                $("#net_amount").val(net.toFixed(2)); // You can adjust the precision as needed
+                $("#pending_quantity").val(pendingQuantity);
+                $("#total_amount").val(total.toFixed(2));
+                $("#net_amount").val(net.toFixed(2));
             }
-
-
             $("#received_quantity, #incentive, #deduction, #conveyance, #pending_quantity").on("input",
                 updateTotal);
-
-            // Initial update
             updateTotal();
 
         });
     </script>
+
     <script>
         $(document).ready(function() {
             $('#Incentive_status').change(function() {
@@ -504,5 +513,31 @@
             });
         });
     </script>
+
+    {{-- <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let totalQuantityInput = document.getElementById("total_quantity");
+        let receivedQuantityInput = document.getElementById("received_quantity");
+        let statusSelect = document.getElementById("received_status");
+
+        receivedQuantityInput.addEventListener("input", function () {
+            let totalQuantity = Number(totalQuantityInput.value) || 0;
+            let receivedQuantity = Number(receivedQuantityInput.value) || 0;
+
+            if (receivedQuantity === totalQuantity) {
+                statusSelect.value = "Complete";
+            } 
+            else {
+                statusSelect.value = "Pending";
+            }
+
+            // Trigger change event to reflect changes in the dropdown
+            statusSelect.dispatchEvent(new Event("change"));
+        });
+    });
+</script> --}}
+
+
+
 
 @endsection

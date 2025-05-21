@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\RawMaterialExport;
+use App\Imports\RawMaterialImport;
 use App\Models\RawMaterialType;
 use App\Models\RawMaterial;
 use Illuminate\Http\Request;
@@ -34,29 +36,28 @@ class RawMaterialController extends Controller
 
    public function store(Request $request)
    {
-
-      //   dd($request);
       $request->validate([
          'name' => 'required',
          'stock' => 'required',
       ]);
 
-      $raw_material_type_id = $request->input('raw_material_type_id');
-      if ($raw_material_type_id == null) {
-         $raw_material_type_id = 1;
-      }
+      $raw_material_type_id = $request->input('raw_material_type_id') ?? 1;
 
       $raw_material = new RawMaterial;
       $raw_material->raw_material_type_id = $raw_material_type_id;
       $raw_material->name = $request->input('name');
       $raw_material->stock = $request->input('stock');
-
-
       $raw_material->save();
+
+      if ($request->input('ajax_mode') == 'ajax') {
+         return response()->json(['success' => true,'data' => $raw_material, 'message' => 'Raw Material added successfully!']);
+      }
 
       return redirect()->route('product-models.raw_materials')->with('success', 'Raw Material added successfully!');
    }
 
+
+  
    public function edit($id)
    {
       $raw_material = RawMaterial::find($id);
@@ -105,5 +106,26 @@ class RawMaterialController extends Controller
 
         RawMaterial::destroy($ids);
         return response()->json(['status' => 'success']);
+    }
+
+    public function export(Request $request)
+    {
+        return Excel::download(new RawMaterialExport($request->all()), 'RawMaterialDatas_' . date('d-m-Y') . '.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+
+      //   dd($request);
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,csv'
+        ]);
+
+        try {
+            Excel::import(new RawMaterialImport, request()->file('file'));
+            return redirect()->route('product-models.raw_materials')->with('success', 'Data imported successfully');
+        }  catch (\Exception $e) {
+            return redirect()->route('product-models.raw_materials')->with('error', 'Data not imported.');
+        }
     }
 }

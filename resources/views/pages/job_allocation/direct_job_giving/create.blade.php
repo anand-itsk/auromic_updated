@@ -4,6 +4,8 @@
 @section('content')
     <!-- Add Select2 CSS -->
     @include('links.css.select2.select2')
+    @include('modals')
+    @include('modals_script')
 
     <div class="wrapper">
         <div class="container-fluid">
@@ -31,7 +33,8 @@
                     <div class="card m-b-30">
                         <div class="card-body">
                             <div class="m-b-30">
-                                <form action="{{ route('job_allocation.direct_job_giving.store') }}" method="POST"
+                                <form id="directJobGivingForm"
+                                    action="{{ route('job_allocation.direct_job_giving.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group row">
@@ -40,12 +43,13 @@
                                             Employee
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="employee_id" id="employee_id" required>
+                                            <select class="form-control select2" name="employee_id" id="employee_id"
+                                                required>
                                                 <option value="">Select Employee</option>
                                                 @foreach ($employee as $item)
                                                     <option value="{{ $item->id }}"
-                                                        data-company-name="{{ $item->company->company_name ??''}}/{{ $item->company->authorisedPerson->name ?? ''}}"
-                                                        data-company-type="{{ $item->company->companyType->name ?? ''}}">
+                                                        data-company-name="{{ $item->company->company_name ?? '' }}/{{ $item->company->authorisedPerson->name ?? '' }}"
+                                                        data-company-type="{{ $item->company->companyType->name ?? '' }}">
                                                         {{ $item->employee_code }}/{{ $item->employee_name }}
                                                     </option>
                                                 @endforeach
@@ -89,6 +93,8 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
+                                        <input class="form-control" type="hidden" name="cutting_charge" id="cutting_charge"
+                                            value="">
                                         <label for="order_date" class="col-sm-2 col-form-label ">Product Name</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="product_name" id="product_name"
@@ -100,12 +106,13 @@
 
 
                                         <label for="customer_code" class="col-sm-2 col-form-label mandatory">Product Color
-                                            <a class="shortcut_master"
-                                                href="{{ route('product-models.product_colors.create') }}"
-                                                target="_blank">+</a>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#product_color">
+                                                +
+                                            </button>
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="product_color_id"
+                                            <select class="form-control product_color_id select2" name="product_color_id"
                                                 id="product_color_id" required>
                                                 <option value="">Select Product color</option>
                                                 @foreach ($product_color as $item)
@@ -119,13 +126,14 @@
                                         <label for="product_size" class="col-sm-2 col-form-label">Product
                                             Size</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="product_size" id="product_size"
-                                                readonly>
+                                            <input class="form-control" type="text" name="product_size"
+                                                id="product_sizes" readonly>
                                             @error('product_size')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
- <input class="form-control" type="hidden" name="product_size_id" id="product_size_id">
+                                        <input class="form-control" type="hidden" name="product_size_id"
+                                            id="product_size_ids">
                                         <label for="meter_for_one_product" class="col-sm-2 col-form-label">Meter for one
                                             product</label>
                                         <div class="col-sm-4 mb-4">
@@ -154,13 +162,14 @@
 
                                         <label for="meter" class="col-sm-2 col-form-label">Total Meter</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="meter" id="meter" required>
+                                            <input class="form-control" type="text" name="meter" id="meter"
+                                                required>
                                             @error('meter')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <label for="total_cutting_pices" class="col-sm-2 col-form-label">Total Cutting
-                                            Pieces</label>
+                                            Charges</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="total_cutting_pices"
                                                 id="total_cutting_pices">
@@ -182,7 +191,8 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="d-flex justify-content-evenly">
-                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                            <button type="submit"
+                                                class="btn btn-primary submit-form waves-effect waves-light">
                                                 Submit
                                             </button>
                                             <a href="{{ route('job_allocation.direct_job_giving.create') }}"
@@ -240,11 +250,22 @@
                 var meterForOneProduct = parseFloat($('#meter_for_one_product').val(), 10);
                 var totalMeter = parseFloat($(this).val(), 10);
                 var errorSpan = $('#assign_meter_error');
-                var net = ( totalMeter/meterForOneProduct );
+                var net = (totalMeter / meterForOneProduct);
 
                 $('#total_quantity').val(net);
-
+                calculateTotalCuttingCharges();
             });
+            $('#total_quantity, #cutting_charge').on('input', function() {
+                calculateTotalCuttingCharges();
+            });
+
+            function calculateTotalCuttingCharges() {
+                var receivingQuantity = parseFloat($('#total_quantity').val(), 10) || 0;
+                var cuttingCharge = parseFloat($('#cutting_charge').val(), 10) || 0;
+                var totalCuttingCharges = receivingQuantity * cuttingCharge;
+
+                $('#total_cutting_pices').val(totalCuttingCharges.toFixed(2)); // Set value with 2 decimal points
+            }
         });
     </script>
     <script>
@@ -260,9 +281,10 @@
                         success: function(data) {
 
                             $('#product_name').val(data.product_name);
-                            $('#product_size').val(data.product_size);
-                             $('#product_size_id').val(data.product_size_id);
+                            $('#product_sizes').val(data.product_size);
+                            $('#product_size_ids').val(data.product_size_id);
                             $('#meter_for_one_product').val(data.meters_one_product);
+                            $('#cutting_charge').val(data.cutting_charge);
 
                         }
                     });

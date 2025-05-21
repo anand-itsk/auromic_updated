@@ -2,6 +2,12 @@
 @section('title', 'Finishing Product')
 <!-- DataTables CSS -->
 @section('content')
+
+<style>
+    #users-table_filter{
+        display: none!important;
+    }
+</style>
     @include('links.css.datatable.datatable-css')
     @include('links.css.table.custom-css')
      <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -16,6 +22,15 @@
                     {{ session('success') }}
                 </div>
             @endif
+
+            @if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{ session('error') }}
+    </div>
+@endif  
             <div class="row">
                 <div class="col-sm-12">
                     <div class="page-title-box">
@@ -147,9 +162,9 @@
                                     </div>
 
                                     <div>
-                                        <!-- <button type="button" class="icon-button common-color bg-secondary rounded"
+                                        <button type="button" class="icon-button common-color bg-secondary rounded"
                                                         data-toggle="modal" data-target=".bs-example-modal-center"
-                                                        title="Import file"><i class="fa fa-upload text-white"></i></button> -->
+                                                        title="Import file"><i class="fa fa-upload text-white"></i></button> 
 
                                         <button class="icon-button  bg-primary rounded">
                                             <a href="{{ route('master.finishing_product.create') }}"
@@ -176,7 +191,7 @@
                                                     <div class="col-12">
                                                         <div class="card m-b-30">
                                                             <div class="card-body">
-                                                                <form action="{{ route('master.incentives.import') }}"
+                                                                <form action="{{ route('master.finishing_product.import') }}"
                                                                     method="POST" enctype="multipart/form-data">
                                                                     @csrf
                                                                     <input type="file" name="file" required>

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('job_giving_id');
             $table->unsignedBigInteger('employee_id');
-            $table->date('receving_date');
-             $table->string('quantity')->nullable();
+            $table->string('quantity')->nullable();
+            $table->date('date')->nullable();
             $table->timestamps();
             $table->foreign('job_giving_id')->references('id')->on('job_givings')->onDelete('cascade');
             $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');

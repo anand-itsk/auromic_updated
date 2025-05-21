@@ -13,6 +13,7 @@ class EmployeeExport implements FromCollection,WithHeadings
     public function collection()
     {
         return Employee::all();
+
     }
 
     public function headings(): array
@@ -42,6 +43,7 @@ class EmployeeExport implements FromCollection,WithHeadings
             'Resigning Date',
             'Photo',
             'Resigning Reason',
+            'own_company',
             'created_at',
             'updated_at'
         ];

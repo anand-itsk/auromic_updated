@@ -28,9 +28,14 @@ use App\Models\Religion;
 use App\Models\ResigningReason;
 use App\Models\User;
 use App\Models\EmployeeHistory;
+use App\Models\Product;
+use App\Models\ProductSize;
+use App\Models\RawMaterial;
+use App\Models\RawMaterialType;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Yajra\DataTables\DataTables;
 
 class EmployeeController extends Controller
@@ -60,9 +65,10 @@ class EmployeeController extends Controller
         $resigning_reason = ResigningReason::all();
 
         $companyType = CompanyType::all();
-        $company = Company::all();
+        $CompanY = Company::all();
+        // dd($company);
         $employees = Employee::all();
-        return view('pages.master.employee.index', compact('formattedEmployeeNumber', 'resigning_reason', 'companyType', 'company', 'employees'));
+        return view('pages.master.employee.index', compact('formattedEmployeeNumber', 'resigning_reason', 'companyType', 'CompanY', 'employees'));
     }
 
 
@@ -105,7 +111,7 @@ class EmployeeController extends Controller
         }
 
         if ($employeeCode) {
-            $query->where('employee_code', $employeeCode);
+            $query->where('id', $employeeCode);
         }
         // dd($employeeCode);
         if ($fromDate && $lastDate) {
@@ -136,15 +142,16 @@ class EmployeeController extends Controller
         }
 
 
-                $workingEmployees = (clone $query)->where('status', 'working')->get();
+        $workingEmployees = (clone $query)->where('status', 'working')->get();
 
-                // Get employees with other statuses
-                $otherEmployees = (clone $query)->where('status', '!=', 'working')->get();
-                $employees = $workingEmployees->merge($otherEmployees);
+        // Get employees with other statuses
+        $otherEmployees = (clone $query)->where('status', '!=', 'working')->get();
+        $employees = $workingEmployees->merge($otherEmployees);
 
 
-          $data = $employees->map(function ($employee) {
+        $data = $employees->map(function ($employee) {
             $companyType = $employee->company->companyType->id ?? null;
+            // dd($companyType);
             $masterCompany = $clientCompany = null;
 
             // Determine the companies based on the company type
@@ -349,10 +356,9 @@ class EmployeeController extends Controller
             $employee->photo = $filename;
         }
 
-        $companyId = $request->client_company_id
-            ?? $request->sub_client_company_id
+        $companyId = $request->sub_client_company_id
+            ?? $request->client_company_id
             ?? $request->master_company;
-
         // Store data
         $employee->update([
             // 'company_id' => $request->master_company ? $request->master_company : ($request->client_company_id ? $request->client_company_id :$request->sub_client_company_id) ,
@@ -827,7 +833,7 @@ class EmployeeController extends Controller
     {
 
         $user = User::with('roles')->find($id);
-        $employee = Employee::with('addresses')->find($id);
+        $employee = Employee::with('addresses','company.companyType')->find($id);
 
         $countries = Country::all();
         $states = State::all();
@@ -842,36 +848,38 @@ class EmployeeController extends Controller
         $esi_despensaries = EsiDispensary::all();
         $family_members = EmployeeFamilyMemberDetail::where('employee_id', $id)->get();
         // dd($family_members);
+        $raw_material_type = RawMaterialType::all();
+        $raw_material = RawMaterial::all();
+         $products =Product::all();
+        $product_size = ProductSize::all();
         $resigning_reason = ResigningReason::all();
         $photoPath = $employee->photo ?? null;
         $master_companies = Company::where('company_type_id', '2')->get();
         $client_companies = Company::where('company_type_id', '3')->get();
         $subclient_companies = Company::where('company_type_id', '4')->get();
+        $selectedMasterCompany = $selectedClientCompany = $selectedSubClientCompany = null;
+        if ($employee->company ?? null) {
+            switch ($employee->company->companyType->id ?? null) {
+                case 2:
+                    // Company is a master
+                    $selectedMasterCompany = $employee->company->id;
+                    break;
 
+                case 3:
+                    // Company is a client, find its master
+                    $selectedClientCompany = $employee->company->id;
+                    $selectedMasterCompany = CompanyHierarchy::where('company_id', $selectedClientCompany)->value('parent_company_id');
+                    break;
 
-        // Initialize variables for selected company data
-        $selectedMasterCompany = $selectedClientCompany = null;
-
-        // Determine master, client, and sub-client based on company type
-        switch ($employee->company->companyType->id ?? null) {
-            case 2:
-                // Master company type
-                $selectedMasterCompany = $employee->company->id;
-                break;
-
-            case 3:
-                // Client company type, find its master company
-                $selectedClientCompany = $employee->company->id;
-                $selectedMasterCompany = CompanyHierarchy::where('company_id', $selectedClientCompany)->value('parent_company_id');
-                break;
-
-            case 4:
-                // Sub-client company type, find its client and master company
-                $subClientCompanyId = $employee->company->id;
-                $selectedClientCompany = CompanyHierarchy::where('company_id', $subClientCompanyId)->value('parent_company_id');
-                $selectedMasterCompany = CompanyHierarchy::where('company_id', $selectedClientCompany)->value('parent_company_id');
-                break;
+                case 4:
+                    // Company is a sub-client, find its client and master
+                    $selectedSubClientCompany = $employee->company->id;
+                    $selectedClientCompany = CompanyHierarchy::where('company_id', $selectedSubClientCompany)->value('parent_company_id');
+                    $selectedMasterCompany = CompanyHierarchy::where('company_id', $selectedClientCompany)->value('parent_company_id');
+                    break;
+            }
         }
+
 
 
 
@@ -892,12 +900,16 @@ class EmployeeController extends Controller
             'resigning_reason' => $resigning_reason,
             'photoPath' => $photoPath,
             'district' => $district,
+            'master_companies' => $master_companies,
             'client_companies' => $client_companies,
             'subclient_companies' => $subclient_companies,
-            'master_companies' => $master_companies,
             'selectedMasterCompany' => $selectedMasterCompany,
             'selectedClientCompany' => $selectedClientCompany,
-            'selectedSubClientCompany' => $subClientCompanyId ?? null,
+            'selectedSubClientCompany' => $selectedSubClientCompany,
+            'raw_material_type'=> $raw_material_type,
+            'raw_material'=> $raw_material,
+            'products'=> $products,
+            'product_size'=> $product_size,
         ]);
     }
     // Update
@@ -976,13 +988,22 @@ class EmployeeController extends Controller
     public function import(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:xlsx,csv'
+            'file' => 'required|file|mimes:xlsx,csv',
+            'import_company_id' => 'required|integer'
         ]);
-
-        Excel::import(new EmployeeDataImport, request()->file('file'));
-
-        return redirect()->route('master.employees.index')->with('success', 'Data imported successfully');
+    
+        $companyId = $request->import_company_id;
+    
+        try {
+            Excel::import(new EmployeeDataImport($companyId), $request->file('file'));
+            return redirect()->route('master.employees.index')->with('success', 'Data imported successfully');
+        } catch (ValidationException $e) {
+            return back()->withErrors($e->errors());
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'An unexpected error occurred. Please try again.']);
+        }
     }
+    
     // Import Users
     public function export(Request $request)
     {
@@ -1136,12 +1157,9 @@ class EmployeeController extends Controller
     public function getClientCompanies(Request $request)
     {
         $masterCompanyId = $request->master_company_id;
-
-        // Fetch client companies based on the selected master company
-        $clientCompanies = Company::whereHas('hierarchy', function ($query) use ($masterCompanyId) {
-            $query->where('parent_company_id', $masterCompanyId);
-        })->where('company_type_id', 2) // Client company type
-            ->get();
+        $clientCompanyIds = CompanyHierarchy::where('parent_company_id', $masterCompanyId)
+            ->pluck('company_id');
+        $clientCompanies = Company::whereIn('id', $clientCompanyIds)->get();
 
         return response()->json($clientCompanies);
     }
@@ -1149,13 +1167,11 @@ class EmployeeController extends Controller
     public function getSubClientCompanies(Request $request)
     {
         $clientCompanyId = $request->client_company_id;
-
-        // Fetch sub-client companies based on the selected client company
-        $subClientCompanies = Company::whereHas('hierarchy', function ($query) use ($clientCompanyId) {
-            $query->where('parent_company_id', $clientCompanyId);
-        })->where('company_type_id', 3) // Sub-client company type
-            ->get();
+        $subClientCompanyIds = CompanyHierarchy::where('parent_company_id', $clientCompanyId)
+            ->pluck('company_id');
+        $subClientCompanies = Company::whereIn('id', $subClientCompanyIds)->get();
 
         return response()->json($subClientCompanies);
     }
+
 }

@@ -8,6 +8,11 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+
+    @php
+        // dd($company);
+    @endphp
+
     <div class="wrapper">
         <div class="container-fluid">
             @if (session('success'))
@@ -18,6 +23,21 @@
                     {{ session('success') }}
                 </div>
             @endif
+
+            @if ($errors->has('import_errors'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <ul>
+                    @foreach ($errors->get('import_errors') as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        
+        
             <div class="row">
                 <div class="col-sm-12">
                     <div class="page-title-box">
@@ -106,7 +126,7 @@
                                 <div class="col-sm-2 mb-2">
                                     <select class="form-control select2" name="companies" id="companies" disabled>
                                         <option value="">Select Company</option>
-                                        @foreach ($company as $c)
+                                        @foreach ($CompanY as $c)
                                             <option value="{{ $c->id }}" data-type-id="{{ $c->company_type_id }}">
                                                 {{ $c->company_name }}</option>
                                         @endforeach
@@ -198,7 +218,7 @@
 
 
                                 {{-- <div class="form-group">
-                                  
+
                                     <div>
                                         <label><input type="radio" name="date_filter" value="today"> Today</label>
                                         <label><input type="radio" name="date_filter" value="this_month"> This
@@ -213,17 +233,17 @@
 
 
                                 <!-- <label for="customer_code" class="col-sm-2 col-form-label ">
-                                                               Gender
-                                                               </label>
-                                                               <div class="col-sm-2 mb-2">
-                                                                  <select class="form-control select2" name="gender" id="gender">
-                                                                     <option value="">Select Gender</option>
-                                                                     
-                                                                  </select>
-                                                                  @error('gender')
+                                                                                       Gender
+                                                                                       </label>
+                                                                                       <div class="col-sm-2 mb-2">
+                                                                                          <select class="form-control select2" name="gender" id="gender">
+                                                                                             <option value="">Select Gender</option>
+
+                                                                                          </select>
+                                                                                          @error('gender')
         <span class="error" style="color: red;">{{ $message }}</span>
     @enderror
-                                                               </div> -->
+                                                                                       </div> -->
 
 
                             </div>
@@ -238,10 +258,8 @@
                                 @enderror
                                 <div class="d-flex justify-content-between p-2 bd-highlight">
                                     <div>
-                                        <button id="deleteButton" style="display: none;"
-                                            class="icon-button text-white bg-danger rounded fs-14"
-                                            title="Delete Selected Record">
-                                            Delete Selected Record</button>
+                                        <button id="deleteButton" class="icon-button delete-color"
+                                            title="Delete Selected Record"><i class="fa fa-user-times"></i></button>
                                     </div>
 
                                     <div>
@@ -275,6 +293,15 @@
                                                                 <form action="{{ route('master.employees.import') }}"
                                                                     method="POST" enctype="multipart/form-data">
                                                                     @csrf
+
+                                                                    <select class="form-control" name="import_company_id"
+                                                                        id="import_company_id">
+                                                                        <option value="">Select Company</option>
+                                                                        @foreach ($CompanY as $company)
+                                                                            <option value="{{ $company->id }}">
+                                                                                {{ $company->company_name }}</option>
+                                                                        @endforeach
+                                                                    </select>
                                                                     <input type="file" name="file" required>
                                                                     <button type="submit"
                                                                         class="btn btn-primary">Import</button>
@@ -807,7 +834,7 @@
                         <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
                         <button onclick="showDetails(${row.id})" class="icon-button common-color"><i class="fa fa-eye"></i></button>
                         <button onclick="openResignModal(${row.id}, '${row.employee_name}', '${row.status}')" class="icon-button custom-color"><i class="fa fa-user"></i></button>
-                        
+
                     `;
                         }
 
@@ -965,6 +992,34 @@
                 table.ajax.reload();
             });
 
+            $('#deleteButton').click(function() {
+                var ids = $.map(table.rows('.selected').data(), function(item) {
+                    return item.id;
+                });
+
+                if (ids.length === 0) {
+                    alert('No rows selected!');
+                    return;
+                }
+
+                if (confirm("Are you sure you want to delete these rows?")) {
+                    // Send AJAX request to delete the selected rows
+                    $.ajax({
+                        url: '/master/employees/delete/selected',
+                        type: 'POST',
+                        data: {
+                            ids: ids,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            // Handle response here
+                            table.ajax.reload(); // Reload the DataTable
+                        }
+                    });
+                }
+                // });
+            });
+
 
         });
 
@@ -999,45 +1054,46 @@
 
 
         // Listen for row selection event
-        $('#users-table').on('select.dt deselect.dt', function() {
-            console.log("yes id done");
-            var selectedRows = table.rows({
-                selected: true
-            }).count();
+        // $('#users-table').on('select.dt deselect.dt', function() {
+        //     console.log("yes id done");
+        //     var selectedRows = table.rows({
+        //         selected: true
+        //     }).count();
 
-            if (selectedRows > 0) {
-                $('#deleteButton').show(); // Show delete button if rows are selected
-            } else {
-                $('#deleteButton').hide(); // Hide delete button if no rows are selected
-            }
-        });
+        //     if (selectedRows > 0) {
+        //         $('#deleteButton').show(); // Show delete button if rows are selected
+        //     } else {
+        //         $('#deleteButton').hide(); // Hide delete button if no rows are selected
+        //     }
+        // });
 
-        $('#deleteButton').click(function() {
-            var ids = $.map(table.rows('.selected').data(), function(item) {
-                return item.id;
-            });
+        // $('#deleteButton').click(function() {
+        //     var ids = $.map(table.rows('.selected').data(), function(item) {
+        //         return item.id;
+        //     });
 
-            if (ids.length === 0) {
-                alert('No rows selected!');
-                return;
-            }
+        //     if (ids.length === 0) {
+        //         alert('No rows selected!');
+        //         return;
+        //     }
 
-            if (confirm("Are you sure you want to delete these rows?")) {
-                // Send AJAX request to delete the selected rows
-                $.ajax({
-                    url: '/master/employees/delete/selected',
-                    type: 'POST',
-                    data: {
-                        ids: ids,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        // Handle response here
-                        table.ajax.reload(); // Reload the DataTable
-                    }
-                });
-            }
-        });
+        //     if (confirm("Are you sure you want to delete these rows?")) {
+        //         // Send AJAX request to delete the selected rows
+        //         $.ajax({
+        //             url: '/master/employees/delete/selected',
+        //             type: 'POST',
+        //             data: {
+        //                 ids: ids,
+        //                 _token: '{{ csrf_token() }}'
+        //             },
+        //             success: function(response) {
+        //                 // Handle response here
+        //                 table.ajax.reload(); // Reload the DataTable
+        //             }
+        //         });
+        //     }
+
+
 
 
         function openResignModal(id, name, status) {
@@ -1118,7 +1174,7 @@
             return `${day}-${month}-${year} ${strTime}`;
         }
     </script>
-
+   
 
     {{-- <script>
         function generateEmployeeCode() {
@@ -1138,6 +1194,7 @@
     </script> --}}
     <script>
         $(document).ready(function() {
+
             // Initialize Select2 on both dropdowns
             $('#company_type, #companies').select2({
                 placeholder: "Select an option",
@@ -1154,7 +1211,7 @@
                     '<option value="">Select Company</option>'); // Reset options
 
                 // Filter and append companies based on selected company type
-                var companies = @json($company); // Get all companies
+                var companies = @json($CompanY); // Get all companies
                 companies.forEach(function(company) {
                     if (company.company_type_id == selectedTypeId) {
                         var option = new Option(company.company_name, company.id);
@@ -1167,6 +1224,7 @@
             });
         });
     </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Get today's date
@@ -1238,53 +1296,53 @@
         });
     </script>
 
-   <script>
-    $(document).ready(function() {
-        $('#employeeForm').on('submit', function(e) {
-            e.preventDefault(); // Prevent the default form submission
+    <script>
+        $(document).ready(function() {
+            $('#employeeForm').on('submit', function(e) {
+                e.preventDefault(); // Prevent the default form submission
 
-            // Disable the submit button to prevent multiple submissions
-            $('button[type="submit"]').prop('disabled', true).text('Submitting...');
+                // Disable the submit button to prevent multiple submissions
+                $('button[type="submit"]').prop('disabled', true).text('Submitting...');
 
-            $.ajax({
-                url: $(this).attr('action'),
-                method: 'POST',
-                data: new FormData(this),
-                processData: false, // Don't process the data
-                contentType: false, // Let jQuery handle the content type
-                success: function(res) {
-                    // Handle success
-                    if (res.errors) {
-                        console.log('res.errors.................', res.errors);
-                        if (res.errors.employee_code) {
-                            $('#employee_code_err').text(res.errors.employee_code[0]);
-                            $('#employee_code_err').removeClass('d-none');
+                $.ajax({
+                    url: $(this).attr('action'),
+                    method: 'POST',
+                    data: new FormData(this),
+                    processData: false, // Don't process the data
+                    contentType: false, // Let jQuery handle the content type
+                    success: function(res) {
+                        // Handle success
+                        if (res.errors) {
+                            console.log('res.errors.................', res.errors);
+                            if (res.errors.employee_code) {
+                                $('#employee_code_err').text(res.errors.employee_code[0]);
+                                $('#employee_code_err').removeClass('d-none');
+                            }
+                        } else if (res.success) {
+                            // Display success message
+                            alert('Employee created successfully!');
+
+                            // Redirect to the edit page
+                            window.location.href = res.redirect_url;
+                        } else {
+                            // Handle validation errors or any other errors
+                            alert('Error: ' + res.message);
                         }
-                    } else if (res.success) {
-                        // Display success message
-                        alert('Employee created successfully!');
-
-                        // Redirect to the edit page
-                        window.location.href = res.redirect_url;
-                    } else {
-                        // Handle validation errors or any other errors
-                        alert('Error: ' + res.message);
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle AJAX error
+                        alert('Something went wrong. Please try again.');
+                    },
+                    complete: function() {
+                        // Re-enable the submit button
+                        $('button[type="submit"]').prop('disabled', false).text('Create');
                     }
-                },
-                error: function(xhr, status, error) {
-                    // Handle AJAX error
-                    alert('Something went wrong. Please try again.');
-                },
-                complete: function() {
-                    // Re-enable the submit button
-                    $('button[type="submit"]').prop('disabled', false).text('Create');
-                }
+                });
             });
         });
-    });
-</script>
+    </script>
 
-  <script>
+    <script>
         $(document).ready(function() {
             // Initialize Select2 on the customer dropdown
             $('#employee_code').select2({
@@ -1299,11 +1357,11 @@
                 placeholder: "Select Own Company",
                 allowClear: true
             });
-             $('#employee_status').select2({
+            $('#employee_status').select2({
                 placeholder: "Select Employee Status",
                 allowClear: true
             });
+
         });
     </script>
-
 @endsection

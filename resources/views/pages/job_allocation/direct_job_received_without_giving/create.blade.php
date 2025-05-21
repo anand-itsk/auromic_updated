@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Create Direct Job Giving')
+@section('title', 'Create Direct Job Received without Giving')
 <!-- DataTables CSS -->
 @section('content')
     <!-- Add Select2 CSS -->
@@ -122,27 +122,137 @@
                                             @enderror
                                         </div>
 
+                                         <label for="wages_one_product" class="col-sm-2 col-form-label">Wages one
+                                            product</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input class="form-control" type="text" name="wages_one_product"
+                                                id="wages_one_product" readonly>
+                                            @error('wages_one_product')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
 
-
-
+                                        <label for="customer_code" class="col-sm-2 col-form-label">Product Color</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <select class="form-control select2" name="product_color_id"
+                                                id="product_color">
+                                                <option value="">Select Product Color</option>
+                                                @foreach ($product_color as $product_colors)
+                                                    <option value="{{ $product_colors->id }}">
+                                                        {{ $product_colors->name }}
+                                                        </option>
+                                                @endforeach
+                                            </select>
+                                            @error('finishing_product_models_id')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                         <label for="total_quantity" class="col-sm-2 col-form-label">Receiving
                                             Quantity</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="received_quantity"
-                                                id="total_quantity">
+                                                id="received_quantity">
                                             @error('total_quantity')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
+
                                         <label for="total_quantity" class="col-sm-2 col-form-label">Receiving
                                             Date</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="date" name="receving_date"
-                                                id="receving_date">
+                                                id="receving_date" required>
                                             @error('receving_date')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
+                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">
+                                            Incentive Applicable
+                                        </label>
+                                        <div class="col-sm-4 mb-4">
+                                            <select class="form-control select2" name="Incentive_status"
+                                                id="Incentive_status">
+                                                <option value="No">No</option>
+                                                <option value="Yes">Yes</option>
+
+                                            </select>
+                                            @error('Incentive_status')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="before_days" class="col-sm-1 col-form-label">
+                                            Before (Days)
+                                        </label>
+                                        <div class="col-sm-2 mb-4">
+                                            <input type="text" class="form-control" name="before_days"
+                                                id="before_days"disabled>
+                                            @error('before_days')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="after_days" class="col-sm-1 col-form-label">
+                                            After (Days)
+                                        </label>
+                                        <div class="col-sm-2 mb-4">
+                                            <input type="text" class="form-control" name="after_days"
+                                                id="after_days">
+                                            @error('after_days')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="conveyance" class="col-sm-2 col-form-label">
+                                            Conveyance
+                                        </label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input type="text" class="form-control" name="conveyance"
+                                                id="conveyance">
+                                            @error('conveyance')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="deduction" class="col-sm-2 col-form-label">
+                                            Deduction
+                                        </label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input type="text" class="form-control" name="deduction" id="deduction">
+                                            @error('deduction')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="incentive" class="col-sm-2 col-form-label">
+                                            Incentive
+                                        </label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input type="text" class="form-control" name="incentive" id="incentive"
+                                                disabled>
+                                            @error('incentive')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="total_amount" class="col-sm-2 col-form-label">Total</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input type="text" class="form-control" name="total_amount"
+                                                id="total_amount" value="0" readonly>
+                                            @error('total_amount')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <label for="net_amount" class="col-sm-2 col-form-label">Net Amount</label>
+                                        <div class="col-sm-4 mb-4">
+                                            <input type="text" class="form-control" name="net_amount" id="net_amount"
+                                                readonly>
+                                            @error('net_amount')
+                                                <span class="error" style="color: red;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
 
                                     </div>
                                     <div class="form-group">
@@ -218,7 +328,7 @@
                 var modelId = $(this).val();
                 if (modelId) {
                     $.ajax({
-                        url: '/job_allocation/direct_job_giving/get-finishing-product-details/' +
+                        url: '/job_allocation/direct_job_wc_giving/get-finishing-product-details/' +
                             modelId,
                         type: 'GET',
                         dataType: 'json',
@@ -228,6 +338,7 @@
                             $('#product_size').val(data.product_size);
                             $('#product_size_id').val(data.product_size_id);
                             $('#meter_for_one_product').val(data.meters_one_product);
+                             $('#wages_one_product').val(data.wages_one_product);
 
                         }
                     });
@@ -259,5 +370,66 @@
             clothesByCuttingSelect.addEventListener('change', toggleMeterInput);
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#Incentive_status').change(function() {
+                // console.log("Option changed");
+                var beforeDaysInput = $('#before_days');
+                var incentiveInput = $('#incentive');
+
+                if ($(this).val() === 'No') {
+                    beforeDaysInput.prop('disabled', true);
+                    incentiveInput.prop('disabled', true);
+                } else {
+                    beforeDaysInput.prop('disabled', false);
+                    incentiveInput.prop('disabled', false);
+                }
+            });
+        });
+    </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const wagesProductsInput = document.getElementById('wages_one_product');
+        const receivedQuantityInput = document.getElementById('received_quantity');
+        const conveyanceInput = document.getElementById('conveyance');
+        const deductionInput = document.getElementById('deduction');
+        const incentiveInput = document.getElementById('incentive');
+        const totalAmountInput = document.getElementById('total_amount');
+        const netAmountInput = document.getElementById('net_amount');
+
+        // Function to calculate total and net amount
+        function calculateAmounts() {
+            const wages = parseFloat(wagesProductsInput?.value) || 0;
+            const quantity = parseFloat(receivedQuantityInput?.value) || 0;
+            const conveyance = parseFloat(conveyanceInput?.value) || 0;
+            const deduction = parseFloat(deductionInput?.value) || 0;
+            const incentive = parseFloat(incentiveInput?.value) || 0;
+
+            // Calculate base total amount
+            let totalAmount = wages * quantity;
+
+            // Add conveyance and incentive
+            totalAmount += conveyance + incentive;
+
+            // Subtract deduction
+            totalAmount -= deduction;
+
+            // Update total amount and net amount fields
+            totalAmountInput.value = totalAmount.toFixed(2);
+            netAmountInput.value = totalAmount.toFixed(2); // Assuming net amount is the same as total amount
+        }
+
+        // Event listeners to trigger calculation when any input changes
+        receivedQuantityInput?.addEventListener('input', calculateAmounts);
+        conveyanceInput?.addEventListener('input', calculateAmounts);
+        deductionInput?.addEventListener('input', calculateAmounts);
+        incentiveInput?.addEventListener('input', calculateAmounts);
+    });
+</script>
+
+
+
     @include('links.js.select2.select2')
 @endsection

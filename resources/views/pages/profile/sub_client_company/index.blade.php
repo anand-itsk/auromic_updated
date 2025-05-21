@@ -14,12 +14,21 @@
                     {{ session('success') }}
                 </div>
             @endif
+
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="alert alert-success alert-dismissible fade show" role="alert" style="display:none;">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    <strong></strong> Sub Client Company deleted successfully.
-</div>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong></strong> Sub Client Company deleted successfully.
+            </div>
             <div class="row">
                 <div class="col-sm-12">
                     <div class="page-title-box">
@@ -41,8 +50,8 @@
                                             title="Delete Selected Record"><i class="fa fa-user-times"></i></button>
                                     </div> --}}
                                     @error('file')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
                                     <div>
                                         <button id="deleteButton" style="display: none;"
                                             class="icon-button text-white bg-danger rounded fs-14"
@@ -52,7 +61,7 @@
                                     <div>
                                         <button type="button" class="icon-button common-color  bg-secondary  rounded"
                                             data-toggle="modal" data-target=".bs-example-modal-center"
-                                             title="Import file"><i class="fa fa-upload text-white"></i></button>
+                                            title="Import file"><i class="fa fa-upload text-white"></i></button>
 
                                         <button class="icon-button  bg-primary rounded">
                                             <a href="{{ route('profile.sub_clients.create') }}"
@@ -137,7 +146,8 @@
                 <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header py-3">
-                            <h5 class="modal-title text-primary mt-0" id="detailsModalLabel">Sub-Client Company Details</h5>
+                            <h5 class="modal-title text-primary mt-0" id="detailsModalLabel">Sub-Client Company Details
+                            </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -199,9 +209,9 @@
                 columns: [{
                         data: 'id',
                         name: 'id',
-                         render: function(data, type, row, meta) {
-            return meta.row + 1;
-        }
+                        render: function(data, type, row, meta) {
+                            return meta.row + 1;
+                        }
                     },
                     {
                         data: 'company_code',
@@ -217,7 +227,7 @@
                             return data ? data : '-';
                         }
                     },
-                     {
+                    {
                         data: 'authorised_person_name',
                         name: 'authorised_person_name',
                         render: function(data, type, row) {
@@ -323,18 +333,18 @@
                     data: {
                         _token: '{{ csrf_token() }}',
                     },
-                     success: function(result) {
-                // Show success message
-                $('.alert-success').show();
+                    success: function(result) {
+                        // Show success message
+                        $('.alert-success').show();
 
-                // Hide success message after 5 seconds
-                setTimeout(function(){
-                    $('.alert-success').alert('close');
-                }, 5000);
+                        // Hide success message after 5 seconds
+                        setTimeout(function() {
+                            $('.alert-success').alert('close');
+                        }, 5000);
 
-                // Reload the DataTable after success message is shown
-                table.ajax.reload(); // Reload the DataTable
-            }
+                        // Reload the DataTable after success message is shown
+                        table.ajax.reload(); // Reload the DataTable
+                    }
 
                 });
             }

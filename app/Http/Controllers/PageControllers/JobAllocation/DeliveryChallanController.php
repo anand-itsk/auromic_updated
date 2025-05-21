@@ -15,8 +15,13 @@ use App\Models\ProductColor;
 use App\Models\DeliveryChallan;
 use App\Models\OrderDetail;
 use App\Models\CompanyHierarchy;
+use App\Models\Employee;
+use App\Models\FinishingProductModel;
 use App\Models\JobGiving;
 use App\Models\OrderNo;
+use App\Models\Product;
+use App\Models\RawMaterial;
+use App\Models\RawMaterialType;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -36,7 +41,7 @@ class DeliveryChallanController extends Controller
         $product_model = ProductModel::all();
         $product_color = ProductColor::all();
         $product_size =  ProductSize::all();
-        return view('pages.job_allocation.delivery_challan.index',compact('companyType','company', 'order_nos', 'delivery_challan', 'product_model', 'product_size','product_color'));
+        return view('pages.job_allocation.delivery_challan.index', compact('companyType', 'company', 'order_nos', 'delivery_challan', 'product_model', 'product_size', 'product_color'));
     }
     // Index DataTable
     public function indexData(Request $request)
@@ -53,26 +58,27 @@ class DeliveryChallanController extends Controller
         $dateFilter = $request->input('date_filter');
 
         $delivery_challans = DeliveryChallan::with([
-                'company',
-                'subCompany',
-                'order_details',
-                'orderDetails.productModel',
-                'productSize',
-                'productColor',
-                'orderDetails.productModel.product'
-            ]);
+            'company',
+            'subCompany',
+            'order_details',
+            'orderDetails.productModel',
+            'productSize',
+            'productColor',
+            'orderDetails.productModel.product',
+        ]);
 
         // Date filter
         if ($dateFilter) {
-            if ($dateFilter === 'today'
+            if (
+                $dateFilter === 'today'
             ) {
                 $delivery_challans->whereDate('created_at', Carbon::today());
             } elseif ($dateFilter === 'this_month') {
                 $delivery_challans->whereMonth('created_at', Carbon::now()->month)
-                ->whereYear('created_at', Carbon::now()->year);
+                    ->whereYear('created_at', Carbon::now()->year);
             } elseif ($dateFilter === 'last_month') {
                 $delivery_challans->whereMonth('created_at', Carbon::now()->subMonth()->month)
-                ->whereYear('created_at', Carbon::now()->subMonth()->year);
+                    ->whereYear('created_at', Carbon::now()->subMonth()->year);
             }
         }
 
@@ -130,32 +136,32 @@ class DeliveryChallanController extends Controller
         }
 
         return DataTables::of($delivery_challans)
-        ->addColumn('order_number', function ($deliveryChallan) {
-            return $deliveryChallan->order_details->customer_order_no ?? '-';
-        })
-        ->addColumn('dc_no', function ($deliveryChallan) {
-            return $deliveryChallan->dc_no ?? '-';
-        })
-        ->addColumn('model_code', function ($deliveryChallan) {
-            return $deliveryChallan->orderDetails->productModel->model_code ?? '-';
-        })
-        ->addColumn('model_name', function ($deliveryChallan) {
-            return $deliveryChallan->orderDetails->productModel->product->name ?? '-';
-        })
-        ->addColumn('product_color', function ($deliveryChallan) {
-            return $deliveryChallan->orderDetails->productColor->name ?? '-';
-        })
-        ->addColumn('product_size', function ($deliveryChallan) {
-            return $deliveryChallan->orderDetails->productSize->name ?? '-';
-        })
-        ->addColumn('wages_product', function ($deliveryChallan) {
-            return $deliveryChallan->orderDetails->productModel->wages_product ?? '-';
-        })
-        ->addColumn('can_delete', function ($deliveryChallan) {
-            // Check if the dc_id exists in the job_giving table
-            return !JobGiving::where('dc_id', $deliveryChallan->id)->exists();
-        })
-        ->make(true);
+            ->addColumn('order_number', function ($deliveryChallan) {
+                return $deliveryChallan->order_details->customer_order_no ?? '-';
+            })
+            ->addColumn('dc_no', function ($deliveryChallan) {
+                return $deliveryChallan->dc_no ?? '-';
+            })
+            ->addColumn('model_code', function ($deliveryChallan) {
+                return $deliveryChallan->orderDetails->productModel->model_code ?? '-';
+            })
+            ->addColumn('model_name', function ($deliveryChallan) {
+                return $deliveryChallan->orderDetails->productModel->product->name ?? '-';
+            })
+            ->addColumn('product_color', function ($deliveryChallan) {
+                return $deliveryChallan->orderDetails->productColor->name ?? '-';
+            })
+            ->addColumn('product_size', function ($deliveryChallan) {
+                return $deliveryChallan->orderDetails->productSize->name ?? '-';
+            })
+            ->addColumn('wages_product', function ($deliveryChallan) {
+                return $deliveryChallan->orderDetails->productModel->wages_product ?? '-';
+            })
+            ->addColumn('can_delete', function ($deliveryChallan) {
+                // Check if the dc_id exists in the job_giving table
+                return !JobGiving::where('dc_id', $deliveryChallan->id)->exists();
+            })
+            ->make(true);
     }
 
     // Create Page
@@ -177,30 +183,33 @@ class DeliveryChallanController extends Controller
         $company_types = CompanyType::all();
         $authorised_people = AuthorisedPerson::all();
         $order_details = OrderDetail::all();
-       $order_nos = OrderNo::whereIn('id', OrderDetail::pluck('order_no_id'))->get();
+        $order_nos = OrderNo::whereIn('id', OrderDetail::pluck('order_no_id'))->get();
         $productModels = ProductModel::with(['rawMaterial.rawMaterialType'])->get();
         $product_size = ProductSize::all();
         $product_color = ProductColor::all();
         $company_hierarchy = CompanyHierarchy::all();
+        $raw_material_type = RawMaterialType::get();
+        $raw_material = RawMaterial::all();
+        $products = Product::all();
+        $employee = Employee::all();
+        $finishingProduct = FinishingProductModel::all();
 
-
-
-        return view('pages.job_allocation.delivery_challan.create', compact('company', 'authorised_people', 'order_details', 'company_types', 'customer', 'productModels', 'product_size', 'product_color', 'formattedDCNumber', 'order_nos','company_hierarchy'));
+        return view('pages.job_allocation.delivery_challan.create', compact('company', 'authorised_people', 'order_details', 'company_types', 'customer', 'productModels', 'product_size', 'product_color', 'formattedDCNumber', 'order_nos', 'company_hierarchy', 'raw_material_type', 'raw_material', 'products', 'employee'));
     }
 
     public function getSubCompanies($companyId)
-{
-       
+    {
+
         // dd($companyId);
 
-       $companyHierarchy = CompanyHierarchy::where('parent_company_id', $companyId)
-        ->with('company') 
-        ->get();
-    
+        $companyHierarchy = CompanyHierarchy::where('parent_company_id', $companyId)
+            ->with('company')
+            ->get();
+
         //  dd($companyHierarchy);
-    
-       return response()->json($companyHierarchy);
-}
+
+        return response()->json($companyHierarchy);
+    }
 
     public function getCompanies($companytypeid)
     {
@@ -211,54 +220,77 @@ class DeliveryChallanController extends Controller
     public function getModelsByOrderId(Request $request)
     {
         $orderId = $request->order_id;
+
         // Retrieve models based on the selected order_id
-        $models = OrderDetail::where('order_no_id', $orderId)->distinct('product_model_id')->pluck('product_model_id');
+        $models = OrderDetail::where('order_no_id', $orderId)
+        ->with('productModel')
+        ->get()
+        ->map(function ($orderDetail) {
+            return [
+                'id' => $orderDetail->id,
+                'model_id' => $orderDetail->productModel->id,
+                'model_name' => $orderDetail->productModel->model_name,
+                'model_code' => $orderDetail->productModel->model_code,
+                'quantity' => $orderDetail->quantity,
+            ];
+        });
+        return response()->json($models);
 
-        // Assuming your models have a relationship to a ProductModel model
-        $productModels = ProductModel::whereIn('id', $models)->get();
-
-        return response()->json($productModels);
+      
     }
 
-
-    public function getProductDetails(Request $request)
-    {
+    public function getProductDetail(Request $request)
+    {  
+        // dd('ff');
+        // dd($request);
+        
         $productModelId = $request->input('product_model');
-        $productDetails = ProductModel::with(['product', 'rawMaterial.rawMaterialType'])->find($productModelId);
-
+        // dd($productModelId);
+        $productDetails = OrderDetail::with([
+            'productModel.product',
+            'productModel.rawMaterial.rawMaterialType',
+            'productSize'
+        ])->where('id', $productModelId)->first();
+        //   dd($productDetails);
         return response()->json([
-            'product' => $productDetails->product->name,
-            'raw_material_name' => $productDetails->rawMaterial->name,
-            'raw_material_type' => $productDetails->rawMaterial->rawMaterialType->name,
-            'product_size_code' => $productDetails->productSize->code,
-            'product_size_id' => $productDetails->productSize->id,
+            'product' =>$productDetails->productModel->product->name,
+            'raw_material_name' =>$productDetails->productModel->rawMaterial->name,
+            'raw_material_type' =>$productDetails->productModel->rawMaterial->rawMaterialType->name,
+            'product_size_code' => $productDetails->productSize?->code ?? null,
+            'product_size_id' => $productDetails->productSize?->id ?? null,
         ]);
     }
     public function getOrderDetails(Request $request)
     {
-        $orderId = $request->input('order_id');
-         $productModelId = $request->input('product_model');
-       $orderDetail = OrderDetail::where('order_no_id', $orderId)
-                               ->where('product_model_id', $productModelId)
-                               ->first();
+        // dd('rd');
+        // dd($request);
+    
+        $productModelId = $request->input('product_model');
 
-        if ($orderDetail) {
-        return response()->json([
-            'order_date' => $orderDetail->order_date,
-            'total_quantity' => $orderDetail->quantity,
-            'available_quantity' => $orderDetail->available_quantity,
-            'total_r_w_weight' => $orderDetail->total_raw_material,
-            'weight_per_item' => $orderDetail->weight_per_item,
-            'available_weight' => $orderDetail->available_weight,
-            'product_color_id' => $orderDetail->productColor->name,
-            'product_size_id' => $orderDetail->productSize->code,
-        ]);
-    } else {
-        return response()->json([
-            'error' => 'No matching order details found.'
-        ], 404); // Return 404 status code if no matching order details found
+        $orderDetails = OrderDetail::with('productColor', 'productSize')->where('id', $productModelId)->first();
+        // dd($orderDetails);
+        if ($orderDetails) {
+            // $response = [
+            //         'id' => $orderDetails->id,
+            //         'order_date' => $orderDetails->order_date,
+            //         'total_quantity' => $orderDetails->quantity,
+            //         'available_quantity' => $orderDetails->available_quantity,
+            //         'total_r_w_weight' => $orderDetails->total_raw_material,
+            //         'weight_per_item' => $orderDetails->weight_per_item,
+            //         'available_weight' => $orderDetails->available_weight,
+            //         'product_color_id' => $orderDetails->productColor->name ?? null,
+            //         'product_size_id' => $orderDetails->productSize->code ?? null,
+            //     ];
+           
+
+            return response()->json($orderDetails);
+        } else {
+            return response()->json([
+                'error' => 'No matching order details found.'
+            ], 404);
+        }
     }
-    }
+
 
     public function store(Request $request)
     {
@@ -274,14 +306,16 @@ class DeliveryChallanController extends Controller
         ]);
 
         $input = $request->all();
-
+            //    dd($input);
         // Retrieve the order detail (change get() to first())
         $orderDetail = OrderDetail::where('order_no_id', $input['order_id'])->first();
+
+        // dd($orderDetail);
 
         // Check if the order detail exists
         if (!$orderDetail) {
             return redirect()->route('job_allocation.delivery_challan.index')
-            ->with('error', 'Order detail not found for this order ID');
+                ->with('error', 'Order detail not found for this order ID');
         }
 
         // Calculate total delivered quantity for the order
@@ -294,7 +328,7 @@ class DeliveryChallanController extends Controller
         if ($input['quantity'] > $availableQuantity) {
             // If the input quantity is greater than the available quantity, show an error message
             return redirect()->route('job_allocation.delivery_challan.index')
-            ->with('error', 'No available quantity for this order');
+                ->with('error', 'No available quantity for this order');
         }
 
         // Create and save the delivery challan
@@ -318,7 +352,7 @@ class DeliveryChallanController extends Controller
 
         // Set success message for display
         return redirect()->route('job_allocation.delivery_challan.index')
-        ->with('success', 'Order Allocation created successfully');
+            ->with('success', 'Order Allocation created successfully');
     }
 
 
@@ -345,10 +379,10 @@ class DeliveryChallanController extends Controller
             ->where('product_model_id', $request->product_model)
             ->get();
 
-             $companyHierarchy = CompanyHierarchy::where('company_id', $delivery_challans->sub_company_id)->first();
-$subCompanyName = $companyHierarchy ? $companyHierarchy->company->company_name : null;
+        $companyHierarchy = CompanyHierarchy::where('company_id', $delivery_challans->sub_company_id)->first();
+        $subCompanyName = $companyHierarchy ? $companyHierarchy->company->company_name : null;
 
-        return view('pages.job_allocation.delivery_challan.edit', compact('company', 'authorised_people', 'order_details', 'delivery_challans', 'company_types', 'productModels', 'product_size', 'product_color', 'customer', 'order_detail', 'order_nos','subCompanyName','companyHierarchy'));
+        return view('pages.job_allocation.delivery_challan.edit', compact('company', 'authorised_people', 'order_details', 'delivery_challans', 'company_types', 'productModels', 'product_size', 'product_color', 'customer', 'order_detail', 'order_nos', 'subCompanyName', 'companyHierarchy'));
     }
 
 

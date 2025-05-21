@@ -260,22 +260,22 @@
                                         class="table table-striped table-bordered table-responsive nowrap"
                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
-                                            <th>ID</th>
-                                            <th>M.Company</th>
-                                            <th>C.Company</th>
-                                            <th>SC.Company</th>
-                                            <th>Own Company</th>
-                                            <th>Employee Code</th>
-                                            <th>Employee Name</th>
-                                            <th>Father/Hus Name</th>
-                                            <th>DOJ</th>
-                                            <th>DOR</th>
-                                            <th>DOB</th>
-                                            <th>Village</th>
-                                            <th>PF</th>
-                                            <th>ESI</th>
-                                            <th>Mobile Number</th>
-                                            <th>Status</th>
+                                              <th>ID</th>
+                                                <th>M.Company</th>
+                                                <th>C.Company</th>
+                                                <th>SC.Company</th>
+                                                <th>Own Company</th>
+                                                <th>Employee Code</th>
+                                                <th>Employee Name</th>
+                                                <th>Father/Hus Name</th>
+                                                <th>DOJ</th>
+                                                <th>DOR</th>
+                                                <th>DOB</th>
+                                                <th>Village</th>
+                                                <th>PF</th>
+                                                <th>ESI</th>
+                                                <th>Mobile Number</th>
+                                                <th>Status</th>
 
                                         </thead>
                                         <tbody>
@@ -376,13 +376,11 @@
                     }
                 },
                 columns: [{
+
                         data: 'id',
                         name: 'id',
                         render: function(data, type, row, meta) {
-                            // console.log('data.......', data);
-                            // console.log('type.......', type);
-                            // console.log('row.......', row);
-                            // console.log('name.......', name);
+
 
                             return meta.row + 1;
                         }
@@ -403,6 +401,13 @@
                         name: 'sub_cilent_company',
                         render: function(data, type, row, meta) {
                             return row.sub_client_company;
+                        }
+                    },
+                    {
+                        data: 'own_company',
+                        name: 'own_company',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
                         }
                     },
                     {
@@ -446,14 +451,6 @@
                         data: 'mobile',
                         name: 'mobile'
                     },
-
-
-
-
-
-
-
-
 
                     {
                         data: 'status',

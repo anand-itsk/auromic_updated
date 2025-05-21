@@ -23,4 +23,6 @@ class RawMaterial extends Model
     {
         return $this->hasMany(ProductModel::class,'raw_material_type_id','stock');
     }
+
+    
 }

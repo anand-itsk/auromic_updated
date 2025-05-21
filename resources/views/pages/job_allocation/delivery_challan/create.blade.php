@@ -30,7 +30,7 @@
                     <div class="card m-b-30">
                         <div class="card-body">
                             <div class="m-b-30">
-                                <form action="{{route('job_allocation.delivery_challan.store')}}" method="POST"
+                                <form action="{{ route('job_allocation.delivery_challan.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group row">
@@ -38,8 +38,8 @@
                                             Company Type
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="company_type_id"
-                                                id="company_type_id" required>
+                                            <select class="form-control select2" name="company_type_id" id="company_type_id"
+                                                required>
                                                 <option value="">Select Company Type</option>
                                                 @foreach ($company_types as $item)
                                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -65,26 +65,28 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="customer_code" class="col-sm-2 col-form-label">
-                                           Sub Company Name
+                                        {{-- <label for="customer_code" class="col-sm-2 col-form-label">
+                                            Sub Company Name
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2 w-100" name="parent_company_id" id="parent_company_id"
-                                                disabled >
+                                            <select class="form-control select2 w-100" name="parent_company_id"
+                                                id="parent_company_id" disabled>
                                                 <option value="">select</option>
                                                 <option value="">Select Company</option>
                                                 @foreach ($company_hierarchy as $companyItem)
-                                                    <option value="{{ $companyItem->id }}">{{ $companyItem->company->company_name}}
+                                                    <option value="{{ $companyItem->id }}">
+                                                        {{ $companyItem->company->company_name }}
                                                     </option>
                                                 @endforeach
                                             </select>
                                             @error('company_id')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
-                                        </div>
+                                        </div> --}}
                                         <label for="customer_name" class="col-sm-2 col-form-label mandatory">DC Date</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="date" name="dc_date" id="dc_date" required>
+                                            <input class="form-control" type="date" name="dc_date" id="dc_date"
+                                                required>
                                             @error('dc_date')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -115,7 +117,8 @@
                                         </div>
                                         <label for="customer_code" class="col-sm-2 col-form-label mandatory">Model</label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="product_model" id="product_model" required>
+                                            <select class="form-control  select2" name="product_model" id="product_model"
+                                                required>
                                                 <option value="">Select Model</option>
 
                                             </select>
@@ -161,7 +164,7 @@
 
                                         <label for="customer_code" class="col-sm-2 col-form-label">Product Size</label>
                                         <div class="col-sm-4 mb-4">
-                                             <input class="form-control" type="text" name="product_size_code"
+                                            <input class="form-control" type="text" name="product_size_code"
                                                 id="product_size_code" readonly>
                                             @error('product_size_id')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
@@ -175,9 +178,9 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label for="order_date" class="col-sm-2 col-form-label">Quantity</label>
+                                        <label for="order_date" class="col-sm-2 col-form-label mandatory">Quantity</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="quantity" id="quantity">
+                                            <input class="form-control" type="text" name="quantity" id="quantity" required>
                                             <span id="quantity_error" class="error" style="color: red;"></span>
                                             @error('quantity')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
@@ -193,9 +196,9 @@
                                             @enderror
                                         </div>
 
-                                        <label for="order_date" class="col-sm-2 col-form-label">Weight</label>
+                                        <label for="order_date" class="col-sm-2 col-form-label mandatory">Weight</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="weight" id="weight">
+                                            <input class="form-control" type="text" name="weight" id="weight"  oninput="preventDash(event)" required>
                                             <input class="form-control" type="hidden" name="weightPerItem"
                                                 id="weightPerItem">
                                             <input class="form-control" type="hidden" name="avaWeight" id="avaWeight">
@@ -251,7 +254,6 @@
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group row">
-
                                         <label for="order_date" class="col-form-label">Total Quantity</label>
                                         <div class="mb-4">
                                             <input class="form-control" type="text" name="total_quantity"
@@ -260,7 +262,6 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-
                                         <label for="order_date" class="col-form-label">Total Weight</label>
                                         <div class="mb-4">
                                             <input class="form-control" type="text" name="total_weight"
@@ -330,7 +331,6 @@
             // Get the values
             var availableQuantity = parseInt(availableQuantityInput.value);
             var quantity = parseInt(quantityInput.value);
-
             // Check if quantity is greater than available quantity
             if (quantity > availableQuantity) {
                 quantityError.textContent = 'Quantity cannot be greater than available quantity';
@@ -343,46 +343,67 @@
 
 
 
-    <script>
-        $(document).ready(function() {
-            // Initially disable the product_model dropdown
-            $('#product_model').prop('disabled', true);
+<script>
+    $(document).ready(function () {
+        // Initially disable the product_model dropdown
+        $('#product_model').prop('disabled', true);
 
-            $('#order_id').change(function() {
-                var orderId = $(this).val();
-                if (orderId) {
-                    $.ajax({
-                        type: "GET",
-                        url: "{{ route('job_allocation.delivery_challan.getModelsByOrderId') }}",
-                        data: {
-                            order_id: orderId
-                        },
-                        success: function(response) {
-                            var options = '<option value="">Select Model</option>';
-                            $.each(response, function(key, value) {
-                                options += '<option value="' + value.id + '">' + value
-                                    .model_name + '-' + value.model_code + '</option>';
-                            });
-                            $('#product_model').html(options);
-                            // Enable the product_model dropdown
-                            $('#product_model').prop('disabled', false);
-                        }
-                    });
-                } else {
-                    $('#product_model').html('<option value="">Select Model</option>');
-                    // Disable the product_model dropdown if no order_id is selected
-                    $('#product_model').prop('disabled', true);
-                }
-            });
+        // Trigger when order_id changes
+ $('#order_id').change(function () {
+    var orderId = $(this).val();
+
+    if (orderId) {
+        $.ajax({
+            type: "GET",
+            url: "{{ route('job_allocation.delivery_challan.getModelsByOrderId') }}",
+            data: { order_id: orderId },
+            success: function (response) {
+                console.log(response); // Debug the response
+                var options = '<option value="">Select Model</option>';
+                $.each(response, function (key, value) {
+                    // Access data directly since it's flattened
+                    if (value.model_name && value.model_code) {
+                        options += '<option value="' + value.id +
+                            '" data-key="' + key + '">' +
+                            value.model_name + '-' + value.model_code +
+                            ' (Qty: ' + value.quantity + ')' +
+                            '</option>';
+                    } else {
+                        console.warn('Model details are missing for item:', value);
+                    }
+                });
+                $('#product_model').html(options);
+                $('#product_model').prop('disabled', false);
+            },
+            error: function (xhr, status, error) {
+                console.error('AJAX error:', error);
+                $('#product_model').prop('disabled', true);
+            }
         });
-    </script>
+    } else {
+        $('#product_model').html('<option value="">Select Model</option>');
+        $('#product_model').prop('disabled', true);
+    }
+});
+
+
+
+        // Optional: Log selected value when product_model changes
+        $('#product_model').change(function () {
+            var selectedValue = $(this).val();
+            console.log("Selected Value (product_model.id):", selectedValue);
+        });
+    });
+</script>
+
+
     <script>
         $(document).ready(function() {
             $('#product_model').change(function() {
                 var productModelId = $(this).val();
                 if (productModelId) {
                     $.ajax({
-                        url: '/job_allocation/delivery_challan/get-product-details', // Update the URL to your route
+                        url: '/job_allocation/delivery_challan/get-product-detail', // Update the URL to your route
                         type: 'GET',
                         data: {
                             product_model: productModelId
@@ -392,8 +413,8 @@
                             $('#product').val(response.product);
                             $('#raw_material_name').val(response.raw_material_name);
                             $('#raw_material_type').val(response.raw_material_type);
-                             $('#product_size_code').val(response.product_size_code);
-                             $('#product_size_id').val(response.product_size_id);
+                            $('#product_size_code').val(response.product_size_code);
+                            $('#product_size_id').val(response.product_size_id);
                         },
                         error: function(xhr, status, error) {
                             console.error(error);
@@ -413,25 +434,25 @@
         $(document).ready(function() {
             $('#product_model').change(function() {
                 var productModelId = $(this).val();
-                 var orderId = $('#order_id').val();
+                //  var orderId = $('#order_id').val();
                 if (productModelId) {
                     $.ajax({
                         url: '/job_allocation/delivery_challan/get-order-details', // Update the URL to your route
                         type: 'GET',
                         data: {
                             product_model: productModelId,
-                             order_id: orderId
+                            //  order_id: orderId
                         },
                         dataType: 'json',
                         success: function(response) {
+                            $('#id').val(response.id);
                             $('#order_date').val(response.order_date);
-                            $('#total_quantity').val(response.total_quantity);
+                            $('#total_quantity').val(response.quantity);
                             $('#available_quantity').val(response.available_quantity);
-                            $('#total_weight').val(response.total_r_w_weight);
+                            $('#total_weight').val(response.total_raw_material);
                             $('#weightPerItem').val(response.weight_per_item);
                             $('#avaWeight').val(response.available_weight);
-                            $('#product_color_id').val(response.product_color_id);
-
+                            $('#product_color_id').val(response.product_color.name ?? '-');
                         },
                         error: function(xhr, status, error) {
                             console.error(error);
@@ -441,18 +462,20 @@
                     $('#order_date').val('');
                     $('#total_quantity').val('');
                     $('#available_quantity').val('');
-                     $('#product_color_id').val('');
+                    $('#product_color_id').val('');
                 }
             });
         });
 
+
+
         $('#weight').on('input', function() {
             var weight = parseFloat($(this).val());
             if (isNaN(weight)) {
-        $('#excess_weight').val('0.0');
-        $('#shortage_weight').val('0.0');
-        return; 
-    }
+                $('#excess_weight').val('0.0');
+                $('#shortage_weight').val('0.0');
+                return;
+            }
             var weightPerQuantity = parseFloat($('#weightPerItem').val());
             var totalQuantity = parseFloat($('#total_quantity').val());
             var totalWeight = parseFloat($('#total_weight').val());
@@ -479,33 +502,35 @@
         });
     </script>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-       
-        $('#company_id').change(function () {
-            var companyId = $(this).val();
-            if (companyId) {
-                $.ajax({
-                    url: '/job_allocation/delivery_challan/getSubCompanies/' + companyId,
-                    type: "GET",
-                    dataType: "json",
-                    success: function (data) {
-                        $('#parent_company_id').empty();
-                        $.each(data, function (key, value) {
-                             $('#parent_company_id').append('<option value="' + value.company.id + '">' + value.company.company_name + '</option>');
-                        });
-                    }
-                });
-            } else {
-                $('#parent_company_id').empty();
-                $('#parent_company_id').append('<option value="">Select Sub Company</option>');
-            }
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $('#company_id').change(function() {
+                var companyId = $(this).val();
+                if (companyId) {
+                    $.ajax({
+                        url: '/job_allocation/delivery_challan/getSubCompanies/' + companyId,
+                        type: "GET",
+                        dataType: "json",
+                        success: function(data) {
+                            $('#parent_company_id').empty();
+                            $.each(data, function(key, value) {
+                                $('#parent_company_id').append('<option value="' + value
+                                    .company.id + '">' + value.company
+                                    .company_name + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#parent_company_id').empty();
+                    $('#parent_company_id').append('<option value="">Select Sub Company</option>');
+                }
+            });
         });
-    });
-</script>
+    </script>
 
 
-<script>
+    <script>
         $(document).ready(function() {
             $('#company_id').on('change', function() {
                 var customerId = $(this).val();
@@ -517,7 +542,24 @@
             });
         });
     </script>
+    <script>
+        document.getElementById('weight').addEventListener('input', function(event) {
+            let value = event.target.value;
 
+            // Check if value starts with "."
+            if (value.startsWith('.')) {
+                // Prepend "0" to the value
+                event.target.value = '0' + value;
+            }
+        });
+    </script>
+
+    <script>
+    function preventDash(event) {
+        const input = event.target;
+        input.value = input.value.replace(/-/g, ''); // Remove any "-" symbol from the input value
+    }
+</script>
 
     @include('links.js.select2.select2')
 @endsection

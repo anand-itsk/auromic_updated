@@ -30,6 +30,8 @@ class ClientCompanyController extends Controller
     {
         // Eager load the roles relationship
        $company = Company::with('authorisedPerson')->where('company_type_id', 3)->get();
+
+        $parentCompanyIds = CompanyHierarchy::pluck('parent_company_id')->toArray();
     
     return DataTables::of($company)
         ->addColumn('authorised_person_name', function($company) {
@@ -38,6 +40,9 @@ class ClientCompanyController extends Controller
         ->addColumn('authorised_person_email', function($company) {
             return $company->authorisedPerson->person_email ?? '-';
         })
+            ->addColumn('parentCompanyIds', function () use ($parentCompanyIds) {
+                return $parentCompanyIds;
+            })
         ->make(true);
     }
     // Create Page
@@ -60,7 +65,8 @@ class ClientCompanyController extends Controller
             'company_name' => 'required|max:255',
             'name' => 'required',
             'photo' => 'nullable|image|max:200000',
-            'master_company' => 'required', // Ensure master company is selected
+            'master_company' => 'required',
+            'person_email' => 'nullable|email|unique:authorised_people,person_email',
         ]);
 
         $input = $request->all();
@@ -150,6 +156,7 @@ class ClientCompanyController extends Controller
             'company_name' => 'required|max:255',
             'name' => 'required',
              'photo' => 'nullable|image|max:200000',
+            // 'person_email' => 'email|unique:authorised_people',
             
         ]);
 
@@ -213,6 +220,13 @@ class ClientCompanyController extends Controller
         $company_registration_details->save();
 
         $authorised_person = AuthorisedPerson::firstOrNew(['company_id' => $company->id]);
+
+        if (!($authorised_person->person_email)) {
+            // dd('in');
+            $request->validate([
+               'person_email' => 'nullable|email|unique:authorised_people,person_email',
+           ]);
+        }
         $authorised_person->name = $input['name'];
         $authorised_person->faorhus_name = $input['faorhus_name'];
         $authorised_person->gender = $input['gender'];
@@ -295,16 +309,33 @@ class ClientCompanyController extends Controller
 
      
     // Import Users
+    // public function import(Request $request)
+    // {
+    //     $request->validate([
+    //         'file' => 'required|file|mimes:xlsx,csv'
+    //     ]);
+    //     $company_type_id = 3;
+    //     Excel::import(new CompanyDataImport($company_type_id), request()->file('file'));
+
+    //     return redirect()->route('profile.clients.index')->with('success', 'Data imported successfully');
+    // }
+
     public function import(Request $request)
     {
         $request->validate([
             'file' => 'required|file|mimes:xlsx,csv'
         ]);
-        $company_type_id = 3;
-        Excel::import(new CompanyDataImport($company_type_id), request()->file('file'));
 
-        return redirect()->route('profile.clients.index')->with('success', 'Data imported successfully');
+        try {
+            $company_type_id = 3;
+            Excel::import(new CompanyDataImport($company_type_id), $request->file('file'));
+
+            return redirect()->route('profile.clients.index')->with('success', 'Data imported successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('profile.clients.index')->with('error', 'Data not imported');
+        }
     }
+
     // Import Users
     public function export(Request $request)
     {

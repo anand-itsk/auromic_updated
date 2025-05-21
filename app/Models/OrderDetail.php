@@ -17,8 +17,8 @@ class OrderDetail extends Model
         'product_color_id',
         'quantity',
         'available_quantity',
-        'delivery_date	',
-        'order_status_id ',
+        'delivery_date',
+        'order_status_id',
         'weight_per_item',
         'available_weight',
         'total_raw_material',
@@ -28,7 +28,7 @@ class OrderDetail extends Model
     {
         return $this->belongsTo(OrderNo::class, 'order_no_id');
     }
-
+    
     public function productSize()
     {
         return $this->belongsTo(ProductSize::class, 'product_size_id');
@@ -42,18 +42,22 @@ class OrderDetail extends Model
     {
         return $this->belongsTo(OrderStatus::class, 'order_status_id');
     }
-public function productModel()
-{
-    return $this->belongsTo(ProductModel::class, 'product_model_id')->with('product');
-}
-    
+    public function productModel()
+    {
+        return $this->belongsTo(ProductModel::class, 'product_model_id')->with('product');
+    }
+    public function product_model()
+    {
+        return $this->belongsTo(ProductModel::class, 'product_model_id')->with('product');
+    }
+  
     public function customer()
     {
         return $this->belongsTo(Customer::class, 'customer_id');
     }
 
     public function deliveryChallans()
-{
-    return $this->hasMany(DeliveryChallan::class, 'order_id');
-}
+    {
+        return $this->hasMany(DeliveryChallan::class, 'order_id');
+    }
 }

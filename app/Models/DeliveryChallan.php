@@ -22,10 +22,10 @@ class DeliveryChallan extends Model
     ];
 
 
-    public function orderDetails()
-    {
-        return $this->belongsTo(OrderDetail::class, 'order_id');
-    }
+   public function orderDetails()
+{
+    return $this->hasOne(OrderDetail::class, 'order_no_id', 'order_id'); // Ensure correct foreign keys
+}
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id');

@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Exports\OrderExport;
 use App\Imports\ModelDataImport;
+use App\Imports\OrderDetailImport;
+use App\Models\AddressType;
 use App\Models\Company;
 use App\Models\CompanyType;
+use App\Models\Country;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\ProductModel;
@@ -17,6 +20,8 @@ use App\Models\OrderStatus;
 use App\Models\OrderDetail;
 use App\Models\OrderNo;
 use App\Models\RawMaterial;
+use App\Models\RawMaterialType;
+use App\Models\State;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -48,7 +53,8 @@ class OrderDetailController extends Controller
         $product = $request->input('product');
         $dateFilter = $request->input('date_filter');
         $order_status = $request->input('order_status');
-        $order_details = OrderDetail::with('orderNo', 'productSize', 'productColor', 'orderStatus', 'productModel.product', 'customer');
+        
+        $order_details = OrderDetail::with('orderNo', 'productSize', 'productColor', 'orderStatus', 'productModel.product', 'product_model.product', 'customer');
         // $order_details = OrderDetail::with('orderNo', 'productSize', 'productColor', 'orderStatus', 'productModel', 'customer')->get();
         if ($order_status) {
             $order_details->where('order_status_id', $order_status);
@@ -139,8 +145,11 @@ class OrderDetailController extends Controller
         $product_size = ProductSize::get();
         $product_color = ProductColor::get();
         $productModels = ProductModel::with(['rawMaterial.rawMaterialType', 'productSize'])->get();
-
-        return view('pages.master.order_detail.create', compact('customer', 'products', 'productModels', 'order_status', 'product_size', 'product_color', 'formattedOrderNumber', 'raw_material'));
+        $raw_material_type = RawMaterialType::get();
+        $countries = Country::all();
+        $states = State::all();
+        $addressTypes = AddressType::all();
+        return view('pages.master.order_detail.create', compact('customer', 'products', 'productModels', 'order_status', 'product_size', 'product_color', 'formattedOrderNumber', 'raw_material', 'raw_material_type','countries'));
     }
 
     public function checkName(Request $request)
@@ -180,6 +189,7 @@ class OrderDetailController extends Controller
     }
     public function store(Request $request)
     {
+        // dd($request);
         $user = Auth::user();
         $lastOrderNumber = OrderNo::max('last_order_number');
         // Increment the last order number
@@ -256,9 +266,10 @@ class OrderDetailController extends Controller
     {
 
         $order_details = OrderDetail::find($id);
-        
+
         // dd($order_details->orderNo->last_order_number);
         // $order_no_id = $order_details->order_no_id;
+        $raw_material = RawMaterial::all();
         $customer = Customer::get();
         $products = Product::get();
         $order_status = OrderStatus::get();
@@ -266,8 +277,10 @@ class OrderDetailController extends Controller
         $product_color = ProductColor::get();
         $productModels = ProductModel::with(['rawMaterial.rawMaterialType','productSize'])->get();
         $orderDetails = OrderDetail::all();
+        $countries = Country::all();
+        $raw_material_type = RawMaterialType::get();
         // dd($orderDetails);
-        return view('pages.master.order_detail.add_order', compact('order_details', 'customer', 'products', 'order_status', 'product_size', 'product_color', 'productModels','orderDetails'));
+        return view('pages.master.order_detail.add_order', compact('order_details', 'customer', 'products', 'order_status', 'product_size', 'product_color', 'productModels','orderDetails', 'raw_material_type', 'raw_material','countries'));
     }
 
     public function update(Request $request, $id)
@@ -337,6 +350,7 @@ class OrderDetailController extends Controller
 
     public function storeNewOrder(Request $request, $id)
     {
+        // dd($request);
         // Validate the request data
         $validatedData = $request->validate([
             'order_date' => 'required|date',
@@ -406,7 +420,7 @@ class OrderDetailController extends Controller
             'file' => 'required|file|mimes:xlsx,csv'
         ]);
 
-        Excel::import(new ModelDataImport, request()->file('file'));
+        Excel::import(new OrderDetailImport, request()->file('file'));
 
         return redirect()->route('master.order_detail.index')->with('success', 'Data imported successfully');
     }

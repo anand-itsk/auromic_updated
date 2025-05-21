@@ -58,13 +58,16 @@ class CompanyBankDetailController extends Controller
     // Store Date
     public function store(Request $request)
     {
+        // dd($request);
         $auth_id = auth()->id();
-
+         
         // Validate request data
         $validatedData = $request->validate([
             'company_id' => 'required|string|max:255',
             'bank_name' => 'required|string|max:255',
-            'account_number' => 'required|string|max:255',
+            'account_number' => ['required', 'numeric', 'min:22'],
+            // 'branch_code' => ['required', 'regex:/^[A-Za-z0-9]{10}$/'],
+            // 'ifsc_code' => ['required', 'regex:/^[A-Z]{4}0[A-Z0-9]{10}$/'],
         ]);
 
         // Check if the bank account number already exists
@@ -106,7 +109,10 @@ class CompanyBankDetailController extends Controller
         $validatedData = $request->validate([
             'company_code' => 'required|max:255',
             'company_name' => 'required|max:255',
-            'name' => 'required'
+            'name' => 'required',
+            'account_number' => ['required', 'numeric', 'min:22'],
+            // 'branch_code' => ['required', 'regex:/^[A-Za-z0-9]{10}$/'],
+            // 'ifsc_code' => ['required', 'regex:/^[A-Z]{4}0[A-Z0-9]{10}$/'],
         ]);
 
         $input = $request->all();

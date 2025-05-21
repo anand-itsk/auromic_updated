@@ -13,8 +13,18 @@ class DirectWithoutGiven extends Model
 
         'employee_id',
         'finishing_product_models_id',
+        'product_color_id',
         'receving_date',
-        'received_quantity'
+        'received_quantity',
+        'incentive_applicable',
+        'receving_date',
+        'before_days',
+        'after_days',
+        'conveyance_fee',
+        'deducation_fee',
+        'incentive_fee',
+        'total_amount',
+        'net_amount',
     ];
 
     public function employee()

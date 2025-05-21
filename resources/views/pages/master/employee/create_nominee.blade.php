@@ -84,11 +84,13 @@
                                             </div>
 
                                             <label class="col-sm-2 col-form-label">Religion
-                                                <a class="shortcut_master"
-                                                href="{{ route('common.religions.create') }}" target="_blank">+</a>
+                                                 <button type="button" class="btn btn-primary"
+                                                                            data-toggle="modal" data-target="#religion">
+                                                                            +
+                                                                        </button>
                                             </label>
                                             <div class="col-sm-4 mb-4">
-                                                <select class="form-control select2" name="religion_id"
+                                                <select class="form-control religion_id select2" name="religion_id"
                                                     id="religion_id">
                                                     @foreach ($religions as $item)
                                                         <option value="{{ $item->id }}">
@@ -371,7 +373,7 @@ $(document).ready(function() {
     if (!valid) {
         e.preventDefault(); // Prevent further action if validation fails
     } else {
-        alert('Form is valid. Proceeding...');
+        // alert('Form is valid. Proceeding...');
         // Optionally, you can proceed with form submission or further AJAX handling
     }
 });

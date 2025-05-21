@@ -1,3 +1,4 @@
+
 <div class="tab-pane" role="tabpanel" id="step3">
     <h4 class="text-center">Family</h4>
 
@@ -510,5 +511,15 @@ activeTab.next().removeClass('disabled');
             aadharError.textContent = ''; // Clear the error if the input is valid
         }
     }
+</script>
+
+<script>
+    $(document).ready(function() {
+    $('#family_country_id').select2({
+        placeholder: "Select a country",
+        allowClear: true
+    });
+});
+
 </script>
 </div>

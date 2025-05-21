@@ -121,8 +121,9 @@
                                             Wages of 1 Product
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <input type="text" class="form-control" name="wages_product" id="wages_product"
-                                                readonly value="{{ $Job_Giving->product_model->wages_product }}">
+                                            <input type="text" class="form-control" name="wages_product"
+                                                id="wages_product" readonly
+                                                value="{{ $Job_Giving->product_model->wages_product }}">
                                             @error('employee_id')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -143,8 +144,7 @@
                                         </label>
                                         <div class="col-sm-4 mb-4">
                                             <input type="text" class="form-control" name="complete_quantity"
-                                                id="complete_quantity" readonly
-                                                value="{{ $completeQuantitySum ?? '' }}">
+                                                id="complete_quantity" readonly value="{{ $completeQuantitySum ?? '' }}">
                                             @error('employee_id')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -199,51 +199,60 @@
 
                                     <!-- reallocation Starts -->
                                     <hr />
+                                    @php
+                                        $jobExists = \App\Models\JobReceived::where('job_giving_id', $id)->exists();
+                                    @endphp
 
-                                    <h5 class="text-primary">Job Reallocation</h5>
-                                    <div class="form-group row">
-                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">
-                                            Employee
-                                        </label>
-                                        <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="employee_id" id="employee_id"
-                                                required>
-                                                <option value="">Select Employee</option>
-                                                @foreach ($employee as $item)
-                                                    <option value="{{ $item->id }}"
-                                                        data-company-name="{{ $item->company->company_name ?? '' }}/{{ $item->company->authorisedPerson->name ?? '' }}"
-                                                        data-company-type="{{ $item->company->companyType->name ?? '' }} "  data-company-id="{{ $item->company->id ?? '' }}">
-                                                        
-                                                        {{ $item->employee_code }}/{{ $item->employee_name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            @error('employee_id')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <label for="company_type" class="col-sm-2 col-form-label">
-                                            Company Type
-                                        </label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input type="text" class="form-control" name="company_type"
-                                                id="company_type" readonly>
-                                            @error('company_type')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <label for="company_name" class="col-sm-2 col-form-label">
-                                            Company Name
-                                        </label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input type="text" class="form-control" name="company_name"
-                                                id="company_name" readonly>
-                                            @error('company_name')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <input type="hidden" class="form-control" name="company_id" id="company_id" readonly>
-                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">
+                                    @if ($jobExists)
+                                        <!-- Display Job Reallocation Details -->
+
+
+                                        <h5 class="text-primary">Job Reallocation</h5>
+                                        <div class="form-group row">
+                                            <label for="customer_code" class="col-sm-2 col-form-label mandatory">
+                                                Employee
+                                            </label>
+                                            <div class="col-sm-4 mb-4">
+                                                <select class="form-control select2" name="employee_id" id="employee_id"
+                                                    required>
+                                                    <option value="">Select Employee</option>
+                                                    @foreach ($employee as $item)
+                                                        <option value="{{ $item->id }}"
+                                                            data-company-name="{{ $item->company->company_name ?? '' }}/{{ $item->company->authorisedPerson->name ?? '' }}"
+                                                            data-company-type="{{ $item->company->companyType->name ?? '' }} "
+                                                            data-company-id="{{ $item->company->id ?? '' }}">
+
+                                                            {{ $item->employee_code }}/{{ $item->employee_name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('employee_id')
+                                                    <span class="error" style="color: red;">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <label for="company_type" class="col-sm-2 col-form-label">
+                                                Company Type
+                                            </label>
+                                            <div class="col-sm-4 mb-4">
+                                                <input type="text" class="form-control" name="company_type"
+                                                    id="company_type" readonly>
+                                                @error('company_type')
+                                                    <span class="error" style="color: red;">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <label for="company_name" class="col-sm-2 col-form-label">
+                                                Company Name
+                                            </label>
+                                            <div class="col-sm-4 mb-4">
+                                                <input type="text" class="form-control" name="company_name"
+                                                    id="company_name" readonly>
+                                                @error('company_name')
+                                                    <span class="error" style="color: red;">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <input type="hidden" class="form-control" name="company_id" id="company_id"
+                                                readonly>
+                                            {{-- <label for="customer_code" class="col-sm-2 col-form-label mandatory">
                                             Receiving Date
                                         </label>
                                         <div class="col-sm-4 mb-4">
@@ -252,56 +261,72 @@
                                             @error('order_id')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
-                                        </div>
+                                        </div> --}}
 
-                                        <label for="customer_code" class="col-sm-2 col-form-label mandatory">
-                                            Quantity
-                                        </label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input type="text" class="form-control" name="quantity" id="quantity"
-                                                required>
-                                            <span id="quantity-error" class="error"
-                                                style="color: red; display: none;"></span>
-                                            @error('quantity')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <label for="customer_code" class="col-sm-2 col-form-label">
-                                            Total Amount
-                                        </label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input type="text" class="form-control" name="total_amount" id="total_amount"
-                                             >
-                        
-                                            @error('quantity')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                            <label for="customer_code" class="col-sm-2 col-form-label mandatory">
+                                                Quantity
+                                            </label>
+                                            <div class="col-sm-4 mb-4">
+                                                <input type="text" class="form-control" name="quantity"
+                                                    id="quantity" required>
+                                                <span id="quantity-error" class="error"
+                                                    style="color: red; display: none;"></span>
+                                                @error('quantity')
+                                                    <span class="error" style="color: red;">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <label for="customer_code" class="col-sm-2 col-form-label">
+                                                Total Amount
+                                            </label>
+                                            <div class="col-sm-4 mb-4">
+                                                <input type="number" class="form-control" name="total_amount"
+                                                    id="total_amount" value="{{ old('total_amount') }}" required>
+                                                @error('quantity')
+                                                    <span class="error" style="color: red;">{{ $message }}</span>
+                                                @enderror
+                                            </div>
 
-                                    </div>
-                                    <!-- reallocation Ends -->
-                                    <div class="form-group">
-                                        <div class="d-flex justify-content-evenly">
-                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                                Submit
-                                            </button>
-                                            <a href="{{ route('job_allocation.job_reallocation.index') }}"
-                                                class="btn btn-secondary waves-effect m-l-5">
-                                                Back
-                                            </a>
 
-                                            <a href="{{ route('job_allocation.job_reallocation.cancel_job_giving', ['id' => $id]) }}"
-                                                class="btn btn-danger waves-effect m-l-5">
-                                                Cancel
-                                            </a>
+                                            <label for="date" class="col-sm-2 col-form-label">
+                                                Date
+                                            </label>
+                                            <div class="col-sm-4 mb-4">
+                                                <input type="date" class="form-control" name="date"
+                                                    id="date" value="{{ old('date') }}">
+                                                @error('date')
+                                                    <span class="error" style="color: red;">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
                                         </div>
-                                    </div>
+                                        <!-- reallocation Ends -->
+                                        <div class="form-group">
+                                            <div class="d-flex justify-content-evenly">
+                                                <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                                    Submit
+                                                </button>
+                                                <a href="{{ route('job_allocation.job_reallocation.index') }}"
+                                                    class="btn btn-secondary waves-effect m-l-5">
+                                                    Back
+                                                </a>
+
+                                                <a href="{{ route('job_allocation.job_reallocation.cancel_job_giving', ['id' => $id]) }}"
+                                                    class="btn btn-danger waves-effect m-l-5">
+                                                    Remove
+                                                </a>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <p class="text-danger">No job reallocation details available.</p>
+                                    @endif
+
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            {{--  --}}
         </div>
     </div>
     @include('links.js.select2.select2')
@@ -316,21 +341,21 @@
             });
         });
     </script>
-   <script>
-    $(document).ready(function() {
-        $('#employee_id').change(function() {
-            // Retrieve data attributes from the selected option
-            var companyName = $(this).find(':selected').data('company-name');
-            var companyType = $(this).find(':selected').data('company-type');
-            var companyId = $(this).find(':selected').data('company-id'); // Retrieve company_id
+    <script>
+        $(document).ready(function() {
+            $('#employee_id').change(function() {
+                // Retrieve data attributes from the selected option
+                var companyName = $(this).find(':selected').data('company-name');
+                var companyType = $(this).find(':selected').data('company-type');
+                var companyId = $(this).find(':selected').data('company-id'); // Retrieve company_id
 
-            // Set values to respective fields
-            $('#company_name').val(companyName);
-            $('#company_type').val(companyType);
-            $('#company_id').val(companyId); // Set company_id
+                // Set values to respective fields
+                $('#company_name').val(companyName);
+                $('#company_type').val(companyType);
+                $('#company_id').val(companyId); // Set company_id
+            });
         });
-    });
-</script>
+    </script>
 
     <script>
         // Get references to the input elements
@@ -372,28 +397,28 @@
     </script>
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get the product wages from the readonly input
-        var wagesPerProduct = parseFloat(document.getElementById('wages_product').value);
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the product wages from the readonly input
+            var wagesPerProduct = parseFloat(document.getElementById('wages_product').value);
 
-        // Event listener for changes in the quantity input
-        document.getElementById('quantity').addEventListener('input', function() {
-            // Get the quantity entered by the user
-            var quantity = parseFloat(document.getElementById('quantity').value);
+            // Event listener for changes in the quantity input
+            document.getElementById('quantity').addEventListener('input', function() {
+                // Get the quantity entered by the user
+                var quantity = parseFloat(document.getElementById('quantity').value);
 
-            // Check if quantity is a valid number
-            if (!isNaN(quantity) && quantity > 0) {
-                // Calculate the total amount
-                var totalAmount = wagesPerProduct * quantity;
+                // Check if quantity is a valid number
+                if (!isNaN(quantity) && quantity > 0) {
+                    // Calculate the total amount
+                    var totalAmount = wagesPerProduct * quantity;
 
-                // Update the total_amount field with the calculated value
-                document.getElementById('total_amount').value = totalAmount.toFixed(2);
-            } else {
-                // If quantity is invalid, reset the total amount field
-                document.getElementById('total_amount').value = '';
-            }
+                    // Update the total_amount field with the calculated value
+                    document.getElementById('total_amount').value = totalAmount.toFixed(2);
+                } else {
+                    // If quantity is invalid, reset the total amount field
+                    document.getElementById('total_amount').value = '';
+                }
+            });
         });
-    });
-</script>
+    </script>
 @endsection

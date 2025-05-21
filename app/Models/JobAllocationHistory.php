@@ -12,8 +12,8 @@ class JobAllocationHistory extends Model
     protected $fillable = [
         'job_giving_id',
         'employee_id ',
-        'receving_date',
-        'quantity'
+        'quantity',
+        'date'
     ];
 
 

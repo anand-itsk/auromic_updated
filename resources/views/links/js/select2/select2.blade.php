@@ -3,8 +3,9 @@
     <script src="{{ asset('assets/js/custom/fetch_address.js') }}"></script>
 
     <script>
-        $(document).ready(function() {
-            $('.select2').select2();
+        var $JQ= jQuery;
+        $JQ(document).ready(function() {
+            $JQ('.select2').select2();
         });
 
         function showTextBox() {

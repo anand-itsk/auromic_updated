@@ -83,6 +83,36 @@
                                     @enderror
                                 </div>
                                 {{-- Last Ends --}}
+                                 <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Company Type
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="company_type" id="company_type">
+                                        <option value="">Select Type</option>
+                                        @foreach ($companyType as $type)
+                                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @error('company_type')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Companies
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="companies" id="companies" disabled>
+                                        <option value="">Select Company</option>
+                                        @foreach ($company as $c)
+                                            <option value="{{ $c->id }}" data-type-id="{{ $c->company_type_id }}">
+                                                {{ $c->company_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('Companies')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
 
                                 <label for="customer_code" class="col-sm-2 col-form-label ">
                                     Employee
@@ -300,6 +330,8 @@
                 ajax: {
                     url: '{{ route('report.job_allocation_report.data') }}',
                     data: function(d) {
+                         d.company_type = $('#company_type').val();
+                        d.companies = $('#companies').val();
                         d.employee = $('#employee').val();
                         d.received_date = $('#received_date').val();
                         d.orderNoId = $('#order_id').val();
@@ -312,7 +344,11 @@
                 },
                 columns: [{
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        render: function(data, type, row, meta) {
+                           
+                            return meta.row + 1;
+                        }
                     },
                     {
                         data: 'company_name',
@@ -482,7 +518,21 @@
             });
 
 
-
+      // Event listener for company type dropdown
+            $('#company_type').on('change', function() {
+                var selectedCompanyType = $(this).val();
+                if (selectedCompanyType) {
+                    $('#companies').prop('disabled', false);
+                } else {
+                    $('#companies').prop('disabled', true).val('');
+                }
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
+            $('#companies').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
 
             $('#employee').on('change', function() {
                 // Reload DataTable with updated parameters
@@ -549,16 +599,17 @@
 
         function updateSelectedFilters() {
             var selectedFilters = '';
-
+            var companyType = $('#company_type option:selected').text();
+            var companies = $('#companies option:selected').text();
             var employee = $('#employee option:selected').text();
-
             var receivedDate = $('#received_date').val();
             var product = $('#product option:selected').text(); // New filter
             var orderNoId = $('#order_id option:selected').text();
             var fromDate = $('#from_date').val();
             var lastDate = $('#last_date').val();
 
-
+             selectedFilters += 'Company Type: ' + companyType + ', ';
+            selectedFilters += 'Companies: ' + companies + ', '; 
             selectedFilters += 'Employee: ' + employee + ', ';
 
             selectedFilters += 'Received Date: ' + receivedDate + ', ';
@@ -657,6 +708,37 @@
         });
     </script>
 
+ <script>
+        $(document).ready(function() {
+            // Initialize Select2 on both dropdowns
+            $('#company_type, #companies').select2({
+                placeholder: "Select an option",
+                allowClear: true
+            });
+
+            // Company Type select change event
+            $('#company_type').on('change', function() {
+                var selectedTypeId = $(this).val(); // Get the selected company type
+
+                // Reset the companies dropdown
+                var $companiesSelect = $('#companies');
+                $companiesSelect.empty().append(
+                    '<option value="">Select Company</option>'); // Reset options
+
+                // Filter and append companies based on selected company type
+                var companies = @json($company); // Get all companies
+                companies.forEach(function(company) {
+                    if (company.company_type_id == selectedTypeId) {
+                        var option = new Option(company.company_name, company.id);
+                        $companiesSelect.append(option);
+                    }
+                });
+
+                // Re-initialize Select2 after appending new options
+                $companiesSelect.trigger('change');
+            });
+        });
+    </script>
 
 
 @endsection

@@ -3,9 +3,16 @@
 @section('title', 'Order Details')
 
 @section('content')
+
+    <style>
+        #users-table_filter {
+            display: none !important;
+        }
+    </style>
+
     @include('links.css.datatable.datatable-css')
     @include('links.css.table.custom-css')
-     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <div class="wrapper">
         <div class="container-fluid">
@@ -122,7 +129,7 @@
                                 </div>
 
                                 <label for="customer_code" class="col-sm-2 col-form-label ">
-                                   Customer Order No
+                                    Customer Order No
                                 </label>
                                 <div class="col-sm-2 mb-2">
                                     <select class="form-control select2" name="order_id" id="order_id">
@@ -153,7 +160,7 @@
                                 </div>
 
 
-                                 <label for="customer_code" class="col-sm-2 col-form-label ">
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
                                     Order No
                                 </label>
                                 <div class="col-sm-2 mb-2">
@@ -211,9 +218,9 @@
                                             Delete Selected Record</button>
                                     </div>
                                     <div>
-                                        <!-- <button type="button" class="icon-button common-color bg-secondary rounded"
-                                                            data-toggle="modal" data-target=".bs-example-modal-center"
-                                                            title="Import file"><i class="fa fa-upload text-white"></i></button> -->
+                                        {{-- <button type="button" class="icon-button common-color bg-secondary rounded"
+                                            data-toggle="modal" data-target=".bs-example-modal-center"
+                                            title="Import file"><i class="fa fa-upload text-white"></i></button> --}}
 
                                         <button class="icon-button  bg-primary rounded">
                                             <a href="{{ route('master.order_detail.create') }}"
@@ -278,10 +285,11 @@
                                                 <th>ID</th>
                                                 <th>Order No</th>
                                                 <th>Order Date</th>
-                                                <th>customer Code</th>
+                                                <th>customer Name</th>
                                                 <th>Total Quantity</th>
                                                 <th>Available Quantity</th>
                                                 <th>Wages of Product</th>
+                                                <th>Product Name</th>
                                                 <th>Product Color</th>
                                                 <th>Product Size</th>
                                                 <th>Order Status</th>
@@ -376,7 +384,7 @@
                         d.from_date = $('#from_date').val();
                         d.last_date = $('#last_date').val();
                         d.orderNoId = $('#order_id').val();
-                         d.order_no = $('#order_no').val();
+                        d.order_no = $('#order_no').val();
                         d.product = $('#product').val(); // New filter
                         d.date_filter = $('input[name="date_filter"]:checked').val();
                     }
@@ -407,8 +415,8 @@
                         }
                     },
                     {
-                        data: 'order_no.customer_order_no',
-                        name: 'order_no.customer_order_no',
+                        data: 'customer.customer_name',
+                        name: 'customer.customer_name',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
@@ -431,6 +439,13 @@
                     {
                         data: 'product_model.wages_product',
                         name: 'product_model.wages_product',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                    },
+                    {
+                        data: 'product_model.product.name',
+                        name: 'product_model.product.name',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
@@ -542,7 +557,7 @@
                 table.ajax.reload();
             });
 
-             $('#order_no').on('change', function() {
+            $('#order_no').on('change', function() {
                 table.ajax.reload();
             });
 
@@ -569,7 +584,7 @@
             var product = $('#product option:selected').text(); // New filter
             var orderNoId = $('#order_id option:selected').text();
 
-             var orderNo = $('#order_no option:selected').text();
+            var orderNo = $('#order_no option:selected').text();
 
             // Construct the string with selected filter values
             selectedFilters += 'Company Type: ' + companyType + ', ';
@@ -579,7 +594,7 @@
             selectedFilters += 'Last Date: ' + lastDate;
             selectedFilters += 'Product: ' + product + ', '; // New filter
             selectedFilters += 'Order No: ' + orderNoId; // New filter
-             selectedFilters += 'Order : ' + orderNo;
+            selectedFilters += 'Order : ' + orderNo;
 
 
             // Update the HTML content with selected filter values
@@ -601,32 +616,32 @@
             }
         });
         $('#deleteButton').click(function() {
-        var ids = $.map(table.rows('.selected').data(), function(item) {
-            return item.id;
-        });
-
-        if (ids.length === 0) {
-            alert('No rows selected!');
-            return;
-        }
-
-        if (confirm("Are you sure you want to delete these rows?")) {
-            // Send AJAX request to delete the selected rows
-            $.ajax({
-                url: '/master/order_detail/delete/selected',
-                type: 'POST',
-                data: {
-                    ids: ids,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    // Handle response here
-                    table.ajax.reload(); // Reload the DataTable
-                }
+            var ids = $.map(table.rows('.selected').data(), function(item) {
+                return item.id;
             });
-        }
+
+            if (ids.length === 0) {
+                alert('No rows selected!');
+                return;
+            }
+
+            if (confirm("Are you sure you want to delete these rows?")) {
+                // Send AJAX request to delete the selected rows
+                $.ajax({
+                    url: '/master/order_detail/delete/selected',
+                    type: 'POST',
+                    data: {
+                        ids: ids,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        // Handle response here
+                        table.ajax.reload(); // Reload the DataTable
+                    }
+                });
+            }
         });
-        
+
 
         function redirectToCreatePage(rowId, orderNo) {
             window.location.href = '/master/order_detail/create?rowId=' + rowId + '&orderNo=' + encodeURIComponent(orderNo);
@@ -770,11 +785,11 @@
                 placeholder: "Select Order Status",
                 allowClear: true
             });
-             $('#order_no').select2({
+            $('#order_no').select2({
                 placeholder: "Select Order No",
                 allowClear: true
             });
-            
+
         });
     </script>
 @endsection

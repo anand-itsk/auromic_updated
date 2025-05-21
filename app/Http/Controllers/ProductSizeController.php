@@ -34,21 +34,24 @@ class ProductSizeController extends Controller
 
    public function store(Request $request)
    {
-
       $request->validate([
          'name' => 'required',
-
       ]);
 
       $product_size = new ProductSize;
       $product_size->name = $request->input('name');
       $product_size->code = $request->input('code');
-
-
       $product_size->save();
+
+      if ($request->input('ajax_mode') === 'ajax') {
+         return response()->json(['success' => true, 'data' => $product_size, 'message' => 'Product Size added successfully!', 'product_size' => $product_size]);
+      }
 
       return redirect()->route('product-models.product_sizes')->with('success', 'Product Size added successfully!');
    }
+
+
+   
 
    public function edit($id)
    {

@@ -53,8 +53,7 @@ class HomeController extends Controller
         $recentEmployees = Employee::latest()->take(5)->get();
         $company = Company::count();
         $product_model = ProductModel::count();
-        $jobGivingCountWithDcId = JobGiving::whereNotNull('dc_id')->count();
-        $jobGivingCountWithoutDcId = JobGiving::count();
+        $jobGivingCount = JobGiving::count();
         $jobGivingCountPending = JobGiving::where('status', 'Pending')->count();
         $jobGivingCountComplete = JobGiving::where('status', 'complete')->count();
         $jobGivingCountcancelled = JobGiving::where('status', 'cancelled')->count();
@@ -62,6 +61,6 @@ class HomeController extends Controller
         $job_reallocation = JobAllocationHistory::count();
         $direct_job_giving = DirectJobGiving::count();
         $direct_job_received = DirectJobReceived::count();
-        return view('home', compact('order_count', 'master_company_count', 'client_company_count', 'subclient_company_count', 'employee_count_master', 'employee_count_client', 'employee_count_subclient', 'employee', 'company', 'product_model', 'jobGivingCountWithDcId', 'jobGivingCountWithoutDcId', 'job_received', 'job_reallocation', 'direct_job_giving', 'direct_job_received', 'recentEmployees','todayOrderCount','jobGivingCountPending','jobGivingCountComplete','jobGivingCountcancelled'));
+        return view('home', compact('order_count', 'master_company_count', 'client_company_count', 'subclient_company_count', 'employee_count_master', 'employee_count_client', 'employee_count_subclient', 'employee', 'company', 'product_model', 'jobGivingCount', 'job_received', 'job_reallocation', 'direct_job_giving', 'direct_job_received', 'recentEmployees','todayOrderCount','jobGivingCountPending','jobGivingCountComplete','jobGivingCountcancelled'));
     }
 }

@@ -10,11 +10,13 @@ use App\Models\Address;
 use App\Models\AddressType;
 use App\Models\AuthorisedPerson;
 use App\Models\Company;
+use App\Models\CompanyHierarchy;
 use App\Models\CompanyRegistrationDetails;
 use App\Models\Country;
 use App\Models\State;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 
@@ -31,21 +33,26 @@ class MasterCompanyController extends Controller
     {
         // Fetch the company records with the authorized person relation
         $company = Company::with('authorisedPerson')->where('company_type_id', 2)->get();
+        $parentCompanyIds = CompanyHierarchy::pluck('parent_company_id')->toArray();
 
-        // Get the first record's ID to hide the delete button for this ID
+        // dd($parentCompanyIds);
         $firstCompanyId = $company->first()->id;
 
         return DataTables::of($company)
-        ->addColumn('authorised_person_name', function ($company) {
-            return $company->authorisedPerson->name ?? '-';
-        })
-        ->addColumn('authorised_person_email', function ($company) {
-            return $company->authorisedPerson->person_email ?? '-';
-        })
+            ->addColumn('authorised_person_name', function ($company) {
+                return $company->authorisedPerson->name ?? '-';
+            })
+            ->addColumn('authorised_person_email', function ($company) {
+                return $company->authorisedPerson->person_email ?? '-';
+            })
             // Include firstCompanyId as part of each row's data
             ->addColumn('first_company_id', function () use ($firstCompanyId) {
                 return $firstCompanyId;
             })
+            ->addColumn('parentCompanyIds', function () use ($parentCompanyIds) {
+                return $parentCompanyIds;
+            })
+
             ->make(true);
     }
 
@@ -67,7 +74,7 @@ class MasterCompanyController extends Controller
             'company_name' => 'required|max:255',
             'name' => 'required',
             'photo' => 'nullable|image|max:200000',
-            // 'person_email' => 'email|unique:authorised_people',
+            'person_email' => 'nullable|email|unique:authorised_people,person_email',
         ]);
         $input = $request->all();
         // dd($input);
@@ -143,15 +150,14 @@ class MasterCompanyController extends Controller
             'company_name' => 'required|max:255',
             'name' => 'required',
             'photo' => 'nullable|image|max:200000',
-          
-            
+            // 'person_email' => 'unique:authorised_people',
         ]);
 
         $input = $request->all();
 
 
         $company = Company::findOrFail($id);
-
+       
         $company->company_type_id = 2;
         $company->company_code = $input['company_code'];
         $company->company_name = $input['company_name'];
@@ -163,7 +169,7 @@ class MasterCompanyController extends Controller
         $company->website = $input['website'];
         $company->updated_by = $auth_id;
         $company->created_by = $auth_id;
-       
+
 
         $company->save();
         $company_registration_details = CompanyRegistrationDetails::firstOrNew(['company_id' => $company->id]);
@@ -187,6 +193,13 @@ class MasterCompanyController extends Controller
         $company_registration_details->save();
 
         $authorised_person = AuthorisedPerson::firstOrNew(['company_id' => $company->id]);
+
+        if (!($authorised_person->person_email)) {
+            // dd('in');
+            $request->validate([
+               'person_email' => 'nullable|email|unique:authorised_people,person_email',
+           ]);
+        }
         $authorised_person->name = $input['name'];
         $authorised_person->faorhus_name = $input['faorhus_name'];
         $authorised_person->gender = $input['gender'];
@@ -273,14 +286,20 @@ class MasterCompanyController extends Controller
         $request->validate([
             'file' => 'required|file|mimes:xlsx,csv'
         ]);
-        $company_type_id = 2;
-        Excel::import(new CompanyDataImport($company_type_id), request()->file('file'));
 
-        return redirect()->route('profile.masters.index')->with('success', 'Data imported successfully');
+        try {
+            $company_type_id = 2;
+            Excel::import(new CompanyDataImport($company_type_id), $request->file('file'));
+
+            return redirect()->route('profile.masters.index')->with('success', 'Data imported successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('profile.masters.index')->with('error', 'Data not imported');
+        }
     }
+
     // Import Users
     public function export(Request $request)
     {
-      return Excel::download(new CompanyExport($request->all()), 'MasterCompany_' . date('d-m-Y') . '.xlsx');
+        return Excel::download(new CompanyExport($request->all()), 'MasterCompany_' . date('d-m-Y') . '.xlsx');
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Employee;
 use App\Models\JobReceived;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -14,19 +15,29 @@ class TotalWagesReport extends Controller
     public function index()
     {
         $employee = Employee::all();
-
         $masterCompany = Company::where('company_type_id', 2)->get();
         $clientCompany = Company::where('company_type_id', 3)->get();
         $subClientCompany = Company::where('company_type_id', 4)->get();
-
-
         return view('pages.report.total_wages', compact('employee', 'masterCompany', 'clientCompany', 'subClientCompany'));
     }
     public function indexData(Request $request)
     {
         $query = JobReceived::query();
-
         // Apply filters if they are provided
+
+        if ($request->filled('date_filter')) {
+            if ($request->date_filter === 'today') {
+                $query->whereDate('created_at', Carbon::today());
+            } elseif ($request->date_filter === 'this_month') {
+                $query->whereMonth('created_at', Carbon::now()->month)
+                    ->whereYear('created_at', Carbon::now()->year);
+            } elseif ($request->date_filter === 'last_month') {
+                $query->whereMonth('created_at', Carbon::now()->subMonth()->month)
+                    ->whereYear('created_at', Carbon::now()->subMonth()->year);
+            }
+        }
+
+    
         if ($request->filled('client_company_id')) {
             $query->whereHas('jobGiving.employee.company', function ($q) use ($request) {
                 $q->where('id', $request->client_company_id);
@@ -124,13 +135,5 @@ class TotalWagesReport extends Controller
             })
             ->make(true);
     }
-
-
-
-
-
-
-
-
 
 }

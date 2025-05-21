@@ -48,6 +48,11 @@ class EsiDispensaryController extends Controller
    
         $esi_dispensary->save();
 
+        if ($request->input('ajax_mode') === 'ajax') {
+            return response()->json(['success' => true, 'data' => $esi_dispensary, 'message' => 'Esi Dispensary added successfully!', 'esi_dispensary' => $esi_dispensary]);
+        }
+
+
         return redirect()->route('specified.esi_dispensaries')->with('success', 'ESI Dispensary added successfully!');
 
 

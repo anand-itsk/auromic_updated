@@ -5,6 +5,8 @@
 @section('content')
     @include('links.css.datatable.datatable-css')
     @include('links.css.table.custom-css')
+     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <div class="wrapper">
         <div class="container-fluid">
             @if (session('success'))
@@ -26,6 +28,126 @@
                             </ol>
                         </div>
                         <h4 class="page-title">Direct Job Giving</h4>
+                    </div>
+                     <div class="card mb-2">
+                        <div class="card-body">
+                            <div class="form-group row mb-0">
+
+                                <div class="form-group col-sm-4 mb-2 d-flex align-item-center"
+                                    style="position: relative;top:8px">
+
+                                    <div class="">
+                                        <label class="mx-0"><input type="radio" name="date_filter" value="today">
+                                            Today</label>
+                                        <label class="ml-4"><input type="radio" name="date_filter" value="this_month">
+                                            This
+                                            Month</label>
+                                        <label class="ml-4"><input type="radio" name="date_filter" value="last_month">
+                                            Last
+                                            Month</label>
+                                    </div>
+                                </div>
+                                {{-- date Ends --}}
+
+
+                                {{-- From Starts --}}
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    From Date
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <input type="date" class="form-control" name="from_date" id="from_date">
+                                    @error('company_type_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- From Ends --}}
+
+
+                                {{-- Last Start --}}
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    To Date
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <input type="date" class="form-control" name="last_date" id="last_date">
+                                    @error('company_type_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- Last Ends --}}
+
+                               
+
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Employee Name
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="employee_name" id="employee_name">
+                                        <option value="">Select Employee</option>
+                                        @foreach ($employee as $type)
+                                            <option value="{{ $type->id }}">
+                                                {{ $type->employee_name }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @error('employee_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    Employee Code
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="employee_code" id="employee_code">
+                                        <option value="">Select Employee</option>
+                                        @foreach ($employee as $type)
+                                            <option value="{{ $type->id }}">
+                                                {{ $type->employee_code }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @error('employee_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    FP model Name
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="fp_name" id="fp_name">
+                                        <option value="">Select FP Name</option>
+                                        @foreach ($finishing_product as $finishing_products)
+                                            <option value="{{ $finishing_products->id }}">
+                                                {{ $finishing_products->model_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('finishing_product_model_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    FP model Code
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="fp_code" id="fp_code">
+                                        <option value="">Select FP Code</option>
+                                        @foreach ($finishing_product as $finishing_products)
+                                            <option value="{{ $finishing_products->id }}">
+                                                {{ $finishing_products->model_code }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('finishing_product_model_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
@@ -96,11 +218,12 @@
                                     </div><!-- /.modal-dialog -->
                                 </div>
                                 <div class="card-body">
-                                    <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap"
+                                    <table id="users-table" class="table table-striped table-bordered table-responsive nowrap"
                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
+                                                <th>Company</th>
                                                 <th>Employee Code</th>
                                                 <th>Employee Name</th>
                                                 <th>FP Model Code</th>
@@ -187,7 +310,20 @@
             table = $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('job_allocation.direct_job_giving.data') }}',
+                 ajax: {
+                    url: '{{ route('job_allocation.direct_job_giving.data') }}',
+                    data: function(d) {
+                       
+                        d.employee_code = $('#employee_code').val();
+                        d.employee_name = $('#employee_name').val();
+                        d.fp_code = $('#fp_code').val();
+                        d.fp_name = $('#fp_name').val();
+                        d.from_date = $('#from_date').val();
+                        d.last_date = $('#last_date').val();
+                        d.date_filter = $('input[name="date_filter"]:checked').val();
+
+                    }
+                },
                 columns: [{
 
                         data: 'id',
@@ -196,6 +332,13 @@
 
 
                             return meta.row + 1;
+                        }
+                    },
+                    {
+                        data: 'company_name',
+                        name: 'company_name',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
                         }
                     },
                     {
@@ -231,6 +374,9 @@
                     {
                         data: 'product_size.code',
                         name: 'product_size.code',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
 
                     },
                     {
@@ -308,6 +454,39 @@
             });
 
 
+ $('#employee_code, #employee_name, #fp_code, #fp_name, #from_date, #last_date, input[name="date_filter"]')
+                .on('change keyup', function() {
+                    table.ajax.reload(); // Reload DataTable when any filter input changes
+                });
+
+                 function updateSelectedFilters() {
+            var selectedFilters = '';
+            // Get selected values from filter elements
+           
+            var employee_code = $('#employee_code option:selected').text();
+            var employee_name = $('#employee_name option:selected').text();
+            var fp_code = $('#fp_code option:selected').text();
+            var fp_name = $('#fp_name option:selected').text();
+         
+            var fromDate = $('#from_date').val();
+            var lastDate = $('#last_date').val();
+
+
+            // Construct the string with selected filter values
+           
+            selectedFilters += 'Employee Code: ' + employee_code + ', ';
+            selectedFilters += 'Employee Name: ' + employee_name + ', ';
+            selectedFilters += 'FP Code: ' + fp_code + ', ';
+            selectedFilters += 'FP Name: ' + fp_name + ', ';
+         
+            selectedFilters += 'From Date: ' + fromDate + ', ';
+            selectedFilters += 'Last Date: ' + lastDate + ', ';
+
+
+            // Update the HTML content with selected filter values
+            $('#selectedFilters').text(selectedFilters);
+
+        }
 
             $('#deleteButton').click(function() {
                 var ids = $.map(table.rows('.selected').data(), function(item) {
@@ -397,5 +576,37 @@
 
             return `${day}-${month}-${year} ${strTime}`;
         }
+    </script>
+
+        <script>
+        $(document).ready(function() {
+            // Initialize Select2 on the customer dropdown
+
+            $('#employee_code').select2({
+                placeholder: "Select Employee code",
+                allowClear: true
+            });
+            $('#employee_name').select2({
+                placeholder: "Select Employee name",
+                allowClear: true
+            });
+            $('#fp_code').select2({
+                placeholder: "Select FP Code",
+                allowClear: true
+            });
+            $('#fp_name').select2({
+                placeholder: "Select FP Name",
+                allowClear: true
+            });
+          
+        });
+    </script>
+
+    <script>
+        document.querySelectorAll('input[name="date_filter"]').forEach(function(element) {
+            element.addEventListener('change', function() {
+                document.getElementById('filterForm').submit(); // Submit the form on selection
+            });
+        });
     </script>
 @endsection

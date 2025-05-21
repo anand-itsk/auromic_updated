@@ -17,18 +17,18 @@
                 </div>
             @endif
             <div class="alert alert-success alert-dismissible fade show" role="alert" style="display:none;">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    <strong></strong> Raw Material Type deleted successfully.
-</div>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong></strong> Raw Material Type deleted successfully.
+            </div>
             <div class="row">
                 <div class="col-xl-2">
                     <div class="row">
                         <div class="col-12">
                             <div class="card p-2 leftsetup">
                                 <h4 class="page-title">Setup</h4>
-                               
+
                                 @include('settings.setup_nav')
                             </div>
                         </div>
@@ -47,16 +47,73 @@
                                         <div class="col-md-12 rightsetup-details">
                                             <div class="d-flex justify-content-between p-2 bd-highlight">
                                                 <div>
-<button id="deleteButton" class="icon-button delete-color"
-                                                    title="Delete Selected Record"><i
-                                                        class="fa fa-user-times"></i></button>
+                                                    <button id="deleteButton" class="icon-button delete-color"
+                                                        title="Delete Selected Record"><i
+                                                            class="fa fa-user-times"></i></button>
                                                 </div>
                                                 <div>
+                                                    <button type="button"
+                                                        class="icon-button common-color bg-secondary rounded"
+                                                        data-toggle="modal" data-target=".bs-example-modal-center"
+                                                        title="Import file"><i
+                                                            class="fa fa-upload  text-white"></i></button>
+
                                                     <a href="{{ route('product-models.raw_material_types.create') }}"
                                                         class="icon-link common-color" title="Create New Country">
                                                         <i class="fa fa-user-plus"></i>
                                                     </a>
                                                 </div>
+                                            </div>
+
+                                            <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog"
+                                                aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title mt-0">Import</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="card m-b-30">
+                                                                        <div class="card-body">
+                                                                            <form
+                                                                                action="{{ route('product-models.raw_material_types.import') }}"
+                                                                                method="POST"
+                                                                                enctype="multipart/form-data">
+                                                                                @csrf
+                                                                                <input type="file" name="file"
+                                                                                    required>
+                                                                                <button type="submit"
+                                                                                    class="btn btn-primary">Import</button>
+                                                                                <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-dismiss="modal">Close</button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <h4 class="mt-0 header-title mb-0">Note:</h4>
+                                                            <p class="text-muted font-14">Supported documents (.xls,
+                                                                .xlsx or .csv)</p>
+                                                            <p class="text-muted font-14">To upload sample document, it
+                                                                must have concern fields.
+                                                                <a href="{{ asset('assets/sample_excels/raw_material_type_import.xlsx') }}"
+                                                                    download>Click
+                                                                    to download sample document</a>
+                                                            </p>
+
+                                                        </div>
+                                                    </div><!-- /.modal-content -->
+                                                </div>
+                                                <!-- /.modal-dialog -->
                                             </div>
                                             <table id="users-table"
                                                 class="table table-striped table-bordered dt-responsive nowrap"
@@ -70,11 +127,11 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                   
+
                                                 </tbody>
                                             </table>
 
-                                            
+
                                         </div>
 
                                     </div>
@@ -90,111 +147,122 @@
     @include('links.js.datatable.datatable-js')
 
 
-   <script>
-var table;
-$(document).ready(function() {
-    table = $('#users-table').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: '{{route('product-models.raw_material_types.data')}}',
-        columns: [{
-                data: 'id',
-                name: 'id'
-            },
-            {
-                data: 'name',
-                name: 'name'
-            },
-            {
-                data: 'code',
-                name: 'code'
-            },
-           
-            {
-                data: null,
-                orderable: false,
-                searchable: false,
-                render: function(data, type, row) {
-                    return `
+    <script>
+        var table;
+        $(document).ready(function() {
+            table = $('#users-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('product-models.raw_material_types.data') }}',
+                columns: [{
+                        data: 'id',
+                        name: 'id',
+                        render: function(data, type, row, meta) {
+
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'code',
+                        name: 'code'
+                    },
+
+                    {
+                        data: null,
+                        orderable: false,
+                        searchable: false,
+                        render: function(data, type, row) {
+                            return `
                         <button onclick="editUser(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
                         <button onclick="deleteUser(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
                                               
                     `;
+                        }
+
+                    },
+                ],
+                order: [
+                    [0, 'asc']
+                ],
+                select: true,
+                dom: 'lBfrtip',
+                buttons: [
+                    'excel', 'print',
+                    {
+                        text: 'Export All',
+                        action: function(e, dt, node, config) {
+                            window.location.href = '/product-models/raw_material_type/export?' + $.param(dt.ajax
+                                .params());
+                        }
+                    }
+                ],
+                pageLength: 8
+            });
+
+            $('#deleteButton').click(function() {
+                var ids = $.map(table.rows('.selected').data(), function(item) {
+                    return item.id;
+                });
+
+                if (ids.length === 0) {
+                    alert('No rows selected!');
+                    return;
                 }
 
-            },
-        ],
-        order: [
-            [0, 'asc']
-        ],
-        select: true,
-        dom: 'lBfrtip',
-        buttons: [
-            'excel', 'print'
-        ],
-        pageLength: 8
-    });
-
-    $('#deleteButton').click(function() {
-        var ids = $.map(table.rows('.selected').data(), function(item) {
-            return item.id;
-        });
-
-        if (ids.length === 0) {
-            alert('No rows selected!');
-            return;
-        }
-
-        if (confirm("Are you sure you want to delete these rows?")) {
-            // Send AJAX request to delete the selected rows
-            $.ajax({
-                url: 'raw_material_type/select-raw_material_type-delete',
-                type: 'POST',
-                data: {
-                    ids: ids,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    // Handle response here
-                    table.ajax.reload(); // Reload the DataTable
+                if (confirm("Are you sure you want to delete these rows?")) {
+                    // Send AJAX request to delete the selected rows
+                    $.ajax({
+                        url: 'raw_material_type/select-raw_material_type-delete',
+                        type: 'POST',
+                        data: {
+                            ids: ids,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            // Handle response here
+                            table.ajax.reload(); // Reload the DataTable
+                        }
+                    });
                 }
             });
-        }
-    });
-});
-
-function editUser(id) {
-    console.log("inside");
-    // Redirect to the user edit page or open a modal for editing
-    window.location.href = 'raw_material_type/edit/' + id;
-}
-
-
-
-function deleteUser(id) {
-    // Send an AJAX request to delete the user
-    if (confirm('Are you sure you want to delete this Raw material type?')) {
-        $.ajax({
-            url: 'raw_material_type/delete/' + id,
-            type: 'get',
-            data: {
-                _token: '{{ csrf_token() }}',
-            },
-            success: function(result) {
-                // Show success message
-                $('.alert-success').show();
-
-                // Hide success message after 5 seconds
-                setTimeout(function(){
-                    $('.alert-success').alert('close');
-                }, 5000);
-
-                // Reload the DataTable after success message is shown
-                table.ajax.reload(); // Reload the DataTable
-            }
-
         });
-    }
-}
-</script>
+
+        function editUser(id) {
+            console.log("inside");
+            // Redirect to the user edit page or open a modal for editing
+            window.location.href = 'raw_material_type/edit/' + id;
+        }
+
+
+
+        function deleteUser(id) {
+            // Send an AJAX request to delete the user
+            if (confirm('Are you sure you want to delete this Raw material type?')) {
+                $.ajax({
+                    url: 'raw_material_type/delete/' + id,
+                    type: 'get',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                    },
+                    success: function(result) {
+                        // Show success message
+                        $('.alert-success').show();
+
+                        // Hide success message after 5 seconds
+                        setTimeout(function() {
+                            $('.alert-success').alert('close');
+                        }, 5000);
+
+                        // Reload the DataTable after success message is shown
+                        table.ajax.reload(); // Reload the DataTable
+                    }
+
+                });
+            }
+        }
+    </script>
 @endsection

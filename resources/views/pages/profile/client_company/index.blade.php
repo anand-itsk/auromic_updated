@@ -15,6 +15,15 @@
                 </div>
             @endif
 
+             @if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{ session('error') }}
+    </div>
+@endif
+
        <div class="alert alert-success alert-dismissible fade show" role="alert" style="display:none;">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -238,13 +247,17 @@
                         data: null,
                         orderable: false,
                         searchable: false,
-                        render: function(data, type, row) {
-                            return `
-                        <button onclick="edit(${row.id})" class="icon-button primary-color"><i class="fa fa-edit"></i></button>
-                        <button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>
-                        <button onclick="showDetails(${row.id})" class="icon-button common-color"><i class="fa fa-eye"></i></button>
-                    `;
-                        }
+                                       render: function(data, type, row) {
+    // Check if row.id is in the parentCompanyIds array
+    var deleteButton = row.parentCompanyIds.includes(row.id) ? '' : 
+        `<button onclick="deleteCustomer(${row.id})" class="icon-button delete-color"><i class="fa fa-trash"></i></button>`;
+
+    return `
+        <button onclick="edit(${row.id})" class="icon-button primary-color" title="Edit"><i class="fa fa-edit"></i></button>
+        ${deleteButton}
+        <button onclick="showDetails(${row.id})" class="icon-button common-color"><i class="fa fa-eye"></i></button>
+    `;
+}
 
                     },
                 ],

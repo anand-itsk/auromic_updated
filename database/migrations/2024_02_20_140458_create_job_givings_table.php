@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('excess')->nullable();
             $table->string('shortage')->nullable();
             $table->string('days')->nullable();
+            $table->string('wages')->nullable();
             $table->date('date')->nullable();
             $table->timestamps();
             $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');

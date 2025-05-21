@@ -69,7 +69,7 @@ class JobGivingController extends Controller
 
         // Company type filter
         if ($companyType) {
-            $jobGivingQuery->whereHas('deliveryChellan.company', function ($q) use ($companyType) {
+            $jobGivingQuery->whereHas('employee.company', function ($q) use ($companyType) {
                 $q->where('company_type_id', $companyType);
             });
         }
@@ -77,7 +77,7 @@ class JobGivingController extends Controller
         // Company filter
         if ($company) {
             $companies = is_array($company) ? $company : [$company];
-            $jobGivingQuery->whereHas('deliveryChellan.company', function ($q) use ($companies) {
+            $jobGivingQuery->whereHas('employee.company', function ($q) use ($companies) {
                 $q->whereIn('company_id', $companies);
             });
         }
@@ -120,6 +120,7 @@ class JobGivingController extends Controller
                 'product_size' => $job_giving->product_model->productSize->code ?? null,
                 'product_color' => $job_giving->order_details->productColor->code ?? null,
                 'quantity' => $job_giving->quantity ?? null,
+                'pending_quantity' => $job_giving->pending_quantity ?? null,
                 'given_date' => $job_giving->created_at ? $job_giving->created_at->format('d/m/Y') : null,
                 'status' => $job_giving->status ?? null,
             ];
@@ -291,6 +292,7 @@ class JobGivingController extends Controller
         $job_giving->employee_id = $input['employee_id'];
         $job_giving->order_id = $order_id;
         $job_giving->product_model_id = $product_model_id;
+        $job_giving->wages = $input['wages'];
         $job_giving->quantity = $input['quantity'];
         $job_giving->dc_id = $input['dc_number'];
         $job_giving->weight = $input['weight'];

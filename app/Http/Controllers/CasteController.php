@@ -49,6 +49,10 @@ class CasteController extends Controller
    
         $caste->save();
 
+    if ($request->input('ajax_mode') === 'ajax') {
+      return response()->json(['success' => true, 'data' => $caste, 'message' => 'Caste added successfully!', 'caste' => $caste]);
+    }
+
         return redirect()->route('common.castes')->with('success', 'Caste added successfully!');
 
 

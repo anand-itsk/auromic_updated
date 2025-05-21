@@ -5,7 +5,8 @@
     <!-- Add Select2 CSS -->
     @include('links.css.select2.select2')
     @include('links.css.wizard-form.wizard-form')
-
+    @include('modals')
+    @include('modals_script')
     <div class="wrapper">
         <div class="container-fluid">
             <!-- Page-Title -->
@@ -57,9 +58,12 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="d-flex justify-content-end align-items-center mb-2">
-                                        <a class="mr-2" href="{{ route('master.employees.show', $employee->id) }}"><button
-                                                class="btn btn-warning py-1">
-                                                Preview</button></a>
+
+                                        <a class="mr-2" href="{{ route('master.employees.show', $employee->id) }}">
+                                            <button class="btn btn-warning py-1">Preview</button>
+                                        </a>
+
+
                                         <a class="mr-2" href="{{ route('master.employees.index') }}"><button
                                                 class="btn btn-danger py-1">
                                                 Close</button></a>
@@ -117,17 +121,10 @@
                                                                                 name="client_company_id"
                                                                                 id="client_company_id">
                                                                                 <option value="">Select</option>
-                                                                                @foreach ($client_companies as $client_company)
-                                                                                    <option
-                                                                                        value="{{ $client_company->id }}"
-                                                                                        {{ $client_company->id == $selectedClientCompany ? 'selected' : '' }}>
-                                                                                        {{ $client_company->company_name }}
-                                                                                        @if ($client_company->authorisedPerson)
-                                                                                            /
-                                                                                            {{ $client_company->authorisedPerson->name }}
-                                                                                        @else
-                                                                                            / No Authorised Person
-                                                                                        @endif
+                                                                                @foreach ($client_companies as $item)
+                                                                                    <option value="{{ $item->id }}"
+                                                                                        {{ $item->id == $selectedClientCompany ? 'selected' : '' }}>
+                                                                                        {{ $item->company_name }}
                                                                                     </option>
                                                                                 @endforeach
                                                                             </select>
@@ -145,17 +142,10 @@
                                                                                 name="sub_client_company_id"
                                                                                 id="sub_client_company_id">
                                                                                 <option value="">Select</option>
-                                                                                @foreach ($subclient_companies as $subclient_company)
-                                                                                    <option
-                                                                                        value="{{ $subclient_company->id }}"
-                                                                                        {{ $subclient_company->id == $selectedSubClientCompany ? 'selected' : '' }}>
-                                                                                        {{ $subclient_company->company_name }}
-                                                                                        @if ($subclient_company->authorisedPerson)
-                                                                                            /
-                                                                                            {{ $subclient_company->authorisedPerson->name }}
-                                                                                        @else
-                                                                                            / No Authorised Person
-                                                                                        @endif
+                                                                                @foreach ($subclient_companies as $item)
+                                                                                    <option value="{{ $item->id }}"
+                                                                                        {{ $item->id == $selectedSubClientCompany ? 'selected' : '' }}>
+                                                                                        {{ $item->company_name }}
                                                                                     </option>
                                                                                 @endforeach
                                                                             </select>
@@ -164,6 +154,7 @@
                                                                                     style="color: red;">{{ $message }}</span>
                                                                             @enderror
                                                                         </div>
+
 
 
                                                                         {{-- <label for="company_type_id"
@@ -180,15 +171,22 @@
                                                                                     style="color: red;">{{ $message }}</span>
                                                                             @enderror
                                                                         </div> --}}
-<label for="employee_code"
-                                                                            class="col-sm-2 col-form-label mandatory">Own Employee
-                                                                            </label>
+                                                                        <label for="employee_code"
+                                                                            class="col-sm-2 col-form-label mandatory">Own
+                                                                            Employee
+                                                                        </label>
                                                                         <div class="col-sm-4">
 
-                                                                           <select class="form-control" name="own_company" id="own_company" readonly>
-    <option value="yes" {{ $employee->own_company == 'yes' ? 'selected' : '' }}>Yes</option>
-    <option value="no" {{ $employee->own_company == 'no' ? 'selected' : '' }}>No</option>
-</select>
+                                                                            <select class="form-control"
+                                                                                name="own_company" id="own_company"
+                                                                                readonly>
+                                                                                <option value="yes"
+                                                                                    {{ $employee->own_company == 'yes' ? 'selected' : '' }}>
+                                                                                    Yes</option>
+                                                                                <option value="no"
+                                                                                    {{ $employee->own_company == 'no' ? 'selected' : '' }}>
+                                                                                    No</option>
+                                                                            </select>
 
                                                                             <span class="error-message text-danger"></span>
                                                                         </div>
@@ -268,10 +266,21 @@
                                                             <hr />
                                                             {{-- Permanent Address --}}
                                                             <div class="row mx-2 mt-0">
+                                                                {{-- @php
+                                                                    $officeAddress = $employee->addresses
+                                                                        ->where('address_type_id', 3)
+                                                                        ->first();
+                                                                @endphp --}}
                                                                 @php
                                                                     $officeAddress = $employee->addresses
                                                                         ->where('address_type_id', 3)
                                                                         ->first();
+                                                                    $selected_country_id =
+                                                                        $officeAddress->country_id ?? null;
+                                                                    $selected_state_id =
+                                                                        $officeAddress->state_id ?? null;
+                                                                    $selected_district_id =
+                                                                        $officeAddress->district_id ?? null;
                                                                 @endphp
                                                                 {{-- {{ dd($officeAddress->district_id) }} --}}
                                                                 <h5 class="text-primary w-100 mt-0">Permanent Address</h5>
@@ -301,9 +310,11 @@
                                                                         @enderror
                                                                     </div>
 
-                                                                    <label class="col-sm-2 col-form-label">Country</label>
+                                                                    <label class="col-sm-2 col-form-label">Country
+                                                                        b</label>
                                                                     <div class="col-sm-4 mb-4">
-                                                                        <select class="form-control select2"
+                                                                        <select
+                                                                            class="form-control select2 office_country_id"
                                                                             name="office_country_id"
                                                                             id="office_country_id">
                                                                             @foreach ($countries as $item)
@@ -320,9 +331,15 @@
 
                                                                     <label class="col-sm-2 col-form-label">State</label>
                                                                     <div class="col-sm-4 mb-4">
-                                                                        <select class="form-control select2 w-100"
+                                                                        <select
+                                                                            class="form-control select2 w-100 office_state_id"
                                                                             name="office_state_id" id="office_state_id"
                                                                             disabled>
+                                                                            @if ($selected_state_id)
+                                                                            <option value="{{ $selected_state_id }}" selected>
+                                                                                {{ $officeAddress->state->name ?? '' }}
+                                                                            </option>
+                                                                        @endif
                                                                         </select>
                                                                         @error('office_state_id')
                                                                             <span class="error"
@@ -335,7 +352,13 @@
                                                                         <select class="form-control select2 w-100"
                                                                             name="office_district_id"
                                                                             id="office_district_id" disabled>
+                                                                            @if ($selected_district_id)
+                                                                            <option value="{{ $selected_district_id }}" selected>
+                                                                                {{ $officeAddress->district->name ?? '' }}
+                                                                            </option>
+                                                                        @endif
                                                                         </select>
+
                                                                         @error('office_district_id')
                                                                             <span class="error"
                                                                                 style="color: red;">{{ $message }}</span>
@@ -355,7 +378,6 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-
                                                             <hr />
                                                             {{-- Correspondence Address --}}
                                                             @php
@@ -755,12 +777,13 @@
                                                                     </div>
 
                                                                     <label class="col-sm-2 col-form-label">Religion
-                                                                        <a class="shortcut_master"
-                                                                            href="{{ route('common.religions.create') }}"
-                                                                            target="_blank">+</a>
+                                                                        <button type="button" class="btn btn-primary"
+                                                                            data-toggle="modal" data-target="#religion">
+                                                                            +
+                                                                        </button>
                                                                     </label>
                                                                     <div class="col-sm-4 mb-4">
-                                                                        <select class="form-control select2"
+                                                                        <select class="form-control religion_id select2"
                                                                             name="religion_id" id="religion_id">
                                                                             @foreach ($religions as $item)
                                                                                 <option value="{{ $item->id }}"
@@ -775,12 +798,13 @@
                                                                     </div>
 
                                                                     <label class="col-sm-2 col-form-label">Caste
-                                                                        <a class="shortcut_master"
-                                                                            href="{{ route('common.castes.create') }}"
-                                                                            target="_blank">+</a>
+                                                                        <button type="button" class="btn btn-primary"
+                                                                            data-toggle="modal" data-target="#caste">
+                                                                            +
+                                                                        </button>
                                                                     </label>
                                                                     <div class="col-sm-4 mb-4">
-                                                                        <select class="form-control select2"
+                                                                        <select class="form-control caste_id select2"
                                                                             name="caste_id" id="caste_id">
                                                                             @foreach ($castes as $item)
                                                                                 <option value="{{ $item->id }}"
@@ -795,12 +819,14 @@
                                                                     </div>
 
                                                                     <label class="col-sm-2 col-form-label">Nationality
-                                                                        <a class="shortcut_master"
-                                                                            href="{{ route('common.nationalities.create') }}"
-                                                                            target="_blank">+</a>
+                                                                        <button type="button" class="btn btn-primary"
+                                                                            data-toggle="modal"
+                                                                            data-target="#nationality">
+                                                                            +
+                                                                        </button>
                                                                     </label>
                                                                     <div class="col-sm-4 mb-4">
-                                                                        <select class="form-control select2"
+                                                                        <select class="form-control nationality_id select2"
                                                                             name="nationality_id" id="nationality_id">
                                                                             @foreach ($nationality as $item)
                                                                                 <option value="{{ $item->id }}"
@@ -868,12 +894,16 @@
                                                                     </div>
 
                                                                     <label class="col-sm-2 col-form-label">Select with
-                                                                        reason<a class="shortcut_master"
-                                                                            href="{{ route('specified.resigning_reasons.create') }}"
-                                                                            target="_blank">+</a>
+                                                                        reason <button type="button"
+                                                                            class="btn btn-primary" data-toggle="modal"
+                                                                            data-target="#resigning_reason">
+                                                                            +
+                                                                        </button>
+
                                                                     </label>
                                                                     <div class="col-sm-4">
-                                                                        <select class="form-control select2"
+                                                                        <select
+                                                                            class="form-control resigning_reason_id select2"
                                                                             name="resigning_reason_id"
                                                                             id="resigning_reason_id">
                                                                             @foreach ($resigning_reason as $item)
@@ -1273,9 +1303,27 @@
     </script>
     <script>
         $(document).ready(function() {
+            // Define pre-selected values
+            const selectedClientCompanyId = "{{ $selectedClientCompany }}";
+            const selectedSubClientCompanyId = "{{ $selectedSubClientCompany }}";
+
             // When a master company is selected, fetch client companies
             $('#master_company').change(function() {
-                let masterCompanyId = $(this).val();
+                loadClientCompanies($(this).val(), selectedClientCompanyId);
+            });
+
+            // When a client company is selected, fetch sub-client companies
+            $('#client_company_id').change(function() {
+                loadSubClientCompanies($(this).val(), selectedSubClientCompanyId);
+            });
+
+            // Load initial data if `master_company` has a value
+            const initialMasterCompanyId = $('#master_company').val();
+            if (initialMasterCompanyId) {
+                loadClientCompanies(initialMasterCompanyId, selectedClientCompanyId);
+            }
+
+            function loadClientCompanies(masterCompanyId, selectedClientId = null) {
                 if (masterCompanyId) {
                     $.ajax({
                         url: '{{ route('master.employees.getClientCompanies') }}',
@@ -1284,28 +1332,32 @@
                             master_company_id: masterCompanyId
                         },
                         success: function(response) {
-                            // Clear and append new client companies
-                            $('#client_company_id').empty().append(
-                                '<option value="">Select</option>');
+                            $('#client_company_id').empty().append('<option value="">Select</option>');
                             $.each(response, function(index, company) {
-                                $('#client_company_id').append(new Option(company
-                                    .company_name, company.id));
+                                $('#client_company_id').append(new Option(company.company_name,
+                                    company.id));
                             });
 
-                            // Reset sub-client company dropdown
+                            // Set selected client company if provided
+                            if (selectedClientId) {
+                                $('#client_company_id').val(selectedClientId).trigger('change');
+                            }
+
+                            // Reset and load sub-client company if a client is pre-selected
                             $('#sub_client_company_id').empty().append(
                                 '<option value="">Select</option>');
+                            if (selectedClientId) {
+                                loadSubClientCompanies(selectedClientId, selectedSubClientCompanyId);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Error fetching client companies:", error);
                         }
                     });
-                } else {
-                    $('#client_company_id').empty().append('<option value="">Select</option>');
-                    $('#sub_client_company_id').empty().append('<option value="">Select</option>');
                 }
-            });
+            }
 
-            // When a client company is selected, fetch sub-client companies
-            $('#client_company_id').change(function() {
-                let clientCompanyId = $(this).val();
+            function loadSubClientCompanies(clientCompanyId, selectedSubClientId = null) {
                 if (clientCompanyId) {
                     $.ajax({
                         url: '{{ route('master.employees.getSubClientCompanies') }}',
@@ -1314,19 +1366,24 @@
                             client_company_id: clientCompanyId
                         },
                         success: function(response) {
-                            // Clear and append new sub-client companies
                             $('#sub_client_company_id').empty().append(
                                 '<option value="">Select</option>');
                             $.each(response, function(index, company) {
                                 $('#sub_client_company_id').append(new Option(company
                                     .company_name, company.id));
                             });
+
+                            // Set selected sub-client company if provided
+                            if (selectedSubClientId) {
+                                $('#sub_client_company_id').val(selectedSubClientId);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Error fetching sub-client companies:", error);
                         }
                     });
-                } else {
-                    $('#sub_client_company_id').empty().append('<option value="">Select</option>');
                 }
-            });
+            }
         });
     </script>
 

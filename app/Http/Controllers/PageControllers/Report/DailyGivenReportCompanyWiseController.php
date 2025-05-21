@@ -36,7 +36,7 @@ class DailyGivenReportCompanyWiseController extends Controller
         $product = $request->input('product');
         $dateFilter = $request->input('date_filter');
         // Retrieve JobGiving data with eager loading
-        $jobGivingQuery = JobGiving::with('employee', 'order_details', 'deliveryChellan', 'product_model.productSize');
+        $jobGivingQuery = JobGiving::with('employee.company', 'order_details', 'deliveryChellan', 'product_model.productSize');
 
         if ($dateFilter) {
             if ($dateFilter === 'today') {
@@ -52,7 +52,7 @@ class DailyGivenReportCompanyWiseController extends Controller
 
         // Apply company type filter if selected
         if ($companyType) {
-            $jobGivingQuery->whereHas('deliveryChellan.company', function ($q) use ($companyType) {
+            $jobGivingQuery->whereHas('employee.company', function ($q) use ($companyType) {
                 $q->where('company_type_id', $companyType);
             });
         }
@@ -60,7 +60,7 @@ class DailyGivenReportCompanyWiseController extends Controller
         if ($company) {
             // Convert $company to an array if it's not already one
             $companies = is_array($company) ? $company : [$company];
-            $jobGivingQuery->whereHas('deliveryChellan.company', function ($q) use ($companies) {
+            $jobGivingQuery->whereHas('employee.company', function ($q) use ($companies) {
                 $q->whereIn('company_id', $companies);
             });
         }

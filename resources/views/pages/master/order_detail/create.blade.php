@@ -5,6 +5,9 @@
 @section('content')
     <!-- Add Select2 CSS -->
     @include('links.css.select2.select2')
+    @include('modals')
+    @include('modals_script')
+ 
     <div class="wrapper">
         <div class="container-fluid">
             <!-- Page-Title -->
@@ -30,9 +33,8 @@
                     <div class="card m-b-30">
                         <div class="card-body">
                             <div class="m-b-30">
-                                <form action="{{ route('master.order_detail.store') }}" method="POST">
+                                <form id="orderForm" action="{{ route('master.order_detail.store') }}" method="POST">
                                     @csrf
-
                                     <div class="d-flex justify-content-end mb-2">
                                         {{-- <h5 class="text-primary">Company Info</h5> --}}
                                         <button class="btn btn-secondary cancel_btn">
@@ -61,9 +63,15 @@
                                             @enderror
                                         </div>
 
-                                        <label class="col-sm-2 col-form-label mandatory">Customer</label>
+                                        <label class="col-sm-2 col-form-label mandatory">Customer
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#customer">
+                                                +
+                                            </button>
+                                        </label>
+                                        
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="customer_id"
+                                            <select class="form-control customer select2" name="customer_id"
                                                 id="customer_id"required>
                                                 <option value="">Select Customer</option>
                                                 @foreach ($customer as $item)
@@ -74,11 +82,17 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <label class="col-sm-2 col-form-label mandatory">Product <a class="shortcut_master"
-                                                href="{{ route('product-models.products.create') }}" target="_blank">+</a>
+
+                                        <label class="col-sm-2 col-form-label mandatory">Product
+                                            {{-- <a class="shortcut_master"
+                                                href="{{ route('product-models.products.create') }}" target="_blank">+</a> --}}
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#product">
+                                                +
+                                            </button>
                                         </label>
                                         <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="product" id="product">
+                                            <select class="form-control products select2" name="product" id="productss" required>
                                                 <option value="">Select Product</option>
                                                 @foreach ($products as $product)
                                                     <option value="{{ $product->id }}">{{ $product->name }}</option>
@@ -88,152 +102,156 @@
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                      <!-- Button to Open Modal -->
- <label class="col-sm-2 col-form-label mandatory">Model <a class="shortcut_master"
-                                                href="{{ route('master.product_model.create') }}" target="_blank">+</a>
-                                        </label>
-
-
-                                        <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="product_model" id="product_model"
-                                                disabled>
-                                                <option value="">Select Product Model</option>
-                                                @foreach ($productModels as $productModel)
-                                                    <option value="{{ $productModel->id }}"
-                                                        data-product-id="{{ $productModel->product_id }}"
-                                                        data-wage="{{ $productModel->wages_product }}"
-                                                        data-weight="{{ $productModel->raw_material_weight_item }}"
-                                                        data-raw-material-id="{{ $productModel->raw_material_id }}"
-                                                        data-raw-material-type="{{ $productModel->rawMaterial->rawMaterialType->name ?? '' }}"
-                                                        data-raw-material-name="{{ $productModel->rawMaterial->name ?? '' }}"
-                                                        data-product-size="{{ $productModel->productSize->name ?? '' }}">
-                                                        {{ $productModel->model_name }}-{{ $productModel->model_code }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            @error('model_id')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <label for="raw_material_type" class="col-sm-2 col-form-label">R.M Type</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="raw_material_type"
-                                                id="raw_material_type" readonly>
-                                            @error('raw_material_type')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <label for="raw_material_name" class="col-sm-2 col-form-label ">R.M Name</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="raw_material_name"
-                                                id="raw_material_name" readonly>
-                                            @error('raw_material_name')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                          <label for="raw_material_name" class="col-sm-2 col-form-label ">Stock</label>
-<div class="col-sm-4 mb-4">
-    <input class="form-control" type="text" name="stock" id="stock" readonly>
-    @error('stock')
-        <span class="error" style="color: red;">{{ $message }}</span>
-    @enderror
-</div>
-                                        <label for="raw_material_weight_item" class="col-sm-2 col-form-label">R.M
-                                            Weight/Item</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="raw_material_weight_item"
-                                                id="raw_material_weight_item" readonly>
-                                            @error('raw_material_weight_item')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <label for="wages_employee" class="col-sm-2 col-form-label ">Wages of
-                                            Employee</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="wages_employee"
-                                                id="wages_employee" readonly>
-                                            @error('wages_employee')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <label for="wages_employee" class="col-sm-2 col-form-label ">Product Size</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="product_size_code"
-                                                id="product_size_code" readonly>
-                                            <input class="form-control" type="hidden" name="product_size_id"
-                                                id="product_size_id" readonly>
-                                            @error('product_size')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <label for="quantity" class="col-sm-2 col-form-label mandatory">Quantity</label>
-<div class="col-sm-4 mb-4">
-    <input class="form-control" type="text" name="quantity" id="quantity" required>
-    <span id="quantity-error" style="color: red; display:none;">Quantity cannot exceed stock!</span>
-    @error('quantity')
-        <span class="error" style="color: red;">{{ $message }}</span>
-    @enderror
-</div>
-
-                                        <label class="col-sm-2 col-form-label mandatory">Delivery Date</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input type="date" class="form-control" name="delivery_date"
-                                                id=""required>
-                                            @error('delivery_date')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-
-
-                                        <label class="col-sm-2 col-form-label mandatory">Product Color
-                                            <a class="shortcut_master"
-                                                href="{{ route('product-models.product_colors.create') }}"
-                                                target="_blank">+</a>
-                                        </label>
-                                        <div class="col-sm-4 mb-4">
-                                            <select class="form-control select2" name="product_color_id"
-                                                id="product_color_id"required>
-                                                <option value="">Select Product Color</option>
-                                                @foreach ($product_color as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('product_color_id')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <label for="customer_code" class="col-sm-2 col-form-label">Total R.M
-                                            Weight</label>
-                                        <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="total_raw_material"
-                                                id="total_raw_material" readonly>
-                                            @error('total_raw_material')
-                                                <span class="error" style="color: red;">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="d-flex justify-content-evenly">
-                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                                Submit
+                                        <!-- Button to Open Modal -->
+                                        <label class="col-sm-2 col-form-label mandatory">Model
+                                            {{-- <a class="shortcut_master"
+                            href="{{ route('master.product_model.create') }}" target="_blank">+</a> --}}
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#product_models">
+                                                +
                                             </button>
-                                            <a href="{{ route('master.order_detail.create') }}"
-                                                class="btn btn-warning waves-effect waves-light">
-                                                Reset
-                                            </a>
-                                            <a href="{{ route('master.order_detail.index') }}"
-                                                class="btn btn-secondary waves-effect m-l-5">
-                                                Cancel
-                                            </a>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+
+
+                    </label>
+
+
+                    <div class="col-sm-4 mb-4">
+                        <select class="form-control select2" name="product_model" id="product_model" disabled required>
+                            <option value="">Select Product Model</option>
+                            @foreach ($productModels as $productModel)
+                                <option value="{{ $productModel->id }}"
+                                    data-product-id="{{ $productModel->product_id }}"
+                                    data-wage="{{ $productModel->wages_product }}"
+                                    data-weight="{{ $productModel->raw_material_weight_item }}"
+                                    data-raw-material-id="{{ $productModel->raw_material_id }}"
+                                    data-raw-material-type="{{ $productModel->rawMaterial->rawMaterialType->name ?? '' }}"
+                                    data-raw-material-name="{{ $productModel->rawMaterial->name ?? '' }}"
+                                    data-product-size="{{ $productModel->productSize->name ?? '' }}">
+                                    {{ $productModel->model_name }}-{{ $productModel->model_code }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('model_id')
+                            <span class="error" style="color: red;">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <label for="raw_material_type" class="col-sm-2 col-form-label">R.M Type</label>
+                    <div class="col-sm-4 mb-4">
+                        <input class="form-control" type="text" name="raw_material_type" id="raw_material_type"
+                            readonly>
+                        @error('raw_material_type')
+                            <span class="error" style="color: red;">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <label for="raw_material_name" class="col-sm-2 col-form-label ">R.M Name</label>
+                    <div class="col-sm-4 mb-4">
+                        <input class="form-control" type="text" name="raw_material_name" id="raw_material_name"
+                            readonly>
+                        @error('raw_material_name')
+                            <span class="error" style="color: red;">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <label for="raw_material_name" class="col-sm-2 col-form-label ">Stock</label>
+                    <div class="col-sm-4 mb-4">
+                        <input class="form-control" type="text" name="stock" id="stocks" readonly>
+                        @error('stocks')
+                            <span class="error" style="color: red;">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <label for="raw_material_weight_item" class="col-sm-2 col-form-label">R.M
+                        Weight/Item</label>
+                    <div class="col-sm-4 mb-4">
+                        <input class="form-control" type="text" name="raw_material_weight_item"
+                            id="raw_material_weight_items" readonly>
+                        @error('raw_material_weight_item')
+                            <span class="error" style="color: red;">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <label for="wages_employee" class="col-sm-2 col-form-label ">Wages of
+                        Employee</label>
+                    <div class="col-sm-4 mb-4">
+                        <input class="form-control" type="text" name="wages_employee" id="wages_employee" readonly>
+                        @error('wages_employee')
+                            <span class="error" style="color: red;">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <label for="wages_employee" class="col-sm-2 col-form-label ">Product Size</label>
+                    <div class="col-sm-4 mb-4">
+                        <input class="form-control" type="text" name="product_size_code" id="product_size_code"
+                            readonly>
+                        <input class="form-control" type="hidden" name="product_size_id" id="product_sizess" readonly>
+                        @error('product_size')
+                            <span class="error" style="color: red;">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <label for="quantity" class="col-sm-2 col-form-label mandatory">Quantity</label>
+                    <div class="col-sm-4 mb-4">
+                        <input class="form-control" type="text" name="quantity" id="quantity" required>
+                        <span id="quantity-error" style="color: red; display:none;">Quantity cannot exceed stock!</span>
+                        @error('quantity')
+                            <span class="error" style="color: red;">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    
+                    <label class="col-sm-2 col-form-label mandatory">Delivery Date</label>
+                    <div class="col-sm-4 mb-4">
+                        <input type="date" class="form-control" name="delivery_date" id=""required>
+                        @error('delivery_date')
+                            <span class="error" style="color: red;">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <label class="col-sm-2 col-form-label mandatory">Product Color
+                        {{-- <a class="shortcut_master" href="{{ route('product-models.product_colors.create') }}"
+                            target="_blank">+</a> --}}
+
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#product_color">
+                            +
+                        </button>
+
+
+                    </label>
+                    <div class="col-sm-4 mb-4">
+                        <select class="form-control product_color_id select2" name="product_color_id" id="product_color_id"required>
+                            <option value="">Select Product Color</option>
+                            @foreach ($product_color as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('product_color_id')
+                            <span class="error" style="color: red;">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <label for="customer_code" class="col-sm-2 col-form-label">Total R.M
+                        Weight</label>
+                    <div class="col-sm-4 mb-4">
+                        <input class="form-control" type="text" name="total_raw_material" id="total_raw_material"
+                            readonly>
+                        @error('total_raw_material')
+                            <span class="error" style="color: red;">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
+                <div class="form-group">
+                    <div class="d-flex justify-content-evenly">
+                        <button type="submit" class="btn btn-primary submit-form waves-effect waves-light">
+                            Submit
+                        </button>
+                        <a href="{{ route('master.order_detail.create') }}"
+                            class="btn btn-warning waves-effect waves-light">
+                            Reset
+                        </a>
+                        <a href="{{ route('master.order_detail.index') }}" class="btn btn-secondary waves-effect m-l-5">
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+                </form>
             </div>
         </div>
+    </div>
+    </div>
+    </div>
+    </div>
     </div>
     <!-- JavaScript to handle product selection -->
     <script>
@@ -253,7 +271,7 @@
 
     <script>
         $(document).ready(function() {
-            $('#product').change(function() {
+            $('#productss').change(function() {
                 $('#product_model').prop('disabled', $(this).val() == '');
             });
         });
@@ -261,7 +279,7 @@
 
     <script>
         // Get the input fields
-        var rawMaterialWeightItemInput = document.getElementById('raw_material_weight_item');
+        var rawMaterialWeightItemInput = document.getElementById('raw_material_weight_items');
         var quantityInput = document.getElementById('quantity');
         var totalRawMaterialInput = document.getElementById('total_raw_material');
 
@@ -279,11 +297,11 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         const urlParams = new URLSearchParams(window.location.search);
         const orderNo = urlParams.get('orderNo');
         document.getElementById('order_no').value = orderNo;
-    </script>
+    </script> --}}
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -333,12 +351,12 @@
                         success: function(response) {
                             $('#product').val(response.product);
                             $('#raw_material_name').val(response.raw_material_name);
-                             $('#stock').val(response.stock);
+                            $('#stocks').val(response.stock);
                             $('#raw_material_type').val(response.raw_material_type);
                             $('#product_size_code').val(response.product_size_code);
-                            $('#product_size_id').val(response.product_size_id);
+                            $('#product_sizess').val(response.product_size_id);
                             $('#wages_employee').val(response.wages_product);
-                            $('#raw_material_weight_item').val(response
+                            $('#raw_material_weight_items').val(response
                                 .raw_material_weight_item);
                         },
                         error: function(xhr, status, error) {
@@ -348,68 +366,74 @@
                 } else {
                     $('#product').val('');
                     $('#raw_material_name').val('');
-                    $('#stock').val('');
+                    $('#stocks').val('');
                     $('#raw_material_type').val('');
                     $('#product_size_code').val('');
-                    $('#product_size_id').val('');
+                    $('#product_sizess').val('');
                     $('#wages_employee').val('');
-                    $('#raw_material_weight_item').val('');
+                    $('#raw_material_weight_items').val('');
                 }
             });
             $('#quantity').on('input', function() {
-            var quantity = parseFloat($(this).val());
-            var stock = parseFloat($('#stock').val());
+                var quantity = parseFloat($(this).val());
+                var stock = parseFloat($('#stocks').val());
 
-            if (quantity > stock) {
-                $('#quantity-error').show(); // Show error message
-            } else {
-                $('#quantity-error').hide(); // Hide error message
-            }
-        });
+                if (quantity > stock) {
+                    $('#quantity-error').show(); // Show error message
+                } else {
+                    $('#quantity-error').hide(); // Hide error message
+                }
+            });
 
-        // Prevent form submission if quantity is greater than stock
-        $('form').on('submit', function(e) {
-            var quantity = parseFloat($('#quantity').val());
-            var stock = parseFloat($('#stock').val());
+            // Prevent form submission if quantity is greater than stock
+            $('form').on('submit', function(e) {
+                var quantity = parseFloat($('#quantity').val());
+                var stock = parseFloat($('#stocks').val());
 
-            if (quantity > stock) {
-                e.preventDefault(); // Prevent form submission
-                $('#quantity-error').show(); // Show error message
-            }
-        });
+                if (quantity > stock) {
+                    e.preventDefault(); // Prevent form submission
+                    $('#quantity-error').show(); // Show error message
+                }
+            });
         });
     </script>
 
 
 
-<script>
-    $(document).ready(function() {
-        $('#product').change(function() {
-            var productId = $(this).val();
-            $('#product_model').prop('disabled', productId == '');
-            // Clear existing options
-            $('#product_model').empty();
-            // Add default option
-            $('#product_model').append('<option value="">Select Product Model</option>');
-            // Fetch product models via AJAX based on selected product
-            if (productId != '') {
-                $.ajax({
-                    url: '/master/order_detail/getProductModels/' + productId, // Replace with your route to fetch product models
-                    type: 'GET',
-                    success: function(response) {
-                        // Populate product models select dropdown
-                        $.each(response, function(key, value) {
-                            $('#product_model').append('<option value="' + value.id + '">' + value.model_name + '-' + value.model_code + '</option>');
-                        });
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
-            }
+    <script>
+        $(document).ready(function() {
+            $('#productss').change(function() {
+                var productId = $(this).val();
+                $('#product_model').prop('disabled', productId == '');
+                // Clear existing options
+                $('#product_model').empty();
+                // Add default option
+                $('#product_model').append('<option value="">Select Product Model</option>');
+                // Fetch product models via AJAX based on selected product
+                if (productId != '') {
+                    $.ajax({
+                        url: '/master/order_detail/getProductModels/' +
+                            productId, // Replace with your route to fetch product models
+                        type: 'GET',
+                        success: function(response) {
+                            // Populate product models select dropdown
+                            $.each(response, function(key, value) {
+                                $('#product_model').append('<option value="' + value
+                                    .id + '">' + value.model_name + '-' + value
+                                    .model_code + '</option>');
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+                }
+            });
         });
-    });
-</script>
+    </script>
+
+
+
 
     @include('links.js.select2.select2')
 @endsection

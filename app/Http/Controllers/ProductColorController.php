@@ -49,7 +49,9 @@ class ProductColorController extends Controller
        
    
         $product_color->save();
-
+        if ($request->input('ajax_mode') === 'ajax') {
+            return response()->json(['success' => true, 'data' => $product_color, 'message' => 'Product Color added successfully!', 'product_color' => $product_color]);
+        }
         return redirect()->route('product-models.product_colors')->with('success', 'Product Color added successfully!');
 
 

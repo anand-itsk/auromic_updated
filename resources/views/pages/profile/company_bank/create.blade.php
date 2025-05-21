@@ -63,7 +63,8 @@
                                             No</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="account_number"
-                                                id="account_number" required>
+                                                id="account_number" required oninput="validateAccountNumber()">
+                                                 <span class="error text-danger" id="account_number_error"></span>
                                                  <span class="error" style="color: red;"></span>
                                             @error('account_number')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
@@ -84,6 +85,7 @@
                                             Code</label>
                                         <div class="col-sm-4 mb-4">
                                             <input class="form-control" type="text" name="branch_code" id="branch_code">
+                                            <span class="error text-danger" id="branch_code_error"></span>
                                             @error('branch_code')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -101,7 +103,8 @@
                                         <label for="ifsc_code" class="col-sm-2 col-form-label">IFSC
                                             Code</label>
                                         <div class="col-sm-4 mb-4">
-                                            <input class="form-control" type="text" name="ifsc_code" id="branch_code">
+                                            <input class="form-control" type="text" name="ifsc_code" id="ifsc_code">
+                                             <span class="error text-danger" id="ifsc_code_error"></span>
                                             @error('ifsc_code')
                                                 <span class="error" style="color: red;">{{ $message }}</span>
                                             @enderror
@@ -215,5 +218,28 @@ $(document).ready(function() {
 });
 </script>
 
+<script>
+    function validateAccountNumber() {
+        var accountNumber = document.getElementById('account_number').value;
+        var errorElement = document.getElementById('account_number_error');
+
+        // Remove any non-numeric characters from the input
+        var numericValue = accountNumber.replace(/\D/g, '');
+
+        // Limit the input to 22 digits
+        if (numericValue.length > 22) {
+            numericValue = numericValue.substring(0, 22);  // Truncate to 22 digits
+        }
+
+        document.getElementById('account_number').value = numericValue;
+
+        // Check if the input length is exactly 22 digits
+        if (numericValue.length !== 22) {
+            errorElement.textContent = "Account number must be exactly 22 digits.";
+        } else {
+            errorElement.textContent = "";
+        }
+    }
+</script>
 
 @endsection

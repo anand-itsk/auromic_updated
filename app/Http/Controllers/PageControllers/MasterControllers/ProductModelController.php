@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Imports\ModelDataImport;
 use App\Exports\ModelExport;
+use App\Models\Country;
 use App\Models\RawMaterial;
 use App\Models\Product;
 use App\Models\ProductSize;
 use App\Models\ProductModel;
 use App\Models\ProductModelHistory;
+use App\Models\RawMaterialType;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
@@ -25,6 +27,7 @@ class ProductModelController extends Controller
         return view('pages.master.product_model.index',compact('product','product_model','product_size'));
     }
 
+
     public function indexData(Request $request)
     {
         $fromDate = $request->input('from_date');
@@ -35,40 +38,105 @@ class ProductModelController extends Controller
         $dateFilter = $request->input('date_filter');
 
         // Start building the query
-        $query = ProductModel::with(['rawMaterial.rawMaterialType', 'product', 'productSize']);
+        $query = ProductModel::query()
+            ->leftJoin('products', 'product_models.product_id', '=', 'products.id')
+            ->leftJoin('product_sizes', 'product_models.product_size_id', '=', 'product_sizes.id')
+            ->leftJoin('raw_materials', 'product_models.raw_material_id', '=', 'raw_materials.id')
+            ->select([
+                'product_models.*',
+                'products.name as product_name',
+                'product_sizes.code as product_size_code',
+                'raw_materials.name as raw_material_name',
+            ]);
 
         // Apply date filter
         if ($dateFilter) {
             if ($dateFilter === 'today') {
-                $query->whereDate('created_at', Carbon::today());
+                $query->whereDate('product_models.created_at', Carbon::today());
             } elseif ($dateFilter === 'this_month') {
-                $query->whereMonth('created_at', Carbon::now()->month)
-                    ->whereYear('created_at', Carbon::now()->year);
+                $query->whereMonth('product_models.created_at', Carbon::now()->month)
+                    ->whereYear('product_models.created_at', Carbon::now()->year);
             } elseif ($dateFilter === 'last_month') {
-                $query->whereMonth('created_at', Carbon::now()->subMonth()->month)
-                    ->whereYear('created_at', Carbon::now()->subMonth()->year);
+                $query->whereMonth('product_models.created_at', Carbon::now()->subMonth()->month)
+                    ->whereYear('product_models.created_at', Carbon::now()->subMonth()->year);
             }
         }
 
         // Filter by date range
         if ($fromDate && $lastDate) {
-            $query->whereBetween('date', [$fromDate, $lastDate]);
+            $query->whereBetween('product_models.date', [$fromDate, $lastDate]);
         }
 
         // Filter by product ID
         if ($product) {
-            $query->where('product_id', $product);
+            $query->where('product_models.product_id', $product);
         }
         if ($product_model) {
-            $query->where('id', $product_model);
+            $query->where('product_models.id', $product_model);
         }
         if ($product_size) {
-            $query->where('product_size_id', $product_size);
+            $query->where('product_models.product_size_id', $product_size);
         }
 
-        // Execute the query and return the DataTables response
-        return DataTables::of($query)->make(true);
+        // Return the DataTables response
+        return DataTables::of($query)
+            ->editColumn('product_name', function ($row) {
+                return $row->product_name ?? '-';
+            })
+            ->editColumn('product_size_code', function ($row) {
+                return $row->product_size_code ?? '-';
+            })
+            ->editColumn('raw_material_name', function ($row) {
+                return $row->raw_material_name ?? '-';
+            })
+            ->make(true);
     }
+
+
+    // public function indexData(Request $request)
+    // {
+    //     $fromDate = $request->input('from_date');
+    //     $lastDate = $request->input('last_date');
+    //     $product = $request->input('product');
+    //     $product_model = $request->input('product_model');
+    //     $product_size = $request->input('product_size');
+    //     $dateFilter = $request->input('date_filter');
+
+    //     // Start building the query
+    //     $query = ProductModel::with(['rawMaterial.rawMaterialType', 'product', 'productSize']);
+
+    //     // Apply date filter
+    //     if ($dateFilter) {
+    //         if ($dateFilter === 'today') {
+    //             $query->whereDate('created_at', Carbon::today());
+    //         } elseif ($dateFilter === 'this_month') {
+    //             $query->whereMonth('created_at', Carbon::now()->month)
+    //                 ->whereYear('created_at', Carbon::now()->year);
+    //         } elseif ($dateFilter === 'last_month') {
+    //             $query->whereMonth('created_at', Carbon::now()->subMonth()->month)
+    //                 ->whereYear('created_at', Carbon::now()->subMonth()->year);
+    //         }
+    //     }
+
+    //     // Filter by date range
+    //     if ($fromDate && $lastDate) {
+    //         $query->whereBetween('date', [$fromDate, $lastDate]);
+    //     }
+
+    //     // Filter by product ID
+    //     if ($product) {
+    //         $query->where('product_id', $product);
+    //     }
+    //     if ($product_model) {
+    //         $query->where('id', $product_model);
+    //     }
+    //     if ($product_size) {
+    //         $query->where('product_size_id', $product_size);
+    //     }
+
+    //     // Execute the query and return the DataTables response
+    //     return DataTables::of($query)->make(true);
+    // }
 
 
     public function create()
@@ -76,9 +144,11 @@ class ProductModelController extends Controller
 
 
         $raw_material = RawMaterial::all();
-        $product = Product::all();
+        $products = Product::all();
         $product_size = ProductSize::all();
-        return view('pages.master.product_model.create', compact('raw_material', 'product', 'product_size'));
+        $raw_material_type = RawMaterialType::get();
+        $countries = Country::all();
+        return view('pages.master.product_model.create', compact('raw_material', 'products', 'product_size', 'raw_material_type','countries'));
     }
 
     public function checkName(Request $request)
@@ -93,33 +163,42 @@ class ProductModelController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request);
         $validatedData = $request->validate([
             'product_id' => 'required',
             'model_code' => 'unique:product_models',
             'model_name' => 'required',
+            'raw_material_id' => 'required',
+            'product_size_id' => 'required',
+            'date' => 'required',
             'raw_material_weight_item' => 'required|numeric|between:0,99999.999',
         ]);
 
-        $product_model = new ProductModel;
+        $product_model = new ProductModel();
         $product_model->raw_material_id = $request->input('raw_material_id');
         $product_model->product_id = $request->input('product_id');
         $product_model->product_size_id  = $request->input('product_size_id');
         $product_model->model_code = $request->input('model_code');
         $product_model->model_name = $request->input('model_name');
         $product_model->raw_material_weight_item = number_format((float)$request->input('raw_material_weight_item'), 3, '.', '');
-
         $product_model->wages_product = $request->input('wages_product');
         $product_model->date = $request->input('date');
-        //    dd($product_model);
         $product_model->save();
 
-        
+        $productModelHistory = new ProductModelHistory();
+        $productModelHistory->product_model_id = $product_model->id;
+        $productModelHistory->wages_product = $request->input('wages_product');
+        $productModelHistory->date = $request->input('date');
+        $productModelHistory->save();
 
+
+        if ($request->input('ajax_mode') === 'ajax') {
+            return response()->json(['success' => true, 'data' => $product_model, 'message' => 'Product added successfully!', 'product_model' => $product_model]);
+        }
 
         return redirect()->route('master.product_model.index')
-            ->with('success', 'Product Model created successfully');
+        ->with('success', 'Product Model created successfully');
     }
+
 
     public function edit($id)
     {
@@ -191,10 +270,14 @@ class ProductModelController extends Controller
             'file' => 'required|file|mimes:xlsx,csv'
         ]);
 
-        Excel::import(new ModelDataImport, request()->file('file'));
-
-        return redirect()->route('master.product_model.index')->with('success', 'Data imported successfully');
+        try {
+            Excel::import(new ModelDataImport, request()->file('file'));
+            return redirect()->route('master.product_model.index')->with('success', 'Data imported successfully');
+        }  catch (\Exception $e) {
+            return redirect()->route('master.product_model.index')->with('error', 'Data not imported.');
+        }
     }
+
 
     public function destroy($id)
     {

@@ -34,16 +34,16 @@ class IncentiveController extends Controller
     }
 
     public function getFinishingProductDetails($id)
-{
-    $finishingProduct = FinishingProductModel::findOrFail($id);
-    
-    return response()->json([
-        'model_name' => $finishingProduct->model_name,
-        'product_name' => $finishingProduct->product->name,
-        'product_size' => $finishingProduct->productSize->name,
-        'wages_one_product' => $finishingProduct->wages_one_product
-    ]);
-}
+    {
+        $finishingProduct = FinishingProductModel::findOrFail($id);
+
+        return response()->json([
+            'model_name' => $finishingProduct->model_name,
+            'product_name' => $finishingProduct->product->name,
+            'product_size' => $finishingProduct->productSize->name,
+            'wages_one_product' => $finishingProduct->wages_one_product
+        ]);
+    }
 
     public function store(Request $request)
 {

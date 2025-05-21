@@ -5,8 +5,8 @@
 @section('content')
     @include('links.css.datatable.datatable-css')
     @include('links.css.table.custom-css')
-         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <div class="wrapper">
         <div class="container-fluid">
             @if (session('success'))
@@ -42,62 +42,78 @@
                         <div class="card-body">
                             <div class="form-group row mb-0">
 
-                               
+                                <div class="form-group col-sm-4 mb-2 d-flex align-item-center"
+                                    style="position: relative;top:8px">
+
+                                    <div class="">
+                                        <label class="mx-0"><input type="radio" name="date_filter" value="today">
+                                            Today</label>
+                                        <label class="ml-4"><input type="radio" name="date_filter" value="this_month">
+                                            This
+                                            Month</label>
+                                        <label class="ml-4"><input type="radio" name="date_filter" value="last_month">
+                                            Last
+                                            Month</label>
+                                    </div>
+                                </div>
+                                {{-- date Ends --}}
+
+
+                                {{-- From Starts --}}
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    From Date
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <input type="date" class="form-control" name="from_date" id="from_date">
+                                    @error('company_type_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- From Ends --}}
+
+
+                                {{-- Last Start --}}
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
+                                    To Date
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <input type="date" class="form-control" name="last_date" id="last_date">
+                                    @error('company_type_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- Last Ends --}}
+
                                 <label for="client_company" class="col-sm-2 col-form-label ">
-    Client Company
-</label>
-<div class="col-sm-2 mb-2">
-    <select class="form-control select2" name="client_company_id" id="client_company">
-        <option value="">Client Company</option>
-        @foreach ($clientCompany as $type)
-            <option value="{{ $type->id }}">{{ $type->company_name }}</option>
-        @endforeach
-    </select>
-    @error('client_company_id')
-        <span class="error" style="color: red;">{{ $message }}</span>
-    @enderror
-</div>
+                                    Client Company
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="client_company_id" id="client_company">
+                                        <option value="">Client Company</option>
+                                        @foreach ($clientCompany as $type)
+                                            <option value="{{ $type->id }}">{{ $type->company_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('client_company_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
 
-<label for="sub_client_company" class="col-sm-2 col-form-label ">
-    Sub Client Company
-</label>
-<div class="col-sm-2 mb-2">
-    <select class="form-control select2" name="sub_client_company_id" id="sub_client_company">
-        <option value="">Sub Client Company</option>
-        @foreach ($subClientCompany as $type)
-            <option value="{{ $type->id }}">{{ $type->company_name }}</option>
-        @endforeach
-    </select>
-    @error('sub_client_company_id')
-        <span class="error" style="color: red;">{{ $message }}</span>
-    @enderror
-</div>
-
-<label for="form_date" class="col-sm-2 col-form-label">
-    Form Date
-</label>
-<div class="col-sm-2 mb-2">
-    <input type="date" class="form-control" name="form_date" id="form_date">
-    @error('form_date')
-        <span class="error" style="color: red;">{{ $message }}</span>
-    @enderror
-</div>
-
-<label for="last_date" class="col-sm-2 col-form-label">
-    Last Date
-</label>
-<div class="col-sm-2 mb-2">
-    <input type="date" class="form-control" name="last_date" id="last_date">
-    @error('last_date')
-        <span class="error" style="color: red;">{{ $message }}</span>
-    @enderror
-</div>
-
-
-
-
-
-
+                                <label for="sub_client_company" class="col-sm-2 col-form-label ">
+                                    Sub Client Company
+                                </label>
+                                <div class="col-sm-2 mb-2">
+                                    <select class="form-control select2" name="sub_client_company_id"
+                                        id="sub_client_company">
+                                        <option value="">Sub Client Company</option>
+                                        @foreach ($subClientCompany as $type)
+                                            <option value="{{ $type->id }}">{{ $type->company_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('sub_client_company_id')
+                                        <span class="error" style="color: red;">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -176,7 +192,6 @@
                                         <tbody>
                                         </tbody>
                                     </table>
-
                                 </div>
                             </div>
                         </div>
@@ -199,9 +214,7 @@
                                 <!-- Content loaded via AJAX -->
                             </div>
                         </div>
-
                         <div class="modal-footer">
-
                             <div class="row w-100">
                                 <div class="col-md-10">
                                     <div class="row">
@@ -239,232 +252,246 @@
     </div>
     <!-- DataTables JS -->
     @include('links.js.datatable.datatable-js')
-
-
     <script>
-            $(document).ready(function() {
-                var table;
-
-                table = $('#users-table').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: {
-                        url: '{{ route('report.total_wages.data') }}',
-                        data: function(d) {
-                            d.client_company_id = $('#client_company').val();  // Add client_company_id
-                    d.sub_client_company_id = $('#sub_client_company').val();  // Add sub_client_company_id
-                    d.form_date = $('#form_date').val();  // Add form_date
-                    d.last_date = $('#last_date').val();  // Add last_date
-                        }
-
+        $(document).ready(function() {
+            var table;
+            table = $('#users-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '{{ route('report.total_wages.data') }}',
+                    data: function(d) {
+                        d.client_company_id = $('#client_company').val(); // Add client_company_id
+                        d.sub_client_company_id = $('#sub_client_company')
+                            .val();
+                        d.from_date = $('#from_date').val();
+                        d.last_date = $('#last_date').val();
+                        d.date_filter = $('input[name="date_filter"]:checked').val();
+                    }
+                },
+                columns: [{
+                        data: 'job_giving_id',
+                        name: 'job_giving_id'
                     },
-                    columns: [{
-                            data: 'job_giving_id',
-                            name: 'job_giving_id'
-                        },
-                        { data: 'company_name', name: 'company_name' },
-                        { data: 'total_complete_quantity', name: 'total_complete_quantity' },
-                        {
-                            data: 'net_amount',
-                            name: 'net_amount'
-                        },
-                        {
-                            data: 'deducation_fee',
-                            name: 'deducation_fee'
-                        },
-                        {
-                            data: 'total_amount',
-                            name: 'total_amount'
-                        },
-                        {
-                            data: 'conveyance_fee',
-                            name: 'conveyance_fee'
-                        },
-                        {
-                            data: 'incentive_fee',
-                            name: 'incentive_fee'
-                        },
-                        {
-                            data: 'total_earned',
-                            name: 'total_earned'
-                        },
-                        {
-                            data: 'commission',
-                            name: 'commission'
-                        },
-                        {
-                            data: 'total_pay',
-                            name: 'total_pay'
-                        },
+                    {
+                        data: 'company_name',
+                        name: 'company_name'
+                    },
+                    {
+                        data: 'total_complete_quantity',
+                        name: 'total_complete_quantity'
+                    },
+                    {
+                        data: 'net_amount',
+                        name: 'net_amount'
+                    },
+                    {
+                        data: 'deducation_fee',
+                        name: 'deducation_fee'
+                    },
+                    {
+                        data: 'total_amount',
+                        name: 'total_amount'
+                    },
+                    {
+                        data: 'conveyance_fee',
+                        name: 'conveyance_fee'
+                    },
+                    {
+                        data: 'incentive_fee',
+                        name: 'incentive_fee'
+                    },
+                    {
+                        data: 'total_earned',
+                        name: 'total_earned'
+                    },
+                    {
+                        data: 'commission',
+                        name: 'commission'
+                    },
+                    {
+                        data: 'total_pay',
+                        name: 'total_pay'
+                    },
 
-                    ],
-                    order: [
-                        [0, 'desc']
-                    ],
-                    select: true,
-                    dom: 'lBfrtip',
-                    buttons: [
-                        'excel',
-                        {
-                            extend: 'print',
-                            text: 'Print',
-                            customize: function(win) {
-                                // Initialize an empty title string
-
-
-                                var title = "";
-
-
-                                $('#client_company').on('change', function() {
-                                    table.ajax.reload();
-                                });
-
-                                // Trigger DataTable reload when received_date is selected
-                                $('#sub_client_company').on('change', function() {
-                                    table.ajax.reload();
-                                });
-
-                                $('#form_date').on('change', function() {
-                                    table.ajax.reload();
-                                });
-
-                                $('#last_date').on('change', function() {
-                                    table.ajax.reload();
-                                });
-
-                                // Set the constructed title to the <h1> element in the print view
-                                var h1Element = $(win.document.body).find('h1');
-                                h1Element.text(title);
-
-                                // Decrease font size of company name in print view
-                                h1Element.css('font-size', '18px');
-
-                                var currentDate = new Date().toLocaleDateString('en-US', {
-                                    year: 'numeric',
-                                    month: 'numeric',
-                                    day: 'numeric'
-                                });
-                                var dateElement = $('<div>').css({
-                                    'position': 'absolute',
-                                    'top': '20px',
-                                    'right': '20px',
-                                    'font-weight': 'bold',
-                                    'font-size': '16px'
-                                }).text(currentDate);
-                                $(win.document.body).append(dateElement);
+                ],
+                order: [
+                    [0, 'desc']
+                ],
+                select: true,
+                dom: 'lBfrtip',
+                buttons: [
+                    'excel',
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        customize: function(win) {
+                            // Initialize an empty title string
 
 
-                                var reportName =
-                                    "Total Wages Report"; // Change this to the desired report name
-                                var reportElement = $('<h2>').css({
+                            var title = "";
+
+
+                            $('#client_company').on('change', function() {
+                                table.ajax.reload();
+                            });
+
+                            // Trigger DataTable reload when received_date is selected
+                            $('#sub_client_company').on('change', function() {
+                                table.ajax.reload();
+                            });
+
+                            $('#form_date').on('change', function() {
+                                table.ajax.reload();
+                            });
+
+                            $('#last_date').on('change', function() {
+                                table.ajax.reload();
+                            });
+
+                            // Set the constructed title to the <h1> element in the print view
+                            var h1Element = $(win.document.body).find('h1');
+                            h1Element.text(title);
+
+                            // Decrease font size of company name in print view
+                            h1Element.css('font-size', '18px');
+
+                            var currentDate = new Date().toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'numeric',
+                                day: 'numeric'
+                            });
+                            var dateElement = $('<div>').css({
+                                'position': 'absolute',
+                                'top': '20px',
+                                'right': '20px',
+                                'font-weight': 'bold',
+                                'font-size': '16px'
+                            }).text(currentDate);
+                            $(win.document.body).append(dateElement);
+
+
+                            var reportName =
+                                "Total Wages Report"; // Change this to the desired report name
+                            var reportElement = $('<h2>').css({
+                                'text-align': 'center',
+                                'font-weight': 'bold',
+                                'font-size': '24px',
+                                'margin-top': '30px'
+                            }).text(reportName);
+                            $(win.document.body).prepend(reportElement);
+
+
+
+                            $(win.document.body).find('table.dataTable').css({
+                                'border-collapse': 'collapse',
+                                'width': '100%' // Ensures table stretches horizontally
+                            });
+
+                            // Center text inside table cells
+                            $(win.document.body).find('table.dataTable th, table.dataTable td')
+                                .css({
                                     'text-align': 'center',
-                                    'font-weight': 'bold',
-                                    'font-size': '24px',
-                                    'margin-top': '30px'
-                                }).text(reportName);
-                                $(win.document.body).prepend(reportElement);
+                                    'padding': '8px', // Add padding for better readability
+                                    'border': '1px solid black' // Optional: add borders for clarity
+                                });
 
-
-
-                              $(win.document.body).find('table.dataTable').css({
-    'border-collapse': 'collapse',
-    'width': '100%' // Ensures table stretches horizontally
-});
-
-// Center text inside table cells
-$(win.document.body).find('table.dataTable th, table.dataTable td').css({
-    'text-align': 'center',
-    'padding': '8px', // Add padding for better readability
-    'border': '1px solid black' // Optional: add borders for clarity
-});
-
-// Add compact class to the table for tighter layout if needed
-$(win.document.body).find('table').addClass('compact');
-                            }
-                        },
-                        {
-                            text: 'Export All',
-                            action: function(e, dt, node, config) {
-                                window.location.href = '/report/job_received_report/export?' + $.param(
-                                    dt.ajax
-                                    .params());
-                            }
+                            // Add compact class to the table for tighter layout if needed
+                            $(win.document.body).find('table').addClass('compact');
                         }
-                    ]
+                    },
+                    {
+                        text: 'Export All',
+                        action: function(e, dt, node, config) {
+                            window.location.href = '/report/job_received_report/export?' + $.param(
+                                dt.ajax
+                                .params());
+                        }
+                    }
+                ]
 
-                });
+            });
 
 
 
 
             $('#client_company').on('change', function() {
-                                    table.ajax.reload();
-                                });
+                table.ajax.reload();
+            });
 
-                                // Trigger DataTable reload when received_date is selected
-                                $('#sub_client_company').on('change', function() {
-                                    table.ajax.reload();
-                                });
+            // Trigger DataTable reload when received_date is selected
+            $('#sub_client_company').on('change', function() {
+                table.ajax.reload();
+            });
 
-                                $('#form_date').on('change', function() {
-                                    table.ajax.reload();
-                                });
+             $('#last_date').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
+            });
 
-                                $('#last_date').on('change', function() {
-                                    table.ajax.reload();
-                                });
-
-
-
-
-
-                $('#deleteButton').click(function() {
-                    var ids = $.map(table.rows('.selected').data(), function(item) {
-                        return item.id;
-                    });
-
-                    if (ids.length === 0) {
-                        alert('No rows selected!');
-                        return;
-                    }
-
-                    if (confirm("Are you sure you want to delete these rows?")) {
-                        // Send AJAX request to delete the selected rows
-                        $.ajax({
-                            url: '/job_allocation/delivery_challan/delete/selected',
-                            type: 'POST',
-                            data: {
-                                ids: ids,
-                                _token: '{{ csrf_token() }}'
-                            },
-                            success: function(response) {
-                                // Handle response here
-                                table.ajax.reload(); // Reload the DataTable
-                            }
-                        });
-                    }
-                });
+            $('#form_date').on('change', function() {
+                // Reload DataTable with updated parameters
+                table.ajax.reload();
             });
 
 
-            function updateSelectedFilters() {
-                var selectedFilters = '';
+            $('input[name="date_filter"]').on('change', function() {
+                // Reload DataTable with new filter
+                table.ajax.reload();
+            });
 
-            
-    
-                var clientCompany = $('#client_company option:selected').text();
-                var subClientCompany = $('#sub_client_company option:selected').text();
-                var formDate = $('#from_date').val();
-                var lastDate = $('#last_date').val();
 
-    
-                selectedFilters += 'Client Company: ' + clientCompany + ', ';
-                selectedFilters += 'Sub Client Company: ' + subClientCompany + ', ';
-                selectedFilters += 'From Date: ' + formDate;
-                selectedFilters += 'Last Date: ' + lastDate;
 
-                $('#selectedFilters').text(selectedFilters);
-            }
+
+
+
+            $('#deleteButton').click(function() {
+                var ids = $.map(table.rows('.selected').data(), function(item) {
+                    return item.id;
+                });
+
+                if (ids.length === 0) {
+                    alert('No rows selected!');
+                    return;
+                }
+
+                if (confirm("Are you sure you want to delete these rows?")) {
+                    // Send AJAX request to delete the selected rows
+                    $.ajax({
+                        url: '/job_allocation/delivery_challan/delete/selected',
+                        type: 'POST',
+                        data: {
+                            ids: ids,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            // Handle response here
+                            table.ajax.reload(); // Reload the DataTable
+                        }
+                    });
+                }
+            });
+        });
+
+
+        function updateSelectedFilters() {
+            var selectedFilters = '';
+
+
+
+            var clientCompany = $('#client_company option:selected').text();
+            var subClientCompany = $('#sub_client_company option:selected').text();
+            var formDate = $('#from_date').val();
+            var lastDate = $('#last_date').val();
+
+
+            selectedFilters += 'Client Company: ' + clientCompany + ', ';
+            selectedFilters += 'Sub Client Company: ' + subClientCompany + ', ';
+            selectedFilters += 'From Date: ' + formDate;
+            selectedFilters += 'Last Date: ' + lastDate;
+
+            $('#selectedFilters').text(selectedFilters);
+        }
 
 
         function edit(id) {
@@ -529,26 +556,34 @@ $(win.document.body).find('table').addClass('compact');
         }
     </script>
 
-<script>
-    $(document).ready(function() {
-        // Initialize Select2 on the customer dropdown
-     
-        
-       
-          $('#client_company').select2({
-            placeholder: "Select Client Company",
-            allowClear: true
+    <script>
+        $(document).ready(function() {
+            // Initialize Select2 on the customer dropdown
+
+
+
+            $('#client_company').select2({
+                placeholder: "Select Client Company",
+                allowClear: true
+            });
+
+
+            $('#sub_client_company').select2({
+                placeholder: "Select Subclient company",
+                allowClear: true
+            });
+
+
+
         });
+    </script>
 
-          
-          $('#sub_client_company').select2({
-            placeholder: "Select Subclient company",
-            allowClear: true
+    <script>
+        document.querySelectorAll('input[name="date_filter"]').forEach(function(element) {
+            element.addEventListener('change', function() {
+                document.getElementById('filterForm').submit(); // Submit the form on selection
+            });
         });
-
-
-        
-    });
-</script>
+    </script>
 
 @endsection

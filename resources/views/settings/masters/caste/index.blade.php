@@ -98,9 +98,13 @@ $(document).ready(function() {
         serverSide: true,
         ajax: '{{route('common.castes.data')}}',
         columns: [{
-                data: 'id',
-                name: 'id'
-            },
+                        data: 'id',
+                        name: 'id',
+                        render: function(data, type, row, meta) {
+                           
+                            return meta.row + 1;
+                        }
+                    },
             {
                 data: 'name',
                 name: 'name'

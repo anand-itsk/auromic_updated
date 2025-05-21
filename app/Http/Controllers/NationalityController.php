@@ -48,6 +48,9 @@ class NationalityController extends Controller
        
    
         $nationality->save();
+        if ($request->input('ajax_mode') === 'ajax') {
+            return response()->json(['success' => true, 'data' => $nationality, 'message' => 'Nationality added successfully!', 'nationality' => $nationality]);
+        }
 
         return redirect()->route('common.nationalities')->with('success', 'Nationality added successfully!');
 

@@ -80,9 +80,7 @@
                                     @enderror
                                 </div>
                                 {{-- To Date Ends --}}
-
-
-
+                                
                                 <label for="customer_code" class="col-sm-2 col-form-label ">
                                     Company Type
                                 </label>
@@ -160,7 +158,7 @@
                                         <span class="error" style="color: red;">{{ $message }}</span>
                                     @enderror
                                 </div>
-<label for="customer_code" class="col-sm-2 col-form-label ">
+                                <label for="customer_code" class="col-sm-2 col-form-label ">
                                     Order No
                                 </label>
                                 <div class="col-sm-2 mb-2">
@@ -268,8 +266,6 @@
                                                 <th>Qty</th>
                                                 <th>Bal.Qty</th>
                                                 <th>Status</th> --}}
-
-
                                                 <th>ID</th>
                                                 <th>Order No</th>
                                                 <th>Order Date</th>
@@ -277,11 +273,11 @@
                                                 <th>Total Quantity</th>
                                                 <th>Available Quantity</th>
                                                 <th>Wages of Product</th>
+                                                <th>Product Name</th>
                                                 <th>Product Color</th>
                                                 <th>Product Size</th>
                                                 <th>Order Status</th>
                                                 <th>Model Name</th>
-
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -384,7 +380,11 @@
                 },
                 columns: [{
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        render: function(data, type, row, meta) {
+
+                            return meta.row + 1;
+                        }
                     },
                     {
                         data: 'order_no.last_order_number',
@@ -427,6 +427,13 @@
                     {
                         data: 'product_model.wages_product',
                         name: 'product_model.wages_product',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
+                    },
+                    {
+                        data: 'product_model.product.name',
+                        name: 'product_model.product.name',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
@@ -726,7 +733,7 @@
             });
         });
     </script>
- 
+
     <script>
         $(document).ready(function() {
             // Initialize Select2 on the customer dropdown
@@ -747,11 +754,11 @@
                 placeholder: "Select Order Status",
                 allowClear: true
             });
-             $('#order_no').select2({
+            $('#order_no').select2({
                 placeholder: "Select Order No",
                 allowClear: true
             });
-            
+
         });
     </script>
 
